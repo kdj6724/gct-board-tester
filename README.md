@@ -9,7 +9,7 @@
 
 ```bash
 pip install -r requirements.txt
-cp .env.example .env   # TAPO_EMAIL / TAPO_PASSWORD / TAPO_IP 입력
+cp remote_power.env.example remote_power.env   # TAPO_EMAIL / TAPO_PASSWORD / TAPO_IP 입력
 python main_app.py
 ```
 

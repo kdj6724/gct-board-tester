@@ -14,10 +14,13 @@ ACC = "#7c6af7"; FIELD = "#313244"
 class _Dialog:
     def __init__(self, parent, title, width=440, height=320):
         self.result = None
+        self.width = width
+        self.height = height
         self.win = tk.Toplevel(parent)
         self.win.title(title)
         self.win.configure(bg=BG)
         self.win.geometry(f"{width}x{height}")
+        self.win.minsize(width, 160)
         self.win.transient(parent)
         self.win.grab_set()
         self.body = tk.Frame(self.win, bg=BG)
@@ -32,8 +35,11 @@ class _Dialog:
                   bd=0, padx=14, pady=5, cursor="hand2").pack(side="right")
 
     def _label(self, text):
-        tk.Label(self.body, text=text, font=("Consolas", 10), bg=BG, fg=MUTE).pack(
-            anchor="w", pady=(8, 2))
+        # wraplength 를 안 주면 긴 문장이 창 밖으로 잘려서 겹쳐 보인다 - 창 너비에 맞춰
+        # 줄바꿈되게 한다.
+        tk.Label(self.body, text=text, font=("Consolas", 10), bg=BG, fg=MUTE,
+                 wraplength=self.width - 48, justify="left").pack(
+            anchor="w", pady=(8, 2), fill="x")
 
     def _entry(self, var, width=30):
         e = tk.Entry(self.body, textvariable=var, width=width, font=("Consolas", 11),
@@ -43,8 +49,9 @@ class _Dialog:
 
     def _check(self, text, var):
         tk.Checkbutton(self.body, text=text, variable=var, font=("Consolas", 10),
-                        bg=BG, fg=FG, activebackground=BG, selectcolor=FIELD).pack(
-            anchor="w", pady=(6, 0))
+                        bg=BG, fg=FG, activebackground=BG, selectcolor=FIELD,
+                        wraplength=self.width - 48, justify="left").pack(
+            anchor="w", pady=(6, 0), fill="x")
 
     def _radio_row(self, var, options):
         row = tk.Frame(self.body, bg=BG)
@@ -112,22 +119,28 @@ def edit_wait_string(parent, params: dict):
 
 
 def edit_send(parent, params: dict):
-    d = _Dialog(parent, "Input 블록", height=480)
-    d._label("보낼 문자열 / 키 입력  ({var} 등 루프 변수 사용 가능, 비워두면 Enter만 전송)")
-    txt = scrolledtext.ScrolledText(d.body, height=4, font=("Consolas", 11), bg=FIELD, fg=FG,
+    d = _Dialog(parent, "Input 블록", height=570)
+    d._label("보낼 문자열 / 키 입력 ({var} 변수 사용 가능, 비워두면 Enter만 전송) - "
+             "여러 줄이면 한 줄씩 순서대로 보냅니다")
+    # width 를 안 주면 Text 위젯 기본값(80자)이 다이얼로그 폭보다 훨씬 넓어져서
+    # 창 밖으로 잘려나가고 그 아래 위젯들이 겹쳐 보이는 문제가 생긴다 - 다이얼로그
+    # 폭에 맞는 글자 수로 명시해준다.
+    txt = scrolledtext.ScrolledText(d.body, height=4, width=44, font=("Consolas", 11), bg=FIELD, fg=FG,
                                      insertbackground=FG, relief="flat", bd=4, wrap="none")
     txt.pack(fill="x")
     txt.insert("1.0", params.get("text", ""))
     enter = tk.BooleanVar(value=params.get("append_enter", True))
     d._check("전송 후 Enter(\\n) 추가", enter)
     delay = tk.StringVar(value=str(params.get("delay_after", 0.3)))
-    d._label("전송 후 대기 시간 (초)")
+    d._label("줄(명령) 사이 대기 시간 (초) - 여러 줄이면 각 줄 전송 뒤마다 이만큼 기다립니다")
     d._entry(delay, width=10)
 
     check_params = params.get("check") or {}
     attach = tk.BooleanVar(value=params.get("check") is not None)
     sep = tk.Frame(d.body, bg=MUTE, height=1); sep.pack(fill="x", pady=(14, 6))
-    d._check("응답 Check 붙이기 (입력을 보낸 뒤 이 응답을 바로 확인)", attach)
+    d._label("※ 응답은 Check 없이도 자동으로 캡처됩니다. 아래는 특정 문자열이 뜰 때까지 "
+             "더 오래 기다려야 할 때만(예: 새 프롬프트) 켜세요.")
+    d._check("응답 Check 붙이기 (특정 문자열까지 더 오래 대기)", attach)
 
     check_frame = tk.Frame(d.body, bg=BG)
     check_frame.pack(anchor="w", fill="x", pady=(4, 0))
@@ -164,6 +177,60 @@ def edit_send(parent, params: dict):
                       "timeout": float(c_timeout.get()), "on_timeout": c_on_timeout.get()}
         return {"text": txt.get("1.0", "end").rstrip("\n"), "append_enter": bool(enter.get()),
                  "delay_after": float(delay.get()), "check": check}
+    d.collect = collect
+    return d.show()
+
+
+def edit_knock(parent, params: dict):
+    d = _Dialog(parent, "Knock 블록", height=590)
+    d._label("보낼 문자열 / 키 입력 ({var} 등 루프 변수 사용 가능, 비워두면 Enter만 전송) - "
+             "Input과 달리 아래 문자열을 찾을 때까지 반복 전송합니다")
+    txt = scrolledtext.ScrolledText(d.body, height=3, width=44, font=("Consolas", 11), bg=FIELD, fg=FG,
+                                     insertbackground=FG, relief="flat", bd=4, wrap="none")
+    txt.pack(fill="x")
+    txt.insert("1.0", params.get("text", ""))
+    enter = tk.BooleanVar(value=params.get("append_enter", True))
+    d._check("전송 후 Enter(\\n) 추가", enter)
+
+    d._label("재전송 간격 (초) - 응답이 오든 안 오든 이 주기마다 다시 보냅니다")
+    interval = tk.StringVar(value=str(params.get("interval", 2.0)))
+    d._entry(interval, width=10)
+
+    sep = tk.Frame(d.body, bg=MUTE, height=1); sep.pack(fill="x", pady=(14, 6))
+    d._label("확인할 문자열 (regex 체크 시 정규식, '|' 로 복수 매칭 가능)")
+    pattern = tk.StringVar(value=params.get("pattern", ""))
+    d._entry(pattern, width=40)
+    regex = tk.BooleanVar(value=params.get("regex", False))
+    d._check("정규식으로 취급", regex)
+    timeout = tk.StringVar(value=str(params.get("timeout", 30)))
+    d._label("전체 타임아웃 (초) - 이 시간 안에 못 찾으면 실패")
+    d._entry(timeout, width=10)
+    on_timeout = tk.StringVar(value=params.get("on_timeout", "stop"))
+    d._label("타임아웃 시 동작")
+    d._radio_row(on_timeout, [("stop", "테스트 중단"), ("continue", "다음 블록 진행")])
+
+    def collect():
+        return {"text": txt.get("1.0", "end").rstrip("\n"), "append_enter": bool(enter.get()),
+                 "interval": float(interval.get()), "pattern": pattern.get(),
+                 "regex": bool(regex.get()), "timeout": float(timeout.get()),
+                 "on_timeout": on_timeout.get()}
+    d.collect = collect
+    return d.show()
+
+
+def edit_ctrl(parent, params: dict):
+    d = _Dialog(parent, "Ctrl 블록", width=480, height=260)
+    d._label("보낼 제어 키 - Input과 달리 Enter 없이 이 키 하나만 raw 로 전송합니다\n"
+             "(ping 처럼 스스로 안 끝나는 명령을 강제로 멈출 때 사용)")
+    key = tk.StringVar(value=params.get("key", "C"))
+    d._radio_row(key, [("C", "Ctrl+C (중단)"), ("D", "Ctrl+D (EOF)"),
+                        ("Z", "Ctrl+Z (일시정지)")])
+    d._label("전송 후 대기 시간 (초)")
+    delay = tk.StringVar(value=str(params.get("delay_after", 0.3)))
+    d._entry(delay, width=10)
+
+    def collect():
+        return {"key": key.get() or "C", "delay_after": float(delay.get())}
     d.collect = collect
     return d.show()
 
@@ -211,7 +278,7 @@ def edit_upload_script(parent, params: dict):
     head.pack(fill="x", pady=(10, 2))
     tk.Label(head, text="스크립트 내용", font=("Consolas", 10), bg=BG, fg=MUTE).pack(side="left")
 
-    txt = scrolledtext.ScrolledText(d.body, height=10, font=("Consolas", 11), bg=FIELD, fg=FG,
+    txt = scrolledtext.ScrolledText(d.body, height=10, width=44, font=("Consolas", 11), bg=FIELD, fg=FG,
                                      insertbackground=FG, relief="flat", bd=4, wrap="none")
     txt.pack(fill="both", expand=True)
     txt.insert("1.0", params.get("script", ""))
@@ -244,6 +311,27 @@ def edit_upload_script(parent, params: dict):
         if loaded:
             result["source_path"] = loaded
         return result
+    d.collect = collect
+    return d.show()
+
+
+def edit_if(parent, params: dict):
+    d = _Dialog(parent, "If 블록", height=350)
+    d._label("라벨")
+    label = tk.StringVar(value=params.get("label", "If"))
+    d._entry(label, width=20)
+    d._label("검사할 문자열 (regex 체크 시 정규식, '|' 로 복수 매칭 가능)")
+    pattern = tk.StringVar(value=params.get("pattern", ""))
+    d._entry(pattern, width=40)
+    regex = tk.BooleanVar(value=params.get("regex", False))
+    d._check("정규식으로 취급", regex)
+    timeout = tk.StringVar(value=str(params.get("timeout", 10)))
+    d._label("타임아웃 (초) - 이 안에 문자열이 나타나면 참, 아니면 거짓 경로로 진행")
+    d._entry(timeout, width=10)
+
+    def collect():
+        return {"label": label.get() or "If", "pattern": pattern.get(),
+                 "regex": bool(regex.get()), "timeout": float(timeout.get())}
     d.collect = collect
     return d.show()
 
@@ -337,10 +425,13 @@ EDITORS = {
     "POWER": edit_power,
     "WAIT_STRING": edit_wait_string,
     "SEND": edit_send,
+    "KNOCK": edit_knock,
+    "CTRL": edit_ctrl,
     "SAVE_RESULT": edit_save_result,
     "DELAY": edit_delay,
     "UPLOAD_SCRIPT": edit_upload_script,
     "LOOP_START": edit_loop,
+    "IF_START": edit_if,
 }
 
 

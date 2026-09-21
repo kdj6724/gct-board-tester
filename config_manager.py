@@ -4,7 +4,14 @@
 - settings.json : COM 포트, Baud, Tapo IP 등 연결 설정 + 마지막으로 사용한 프로파일 이름
 - profiles/*.json : 블록 시퀀스(프로파일) 각각. 보드/프로젝트별로 여러 개 저장해두고
   드롭다운으로 전환한다.
-- .env : TAPO_EMAIL / TAPO_PASSWORD / TAPO_IP (기존과 동일)
+- saved_blocks/ (기본 저장 폴더) : 블록 에디터에서 "파일로 저장"/"파일 불러오기" 로
+  주고받는 .json 파일들. profiles/ 는 앱 내부 드롭다운 전용이고, 이쪽은 탐색기에서
+  직접 보이는/옮길 수 있는 파일이라 다른 PC 나 사람과 공유할 때 쓴다. 저장 위치는
+  설정에서 바꿀 수 있다.
+- remote_power.env : TAPO_EMAIL / TAPO_PASSWORD / TAPO_IP. 연결 정보는 여기 한
+  곳에서만 읽는다(설정 화면에 Tapo IP 입력칸을 따로 두지 않음 - settings.json 에
+  저장된 옛날 IP 값과 .env 값이 서로 어긋나던 문제가 있어서 통일함). 예전 이름
+  `.env` 로 만들어둔 파일이 아직 있으면 그것도 자동으로 읽는다(마이그레이션 편의).
 - 기존 config.json(구버전, commands/para1/script 방식)이 있으면 최초 실행 시
   자동으로 블록 프로파일로 변환해준다.
 """
@@ -17,29 +24,55 @@ import step_types as st
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 SETTINGS_PATH = os.path.join(BASE_DIR, "settings.json")
 PROFILES_DIR = os.path.join(BASE_DIR, "profiles")
+DEFAULT_SAVE_DIR = os.path.join(BASE_DIR, "saved_blocks")
 LEGACY_CONFIG_PATH = os.path.join(BASE_DIR, "config.json")
-ENV_PATH = os.path.join(BASE_DIR, ".env")
+ENV_PATH = os.path.join(BASE_DIR, "remote_power.env")
+_LEGACY_ENV_PATH = os.path.join(BASE_DIR, ".env")
 
 os.makedirs(PROFILES_DIR, exist_ok=True)
+os.makedirs(DEFAULT_SAVE_DIR, exist_ok=True)
 
 DEFAULT_SETTINGS = {
     "com_port": "COM4",
     "baud_rate": "921600",
-    "tapo_ip": "192.168.10.45",
     "last_profile": "default",
+    "save_dir": DEFAULT_SAVE_DIR,
+    "window_geometry": "1000x760",
 }
 
 
+def get_save_dir(settings: dict | None = None) -> str:
+    """블록 파일 저장/불러오기 기본 폴더. 없거나 비어 있으면 만들어서 반환."""
+    d = (settings or load_settings()).get("save_dir") or DEFAULT_SAVE_DIR
+    try:
+        os.makedirs(d, exist_ok=True)
+    except OSError:
+        d = DEFAULT_SAVE_DIR
+        os.makedirs(d, exist_ok=True)
+    return d
+
+
 def load_env(path: str = ENV_PATH) -> dict:
+    """remote_power.env 를 읽는다. 그 파일이 아직 없고 예전 이름(.env)의 파일이
+    있으면 그걸 대신 읽는다 - 이름을 바꾸기 전에 이미 만들어둔 설정을 그대로 쓰기 위함."""
+    load_path = path
+    if not os.path.exists(load_path) and path == ENV_PATH and os.path.exists(_LEGACY_ENV_PATH):
+        load_path = _LEGACY_ENV_PATH
     env = {}
-    if os.path.exists(path):
-        with open(path, encoding="utf-8") as f:
+    if os.path.exists(load_path):
+        with open(load_path, encoding="utf-8") as f:
             for line in f:
                 line = line.strip()
                 if line and not line.startswith("#") and "=" in line:
                     k, v = line.split("=", 1)
                     env[k.strip()] = v.strip()
     return env
+
+
+def get_tapo_ip() -> str:
+    """Tapo IP 는 오직 remote_power.env(또는 예전 .env) 에서만 읽는다 -
+    settings.json 에 저장해두면 .env 값과 어긋나 헷갈리는 문제가 있었어서 없앰."""
+    return load_env().get("TAPO_IP", "")
 
 
 def load_settings() -> dict:
@@ -50,10 +83,6 @@ def load_settings() -> dict:
                 data.update(json.load(f))
         except Exception:  # noqa: BLE001
             pass
-    else:
-        env = load_env()
-        if "TAPO_IP" in env:
-            data["tapo_ip"] = env["TAPO_IP"]
     return data
 
 
@@ -100,6 +129,24 @@ def rename_profile(old: str, new: str):
     blocks = load_profile(old)
     save_profile(new, blocks)
     delete_profile(old)
+
+
+def save_blocks_to_file(path: str, blocks: list[dict], name: str | None = None):
+    """블록 에디터의 "파일로 저장" - 프로파일과 같은 {"name","blocks"} 형식이라
+    profiles/ 로 그대로 복사해 넣어도 호환된다."""
+    payload = {"name": name or os.path.splitext(os.path.basename(path))[0], "blocks": blocks}
+    with open(path, "w", encoding="utf-8") as f:
+        json.dump(payload, f, ensure_ascii=False, indent=2)
+
+
+def load_blocks_from_file(path: str) -> list[dict]:
+    """블록 에디터의 "파일 불러오기". {"blocks":[...]} 형식과, blocks 리스트만 담긴
+    파일 둘 다 읽을 수 있다."""
+    with open(path, encoding="utf-8") as f:
+        data = json.load(f)
+    if isinstance(data, list):
+        return data
+    return data.get("blocks", [])
 
 
 def default_blocks() -> list[dict]:

@@ -1,0 +1,1617 @@
+[17:43:41.870] === TEST START === profile: default
+[17:43:52.302] $ (knock every 2s) 
+[17:43:52.770] Welcome to
+[17:43:52.776]   G C T   L T E   M O D E M
+[17:43:52.780] modprobe: module board not found in modules.dep
+[17:43:52.784] backtrace info:
+[17:43:52.788]   LIBC=uClibc
+[17:43:52.792]   __SSP_ALL__
+[17:43:52.796]   guard=0xefbeaddeefbeadde
+[17:43:52.800]   inited=1
+[17:43:52.805]   stack_corr_nr=0
+[17:43:52.810]   load_nr=0
+[17:43:52.815]   unload_nr=0
+[17:43:52.819]   malloc_flags=0x0
+[17:43:52.877] [NV] NV flash Device : NAND FLASH 
+[17:43:52.884] [NV] nv_log mask: 0x0->0x3
+[17:43:52.892] [NV] NVM_VER=3.0
+[17:43:52.896] [NV] +nv_reload ucfg
+[17:43:52.900] [NV] NR1NV(9) map(0x0 0x200000)
+[17:43:52.905] [NV] [SEL-NV] NR1NV(9) hdr[0]: max_nv_size(0x96e24)
+[17:43:52.995] [NV]   hchk=0x7af20757(0x7af20757-ok) magic=0xcafebabe(ok) hsize=0x40 ts=0xc
+[17:43:53.001] [NV]   dchk=0xe75e31fb(0xe75e31fb-ok) dsize=0x96de4(ok)
+[17:43:53.006] [NV] [SEL-NV] NR1NV(9) hdr[1]: max_nv_size(0x96e24)
+[17:43:53.010] [NV]   hchk=0x7b260758(0x7b260758-ok) magic=0xcafebabe(ok) hsize=0x40 ts=0xd
+[17:43:53.014] [NV]   dchk=0xe75e31fb(0xe75e31fb-ok) dsize=0x96de4(ok)
+[17:43:53.030] [NV] NR1NV(9): active=1 map(0x0-0x200000) ts=0xd sz=0x96e24
+[17:43:53.035] [NV] NR2NV(10) map(0x0 0x100000)
+[17:43:53.040] [NV] [SEL-NV] NR2NV(10) hdr[0]: max_nv_size(0x19140)
+[17:43:53.044] [NV]   hchk=0x2f8905b5(0x2f8905b5-ok) magic=0xcafebabe(ok) hsize=0x40 ts=0x4
+[17:43:53.067] [NV]   dchk=0xeb592437(0xeb592437-ok) dsize=0x19100(ok)
+[17:43:53.072] [NV] [SEL-NV] NR2NV(10) hdr[1]: max_nv_size(0x19140)
+[17:43:53.076] [NV]   hchk=0x2bf30594(0x2bf30594-ok) magic=0xcafebabe(ok) hsize=0x40 ts=0x5
+[17:43:53.080] [NV]   dchk=0x1f4024fa(0x1f4024fa-ok) dsize=0x19100(ok)
+[17:43:53.103] [NV] NR2NV(10): active=1 map(0x0-0x100000) ts=0x5 sz=0x19140
+[17:43:53.108] [NV] NR2NV Init active block [1]=0x100000
+[17:43:53.111] [NV] CMNNV(13) map(0x0 0x100000)
+[17:43:53.115] [NV] [SEL-NV] CMNNV(13) hdr[0]: max_nv_size(0x40000)
+[17:43:53.118] [NV]   hchk=0x8d0007c4(0x8d0007c4-ok) magic=0xcafebabe(ok) hsize=0x40 ts=0x32
+[17:43:53.144] [NV]   dchk=0xf4c70c89(0xf4c70c89-ok) dsize=0x3ffc0(ok)
+[17:43:53.149] [NV] [SEL-NV] CMNNV(13) hdr[1]: max_nv_size(0x40000)
+[17:43:53.154] [NV]   hchk=0x43340629(0x43340629-ok) magic=0xcafebabe(ok) hsize=0x40 ts=0x31
+[17:43:53.158] [NV]   dchk=0x6880c1c(0x6880c1c-ok) dsize=0x3ffc0(ok)
+[17:43:53.326] [NV] CMNNV(13): active=0 map(0x0-0x100000) ts=0x32 sz=0x40000
+[17:43:53.333] [NV] CMNNV Init active block [0]=0x0
+[17:43:53.338] [NV] ucfg nr1nv data read from CMNNV[1] timestamp=0xd
+[17:43:53.342] [NV] NR1NV Init active block [1]=0x200000
+[17:43:53.346] [NV] CMNNV2(14) map(0x0 0x100000)
+[17:43:53.350] [NV] [SEL-NV] CMNNV2(14) hdr[0]: max_nv_size(0xa7c0)
+[17:43:53.357] [NV] [SEL-NV] CMNNV2(14) hdr[1]: max_nv_size(0xa7c0)
+[17:43:53.362] [NV] [SEL-NV-SET] CMNNV2(14) hdr[0]: max_nv_size(0xa7c0)
+[17:43:53.364] [NV]   hchk=0x0(0x0-ok) magic=0x0(ng) hsize=0x0 ts=0x0
+[17:43:53.369] [NV]   dchk=0x0(0x0-ok) dsize=0x0(ok)
+[17:43:53.373] [NV] CMNNV2(14) : all block invalid(map 0x0-0x100000)
+[17:43:53.665] [NV] -nv_reload ucfg
+[17:43:53.671] [UCFG] ucfg(1.1) load xml:
+[17:43:53.675] [UCFG]   var nr: conf=1037(918) fact=1037(918) perm=16(12)
+[17:43:53.678] [UCFG]   def nr: conf=0 conf=0 conf=0
+[17:43:53.681] Use normal log configuration
+[17:43:53.685] +modprobe modem modem_bootp="product_id=0x0000, operator_id=0x0000"
+[17:43:53.688] modem: loading out-of-tree module taints kernel.
+[17:43:53.691] modem driver ver 1.0
+[17:43:53.694]   base: 84100000
+[17:43:53.698]   size: 0ff00000
+[17:43:53.701]   param: 840fe000
+[17:43:53.729] boot param: product_id=0x0000, operator_id=0x0000, boot_mode=0, gipc_phy_base=0x81c00018, mem_base=0x80000000, mem_size=0x20000000, compat=0x0, ipv6=1
+[17:43:53.735] ---------------------
+[17:43:53.739] hdr chksum  : 0x8d0007c4
+[17:43:53.744] magic       : 0xcafebabe
+[17:43:53.749] timstamp    : 0x00000032
+[17:43:53.753] data chksum : 0xf4c70c89
+[17:43:53.757] data size   : 0x0003ffc0
+[17:43:53.762] ---------------------
+[17:43:53.767] ---------------------
+[17:43:53.771] hdr chksum  : 0x43340629
+[17:43:53.775] magic       : 0xcafebabe
+[17:43:53.779] timstamp    : 0x00000031
+[17:43:53.782] data chksum : 0x06880c1c
+[17:43:53.786] data size   : 0x0003ffc0
+[17:43:53.789] ---------------------
+[17:43:53.793] using block : 0, 0x0 
+[17:43:53.797] map idx=0
+[17:43:53.800] hdr idx: fs=0 zp=1 zpsize=9157832
+[17:43:53.804] ts: fs=10 zp=8
+[17:43:53.809] no such fw files!
+[17:43:53.812]   /lib/firmware/tk.gz
+[17:43:54.823]   /lib/firmware/tk.xz
+[17:43:54.827] read from nand mtd=zp2(9159880)
+[17:43:54.831] modem map info:
+[17:43:54.835]   [0] pa(0000000084100000)
+[17:43:54.839] ->va(ffffffc090000000)
+[17:43:54.842] c00: decompress gzip(1f 8b) at ffffffc090000000... (9159880bytes)
+[17:43:56.391] c00: decompress done 138404920bytes 1614ms ret=0
+[17:43:56.396] modem start
+[17:43:56.400] cpu_smc_powerdomain_up(pt=1, pd=0)
+[17:43:56.449] c00: cpu_smc_handler: fid=c1000001 x1=1 x2=0 x3=0 x4=0
+[17:43:56.455] enable cluster1-pll
+[17:43:56.458] start_modem_cpu: done start=1
+[17:43:56.461] -modprobe modem
+[17:43:56.464] Thu Jan  1 00:00:05 UTC 1970
+[17:43:56.467] cp: can't stat '/etc/sysconfig/lte/param/*': No such file or directory
+[17:43:56.470] BL33 pc=0x84dae704 spsr=0x600002c5
+[17:43:56.474] c10: psci_smc_handler: fid=84000000 x1=0 x2=0 x3=0 x4=0
+[17:43:56.478] TK: gipc-protocol: cpu1:0 addr(v1)=0000000081c00018 magic=4054 ver(master=1.10 slave=1.11) proci=0 assertl=3
+[17:43:56.482] TK: hw lock_reg:
+[17:43:56.485] TK:   active=110004c0
+[17:43:56.489] TK:   free  =110004c4
+[17:43:56.493] TK: ipc config=00000004
+[17:43:56.496] TK:   router-device
+[17:43:56.500] TK: ipc init ch=0
+[17:43:56.503] TK:   peer-genirq=1a111020(152)
+[17:43:56.507] TK:   s-ch_enabled=0x10010001
+[17:43:56.510] TK: ipc init ch=16
+[17:43:56.513] TK:   peer-genirq=1a111020(152)
+[17:43:56.516] TK:   s-ch_enabled=0x10010001
+[17:43:56.519] TK: ipc init ch=28
+[17:43:56.523] TK:   peer-genirq=1a111020(152)
+[17:43:56.526] TK:   s-ch_enabled=0x10010001
+[17:43:56.530] ipc modem boot done
+[17:43:56.533] GDM Modem gdm7259x_board
+[17:43:56.536] Boot Param] error: token=9, ret=-54
+[17:43:56.539] ============================================================================
+[17:43:56.543]  [0] ZEPHYR OS v4.3.0 (v4.3.0-3049-g03924c3679: 192MB)
+[17:43:56.546] ----------------------------------------------------------------------------
+[17:43:56.550]  - gct@CS-buildserver
+[17:43:56.554]  - 2026-08-31T22:51:44
+[17:43:56.557]  - gdm7259x_nsa_192mb
+[17:43:56.560] ============================================================================
+[17:43:56.564] [MEM] WT DRAM zero initialized 0(0KB)bytes from 000000008d700000 to 000000008d700000
+[17:43:56.567] [MEM] NCH DRAM zero initialized 35348240(34519KB)bytes from 000000008d700000 to 000000008f8b5f10
+[17:43:56.570] [CHIP] GDM7259X(Rev.1C)
+[17:43:56.573] [CLOCK] arm(1300.000MHz) 1x(100.000MHz)
+[17:43:56.575] [MEM]  total : 0x84000000 - 0x90000000 (  192 MB)
+[17:43:56.578] [MEM]  .init : 0x84100000 - 0x841068a8 (   27 kB)
+[17:43:56.581] [MEM]  .text : 0x84100000 - 0x85587000 (21020 kB)
+[17:43:56.584] [MEM]  .data : 0x85586600 - 0x8c4fe438 (114144 kB)
+[17:43:56.587] [MEM]   .bss : 0x8b20b000 - 0x8c4c7a08 (19187 kB)
+[17:43:56.590] I2C3 initialized
+[17:43:56.593] Modem IPC mode:
+[17:43:56.596]   master_proc_idle=0
+[17:43:56.600]   assert_level=3
+[17:43:56.604]   sdu_prio=0
+[17:43:56.607] ########################################
+[17:43:56.610] ####       Board Configuration      ####
+[17:43:56.613] ########################################
+[17:43:56.617] Operator: [0x0000]
+[17:43:56.620] Product : [0x0000]
+[17:43:56.624] LTE>====================================
+[17:43:56.627] IPv6 mode:[0]
+[17:43:56.630] ## UE CONFIG
+[17:43:56.634]  - Combined attach : [0]
+[17:43:56.637]  - UE CAPABILITY
+[17:43:56.640] 	> UE Category  : [0 (0/0)]
+[17:43:56.643] 	> AS Rel Num   : [0]
+[17:43:56.646] 	> FGI          : FDD [00000000 00000000 00000000]
+[17:43:56.649] 	>              : TDD [00000000 00000000 00000000]
+[17:43:56.652] 	> ROHC         : [1]
+[17:43:56.655] 	> eMBMS        : [0]
+[17:43:56.658] 	> TM           : [00/00/00]
+[17:43:56.662] NR>=====================================
+[17:43:56.665] [console] gdm_uart0 enabled
+[17:43:56.668] [console] crash enabled
+[17:43:56.673] [console] gdm_ipc enabled
+[17:43:56.676] ----------------------------------------------------------------------------
+[17:43:56.679]  NR - FW ver: 0.1.0.0
+[17:43:56.683] ----------------------------------------------------------------------------
+[17:43:56.686]  Pkg: 1.11.0
+[17:43:56.690] ----------------------------------------------------------------------------
+[17:43:56.693] ----------------------------------------------------------------------------
+[17:43:56.696]  LTE - FW ver: 0.3.5.0
+[17:43:56.698] ----------------------------------------------------------------------------
+[17:43:56.702] nv_checksum_info: 0
+[17:43:56.705] nr driver ver 1.0
+[17:43:56.708]   usl
+[17:43:56.712] param_mtu=1500
+[17:43:56.715] ipc init ch=1
+[17:43:56.719] ipc ch[1]:SDU, irb: va=ffffffc082551018-ffffffc082599018 pa=83400018-83448018
+[17:43:56.722] ipc ch[1]:SDU, irb_work: va=ffffffc0825d1018-ffffffc082601038 pa=83480018-834b0038
+[17:43:56.725]   irb nr: tx=4096(2080bytes) rx=8192(2080bytes)
+[17:43:56.729]    irb tx: va=ffffffc082551018-ffffffc082569018 pa=83400018-83418018
+[17:43:56.732]    irb rx: va=ffffffc082569020-ffffffc082599020 pa=83418020-83448020
+[17:43:56.736] ipc init ch=1
+[17:43:56.740]   peer-genirq=1a111020(152 ) m
+[17:43:56.743] -ch_enab l esd-=c0hxena100d=0
+[17:43:56.747] NET100:
+[17:43:56.750]  irb->buffer=82d6d0f8
+[17:43:56.916]   IPC_BUF_RSVD_SIZE=184(0xb8)
+[17:43:56.921]   NET_IP_ALIGN=0
+[17:43:56.926] start_net.sh
+[17:43:56.929] VLANEN=0
+[17:43:56.933] act=1
+[17:43:56.936] Run start_br.sh
+[17:43:56.940] local null ip=0.0.0.0 mask=0.0.0.0 00:00:00:00:00:00 en=0
+[17:43:56.943] GDM_LOCAL_DEVIF=br0
+[17:43:56.946] NIF: up(lo)
+[17:43:56.959] [0] br0 addr=192.168.0.1 mask=255.255.255.0 local=192.168.0.1 bcast=192.168.0.255
+[17:43:56.962] netif set local br0 ip=192.168.0.1 mask=255.255.255.0 00:00:00:00:00:00 en=0
+[17:43:56.965] NIF: up(br0)
+[17:43:56.969] brctl: iface eth0: No such device
+[17:43:56.972] ifconfig: SIOCSIFADDR: No such device
+[17:43:56.976] brctl: iface usb0: No such device
+[17:43:56.979] ifconfig: SIOCSIFADDR: No such device
+[17:43:57.065] Setting dhcp configuration..
+[17:43:57.070] Internet Systems Consortium DHCP Server 4.1-ESV-R16-P2
+[17:43:57.074] Copyright 2004-2022 Internet Systems Consortium.
+[17:43:57.078] All rights reserved.
+[17:43:57.082] For info, please visit https://www.isc.org/software/dhcp/
+[17:43:57.086] Wrote 0 leases to leases file.
+[17:43:57.108] Listening on LPF/br0/f2:51:74:7c:ea:fe/192.168.0.0/24
+[17:43:57.112] Sending on   LPF/br0/f2:51:74:7c:ea:fe/192.168.0.0/24
+[17:43:57.116] Sending on   Socket/fallback/fallback-net
+[17:43:57.119] DTS_WIFI_STATUS=okay
+[17:43:57.122] DTS_WIFI_VENDOR=synaptics
+[17:43:57.126] DTS_WIFI_DEVICE=syn4384
+[17:43:57.130] Activating Synaptics WIFI
+[17:43:57.490] /etc/sysconfig/script/start_synaptics.sh: line 4: wifi: command not found
+[17:43:57.494] 0xffffffa016400810: 00000000->0000001f
+[17:43:57.497] bcmdhd: unknown parameter 'conf_path' ignored
+[17:43:57.504] [dhd] _dhd_module_init: in Dongle Host Driver, version 103.20.62.47(20260702-1)(20260708-1)(6792bdc)
+[17:43:57.508] /home/djkim/work/sdk/7275x/wifi/syn4384_lin6_crash/component/standalone/wifi/synaptics_4384/bcmdhd.103.20.x compiled on Sep  2 2026 at 11:21:38
+[17:43:57.512] [dhd] KERNEL_VERSION = 6.12.49 (64bits)
+[17:43:57.516] [dhd] STATIC-MSG) dhd_init_wlan_mem : prealloc ok for index 0: 2071552(2023K)
+[17:43:57.520] [dhd] ======== Get GPIO from DTS(android,bcmdhd_wlan) ========
+[17:43:57.524] [dhd] dhd_wlan_init_gpio: gpio_wl_reg_on=153
+[17:43:57.528] [dhd] dhd_wifi_platform_load: Enter
+[17:43:57.532] [dhd] Power-up adapter 'DHD generic adapter'
+[17:43:57.536] [dhd] wifi_platform_set_power = 1, delay: 200 msec
+[17:43:57.700] [dhd] ======== PULL WL_REG_ON(153) HIGH! ========
+[17:43:57.708] [dhd] wifi_platform_set_power = 1, sleep done: 200 msec
+[17:43:57.712] [dhd] wifi_platform_bus_enumerate device present 1
+[17:43:57.715] [dhd] ======== Card detection to detect PCIE card! ========
+[17:43:57.719] [dhd] Synaptics or Broadcom PCI device enumerated!
+[17:43:57.722] [dhd] dhd_wifi_platform_load_pcie: dhd_bus_register failed err=-1
+[17:43:57.726] [dhd] unregister wifi platform drivers
+[17:43:57.729] [dhd] wifi_platform_set_power = 0, delay: 10 msec
+[17:43:57.733] [dhd] ======== PULL WL_REG_ON(153) LOW! ========
+[17:43:57.737] [dhd] wifi_platform_set_power = 0, sleep done: 10 msec
+[17:43:57.740] [dhd] wifi_platform_bus_enumerate device present 0
+[17:43:57.743] [dhd] ======== Card detection to remove PCIE card! ========
+[17:43:57.747] [dhd] dhd_wlan_free_gpio: gpio_free(153) for WL_REG_ON
+[17:43:57.750] [dhd] _dhd_module_init: Failed to load the driver, try cnt 1
+[17:43:57.754] [dhd] ======== Get GPIO from DTS(android,bcmdhd_wlan) ========
+[17:43:57.758] [dhd] dhd_wlan_init_gpio: gpio_wl_reg_on=153
+[17:43:57.761] [dhd] dhd_wifi_platform_load: Enter
+[17:43:57.765] [dhd] Power-up adapter 'DHD generic adapter'
+[17:43:57.769] [dhd] wifi_platform_set_power = 1, delay: 200 msec
+[17:43:57.923] [dhd] ======== PULL WL_REG_ON(153) HIGH! ========
+[17:43:57.930] [dhd] wifi_platform_set_power = 1, sleep done: 200 msec
+[17:43:57.935] [dhd] wifi_platform_bus_enumerate device present 1
+[17:43:57.943] [dhd] ======== Card detection to detect PCIE card! ========
+[17:43:57.950] [dhd] Synaptics or Broadcom PCI device enumerated!
+[17:43:57.954] [dhd] dhd_wifi_platform_load_pcie: dhd_bus_register failed err=-1
+[17:43:57.957] [dhd] unregister wifi platform drivers
+[17:43:57.961] [dhd] wifi_platform_set_power = 0, delay: 10 msec
+[17:43:57.964] [dhd] ======== PULL WL_REG_ON(153) LOW! ========
+[17:43:57.968] [dhd] wifi_platform_set_power = 0, sleep done: 10 msec
+[17:43:57.970] [dhd] wifi_platform_bus_enumerate device present 0
+[17:43:57.974] [dhd] ======== Card detection to remove PCIE card! ========
+[17:43:57.978] [dhd] dhd_wlan_free_gpio: gpio_free(153) for WL_REG_ON
+[17:43:57.981] [dhd] _dhd_module_init: Failed to load the driver, try cnt 0
+[17:43:57.984] [dhd] _dhd_module_init: Failed to load driver max retry reached**
+[17:43:57.988] [dhd] STATIC-MSG) dhd_static_buf_exit : Enter
+[17:43:57.991] [dhd] _dhd_module_init: Exit err=-1
+[17:43:57.994] bcmdhd: unknown parameter 'conf_path' ignored
+[17:43:57.998] [dhd] _dhd_module_init: in Dongle Host Driver, version 103.20.62.47(20260702-1)(20260708-1)(6792bdc)
+[17:43:58.002] /home/djkim/work/sdk/7275x/wifi/syn4384_lin6_crash/component/standalone/wifi/synaptics_4384/bcmdhd.103.20.x compiled on Sep  2 2026 at 11:21:38
+[17:43:58.010] [dhd] KERNEL_VERSION = 6.12.49 (64bits)
+[17:43:58.016] [dhd] STATIC-MSG) dhd_init_wlan_mem : prealloc ok for index 0: 2071552(2023K)
+[17:43:58.024] [dhd] ======== Get GPIO from DTS(android,bcmdhd_wlan) ========
+[17:43:58.032] [dhd] dhd_wlan_init_gpio: gpio_wl_reg_on=153
+[17:43:58.040] [dhd] dhd_wifi_platform_load: Enter
+[17:43:58.046] [dhd] Power-up adapter 'DHD generic adapter'
+[17:43:58.179] [dhd] wifi_platform_set_power = 1, delay: 200 msec
+[17:43:58.186] [dhd] ======== PULL WL_REG_ON(153) HIGH! ========
+[17:43:58.193] [dhd] wifi_platform_set_power = 1, sleep done: 200 msec
+[17:43:58.200] [dhd] wifi_platform_bus_enumerate device present 1
+[17:43:58.204] [dhd] ======== Card detection to detect PCIE card! ========
+[17:43:58.209] [dhd] Synaptics or Broadcom PCI device enumerated!
+[17:43:58.212] [dhd] dhd_wifi_platform_load_pcie: dhd_bus_register failed err=-1
+[17:43:58.219] [dhd] unregister wifi platform drivers
+[17:43:58.226] [dhd] wifi_platform_set_power = 0, delay: 10 msec
+[17:43:58.232] [dhd] ======== PULL WL_REG_ON(153) LOW! ========
+[17:43:58.239] [dhd] wifi_platform_set_power = 0, sleep done: 10 msec
+[17:43:58.244] [dhd] wifi_platform_bus_enumerate device present 0
+[17:43:58.251] [dhd] ======== Card detection to remove PCIE card! ========
+[17:43:58.255] [dhd] dhd_wlan_free_gpio: gpio_free(153) for WL_REG_ON
+[17:43:58.258] [dhd] _dhd_module_init: Failed to load the driver, try cnt 1
+[17:43:58.263] [dhd] ======== Get GPIO from DTS(android,bcmdhd_wlan) ========
+[17:43:58.267] [dhd] dhd_wlan_init_gpio: gpio_wl_reg_on=153
+[17:43:58.272] [dhd] dhd_wifi_platform_load: Enter
+[17:43:58.277] [dhd] Power-up adapter 'DHD generic adapter'
+[17:43:58.403] [dhd] wifi_platform_set_power = 1, delay: 200 msec
+[17:43:58.448] [dhd] ======== PULL WL_REG_ON(153) HIGH! ========
+[17:43:58.454] [dhd] wifi_platform_set_power = 1, sleep done: 200 msec
+[17:43:58.461] [dhd] wifi_platform_bus_enumerate device present 1
+[17:43:58.466] [dhd] ======== Card detection to detect PCIE card! ========
+[17:43:58.475] [dhd] Synaptics or Broadcom PCI device enumerated!
+[17:43:58.479] [dhd] dhd_wifi_platform_load_pcie: dhd_bus_register failed err=-1
+[17:43:58.483] [dhd] unregister wifi platform drivers
+[17:43:58.487] [dhd] wifi_platform_set_power = 0, delay: 10 msec
+[17:43:58.490] [dhd] ======== PULL WL_REG_ON(153) LOW! ========
+[17:43:58.494] [dhd] wifi_platform_set_power = 0, sleep done: 10 msec
+[17:43:58.498] [dhd] wifi_platform_bus_enumerate device present 0
+[17:43:58.502] [dhd] ======== Card detection to remove PCIE card! ========
+[17:43:58.506] [dhd] dhd_wlan_free_gpio: gpio_free(153) for WL_REG_ON
+[17:43:58.644] [dhd] _dhd_module_init: Failed to load the driver, try cnt 0
+[17:43:58.650] [dhd] _dhd_module_init: Failed to load driver max retry reached**
+[17:43:58.654] [dhd] STATIC-MSG) dhd_static_buf_exit : Enter
+[17:43:58.657] [dhd] _dhd_module_init: Exit err=-1
+[17:43:58.660] insmod: can't insert '/lib/modules/6.12.49/updates/bcmdhd.ko': Operation not permitted
+[17:43:58.663] Could not read interface wlan0 flags: No such device
+[17:43:58.666] nl80211: Driver does not support authentication/association or connect commands
+[17:43:58.668] nl80211: deinit ifname=wlan0 disabled_11b_rates=0
+[17:43:58.672] Could not read interface wlan0 flags: No such device
+[17:43:58.751] nl80211 driver initialization failed.
+[17:43:58.755] wlan0: interface state UNINITIALIZED->DISABLED
+[17:43:58.758] wlan0: AP-DISABLED 
+[17:43:58.761] wlan0: CTRL-EVENT-TERMINATING 
+[17:43:58.764] hostapd_free_hapd_data: Interface wlan0 wasn't started
+[17:43:58.767] ifconfig: SIOCSIFADDR: No such device
+[17:43:58.770] Loading simple NAT configuration..
+[17:43:59.012] INTF=br0, WANINTF=nr0pdu3
+[17:43:59.016] register ip_conntrack_cb
+[17:43:59.020] <message>[NV] CRIT(cotra:1380): file=nv_7275x.c(304) cmn2_nv_read
+[17:43:59.023] [NV] [cotra] invalid CMN2_PORT(id=1) magic
+[17:43:59.027] [NV] +nv_write [cotra] CMN2_PORT(36) data=0x416010 part=36 size=0xa09
+[17:43:59.083] [NV] cotra CMNNV2 Write Skip (3:CMN2_PORT, 0x0, 2569)
+[17:43:59.088] [NV] -nv_write [cotra] CMN2_PORT(36) data=0x416010 part=36 size=0xa09
+[17:43:59.093] Fail to Check DMZ Setting. Please, restart Command</message>
+[17:43:59.155] 1970-01-01 00:00:08: (../../src/configfile.c.387) Warning: please add "mod_authn_file" to server.modules list in lighttpd.conf.  A future release of lighttpd 1.4.x will not automatically load mod_authn_file and lighttpd will fail to start up since your lighttpd.conf uses auth.backend = "htpasswd".
+[17:43:59.163] Run usb_configfs.sh
+[17:43:59.186] usbeth ENABLE=1, mode=0, serial cfg: gs0=0 gs1=0 dm0=0 dm1=0
+[17:43:59.193] configfs-gadget.g1 gadget.0: HOST MAC 00:0a:3b:ff:ff:02
+[17:43:59.199] configfs-gadget.g1 gadget.0: MAC 00:0a:3b:ff:ff:01
+[17:43:59.208] set hostif=usb0 cnt=0
+[17:43:59.216] net_mode=0
+[17:43:59.223] udc: gadget start
+[17:43:59.228] c00: gdm_irq_set_type: cpu=0 hwirq=208 type=4
+[17:43:59.349] c00: set_affinity: no online irq=50(DWC3) cpu=2
+[17:43:59.357] USB gadget configured: ETH=rndis.usb0, ACM count=0, UDC=13500000.dwc3
+[17:43:59.363] IPV6Q LOG(00000004):
+[17:43:59.369] ipv6q_enabled=0
+[17:43:59.373] NET EMUL LOG(00000000):
+[17:43:59.379]  NULL
+[17:43:59.384] net_emul_mask=00000000
+[17:43:59.389] net.core.rmem_max = 16777216
+[17:43:59.455] net.core.wmem_max = 16777216
+[17:43:59.463] net.ipv4.tcp_rmem = 4096 131072 16777216
+[17:43:59.473] net.ipv4.tcp_wmem = 4096 131072 16777216
+[17:43:59.478] net.ipv4.tcp_moderate_rcvbuf = 1
+[17:43:59.482] mrd: mrd_lplog_start 
+[17:43:59.489] [mrd_lplog] listening on 0.0.0.0:1011 (id=0, idx=0)
+[17:43:59.496] [mrd_lplog] listening on 0.0.0.0:1012 (id=1, idx=1)
+[17:43:59.503] [mrd_lplog] listening on 0.0.0.0:1013 (id=2, idx=2)
+[17:43:59.509] [mrd_lplog] listening on 0.0.0.0:1014 (id=3, idx=3)
+[17:43:59.519] [mrd_lplog] listening on 0.0.0.0:1015 (id=4, idx=4)
+[17:43:59.525] [mrd_lplog] listening on 0.0.0.0:1016 (id=5, idx=5)
+[17:43:59.531] [mrd_lplog] listening on 0.0.0.0:1017 (id=6, idx=6)
+[17:43:59.537] [mrd_lplog] listening on 0.0.0.0:1018 (id=7, idx=7)
+[17:43:59.543] [mrd_lplog] listening on 0.0.0.0:1019 (id=8, idx=8)
+[17:43:59.551] [mrd_lplog] LP_LOG_ID_ULP0 telnet port:1011
+[17:43:59.556] [mrd_lplog] LP_LOG_ID_ULP1 telnet port:1012
+[17:43:59.559] [mrd_lplog] LP_LOG_ID_ULP2 telnet port:1013
+[17:43:59.562] [mrd_lplog] LP_LOG_ID_ULP3 telnet port:1014
+[17:43:59.566] [mrd_lplog] LP_LOG_ID_DLP0 telnet port:1015
+[17:43:59.569] [mrd_lplog] LP_LOG_ID_DLP1 telnet port:1016
+[17:43:59.573] [mrd_lplog] LP_LOG_ID_DLP2 telnet port:1017
+[17:43:59.576] [mrd_lplog] LP_LOG_ID_DLP3 telnet port:1018
+[17:43:59.580] [mrd_lplog] LP_LOG_ID_SLP  telnet port:1019
+[17:43:59.583] mrd: nrd started
+[17:43:59.586] Open shared map and Init mutex in mrd_main!!
+[17:43:59.590] mrd: ***************************************
+[17:43:59.593] mrd: *          NR DAEMON START           *
+[17:43:59.597] mrd: ***************************************
+[17:43:59.601] mrd: operator_id=0
+[17:43:59.604] lowd open nr=1
+[17:43:59.678] gif_open mrd 1/0
+[17:43:59.699] [mrd] bentry delayed copy: b336(4)
+[17:43:59.707] udc: connect: conn=1 discon=0 rtc=000624da
+[17:43:59.716] Disable GPS Module ...
+[17:43:59.722] RNDIS multi_pkt_tx_size: host=16384 nv=0 actual=16384 nr=10
+[17:43:59.738] Not Used
+[17:43:59.744] br0: port 1(usb0) entered blocking state
+[17:43:59.748] br0: port 1(usb0) entered disabled state
+[17:43:59.758] configfs-gadget.g1 gadget.0 usb0: entered allmulticast mode
+[17:43:59.772] configfs-gadget.g1 gadget.0 usb0: entered promiscuous mode
+[17:43:59.784] eth_open
+[17:43:59.790] eth_start
+[17:43:59.794] NIF: up(usb0)
+[17:43:59.812] usb0 set host mac: 00:0a:3b:ff:ff:02
+[17:43:59.829] gif_mmap va=0x7f98f35000 pa=0x96292000 sz=8192
+[17:43:59.835] mrautocm: ucfg_retry : 0
+[17:43:59.840] mrautocm: [LTE UCFG] cfun(0), manual(0)
+[17:43:59.844] mrautocm: NR Search(Core:0, Selection Mode: 0, cellTypeMode: 0, Roam: 0)
+[17:43:59.849] mrautocm: RAT (LTE NV: 0, NR NV: 0)
+[17:43:59.852] mrautocm: [PLMN LTE] Core(0), Mode(0), CellType(0), Roam(0), List Num(0)
+[17:43:59.856] mrautocm: [PLMN LTE] searchMode(0), MCC[0]=0, MCC[1]=0, MCC[2]=0
+[17:43:59.859] mrautocm: [PLMN NR] Core(0), Mode(0), CellType(0), Roam(0), List Num(4)
+[17:43:59.864] mrautocm: [PLMN NR] searchMode(0), MCC[0]=0, MCC[1]=0, MCC[2]=0
+[17:43:59.869] mrautocm: [PLMN NR][MRU] Count(5)
+[17:43:59.876] mrautocm: [PLMN NR][ARFCN](1/1), Band(26), ARFCN(172370)
+[17:43:59.883] mrautocm: [PLMN NR][Band](1/1), Band(26)
+[17:43:59.887] mrautocm: [PLMN NR][ARFCN Range](1/1), Band(26) ARFCN(from: 171800 to: 178800)
+[17:43:59.912] mrautocm: CORE NET (LTE NV: 0, NR NV: 0)
+[17:43:59.919] mrd: TID list initialized.
+[17:43:59.924] mrd: T-ID Feature Activation is Done.
+[17:43:59.927] mrautocm: LTE PDN[1] Enable(1), Connect Order(1) Label(ims), Type(2), APN(IMS) PCO()
+[17:43:59.931] mrautocm: LTE PDN[2] Enable(1), Connect Order(0) Label(admin), Type(2), APN(VZWADMIN) PCO()
+[17:43:59.934] mrautocm: LTE PDN[3] Enable(1), Connect Order(2) Label(internet), Type(2), APN(V5GA01INTERNET) PCO()
+[17:43:59.938] mrautocm: LTE PDN[4] Enable(1), Connect Order(0) Label(app), Type(2), APN(VZWAPP) PCO()
+[17:43:59.941] mrautocm: LTE PDN[5] Enable(1), Connect Order(0) Label(emergency), Type(2), APN() PCO()
+[17:43:59.946] mrautocm: LTE PDN[6] Enable(0), Connect Order(0) Label(enterprise), Type(2), APN(VZWCLASS6) PCO()
+[17:43:59.951] mrautocm: LTE PDN[7] Enable(0), Connect Order(0) Label(b2b), Type(0), APN(VZWCLASS7) PCO()
+[17:43:59.955] mrautocm: LTE PDN[8] Enable(0), Connect Order(0) Label(reserved3), Type(0), APN() PCO()
+[17:43:59.958] mrautocm: NR PDU[1] Enable(0), Connect Order(0) Label(ims), Type(3), DNN(), PCO(), S-NSSAI(len:0 sst:00 sd:000000 mapped_sst:00 mapped_sd:000000)
+[17:43:59.965] mrautocm: NR PDU[2] Enable(0), Connect Order(0) Label(admin), Type(3), DNN(), PCO(), S-NSSAI(len:0 sst:00 sd:000000 mapped_sst:00 mapped_sd:000000)
+[17:43:59.984] mrautocm: NR PDU[3] Enable(1), Connect Order(1) Label(internet), Type(1), DNN(), PCO(), S-NSSAI(len:0 sst:00 sd:000000 mapped_sst:00 mapped_sd:000000)
+[17:44:00.002] mrautocm: NR PDU[4] Enable(0), Connect Order(0) Label(app), Type(3), DNN(), PCO(), S-NSSAI(len:0 sst:00 sd:000000 mapped_sst:00 mapped_sd:000000)
+[17:44:00.026] mrautocm: NR PDU[5] Enable(0), Connect Order(0) Label(emergency), Type(3), DNN(), PCO(), S-NSSAI(len:0 sst:00 sd:000000 mapped_sst:00 mapped_sd:000000)
+[17:44:00.061] mrautocm: NR PDU[6] Enable(0), Connect Order(0) Label(enterprise), Type(3), DNN(), PCO(), S-NSSAI(len:0 sst:00 sd:000000 mapped_sst:00 mapped_sd:000000)
+[17:44:00.098] mrautocm: NR PDU[7] Enable(0), Connect Order(0) Label(b2b), Type(3), DNN(), PCO(), S-NSSAI(len:0 sst:00 sd:000000 mapped_sst:00 mapped_sd:000000)
+[17:44:00.156] mrautocm: NR PDU[8] Enable(0), Connect Order(0) Label(reserved), Type(3), DNN(), PCO(), S-NSSAI(len:0 sst:00 sd:000000 mapped_sst:00 mapped_sd:000000)
+[17:44:00.209] mrautocm: [mrcm_ucfg_get_overheat] Overheat is disable. 
+[17:44:00.267] mrautocm: [mrcm_process_temperature_set] Executing command: kern temp uintv 0
+[17:44:00.324] gif_to_ipc: delayed req 3335(2044)
+[17:44:00.377] gif_to_ipc: delayed req 3335(2044)
+[17:44:00.411] gif_to_ipc: delayed req 3335(2044)
+[17:44:00.457] enabled=1
+[17:44:00.487] interval_sec=1(sec)
+[17:44:00.526] user_interval_ticks=0/0(sec)
+[17:44:00.561] log_enabled=0
+[17:44:00.604] gif_to_ipc: delayed req 3335(2044)
+[17:44:00.640] mrautocm: [IMS] Enable(0)
+[17:44:00.675] mrautocm: [EAP] PDU auth bypass pdu1 (0)
+[17:44:00.705] mrautocm: [EAP] PDU auth bypass pdu2 (0)
+[17:44:00.738] mrautocm: [EAP] PDU auth bypass pdu3 (0)
+[17:44:00.767] mrautocm: [EAP] PDU auth bypass pdu4 (0)
+[17:44:00.797] mrautocm: [EAP] PDU auth bypass pdu5 (0)
+[17:44:00.825] mrautocgif_to_ipc: delayed req 3335(2044)
+[17:44:00.845] m: [EAP] PDU auth bypass pdu6 (0)
+[17:44:00.870] mrautocm: [EAP] PDU auth bypass pdu7 (0)
+[17:44:00.887] mrautocm: [EAP] PDU auth bypass pdu8 (0)
+[17:44:00.916] mrd: get_lted_keep_alive_setting, lted_keep_alive setting (enable=0, expired_time=0, max_retry_val=0)
+[17:44:00.937] mrd: [SERVER] new connection request
+[17:44:00.954] mrd: lted_srv_alloc_client id=0
+[17:44:00.968] mrd: [SERVER] assigns client index 0 proc=mratcm(1455)
+[17:44:00.987] mrd: [SERVER] new connection request
+[17:44:01.004] mrd: lted_srv_alloc_client id=1
+[17:44:01.013] mrbip: lted_client_init_ex success (id: 1, client_identity : 0x00000000, pid (1472-mrbip) 
+[17:44:01.020] mrbip: Wait LTE PS INIT..
+[17:44:01.026] gif_to_ipc: delayed req 3335(2044)
+[17:44:01.033] mrd: [SERVER] assigns client index 1 proc=mrbip(1472)
+[17:44:01.042] mrd: [SERVER] new connection request
+[17:44:01.048] mrd: lted_srv_alloc_client id=2
+[17:44:01.053] mrd: [SERVER] assigns client index 2 proc=cli(1512)
+[17:44:01.056] gif_to_ipc: delayed req 3335(2044)
+[17:44:01.060] gif_to_ipc: delayed req 3335(2044)
+[17:44:01.064] gif_to_ipc: delayed req 3335(2044)
+[17:44:01.068] mrd: [SERVER] new connection request
+[17:44:01.071] mrd: lted_srv_alloc_client id=3
+[17:44:01.075] mrd: [SERVER] assigns client index 3 proc=mrcm(1513)
+[17:44:01.079] mrautocm: lted_client_init_ex success (id: 3, client_identity : 0x00000040, pid (1513-mrcm) 
+[17:44:01.082] gif_to_ipc: delayed req 3335(2044)
+[17:44:01.085] gif_to_ipc: delayed req 3335(2044)
+[17:44:01.089] mrd: clearing start - eps_id = 0xffef
+[17:44:01.092] mrd: clearing done
+[17:44:01.097] mrd: nr rf scr: access(/etc/sysconfig/script/lte_scr/rf/x_6)=-1
+[17:44:01.101] mrd: NR  DEVICE INSERT(DEV_IDX(1))
+[17:44:01.103] [NV_HCI] nv checksum is valid(0xc83f56f5/0xc83f56f5)
+[17:44:01.108] [NVM] READ Head N_INFO         (7243,10,5a) - Status(0)
+[17:44:01.111] [NVM] READ Head N_BCFG         (7243,10,5b) - Status(0)
+[17:44:01.115] [NVM] READ Head N_RFCAL        (7243,18,48) - Status(0)
+[17:44:01.119] [NVM] READ Head N_TCCAL        (7243,10,2b) - Status(0)
+[17:44:01.122] [NVM] READ Head N_NETWORK      (0000,00,00) - Status(0)
+[17:44:01.127] [NVM] Default NV Memory Write(4)
+[17:44:01.130] [NVM] NV NETWORK DUMP
+[17:44:01.134] [NVM] READ Head N_SAFE         (7243,10,31) - Status(0)
+[17:44:01.138] [V_SIM]ProcNvBcfgData/gstVsimEnData:0
+[17:44:01.142] default tdm log level=2 (NV:2)
+[17:44:01.145] [MRM] [CHK]MRM: NVM_INIT_CMPL_IND 
+[17:44:01.148] [CHK]UMM: NVM_INIT_CMPL_IND 
+[17:44:01.152] [UMM_ERR] [V_SIM]eVSIM_Enabled::5 
+[17:44:01.155] [UMM_ERR] (UMM_MODE_EMUL)/Virtual SIM :5 
+[17:44:01.158] [UMM_ERR] [V_SIM]UMM_Update_AllCacheItems_forUSIM, eVSIM: :5 
+[17:44:01.162] [MRM_UMM][UMM][UMM_UICC_ACT_IND] nMsgSize:24 
+[17:44:01.165] [UMM_ERR] [V_SIM]Enter UMM_ACTIVE state  
+[17:44:01.168]  LTE L1 initialize...
+[17:44:01.172] l1_modem_init(restart=0,init=0)
+[17:44:01.176] mrd: NR force_dhcp == 0
+[17:44:01.179] mrd: Don't start DHCP procedure for IPv6/NAS mode. pdn_ip_type = 0, ip_alloc = 0
+[17:44:01.183] mrd: clearing start - eps_id = 0xfeff
+[17:44:01.186] mrd: clearing done
+[17:44:01.189] c10: cpu_smc_handler: fid=c1000030 x1=0 x2=0 x3=0 x4=0
+[17:44:01.192] c10: OIC_TZPROT: 00000000->ffffffff
+[17:44:01.194]  =====   RF NV3  ====== 
+[17:44:01.197] [CSI] INIT: STI=10239
+[17:44:01.201] [rxm_meas_init] Disable Measuremnt
+[17:44:01.204] [RXM_DM_InitDebugOption] INIT (1)
+[17:44:01.208] [L1C] INIT2(RFFE=65542)
+[17:44:01.211] l1_bb_ctrl(0)
+[17:44:01.215] [NAS_CACHE] Access Control Class: 0x0001
+[17:44:01.217] [NAS_CACHE] UE Operation Mode: 0x80 Length of MNC: 3
+[17:44:01.221] [NAS_CACHE] NOT Available the UAC Access Identities Configuration EF
+[17:44:01.223] [NAS_CACHE] Higher Priority PLMN search period (28800 Sec)
+[17:44:01.226] Equivalent HPLMN 0: 0x00f110 
+[17:44:01.229] Equivalent HPLMN 1: 0x130184 
+[17:44:01.232] [NAS_CACHE] SUCI calculation is to be performed by the ME
+[17:44:01.235] [NAS_CACHE] NOT Available Subscription identifier privacy support
+[17:44:01.238] [NAS_CACHE] NOT Available the 5GS Operator PLMN List EF
+[17:44:01.242] [NAS_CACHE] NOT Available the Routing Indicator EF
+[17:44:01.245] [NAS_CACHE] [ERR] Read Failed for PNN EF <IN cacheReadEFPNN 5203>
+[17:44:01.248] [NAS_CACHE] [ERR] Read Failed for OPL EF <IN cacheReadEFOPL 5227>
+[17:44:01.252] [NAS_CACHE] NOT Available the Operator controlled signal threshold per access technology EF
+[17:44:01.255] [NAS_CACHE] Requested the File Count: 29
+[17:44:01.259] [FSM] [H] Cell DB:halfBank 317, blockFree 634, blockNo 634, blockSz 252
+[17:44:01.262] L1_BandInfoNV: B1 B2 B3 B4 B5 B6 B7 B8 B10 B12 B13 B14 B17 B18 B19 B20 B25 B26 B28 B29 B30 B34 B38 B39 B40 B41 B42 B43 B48 B52 B66 B71 B77(x) B78(x)
+[17:44:01.269] [L3API][H]  user FreqTable's init'd: 856AD8F8
+[17:44:01.273] [IMC] [H]Supported Band: B1 B2 B3 B4 B5 B6 B7 B8 B10 B12 B13 B14 B17 B18 B19 B20 B25 B26 B28 B29 B30 B34 B38 B39 B40 B41 B42 B43 B48 B52 B66 B71
+[17:44:01.281] [L3API] 	Max Layer: B71:4/1 B66:4/1
+[17:44:01.288] [L3API] 	Max Layer: B52:4/2 B48:4/2 B43:4/2 B42:4/2 B41:4/1 B40:4/1 B39:4/1 B38:4/1 B34:4/1 B30:4/1
+[17:44:01.299] [L3API][H] 	B29: not support UL
+[17:44:01.309] [L3API] 	Max Layer: B29:4/0 B28:4/1 B26:4/1 B25:4/1 B20:4/1 B19:4/1 B18:4/1 B17:4/1 B14:4/1 B13:4/1
+[17:44:01.324] [L3API] 	Max Layer: B12:4/1 B10:4/1 B8:4/1 B7:4/1 B6:4/1 B5:4/1 B4:4/1 B3:4/1 B2:4/1 B1:4/1
+[17:44:01.334] [L3API][H] Init BC List - mode:0, count:32
+[17:44:01.343] [L3API][H]  BandPair Count: 32 (640)
+[17:44:01.349] [L3API][H]  MakeMimoBandComb:(B1:0x14)
+[17:44:01.357] [L3API][H]  MakeMimoBandComb:(B2:0x14)(B3:0x14)(B4:0x14)(B5:0x14)(B6:0x14)(B7:0x14)(B8:0x14)(B10:0x14)(B12:0x14)([L3API][H]  MakeMimoBandComb:(B14:0x14)(B17:0x14)(B18:0x14)(B19:0x14)(B20:0x14)(B25:0x14)(B26:0x14)(B28:0x14)(B29[L3API][H]  MakeMimoBandComb:(B34:0x14)(B38:0x14)(B39:0x14)(B40:0x14)(B41:0x14)(B42:0x24)(B43:0x24)(B48:0x24)(B52[L3API][H]  MakeMimoBandComb:(B71:0x14)
+[17:44:01.382] [L3API][E]  RRC_UE_EUTRA_Capability_v9a0_IEs is NULL
+[17:44:01.397] [L3API][H] Set PHY Capability Parameters
+[17:44:01.446] [L3API][H] 	multiClusterPUSCH_WithinCC (1)
+[17:44:01.463] [L3API][H]  Support  B1 B2 B3 B4 B5 B6 B7 B8 B10 B1[NV] +nv_write [mrd] SAFE(5) data=0x7f98e85010 offs=0x139a8 size=0x1
+[17:44:01.501] 2 B13 B14 B17 B18 B19 B20 B25 B26 B28 B29 B30 B34 B38 B39 B40 [L3API][H] Set modifiedMPR_Behavior_r10 : 60 00 00 00 (32)
+[17:44:01.541] [L3API][H] 	freqBandRetrieval (1)
+[17:44:01.562] [L3API] 	Set dl_256QAM_r12: 1
+[17:44:01.586] [L3API] 	Set ul_64QAM_r12 1
+[17:44:01.615] [L3API][H]  set_db_capability_r12_rf : DL256-1, UL64-1 (32)
+[17:44:01.635] [L3API][H]  set_db_capability_r13_rf : MaxCCs-1, ReducedINCComb-1, SkipFallbackComb-1
+[17:44:01.657] [L3API][H] Default BCL cnt 32
+[17:44:01.672] [L3API][H] 	[0] - 1(1) *
+[17:44:01.694] [L3API][H] 	[1] - 1(2) *
+[17:44:01.716] [L3API][H] 	[2] - 1(3) *
+[17:44:01.735] [L3API][H] 	[3] - 1(4) *
+[17:44:01.760] [L3API][H] 	[4] - 1(5) *
+[17:44:01.785] [L3API][H] 	[5] - 1(6) *
+[17:44:01.806] [L3API][H] 	[6] - 1(7) *
+[17:44:01.827] [L3API][H] 	[7] - 1(8) *
+[17:44:01.844] [L3API][H] 	[8] - 1(10) *
+[17:44:01.862] [L3API][H] 	[9] - 1(12) *
+[17:44:01.878] [L3API][H] 	[10] - 1(13) *
+[17:44:01.894] [L3API][H] 	[11] - 1(14) *
+[17:44:01.914] [L3API][H] 	[12] - 1(17) *
+[17:44:01.935] [L3API][H] 	[13] - 1(18) *
+[17:44:01.957] [L3API][H] 	[14] - 1(19) *
+[17:44:01.983] [L3API][H] 	[15] - 1(20) *
+[17:44:02.005] [L3API][H] 	[16] - 1(25) *
+[17:44:02.032] [L3API][H] 	[17] - 1(26) *
+[17:44:02.048] [L3API][H] 	[18] - 1(28) *
+[17:44:02.067] [L3API][H] 	[19] - 1(29) :DB 64
+[17:44:02.083] [L3API][H] 	[20] - 1(30) *
+[17:44:02.100] [L3API][H] 	[21] - 1(34) *
+[17:44:02.111] [L3API][H[NV] [LTE_NV] mrd Write Skip id=5(SAFE)
+[17:44:02.130] ] 	[22] - 1(38) *
+[17:44:02.143] [L3API][H] 	[23] - 1(39) *
+[17:44:02.152] [L3API][H] 	[24] - 1([NV] -nv_write [mrd] SAFE(5) data=0x7f98e85010 offs=0x139a8 size=0x1
+[17:44:02.161] 40) *
+[17:44:02.168] [L3API][H] 	[25] - 1(41) *
+[17:44:02.176] [L3API][H] 	[26] - 1(42) *
+[17:44:02.186] [L3API][H] 	[27] - 1(43) *
+[17:44:02.193] [L3API][H] 	[28] - 1(48) *
+[17:44:02.203] [L3API][H] 	[29] - 1(52) *
+[17:44:02.211] [L3API][H] 	[30] - 1(66) *
+[17:44:02.221] [L3API][H] 	[31] - 1(71) *
+[17:44:02.232] [L3API][H] Set modifiedMPR_Behavior_r10 : 60 00 00 00 (32)
+[17:44:02.240] [L3API][H]  Making band combination list (31)
+[17:44:02.250] [L3API][H]  supportedBandCombination_r10 malloc - 0x856AE758 (1984 * 31)
+[17:44:02.256] [L3API] Set BC: 1(1), 0(0)
+[17:44:02.263] [L3API] Set BC: 1(2), 0(0)
+[17:44:02.273] [L3API] Set BC: 1(3), 0(0)
+[17:44:02.281] [L3API] Set BC: 1(4), 0(0)
+[17:44:02.286] [L3API] Set BC: 1(5), 0(0)
+[17:44:02.293] [L3API] Set BC: 1(6), 0(0)
+[17:44:02.302] [L3API] Set BC: 1(7), 0(0)
+[17:44:02.307] [L3API] Set BC: 1(8), 0(0)
+[17:44:02.320] [L3API] Set BC: 1(10), 0(0)
+[17:44:02.324] [L3API] Set BC: 1(12), 0(0)
+[17:44:02.329] [L3API] Set BC: 1(13), 0(0)
+[17:44:02.335] [L3API] Set BC: 1(14), 0(0)
+[17:44:02.339] [L3API] Set BC: 1(17), 0(0)
+[17:44:02.343] [L3API] Set BC: 1(18), 0(0)
+[17:44:02.348] [L3API] Set BC: 1(19), 0(0)
+[17:44:02.352] [L3API] Set BC: 1(20), 0(0)
+[17:44:02.355] [L3API] Set BC: 1(25), 0(0)
+[17:44:02.359] [L3API] Set BC: 1(26), 0(0)
+[17:44:02.363] [L3API] Set BC: 1(28), 0(0)
+[17:44:02.366] [L3API] Set BC: 1(30), 0(0)
+[17:44:02.371] [L3API] Set BC: 1(34), 0(0)
+[17:44:02.377] [L3API] Set BC: 1(38), 0(0)
+[17:44:02.383] [L3API] Set BC: 1(39), 0(0)
+[17:44:02.387] [L3API] Set BC: 1(40), 0(0)
+[17:44:02.391] [L3API] Set BC: 1(41), 0(0)
+[17:44:02.394] [L3API] Set BC: 1(42), 0(0)
+[17:44:02.397] [L3API] Set BC: 1(43), 0(0)
+[17:44:02.446] [L3API] Set BC: 1(48), 0(0)
+[17:44:02.449] [L3API] Set BC: 1(52), 0(0)
+[17:44:02.453] [L3API] Set BC: 1(66), 0(0)
+[17:44:02.456] [L3API] Set BC: 1(71), 0(0)
+[17:44:02.460] [L3API][H]  Set SupportedBandCombination R10 (31 of 31)
+[17:44:02.464] [L3API][H]  Set maxLayersMIMO_Indication_r12
+[17:44:02.467] [L3API][H] Enable UL MIMO
+[17:44:02.471] [L3API][H] TDD UL MIMO
+[17:44:02.474] [L3API][H] Disable CA
+[17:44:02.480] [L3API][H] Set modifiedMPR_Behavior_r10 : 60 00 00 00 (32)
+[17:44:02.485] [L3API][H] Bit 13 : disabled
+[17:44:02.489] [L3API][H] Bit 18 : disabled
+[17:44:02.492] [L3API][H] Bit 13 : disabled
+[17:44:02.496] [L3API][H] Bit 18 : disabled
+[17:44:02.499] [L3API][H]  SetFgi: 1E9805FE 00000000 0000C1FF / 1E9805FE 00000000 0000C1FF
+[17:44:02.503] [L3API][H]  SetFgi: FDD/TDD configured
+[17:44:02.511] [L3API][H] Bit 13 : disabled
+[17:44:02.514] [L3API][H] Bit 18 : disabled
+[17:44:02.518] [L3API][H]  Set FGI Common (1E9805FE 00000000 0000C1FF)
+[17:44:02.522] [L3API][H]  Set FGI FDD only (00000000 00000000 00000000)
+[17:44:02.526] [L3API][H]  Set FGI TDD only (00000000 00000000 00000000)
+[17:44:02.529] [L3API][H] Bit 13 : disabled
+[17:44:02.533] [L3API][H] Bit 18 : disabled
+[17:44:02.536] [L3API][H] Bit 13 : disabled
+[17:44:02.539] [L3API][H] Bit 18 : disabled
+[17:44:02.543] [L3API][H]  SetFgi: 1E9805FE 00000000 0000C1FF / 1E9805FE 00000000 0000C1FF
+[17:44:02.546] [L3API][H]  SetFgi: FDD/TDD configured
+[17:44:02.550] [L3API][H] Bit 13 : disabled
+[17:44:02.554] [L3API][H] Bit 18 : disabled
+[17:44:02.557] [L3API][H]  Set FGI Common (1E9805FE 00000000 0000C1FF)
+[17:44:02.561] [L3API][H]  Set FGI FDD only (00000000 00000000 00000000)
+[17:44:02.565] [L3API][H]  Set FGI TDD only (00000000 00000000 00000000)
+[17:44:02.568] [L3API][H] BandNR: 0 (NR list not ready)
+[17:44:02.571] [L3API][H]  set v1540:0  No NR supported band
+[17:44:02.575] [L3API][H]  Set ul_RRC_Segmentation_r16
+[17:44:02.578] [L3API][H] reset all default bcl
+[17:44:02.583] [L3API][H]  default supportedBandCombination_v10i0 - 0x856BD7A8
+[17:44:02.587] [L3API][H]  default supportedBandCombination_r10 - 0x856AE758
+[17:44:02.590] [L3API][H] eutra seed: RunSrc=CFG
+[17:44:02.594] [FSM] [L3>S][FSM_IMC_WaitInitialize__NASRRC_RRC_INITIALIZE_REQ] NASRRC_RRC_INITIALIZE_CNF
+[17:44:02.597] [NL3] [H] Cell DB:halfBank 209, blockFree 418, blockNo 418, blockSz 764
+[17:44:02.600] [32mNR_DB_SERV_CELL_DDCT(34) : 8780
+[17:44:02.609] [0mL1_NrBandInfoNV:34
+[17:44:02.612] filtering:
+[17:44:02.616] [N3API]  user FreqTable's init'd: 856C8FD8
+[17:44:02.620] [N3API] [CAPA-MEM][op-pre] pInfo=00000000 SBL(own=0 alloc=00000000) BCL.trk=0 FS.trk=0
+[17:44:02.622] [N3API] [CAPA-MEM][cfg-cache] reset: empty
+[17:44:02.626] [OTA RX:10240] 31:NRCAPA [2486]->
+[17:44:02.630] E1A23000 47465A03 1F8D8387 20000160 93170001 83F0D802 6EFF8204 41020174
+[17:44:02.635] 48005005 810A6260 04800000 86400035 68300018 01E81C79 0E7C0000 82FFE3F8
+[17:44:02.638] FE3FF8FE 3F854408 000EDD00 01000100 01D00010 00100000 0140A626 01480000
+[17:44:02.641] 08640003 56830001 801E81C7 90E7C000 082FFE3F 8FE3FF8F E3F85440 8000EDD8
+[17:44:02.645] 00180018 001D8001 80018000 00140A62 60248000 00864000 35683000 1801E81C
+[17:44:02.648] 790E7C00 0082DF03 C0DE0380 54008000 140A6260 34800000 86400035 68300018
+[17:44:02.652] 01E81C79 0E7C0000 82FFE3F8 FE3FF8FE 3F854408 000EDC80 00800080 01C80008
+[17:44:02.655] 00080000 0140A626 03C80000 08640003 56830001 801E81C7 90E7C000 082DE038
+[17:44:02.658] 0DE03805 44080007 9C800080 00800001 40A62609 C8000008 64000356 83000180
+[17:44:02.661] 1E81C790 E7C00008 2DE0380D E0380540 08000140 A6260CC8 00000864 00035683
+[17:44:02.665] 0001801E 81C790E7 C000082D F83E0DE0 38054008 000140A6 260DC800 00086400
+[17:44:02.668] 03568300 01801E81 C790E7C0 00082DF8 3E0DF83E 05400800 0140A636 12C80000
+[17:44:02.671] 08640003 56830001 801E81C7 90E7C000 082BFF0F C3F0FFC3 F0FC1500 20000502
+[17:44:02.675] 98D84F20 00002190 000D5A0C 0006007A 071E439F 000020AF FE3FEFFB FF8FFBFE
+[17:44:02.678] 54408000 ACE40024 000E4002 40000014 0E636140 84800000 86400035 68300018
+[17:44:02.681] 01E81C79 0E7C0000 82BFF8FF BFEFFE3F EFF95142 0003B760 00E000E0 0076000E
+[17:44:02.684] 000E0000 01000200 00005029 89883200 00021900 00D5A0C0 006007A0 71E439F0
+[17:44:02.688] 00020BFF 0FC3F0FF C3F0FC15 1020003B 76000600 06000760 00600060 00000502
+[17:44:02.692] 98988D20 00002190 000D5A0C 0006007A 071E439F 000020B7 E0F83780 E0151020
+[17:44:02.696] 002B6200 02000620 00200000 05029898 95200000 2190000D 5A0C0006 007A071E
+[17:44:02.700] 439F0000 20BFF8FE 3F8FFE3F 8FE15002 00005029 89897200 00021900 00D5A0C0
+[17:44:02.703] 006007A0 71E439F0 00020A40 09001500 20000503 98D89901 20000021 90000D5A
+[17:44:02.707] 0C000600 7A071E43 9F000020 AEFE3FEF FBBF8FFB FE545080 00ACE000 20000E00
+[17:44:02.712] 02000000 40008000 00140A63 626C8000 00864000 35683000 1801E81C 790E7C00
+[17:44:02.716] 0082BBF8 FFBFEEFE 3FEFF951 420002B3 80008000 38000800 00010002 00000050
+[17:44:02.719] 1E800E00 00000000 38040000 0000E020 00001003 80C00000 000E0380 00020038
+[17:44:02.722] 2600000C 00E0C800 00200383 60000100 0E128000 0508384E 00001820 E1400000
+[17:44:02.726] 60038820 0001400E 23000004 08389800 001820E2 68000061 07800001 C0200000
+[17:44:02.729] E5EC41E0 00007010 00003963 10780000 1C060000 0E5CC41E 00000701 C0000387
+[17:44:02.732] 10780000 1C130000 0E58C41E 00000706 C0000387 10780000 18250004 0220E000
+[17:44:02.735] 0E128000 090441E0 0000709C 00003973 10780000 1C280000 0E1C41E0 00006118
+[17:44:02.739] 00100883 8000388C 00002411 07800001 84A00041 63107800 00184B00 040220F0
+[17:44:02.744] 00003898 00001CB1 883C0000 0E268000 072FE20F 00800380 800001C1 10780400
+[17:44:02.754] 1C060000 0E5CC41E 01000701 C0000397 31078040 01C13000 00E58C41 E0100070
+[17:44:02.768] 6C000039 7F107804 001C2500 000E0883 C02000E1 38000072 F620F008 00385000
+[17:44:02.774] 001CBF88 3C02000C 23000201 10700407 11800004 8220F008 00309400 082C620F
+[17:44:02.794] 00800389 800001CB 9883C020 00E26800 0072E620 F0100038 0C00001C B1883C04
+[17:44:02.804] 000C1280 02011070 08070940 00048220 F0100038 4E00001C 11078080 01C28000
+[17:44:02.808] 00E0883C 04000E26 0000072C 620F0100 0389A000 01CB9883 C06000E0 38000070
+[17:44:02.813] 441E0300 0704C000 03943107 80C001C1 B00000E0 883C0600 0C128002 0110700C
+[17:44:02.816] 07094000 048220F0 1800384E 00001C11 0780C001 82800040 220E0180 E1400000
+[17:44:02.834] 90441E03 00061180 01058C41 C0301C46 00001258 C41E0300 06128001 058C41E0
+[17:44:02.838] 3000612C 00100883 C06000E2 60000072 C620F018 00389A00 001CB988 3C07000C
+[17:44:02.851] 12800201 10700E07 09400004 8220F01C 00384E00 001CB188 3C07000E 14000007
+[17:44:02.872] 2E620F01 C0038980 0001C110 780E001C 4D00000E 5CC41E09 80060940 01008838
+[17:44:02.888] 130384A0 00024110 78260018 27000402 20E04C0E 13800009 0441E098 0060A000
+[17:44:02.894] 10088381 30385000 00241107 82600184 C0004022 0E04C0E2 60000090 441E0980
+[17:44:02.900] 07134000 03963107 836001C2 700000E5 CC41E0D8 0070A000 00397310 78360018
+[17:44:02.910] 4A00040B 883C1B00 0C258002 01107836 001C4C00 000E5CC4 1E0D8007 13400003
+[17:44:02.919] 97310784 A0018270 0040220E 0940E138 00009044 1E128006 11800100 88382503
+[17:44:02.922] 88C00002 4110784A 00184A00 040220F0 94003096 00080441 E1280061 30001008
+[17:44:02.929] 83825038 98000024 110784A0 01C4D000 00E5CC41 E1380070 A0000039 7310784E
+[17:44:02.935] 00184600 040220E0 9C0E2300 00090441 E1380061 28001008 83C27000 C2580020
+[17:44:02.938] 110784E0 01C4C000 00E0883C 27000E26 8000072E 620F0A00 0388C000 01CB9883
+[17:44:02.941] C28000C2 50002011 07850001 84B00040 220F0A00 03898000 01CB9883 C28000E2
+[17:44:02.946] 68000072 E620F118 00389800 001CB188 3C46000E 26800007 2C620E12 80E26800
+[17:44:02.952] 0092C620 F1300030 9A00082C 620E1300 E2680000 92C620F0 00003000 00080441
+[17:44:02.961] E0100060 0800101C 41E03000 60180010 0883C280 00C14000 207E20F1 1800308C
+[17:44:02.973] 00080441 E2600061 3000101C 41E26800 61340010 2E2070A0 208050B8 81C4C082
+[17:44:02.989] 0141C40E 2684100A 0E5A4000 0404C4F4 00000000 00000000 00023011 8000008C
+[17:44:02.994] 04608020 08020080 20080200 80200802 00802008 02008020 08020080 20080200
+[17:44:02.997] 80200802 00802008 02008020 08020080 20080200 80200802 00802008 02008020
+[17:44:03.005] 08020080 20080200 80200802 00802008 02008020 08020080 20080200 80200802
+[17:44:03.020] 00802008 02008020 08020080 20080200 80200802 00802008 02008020 08020080
+[17:44:03.025] 20080200 0000036C 7A000000 00000000 00004000 02040000 00000000 00000000
+[17:44:03.042] 00000000 00000000 00000000 00000000 00000000 00000000 00000000 00000000
+[17:44:03.049] 00000000 00000000 00000000 00000000 00000000 00000000 00000000 00000000
+[17:44:03.057] 00000000 00000000 00000000 00000000 00000000 07EFFFFF C6600007 00050382
+[17:44:03.061] 80381804 200C03C0 D0000000 00000000 04000000 04000000 03000000 02000000
+[17:44:03.065] 01400000 00C00000 00700000 00400000 00240000 00140000 000B0000 00060000
+[17:44:03.071] 000340D6 4ED60ED6 8ED648D6 08D64AD6 0AD646D6 06D64CD6 0CD68CD6 54D694D0
+[17:44:03.077] 30100000 6DB6D040 0005B6DB 41000026 DB6D0400 00DB6DB4 1000046D B6D04000
+[17:44:03.081] 15B6DB41 000066DB 6D040001 DB6DB410 00086DB6 D0400025 B6DB4100 00A6DB6D
+[17:44:03.084] 040002DB 6DB41000 0C6DB6D0 3149EAA8 3D5547AA A475540E AA92D550 5AAA4D55
+[17:44:03.090] 41AAAA35 552AAAA9 55548EA0 14005002 00600801 40180300 18040090 0A014006
+[17:44:03.093] 01802403 80500180 80090120 14006018 03403807 00280A01 10160260 30050014
+[17:44:03.097] 0680B802 00501C03 02020200 68080801 A1010100 34040400 00808080 00020200
+[17:44:03.100] 68004040 0D1AA030 401032F6 70000000 014A2000 0420
+[17:44:03.103] [N3API] init_BCL param - 122
+[17:44:03.107] [N3API] RF bit_mask : a2 00 00 00 00
+[17:44:03.111] [N3API] [CAPA-MEM][post-decode] pInfo=00000000 SBL(own=0 alloc=00000000) BCL.trk=0 FS.trk=0
+[17:44:03.116] [N3API] nr pdu filter hw=26 sbl 17->15 bcl 122->108
+[17:44:03.119] [N3API] [CAPA-MEM][DB-set] pInfo=856c9dd8 SBL(own=0 alloc=00000000) BCL.trk=0 FS.trk=0
+[17:44:03.123] [N3API]   SBL.val=85795858 cnt=15 BCL.main=857ab578 cnt=108 ABLF(dec=0/00000000/0 own=0/00000000)
+[17:44:03.128] [N3API]   FS outer: decode-graph (B), trk=0
+[17:44:03.131] [L3API][H] Set BandNR[15]:  1, 3, 5, 7, 8, 20, 26, 28, 38, 40, 41, 66, 71, 77, 78,
+[17:44:03.135] [L3API][H] BandNR: 0 (NR list not ready)
+[17:44:03.139] [L3API][H]  set v1540:15  n1 n3 n5 n7 n8 n20 n26 n28 n38 n40 n41 n66 n71 n77 n78
+[17:44:03.143] [N3API]  EUTRA band[32]:
+[17:44:03.148] [N3API] 	 B1 B2 B3 B4 B5 B6 B7 B8 B10 B12 B13 B14 B17 B18 B19 B20
+[17:44:03.153] [N3API] 	 B25 B26 B28 B29 B30 B34 B38 B39 B40 B41 B42 B43 B48 B52 B66 B71
+[17:44:03.160] [N3API] 
+[17:44:03.165] Set bit-mask: 856CB4E4(000000E0) - 0 00000010
+[17:44:03.169] [N3API] [MPR][PC] band:n38 pc:1 v1610:0 isPc1dot5:0 mpr_present:0 mpr_val:0x00
+[17:44:03.174] [N3API] [MPR][PC] done band:n38 mpr_present:0 mpr_val:0x00
+[17:44:03.178] [N3API] [MPR][PC] band:n40 pc:1 v1610:0 isPc1dot5:0 mpr_present:0 mpr_val:0x00
+[17:44:03.183] [N3API] [MPR][PC] done band:n40 mpr_present:0 mpr_val:0x00
+[17:44:03.188] [N3API] [MPR][PC] band:n41 pc:1 v1610:1 isPc1dot5:1 mpr_present:1 mpr_val:0x10
+[17:44:03.193] [N3API] [MPR][PC] set n41 modifiedMPR_Behaviour=0x10
+[17:44:03.197] [N3API] [MPR][PC] done band:n41 mpr_present:1 mpr_val:0x10
+[17:44:03.203] [N3API] [MPR][PC] band:n77 pc:1 v1610:1 isPc1dot5:1 mpr_present:1 mpr_val:0x80
+[17:44:03.208] [N3API] [MPR][PC] set n77 modifiedMPR_Behaviour=0x80
+[17:44:03.211] [N3API] [MPR][PC] done band:n77 mpr_present:1 mpr_val:0x80
+[17:44:03.216] [N3API] [MPR][PC] band:n78 pc:1 v1610:1 isPc1dot5:1 mpr_present:0 mpr_val:0x00
+[17:44:03.219] [N3API] [MPR][PC] set n78 modifiedMPR_Behaviour=0x80
+[17:44:03.224] [N3API] [MPR][PC] done band:n78 mpr_present:1 mpr_val:0x80
+[17:44:03.227] [N3API] === reset UE Capa PDU
+[17:44:03.232] [N3API] [CAPA-MEM][reset-done] pInfo=856c9dd8 SBL(own=0 alloc=00000000) BCL.trk=0 FS.trk=0
+[17:44:03.238] [N3API]   SBL.val=85795858 cnt=15 BCL.main=857ab578 cnt=108 ABLF(dec=0/00000000/0 own=0/00000000)
+[17:44:03.244] [N3API]   FS outer: decode-graph (B), trk=0
+[17:44:03.248] [N3API] [CAPA-MEM][op-post] pInfo=856c9dd8 SBL(own=0 alloc=00000000) BCL.trk=0 FS.trk=0
+[17:44:03.252] [N3API]   SBL.val=85795858 cnt=15 BCL.main=857ab578 cnt=108 ABLF(dec=0/00000000/0 own=0/00000000)
+[17:44:03.256] [N3API]   FS outer: decode-graph (B), trk=0
+[17:44:03.260] [NL3:   0][>S][nrrc_send_NNASRRC_RRC_INITIALIZE_CNF] NNASRRC_RRC_INITIALIZE_CNF
+[17:44:03.264] [NAS_NSM] nsmSetPduAuthControlByUpperEnabled()
+[17:44:03.268] [NAS_NSM] 	 flag(1)
+[17:44:03.274] [NAS_INSIG] EPLMN|NASRRC_RRC_INITIALIZE_CNF(18)|PLMN_NULL(0)
+[17:44:03.277] [NAS_INSIG] NPLMN|NNASRRC_RRC_INITIALIZE_CNF(18)|PLMN_NULL(0)
+[17:44:03.281] [NAS_INSIG] CACHE|NASNVM_READ_CNF(8)|CACHE_WAIT_FOR_CACHE_INIT(0)
+[17:44:03.287] [NAS_INSIG] CACHE|NASNVM_READ_CNF(8)|CACHE_WAIT_FOR_CACHE_INIT(0)
+[17:44:03.301] [NAS_INSIG] CACHE|NASNVM_READ_CNF(8)|CACHE_WAIT_FOR_CACHE_INIT(0)
+[17:44:03.308] [NAS_CACHE] [WAR] Invalid 5GSLOCI in the NV (0xffffff)!!!
+[17:44:03.318] [NAS_INSIG] CACHE|NASNVM_READ_CNF(8)|CACHE_WAIT_FOR_CACHE_INIT(0)
+[17:44:03.329] [NAS_INSIG] CACHE|NASNVM_READ_CNF(8)|CACHE_WAIT_FOR_CACHE_INIT(0)
+[17:44:03.337] [NAS_INSIG] CACHE|NASNVM_READ_CNF(8)|CACHE_WAIT_FOR_CACHE_INIT(0)
+[17:44:03.345] [NAS_INSIG] CACHE|NASNVM_READ_CNF(8)|CACHE_WAIT_FOR_CACHE_INIT(0)
+[17:44:03.352] [NAS_INSIG] CACHE|NASNVM_READ_CNF(8)|CACHE_WAIT_FOR_CACHE_INIT(0)
+[17:44:03.361] [NAS_INSIG] CACHE|NASNVM_READ_CNF(8)|CACHE_WAIT_FOR_CACHE_INIT(0)
+[17:44:03.370] [NAS_INSIG] CACHE|NASNVM_READ_CNF(8)|CACHE_WAIT_FOR_CACHE_INIT(0)
+[17:44:03.375] [NAS_CACHE] Read UTC Time: 0
+[17:44:03.379] [NAS_INSIG] CACHE|NASNVM_READ_CNF(8)|CACHE_WAIT_FOR_CACHE_INIT(0)
+[17:44:03.383] [NAS_INSIG] CACHE|NASNVM_READ_CNF(8)|CACHE_WAIT_FOR_CACHE_INIT(0)
+[17:44:03.386] [NAS_INSIG] CACHE|NASNVM_READ_CNF(8)|CACHE_WAIT_FOR_CACHE_INIT(0)
+[17:44:03.390] [NAS_INSIG] CACHE|NASNVM_READ_CNF(8)|CACHE_WAIT_FOR_CACHE_INIT(0)
+[17:44:03.394] [NAS_CACHE] [ERR] Invalid IMEI: 0x000000000000000000 <IN cacheReadNVMCnf 528>
+[17:44:03.397] [NAS_INSIG] CACHE|NASNVM_READ_CNF(8)|CACHE_WAIT_FOR_CACHE_INIT(0)
+[17:44:03.446] [NAS_CACHE] [ERR] Invalid IMEI2: 0x000000000000000000 <IN cacheReadNVMCnf 550>
+[17:44:03.457] [NAS_INSIG] CACHE|NASNVM_READ_CNF(8)|CACHE_WAIT_FOR_CACHE_INIT(0)
+[17:44:03.464] [NAS_INSIG] CACHE|NASNVM_READ_CNF(8)|CACHE_WAIT_FOR_CACHE_INIT(0)
+[17:44:03.471] [NAS_INSIG] CACHE|NASNVM_READ_CNF(8)|CACHE_WAIT_FOR_CACHE_INIT(0)
+[17:44:03.479] [NAS_CACHE] Read T3245 lte:0 nr: 0
+[17:44:03.483] [NAS_INSIG] CACHE|NASNVM_READ_CNF(8)|CACHE_WAIT_FOR_CACHE_INIT(0)
+[17:44:03.487] [NAS_INSIG] CACHE|NASNVM_READ_CNF(8)|CACHE_WAIT_FOR_CACHE_INIT(0)
+[17:44:03.495] [NAS_INSIG] CACHE|NASNVM_READ_CNF(8)|CACHE_WAIT_FOR_CACHE_INIT(0)
+[17:44:03.498] [NAS_INSIG] CACHE|NASNVM_READ_CNF(8)|CACHE_WAIT_FOR_CACHE_INIT(0)
+[17:44:03.501] [NAS_INSIG] CACHE|NASNVM_READ_CNF(8)|CACHE_WAIT_FOR_CACHE_INIT(0)
+[17:44:03.505] [NAS_INSIG] CACHE|NASNVM_READ_CNF(8)|CACHE_WAIT_FOR_CACHE_INIT(0)
+[17:44:03.509] [NAS_INSIG] CACHE|NASNVM_READ_CNF(8)|CACHE_WAIT_FOR_CACHE_INIT(0)
+[17:44:03.512] [NAS_INSIG] CACHE|NASNVM_READ_CNF(8)|CACHE_WAIT_FOR_CACHE_INIT(0)
+[17:44:03.515] [NAS_INSIG] CACHE|NASNVM_READ_CNF(8)|CACHE_WAIT_FOR_CACHE_INIT(0)
+[17:44:03.521] [NAS_INSIG] CACHE|NASNVM_READ_CNF(8)|CACHE_WAIT_FOR_CACHE_INIT(0)
+[17:44:03.525] [NAS_INSIG] CACHE|NASNVM_READ_CNF(8)|CACHE_WAIT_FOR_CACHE_INIT(0)
+[17:44:03.528] [NAS_CACHE] ICCID Matched: No USIM change detected
+[17:44:03.533] [NAS_CACHE] State Change (CACHE_WAIT_FOR_CACHE_INIT => CACHE_VALID_USIM)
+[17:44:03.538] [NAS_INSIG] EMM|EMM_INT_USIM_INSERTED_IND(2)|EMM_NULL(0)
+[17:44:03.542] [FSM] [ERR]EHPLMN list cnt:2
+[17:44:03.547] [FSM] EHPLMN :[0] F110
+[17:44:03.551] [FSM] EHPLMN :[1] 130184
+[17:44:03.555] [L3API][H] Init CSG DB: 0
+[17:44:03.559] [FSM] [L3>S][RRC_send_NASRRC_USIM_INSERTED_CNF] NASRRC_USIM_INSERTED_CNF
+[17:44:03.563] [NAS_INSIG] EPLMN|EPLMN_USIM_INSERTED_IND(5)|PLMN_NULL(0)
+[17:44:03.566] [NAS_EPLMN] PLMN_PERIODIC_HPLMN_SEARCH_TIMER Timer value Changed: 28800000 ms
+[17:44:03.571] [NAS_EPLMN] State Change (PLMN_NULL => PLMN_IDLE)
+[17:44:03.575] [NAS_INSIG] NMM|NMM_INT_USIM_INSERTED_IND(3)|NMM_NULL(0)
+[17:44:03.578] [NL3:   0]<- NNASRRC_USIM_INSERTED_REQ
+[17:44:03.582] [NL3:   0]EHPLMN :[0] F110
+[17:44:03.586] [NL3:   0]EHPLMN :[1] 130184
+[17:44:03.589] [NL3:   0][>S][NRRC_Read_NVM_DRX] NVM_READ_REQ
+[17:44:03.593] [NL3:   0][>S][NRRC_Read_NVM_User_DRX] NVM_READ_REQ
+[17:44:03.596] [NAS_INSIG] NPLMN|NPLMN_USIM_INSERTED_IND(5)|PLMN_NULL(0)
+[17:44:03.600] [NAS_NPLMN] PLMN_PERIODIC_HPLMN_SEARCH_TIMER Timer value Changed: 28800000 ms
+[17:44:03.603] [NAS_NPLMN] State Change (PLMN_NULL => PLMN_IDLE)
+[17:44:03.607] [NAS_INSIG] EMM|NASRRC_USIM_INSERTED_CNF(45)|EMM_NULL(0)
+[17:44:03.609] [NAS_EMM] FSM_EMM_NULL__NASRRC_USIM_INSERTED_CNF
+[17:44:03.612] [FSM] [L3<-][RMCI][0] NASRRC_COUNT_UPDATE_IND
+[17:44:03.615] [RMC] [H] NAS count:0
+[17:44:03.619] NAS_MsgHandler, messageType(0x360014)
+[17:44:03.622] [NL3:   0][<-][NL3USI][2][3] NVM_READ_CNF
+[17:44:03.626] [N3USI] NV name : LDRX_NV
+[17:44:03.629] [N3USI] NV DRX not used: 0
+[17:44:03.633] [NL3:   0][<-][NL3USI][2][3] NVM_READ_CNF
+[17:44:03.635] [N3USI] NV name : NDRX_NV
+[17:44:03.638] [N3USI] NV User DRX not used :0
+[17:44:03.642] [NL3:   0][>S][FSM_NL3USI_Read__NVM_READ_CNF] NNASRRC_USIM_INSERTED_CNF
+[17:44:03.646] [NAS_INSIG] NMM|NASRRC_USIM_INSERTED_CNF(44)|NMM_NULL(0)
+[17:44:03.650] [NAS_NMM] FSM_NMM_NULL__NASRRC_USIM_INSERTED_CNF
+[17:44:03.653] [NAS_INSIG] NSM_CONNECTION_MANAGEMENT|NMMNSM_UICC_USIM_CACHE_END_IND(22)|NSM_CONNECTION_MANAGEMENT(0)
+[17:44:03.657] L1 initialize...
+[17:44:03.661] nr_slp_shmem : 28500000
+[17:44:03.665] nr_dlp_shmem[0] : 20500000
+[17:44:03.669] nr_dlp_shmem[1] : 21500000
+[17:44:03.672] nr_dlp_shmem[2] : 22500000
+[17:44:03.675] nr_dlp_shmem[3] : 23500000
+[17:44:03.679] nr_dlp_shmem[4] : 24500000
+[17:44:03.682] nr_dlp_shmem[5] : 25500000
+[17:44:03.686] nr_dlp_shmem[6] : 26500000
+[17:44:03.690] nr_dlp_shmem[7] : 27500000
+[17:44:03.693] nr_ulp_shmem[0] : 20d00000
+[17:44:03.696] nr_ulp_shmem[1] : 21d00000
+[17:44:03.701] nr_ulp_shmem[2] : 22d00000
+[17:44:03.705] nr_ulp_shmem[3] : 23d00000
+[17:44:03.709]  =====   RF NV3  ====== 
+[17:44:03.712]  RFD_GetAdcMetalfix() nv_bcfg cmn_ext_rfconfig 0x0030 bit#3(0 metal fix, 1 no fix) adc_metal_fix 1
+[17:44:03.715] [MRM] Read MRM Mode: 0
+[17:44:03.718] [MRM] NOT Enabled MRM FSM: 0
+[17:44:03.721] [MRM] 0x6c Connected assigned ConnId: 0x1
+[17:44:03.725] [SMS] ENAS SMS INIT REQ rxed
+[17:44:03.729] [MRM] 0x55 Connected assigned ConnId: 0x2
+[17:44:03.732] [ATM] ATMManager_RegisterUMM(evt:35, nPortId:0)...
+[17:44:03.747] $ shell
+[17:44:04.755] rmat(3GPP)
+[17:44:04.760] [SMS] SMSMGR : UICC FILE INFO rxed(FID = 0x0)
+[17:44:04.763] mrd: UICC Activation done : driver open fail(-1)
+[17:44:04.766] mrd: 
+[17:44:04.770] UICC INDICATION(DEV_IDX(1))
+[17:44:04.773] mrd: UICC ACTIVATED INDICATION
+[17:44:04.776] mrautocm: [mrcm_ind_uicc_ind]
+[17:44:04.779] mrautocm: UICC ACTIVATED INDICATION
+[17:44:04.783] mrd: 
+[17:44:04.787] INITIALIZATION PROTOCOL STACK RESPONSE(DEV_IDX(1))
+[17:44:04.791] mrd: Result : 0
+[17:44:04.794] mrd: WTD: LAPI_NotiArm1Reset : Hold[0]
+[17:44:04.797] mrd: ucfg Scramble (0)
+[17:44:04.801] mrd: NRAPI_DeviceCfgSetReq Scramble (0)
+[17:44:04.804] mrd: SET SCRAMBLE LOG : DISABLE
+[17:44:04.808] LTE LOG(000001c4): NOTI WARN2 WARN3 ERR
+[17:44:04.811] mrd: cm_set_smsCfgWriteReq()
+[17:44:04.815] [MRM] Disable Scrumble Log
+[17:44:04.818] [NAS_INSIG] CACHE|NAS_PROTOCOL_CONFIG_WRITE_REQ(3)|CACHE_VALID_USIM(1)
+[17:44:04.822] [NAS_CACHE] Scrumble Log: 0
+[17:44:04.826] mrd: cm_set_RaDeploymentReq()
+[17:44:04.829] mrd: get_load_capa_pdu_uper_file(1) - isFirstChunk=1
+[17:44:04.833] mrd: read_rrc_capa_pdu_chunk(/var/nr/param/capa/UE_MRDC_Capability.uper) - (0~10224)/fileSize(12134)
+[17:44:04.836] 81 01 41 ED 88 2C 08 03 80 40 00 00 01 10 58 20 ....
+[17:44:04.839] mrd: cm_set_NRUERadioCapaReq()
+[17:44:04.843] [MRM] 5G NR SA: 1 NSA: 0 LTE SA: 0
+[17:44:04.846] [MRM] Set NR SA Mode for RRC: 1
+[17:44:04.850] [L3API][H] Set BandNR[15]:  n1 n3 n5 n7 n8 n20 n26 n28 n38 n40 n41 n66 n71 n77 n78
+[17:44:04.853] [MRM] Set Endc Enable for RRC: 0
+[17:44:04.856] [L3API][H] 	Set EN-DC Enable:0
+[17:44:04.860] [L3API][H]  set v1540:15  n1 n3 n5 n7 n8 n20 n26 n28 n38 n40 n41 n66 n71 n77 n78
+[17:44:04.863] [MRM] Set LTE Only Mode for RRC: 1
+[17:44:04.867] [L3API][H] Enable UL MIMO
+[17:44:04.871] [L3API][H] TDD UL MIMO
+[17:44:04.875] [L3API][H] Disable CA
+[17:44:04.880] [L3API][H] Bit 13 : disabled
+[17:44:04.886] [L3API][H] Bit 18 : disabled
+[17:44:04.889] [L3API][H] Bit 13 : disabled
+[17:44:04.893] [L3API][H] Bit 18 : disabled
+[17:44:04.900] [L3API][H]  SetFgi: 1E9805FE 00000000 0000C1FF / 1E9805FE 00000000 0000C1FF
+[17:44:04.905] mrd: get_load_capa_pdu_uper_file(1) - isFirstChunk=0
+[17:44:04.908] mrd: read_rrc_capa_pdu_chunk(/var/nr/param/capa/UE_MRDC_Capability.uper) - (10224~12134)/fileSize(12134)
+[17:44:04.911] 03 80 00 01 C0 60 00 01 60 88 6C 08 01 89 80 70 ....
+[17:44:04.915] mrd: cm_set_NRUERadioCapaReq()
+[17:44:04.919] mrd: get_load_capa_pdu_uper_file(0) - isFirstChunk=1
+[17:44:04.922] mrd: read_rrc_capa_pdu_chunk(/var/nr/param/capa/UE_NR_Capability.uper) - (0~1686)/fileSize(1686)
+[17:44:04.926] E1 A2 30 00 47 46 5A 03 1F 8D 83 85 20 00 16 09 ....
+[17:44:04.930] mrd: cm_set_NRUERadioCapaReq()
+[17:44:04.934] mrd: get_load_capa_pdu_uper_file(2) - isFirstChunk=1
+[17:44:04.938] mrd: read_rrc_capa_pdu_chunk(/var/nr/param/capa/UE_EUTRA_Capability.uper) - (0~1853)/fileSize(1853)
+[17:44:04.943] E0 19 80 57 00 10 30 81 43 07 12 44 91 33 26 CF ....
+[17:44:04.947] mrd: cm_set_LTEUERadioCapaReq()
+[17:44:04.951] [L3API][H]  SetFgi: FDD/TDD configured
+[17:44:04.956] [L3API][H] Bit 13 : disabled
+[17:44:04.961] [L3API][H] Bit 18 : disabled
+[17:44:04.964] [L3API][H]  Set FGI Common (1E9805FE 00000000 0000C1FF)
+[17:44:04.969] [L3API][H]  Set FGI FDD only (00000000 00000000 00000000)
+[17:44:04.973] [L3API][H]  Set FGI TDD only (00000000 00000000 00000000)
+[17:44:04.978] [L3API][H] 	[Y]Set interRAT_BandList(0) in BCL(31)
+[17:44:04.982] [NAS_INSIG] CACHE|NAS_PROTOCOL_CONFIG_WRITE_REQ(3)|CACHE_VALID_USIM(1)
+[17:44:04.988] [NAS_CACHE] 5G NR SA: 1 5G NR NSA: 0 LTE SA: 0
+[17:44:04.991] [MRM] Set UE MRDC Capability PDU - mode: 1 length: 10224
+[17:44:04.994] [N3API]  mrdcCapaPdu mode:1, size:10224
+[17:44:04.998] [N3API][E] mrdcCapaPdu: too big PDU size:10224
+[17:44:05.002] [N3API]  mrdcCapaPdu mode:3, size:10224
+[17:44:05.006] [N3API] MRDC reset: load default into DB (hasPdu:0)
+[17:44:05.010] [N3API] del default MRDC Capa DB
+[17:44:05.015] [N3API] MRDC update: gen BCL 128 from gMrdcSupportedBcTable[128] (sbl e:32 n:15 nrBcl:108 skipFb:0)
+[17:44:05.019] [N3API] MRDC tbl[0] e:1+3 n:1+78
+[17:44:05.022] [N3API] [0]tbl0-4,0  MRDC tbl[1] e:1+7 n:1+78
+[17:44:05.026] [N3API] [1]tbl1-4,0  MRDC tbl[2] e:1+28 n:1+78
+[17:44:05.029] [N3API] [2]tbl2-4,0  MRDC tbl[3] e:1+40 n:1+78
+[17:44:05.033] [N3API] [3]tbl3-4,0  MRDC tbl[4] e:3+7 n:1+78
+[17:44:05.036] [N3API] MRDC: [4]tbl4-4,0  
+[17:44:05.039] [N3API] MRDC tbl[5] e:3+28 n:1+78
+[17:44:05.042] [N3API] [5]tbl5-4,0  MRDC tbl[6] e:3+40 n:1+78
+[17:44:05.046] [N3API] [6]tbl6-4,0  MRDC tbl[7] e:7+28 n:1+78
+[17:44:05.049] [N3API] [7]tbl7-4,0  MRDC tbl[8] e:7+40 n:1+78
+[17:44:05.054] [N3API] [8]tbl8-4,0  MRDC tbl[9] e:28+40 n:1+78
+[17:44:05.057] [N3API] MRDC: [9]tbl9-4,0  
+[17:44:05.061] [N3API] MRDC tbl[10] e:1+3+7 n:1+78
+[17:44:05.064] [N3API] [10]tbl10-5,1  MRDC tbl[11] e:1+3+28 n:1+78
+[17:44:05.068] [N3API] [11]tbl11-5,1  MRDC tbl[12] e:1+3+40 n:1+78
+[17:44:05.072] [N3API] [12]tbl12-5,1  MRDC tbl[13] e:1+7+28 n:1+78
+[17:44:05.076] [N3API] [13]tbl13-5,1  MRDC tbl[14] e:1+7+40 n:1+78
+[17:44:05.080] [N3API] MRDC: [14]tbl14-5,1  
+[17:44:05.084] [N3API] MRDC tbl[15] e:1+28+40 n:1+78
+[17:44:05.086] [N3API] [15]tbl15-5,1  MRDC tbl[16] e:3+7+28 n:1+78
+[17:44:05.089] [N3API] [16]tbl16-5,1  MRDC tbl[17] e:3+7+40 n:1+78
+[17:44:05.092] [N3API] [17]tbl17-5,1  MRDC tbl[18] e:3+28+40 n:1+78
+[17:44:05.096] [N3API] [18]tbl18-5,1  MRDC tbl[19] e:7+28+40 n:1+78
+[17:44:05.099] [N3API] MRDC: [19]tbl19-5,1  
+[17:44:05.103] [N3API] MRDC tbl[20] e:1+3 n:5+78
+[17:44:05.105] [N3API] [20]tbl20-4,0  MRDC tbl[21] e:1+7 n:5+78
+[17:44:05.108] [N3API] [21]tbl21-4,0  MRDC tbl[22] e:1+28 n:5+78
+[17:44:05.111] [N3API] [22]tbl22-4,0  MRDC tbl[23] e:1+40 n:5+78
+[17:44:05.114] [N3API] [23]tbl23-4,0  MRDC tbl[24] e:3+7 n:5+78
+[17:44:05.116] [N3API] MRDC: [24]tbl24-4,0  
+[17:44:05.120] [N3API] MRDC tbl[25] e:3+28 n:5+78
+[17:44:05.123] [N3API] [25]tbl25-4,0  MRDC tbl[26] e:3+40 n:5+78
+[17:44:05.127] [N3API] [26]tbl26-4,0  MRDC tbl[27] e:7+28 n:5+78
+[17:44:05.130] [N3API] [27]tbl27-4,0  MRDC tbl[28] e:7+40 n:5+78
+[17:44:05.133] [N3API] [28]tbl28-4,0  MRDC tbl[29] e:28+40 n:5+78
+[17:44:05.137] [N3API] MRDC: [29]tbl29-4,0  
+[17:44:05.139] [N3API] MRDC tbl[30] e:1+3+7 n:5+78
+[17:44:05.142] [N3API] [30]tbl30-5,1  MRDC tbl[31] e:1+3+28 n:5+78
+[17:44:05.146] [N3API] [31]tbl31-5,1  MRDC tbl[32] e:1+3+40 n:5+78
+[17:44:05.150] [N3API] [32]tbl32-5,1  MRDC tbl[33] e:1+7+28 n:5+78
+[17:44:05.153] [N3API] [33]tbl33-5,1  MRDC tbl[34] e:1+7+40 n:5+78
+[17:44:05.156] [N3API] MRDC: [34]tbl34-5,1  
+[17:44:05.160] [N3API] MRDC tbl[35] e:1+28+40 n:5+78
+[17:44:05.162] [N3API] [35]tbl35-5,1  MRDC tbl[36] e:3+7+28 n:5+78
+[17:44:05.166] [N3API] [36]tbl36-5,1  MRDC tbl[37] e:3+7+40 n:5+78
+[17:44:05.169] [N3API] [37]tbl37-5,1  MRDC tbl[38] e:3+28+40 n:5+78
+[17:44:05.172] [N3API] [38]tbl38-5,1  MRDC tbl[39] e:7+28+40 n:5+78
+[17:44:05.174] [N3API] MRDC: [39]tbl39-5,1  
+[17:44:05.178] [N3API] MRDC tbl[40] e:1+3 n:1+40
+[17:44:05.181] [N3API] [40]tbl40-4,0  MRDC tbl[41] e:1+7 n:1+40
+[17:44:05.185] [N3API] [41]tbl41-4,0  MRDC tbl[42] e:1+28 n:1+40
+[17:44:05.188] [N3API] [42]tbl42-4,0  MRDC tbl[43] e:1+40 n:1+40
+[17:44:05.192] [N3API] [43]tbl43-4,0  MRDC tbl[44] e:3+7 n:1+40
+[17:44:05.195] [N3API] MRDC: [44]tbl44-4,0  
+[17:44:05.199] [N3API] MRDC tbl[45] e:3+28 n:1+40
+[17:44:05.202] [N3API] [45]tbl45-4,0  MRDC tbl[46] e:3+40 n:1+40
+[17:44:05.205] [N3API] [46]tbl46-4,0  MRDC tbl[47] e:7+28 n:1+40
+[17:44:05.208] [N3API] [47]tbl47-4,0  MRDC tbl[48] e:7+40 n:1+40
+[17:44:05.212] [N3API] [48]tbl48-4,0  MRDC tbl[49] e:28+40 n:1+40
+[17:44:05.215] [N3API] MRDC: [49]tbl49-4,0  
+[17:44:05.219] [N3API] MRDC tbl[50] e:1+3+7 n:1+40
+[17:44:05.221] [N3API] [50]tbl50-5,1  MRDC tbl[51] e:1+3+28 n:1+40
+[17:44:05.225] [N3API] [51]tbl51-5,1  MRDC tbl[52] e:1+3+40 n:1+40
+[17:44:05.228] [N3API] [52]tbl52-5,1  MRDC tbl[53] e:1+7+28 n:1+40
+[17:44:05.232] [N3API] [53]tbl53-5,1  MRDC tbl[54] e:1+7+40 n:1+40
+[17:44:05.236] [N3API] MRDC: [54]tbl54-5,1  
+[17:44:05.239] [N3API] MRDC tbl[55] e:1+28+40VLAN: all hmac cleared
+[17:44:05.243] br0: port 1(usb0) entered blocking state
+[17:44:05.246] br0: port 1(usb0) entered forwarding state
+[17:44:05.249]  n:1+40
+[17:44:05.253] [N3API] [55]tbl55-5,1  MRDC tbl[56] e:3+7+28 n:1+40
+[17:44:05.256] [N3API] [56]tbl56-5,1  MRDC tbl[57] e:3+7+40 n:1+40
+[17:44:05.260] [N3API] [57]tbl57-5,1  MRDC tbl[58] e:3+28+40 n:1+40
+[17:44:05.263] [N3API] [58]tbl58-5,1  MRDC tbl[59] e:7+28+40 n:1+40
+[17:44:05.267] [N3API] MRDC: [59]tbl59-5,1  
+[17:44:05.270] [N3API] MRDC tbl[60] e:1+3 n:5+40
+[17:44:05.274] [N3API] [60]tbl60-4,0  MRDC tbl[61] e:1+7 n:5+40
+[17:44:05.277] [N3API] [61]tbl61-4,0  MRDC tbl[62] e:1+28 n:5+40
+[17:44:05.280] [N3API] [62]tbl62-4,0  MRDC tbl[63] e:1+40 n:5+40
+[17:44:05.284] [N3API] [63]tbl63-4,0  MRDC tbl[64] e:3+7 n:5+40
+[17:44:05.287] [N3API] MRDC: [64]tbl64-4,0  
+[17:44:05.291] [N3API] MRDC tbl[65] e:3+28 n:5+78
+[17:44:05.294] [N3API] [65]tbl65-4,0  MRDC tbl[66] e:3+40 n:5+40
+[17:44:05.298] [N3API] [66]tbl66-4,0  MRDC tbl[67] e:7+28 n:5+40
+[17:44:05.302] [N3API] [67]tbl67-4,0  MRDC tbl[68] e:7+40 n:5+40
+[17:44:05.305] [N3API] [68]tbl68-4,0  MRDC tbl[69] e:28+40 n:5+40
+[17:44:05.309] [N3API] MRDC: [69]tbl69-4,0  
+[17:44:05.312] [N3API] MRDC tbl[70] e:1+3+7 n:5+40
+[17:44:05.315] [N3API] [70]tbl70-5,1  MRDC tbl[71] e:1+3+28 n:5+40
+[17:44:05.318] [N3API] [71]tbl71-5,1  MRDC tbl[72] e:1+3+40 n:5+40
+[17:44:05.321] [N3API] [72]tbl72-5,1  MRDC tbl[73] e:1+7+28 n:5+40
+[17:44:05.324] [N3API] [73]tbl73-5,1  MRDC tbl[74] e:1+7+40 n:5+40
+[17:44:05.326] [N3API] MRDC: [74]tbl74-5,1  
+[17:44:05.329] [N3API] MRDC tbl[75] e:1+28+40 n:5+40
+[17:44:05.332] [N3API] [75]tbl75-5,1  MRDC tbl[76] e:3+7+28 n:5+40
+[17:44:05.335] [N3API] [76]tbl76-5,1  MRDC tbl[77] e:3+7+40 n:5+40
+[17:44:05.339] [N3API] [77]tbl77-5,1  MRDC tbl[78] e:3+28+40 n:5+40
+[17:44:05.342] [N3API] [78]tbl78-5,1  MRDC tbl[79] e:7+28+40 n:5+40
+[17:44:05.345] [N3API] MRDC: [79]tbl79-5,1  
+[17:44:05.348] [N3API] MRDC tbl[80] e:1+3 n:78
+[17:44:05.351] [N3API] [80]tbl80-3,2  MRDC tbl[81] e:1+7 n:78
+[17:44:05.354] [N3API] [81]tbl81-3,2  MRDC tbl[82] e:1+28 n:78
+[17:44:05.358] [N3API] [82]tbl82-3,2  MRDC tbl[83] e:1+40 n:78
+[17:44:05.360] [N3API] [83]tbl83-3,2  MRDC tbl[84] e:3+7 n:78
+[17:44:05.363] [N3API] MRDC: [84]tbl84-3,2  
+[17:44:05.366] [N3API] MRDC tbl[85] e:3+28 n:78
+[17:44:05.370] [N3API] [85]tbl85-3,2  MRDC tbl[86] e:3+40 n:78
+[17:44:05.374] [N3API] [86]tbl86-3,2  MRDC tbl[87] e:7+28 n:78
+[17:44:05.378] [N3API] [87]tbl87-3,2  MRDC tbl[88] e:7+40 n:78
+[17:44:05.381] [N3API] [88]tbl88-3,2  MRDC tbl[89] e:28+40 n:78
+[17:44:05.384] [N3API] MRDC: [89]tbl89-3,2  
+[17:44:05.388] [N3API] MRDC tbl[90] e:1+3+7 n:78
+[17:44:05.392] [N3API] [90]tbl90-4,3  MRDC tbl[91] e:1+3+28 n:78
+[17:44:05.395] [N3API] [91]tbl91-4,3  MRDC tbl[92] e:1+3+40 n:78
+[17:44:05.399] [N3API] [92]tbl92-4,3  MRDC tbl[93] e:1+7+28 n:78
+[17:44:05.449] [N3API] [93]tbl93-4,3  MRDC tbl[94] e:1+7+40 n:78
+[17:44:05.453] [N3API] MRDC: [94]tbl94-4,3  
+[17:44:05.457] [N3API] MRDC tbl[95] e:1+28+40 n:78
+[17:44:05.461] [N3API] [95]tbl95-4,3  MRDC tbl[96] e:3+7+28 n:78
+[17:44:05.464] [N3API] [96]tbl96-4,3  MRDC tbl[97] e:3+7+40 n:78
+[17:44:05.467] [N3API] [97]tbl97-4,3  MRDC tbl[98] e:3+28+40 n:78
+[17:44:05.471] [N3API] [98]tbl98-4,3  MRDC tbl[99] e:7+28+40 n:78
+[17:44:05.475] [N3API] MRDC: [99]tbl99-4,3  
+[17:44:05.478] [N3API] MRDC tbl[100] e:1+3+7+28 n:78
+[17:44:05.482] [N3API] [100]tbl100-5,4  MRDC tbl[101] e:1+3+7+40 n:78
+[17:44:05.485] [N3API] [101]tbl101-5,4  MRDC tbl[102] e:1+7+28+40 n:78
+[17:44:05.489] [N3API] [102]tbl102-5,4  MRDC tbl[103] e:3+7+28+40 n:78
+[17:44:05.493] [N3API] [103]tbl103-5,4  MRDC tbl[104] e:1+3 n:40
+[17:44:05.496] [N3API] MRDC: [104]tbl104-3,2  
+[17:44:05.500] [N3API] MRDC tbl[105] e:1+7 n:40
+[17:44:05.503] [N3API] [105]tbl105-3,2  MRDC tbl[106] e:1+28 n:40
+[17:44:05.507] [N3API] [106]tbl106-3,2  MRDC tbl[107] e:1+40 n:40
+[17:44:05.509] [N3API] [107]tbl107-3,2  MRDC tbl[108] e:3+7 n:40
+[17:44:05.513] [N3API] [108]tbl108-3,2  MRDC tbl[109] e:3+28 n:40
+[17:44:05.517] [N3API] MRDC: [109]tbl109-3,2  
+[17:44:05.520] [N3API] MRDC tbl[110] e:3+40 n:40
+[17:44:05.524] [N3API] [110]tbl110-3,2  MRDC tbl[111] e:7+28 n:40
+[17:44:05.527] [N3API] [111]tbl111-3,2  MRDC tbl[112] e:7+40 n:40
+[17:44:05.531] [N3API] [112]tbl112-3,2  MRDC tbl[113] e:28+40 n:40
+[17:44:05.535] [N3API] [113]tbl113-3,2  MRDC tbl[114] e:1+3+7 n:40
+[17:44:05.538] [N3API] MRDC: [114]tbl114-4,3  
+[17:44:05.541] [N3API] MRDC tbl[115] e:1+3+28 n:40
+[17:44:05.544] [N3API] [115]tbl115-4,3  MRDC tbl[116] e:1+3+40 n:40
+[17:44:05.548] [N3API] [116]tbl116-4,3  MRDC tbl[117] e:1+7+28 n:40
+[17:44:05.551] [N3API] [117]tbl117-4,3  MRDC tbl[118] e:1+7+40 n:40
+[17:44:05.555] [N3API] [118]tbl118-4,3  MRDC tbl[119] e:1+28+40 n:40
+[17:44:05.559] [N3API] MRDC: [119]tbl119-4,3  
+[17:44:05.563] [N3API] MRDC tbl[120] e:3+7+28 n:40
+[17:44:05.566] [N3API] [120]tbl120-4,3  MRDC tbl[121] e:3+7+40 n:40
+[17:44:05.569] [N3API] [121]tbl121-4,3  MRDC tbl[122] e:3+28+40 n:40
+[17:44:05.572] [N3API] [122]tbl122-4,3  MRDC tbl[123] e:7+28+40 n:40
+[17:44:05.575] [N3API] [123]tbl123-4,3  MRDC tbl[124] e:1+3+7+28 n:40
+[17:44:05.578] [N3API] MRDC: [124]tbl124-5,4  
+[17:44:05.581] [N3API] MRDC tbl[125] e:1+3+7+40 n:40
+[17:44:05.583] [N3API] [125]tbl125-5,4  MRDC tbl[126] e:1+7+28+40 n:40
+[17:44:05.586] [N3API] [126]tbl126-5,4  MRDC tbl[127] e:3+7+28+40 n:40
+[17:44:05.589] [N3API] MRDC: [127]tbl127-5,4  
+[17:44:05.593] [N3API] MRDC BCL:128, FSCL:5
+[17:44:05.596] [ASN]  [OSS DB] enc PDU sz: 1873
+[17:44:05.600] [OTA DB] 29:MRDC [1873]
+[17:44:05.603] [N3API] MRDC update: reset UE capability DB
+[17:44:05.606] [MRM] Set UE MRDC Capability PDU - mode: 2 length: 1910
+[17:44:05.610] [N3API]  mrdcCapaPdu mode:2, size:1910
+[17:44:05.613] [MRM] Set UE NR Capability PDU - mode: 1 length: 1686
+[17:44:05.616] [N3API]  ueCapaPdu mode:1, size:1686
+[17:44:05.619] [N3API]  ueCapaPdu mode:3, size:1686
+[17:44:05.622] [N3API] [CAPA-MEM][op-pre] pInfo=856c9dd8 SBL(own=0 alloc=00000000) BCL.trk=0 FS.trk=0
+[17:44:05.625] [N3API]   SBL.val=85795858 cnt=15 BCL.main=857ab578 cnt=108 ABLF(dec=0/00000000/0 own=0/00000000)
+[17:44:05.629] [N3API]   FS outer: decode-graph (B), trk=0
+[17:44:05.633] [N3API] [CAPA-MEM][pre-ASNFreePdu] pInfo=856c9dd8 SBL(own=0 alloc=00000000) BCL.trk=0 FS.trk=0
+[17:44:05.637] [N3API]   SBL.val=85795858 cnt=15 BCL.main=857ab578 cnt=108 ABLF(dec=0/00000000/0 own=0/00000000)
+[17:44:05.640] [N3API]   FS outer: decode-graph (B), trk=0
+[17:44:05.644] [N3API] L3_NR_FREE_BCL: supportedBandCombinationList, num: 108
+[17:44:05.647] [N3API] BCL: free dec 857ab578 (detach untrk)
+[17:44:05.651] [N3API] L3_NR_FREE_BCL: supportedBandCombinationList_v1540, num: 108
+[17:44:05.655] [N3API] BCL: free dec 857b3358 (detach untrk)
+[17:44:05.658] [N3API] L3_NR_FREE_BCL: supportedBandCombinationList_v1610, num: 108
+[17:44:05.662] [N3API] BCL: free dec 85815258 (detach untrk)
+[17:44:05.667] [N3API] [CAPA-MEM][post-ASNFreePdu] pInfo=856c9dd8 SBL(own=0 alloc=00000000) BCL.trk=0 FS.trk=0
+[17:44:05.670] [N3API]   SBL.val=85795858 cnt=15 BCL.main=00000000 cnt=0 ABLF(dec=0/00000000/0 own=0/00000000)
+[17:44:05.674] [N3API]   FS outer: decode-graph (B), trk=0
+[17:44:05.677] [N3API] [CAPA-MEM][cfg-cache] reset: empty
+[17:44:05.681] [OTA RX:10240] 31:NRCAPA [1686]->
+[17:44:05.686] E1A23000 47465A03 1F8D8385 20001609 31700018 3F0B804D DFF04088 20402E89
+[17:44:05.690] 000A00B0 1F4C4C00 90000010 88006AD0 60003003 D038F21C F8000105 FFC7F1FC
+[17:44:05.695] 7FF1FC7F 0708100E DD000100 010001D0 00100010 00000140 A6260148 00000844
+[17:44:05.699] 00356830 001801E8 1C790E7C 000082FF E3F8FE3F F8FE3F83 8408076E C000C000
+[17:44:05.703] C000EC00 0C000C00 0000A053 13012400 00042200 1AB41800 0C00F40E 3C873E00
+[17:44:05.708] 00416F81 E06F01C0 1C004005 0298980D 20000021 1000D5A0 C0006007 A071E439
+[17:44:05.711] F000020B FF8FE3F8 FFE3F8FE 0E10201D B9000100 01000390 00100010 00000281
+[17:44:05.715] 4C4C0790 00001088 006AD060 003003D0 38F21CF8 000105BC 0701BC07 00708100
+[17:44:05.718] 79C80008 00080000 140A6260 6C800000 84400356 83000180 1E81C790 E7C00008
+[17:44:05.721] 2D80200D 80200380 0800A053 1304E400 00042200 1AB41800 0C00F40E 3C873E00
+[17:44:05.724] 00416F01 C06F01C0 1C004005 02989833 20000021 1000D5A0 C0006007 A071E439
+[17:44:05.727] F000020B 7E0F8378 0E00E002 002814C4 C1B90000 01088006 AD060003 003D038F
+[17:44:05.731] 21CF8000 105BF07C 1BF07C07 00100140 A63612C8 00000844 00356830 001801E8
+[17:44:05.734] 1C790E7C 000082BF F0FC3F0F FC3F0FC0 E0020028 14C6C279 00000108 8006AD06
+[17:44:05.738] 0003003D 038F21CF 80001057 FF1FF7FD FFC7FDFF 1C20402B 39000900 03900090
+[17:44:05.742] 00000503 98D85021 20000021 1000D5A0 C0006007 A071E439 F000020A FFE3FEFF
+[17:44:05.746] BFF8FFBF E3850807 6EC001C0 01C000EC 001C001C 00000200 04000000 A0130212
+[17:44:05.749] A0000000 88006AD0 60003003 D038F21C F8000105 FFC7F1FC E6362640 48000008
+[17:44:05.752] 44003568 30001801 E81C790E 7C000082 BBF8FFBF EEFE3FEF F8E14201 59C00040
+[17:44:05.756] 001C0004 00000080 01000000 2814C6C4 D9000001 088006AD 06000300 3D038F21
+[17:44:05.759] CF800010 577F1FF7 FDDFC7FD FF1C2840 2B380008 00038000 80000010 00200000
+[17:44:05.762] 05029888 A7200000 211000D5 A0C00060 07A071E4 39F00002 0BFF8FE3 F8380080
+[17:44:05.765] 0A010801 C0000000 00070080 0000001C 04000002 00701800 000001C0 70000040
+[17:44:05.769] 07034000 01801C13 00000800 70640000 1001C1B0 0000A107 09400003 001C2700
+[17:44:05.772] 000E1070 9C000040 41C28000 01010713 00000404 1C4D0000 1000F134 0028A600
+[17:44:05.776] 09007800 001C0400 001400F0 0000384E 00002C01 E0000071 34000058 03C04000
+[17:44:05.780] E1380000 C0078080 01C4D000 01801700 00038080 01827000 6805C000 00C0201C
+[17:44:05.783] 2700001C 0160000E 02000709 C0000780 5C00000E 02000613 4001A017 00000300
+[17:44:05.787] 80713400 00700580 00380800 1C4D0000 1E017000 00384E00 184D0008 005C0000
+[17:44:05.791] 0C1381C4 D0000220 160000E1 38007134 00009005 C04000E1 38006134 00260170
+[17:44:05.797] 1000304E 07134000 0A005804 0384E001 C4D00002 A3A40017 44200000 00000000
+[17:44:05.801] 00000023 011808C0 46023011 82008020 08020080 40040040 04004004 00400400
+[17:44:05.806] 40040040 04000FC2 10000000 00000000 00000010 20400000 00000000 00000000
+[17:44:05.810] 00000000 00007EFF FFFC4600 07000503 82803818 04200C03 C0F00000 00000000
+[17:44:05.816] 00040000 00040000 00030000 00020000 00014000 0000C000 00007000 00004000
+[17:44:05.818] 00002400 00001400 00000B00 00000600 00000340 000001C0 000000F0 3D93B583
+[17:44:05.822] B5A3B592 35823592 B582B590 B580B591 B581B593 358335A3 359535A5 34100000
+[17:44:05.827] 00000000 10000008 00000300 00010000 00500000 18000007 00000200 00009000
+[17:44:05.831] 00280000 0B000003 000000D0 00003800 000F0000 04010127 820F051E 091C1038
+[17:44:05.835] 24304060 9341068A 4D5141AA 2A35412A 829514AA A283D454 AA80A801 40080180
+[17:44:05.839] 20050060 0C006010 02402805 00180600 900E0140 06020034 04807001 80A00901
+[17:44:05.842] 60140060 30044068 0900280C 01501A02 E0380600 140780D8 02005020 03800A03
+[17:44:05.846] C07C0101 08100221 0501E03E 00808408 01105000 00600001 40000308 28010030
+[17:44:05.850] 0400A00C 01818040 0900A014 20A00400 C0100280 30060A03 C06C0100 281001C1
+[17:44:05.855] 03008012 01402828 0F01B004 00A04007 08140080 18020050 0600C0C0 20048050
+[17:44:05.859] 0A0A03C0 04010008 10000205 00200600 80140180 30300800 20140002 80F01B00
+[17:44:05.864] 400A0400 70814008 00802001 0060000C 02004805 00A0A03C 06C01002 81001C20
+[17:44:05.867] 50020060 08014018 03050020 06008014 01803050 1E002008 00408000 10280100
+[17:44:05.871] 300400A0 0C018280 F0010040 02040000 28010030 0400A00C 01881400 80080200
+[17:44:05.874] 10060001 40780D80 20050200 38140080 18020050 0600C406 01002402 80505002
+[17:44:05.878] 00600801 40180305 01E00200 80040800 01018040 0900A014 14078008 02001020
+[17:44:05.882] 00014008 01802005 00600C40 60100040 28000501 E0360080 140800E0 50020060
+[17:44:05.886] 08014018 031AA030 401032F6 70000000 014A2000 0420
+[17:44:05.890] [N3API] init_BCL param - 33
+[17:44:05.893] [N3API] RF bit_mask : a2 00 00 00 00
+[17:44:05.897] [N3API] [CAPA-MEM][post-decode] pInfo=00000000 SBL(own=0 alloc=00000000) BCL.trk=0 FS.trk=0
+[17:44:05.901] [N3API] nr pdu filter hw=26 sbl 16->14 bcl 33->32
+[17:44:05.905] [N3API] [CAPA-MEM][DB-set] pInfo=856c9dd8 SBL(own=0 alloc=00000000) BCL.trk=0 FS.trk=0
+[17:44:05.907] [N3API]   SBL.val=85599458 cnt=14 BCL.main=85594428 cnt=32 ABLF(dec=0/00000000/0 own=0/00000000)
+[17:44:05.911] [N3API]   FS outer: decode-graph (B), trk=0
+[17:44:05.920] [L3API][H] Enable UL MIMO
+[17:44:05.928] [L3API][H] TDD UL MIMO
+[17:44:05.935] [L3API][H] Disable CA
+[17:44:05.948] [L3API][H] Bit 13 : disabled
+[17:44:05.955] [L3API][H] Bit 18 : disabled
+[17:44:05.958] [L3API][H] Bit 13 : disabled
+[17:44:05.961] [L3API][H] Bit 18 : disabled
+[17:44:05.965] [L3API][H]  SetFgi: 1E9805FE 00000000 0000C1FF / 1E9805FE 00000000 0000C1FF
+[17:44:05.969] [L3API][H]  SetFgi: FDD/TDD configured
+[17:44:05.972] [L3API][H] Bit 13 : disabled
+[17:44:05.976] [L3API][H] Bit 18 : disabled
+[17:44:05.979] [L3API][H]  Set FGI Common (1E9805FE 00000000 0000C1FF)
+[17:44:05.982] [L3API][H]  Set FGI FDD only (00000000 00000000 00000000)
+[17:44:05.985] [L3API][H]  Set FGI TDD only (00000000 00000000 00000000)
+[17:44:05.988] [L3API][H] 	[Y]Set interRAT_BandList(0) in BCL(31)
+[17:44:05.991] [N3API]  EUTRA band[32]:
+[17:44:05.994] [N3API] 	 B1 B2 B3 B4 B5 B6 B7 B8 B10 B12 B13 B14 B17 B18 B19 B20
+[17:44:05.997] [N3API] 	 B25 B26 B28 B29 B30 B34 B38 B39 B40 B41 B42 B43 B48 B52 B66 B71
+[17:44:06.001] [N3API] 
+[17:44:06.004] Set bit-mask: 856CB4E4(000000E0) - 0 00000010
+[17:44:06.011] [N3API] [MPR][PC] band:n38 pc:1 v1610:0 isPc1dot5:0 mpr_present:0 mpr_val:0x00
+[17:44:06.015] [N3API] [MPR][PC] done band:n38 mpr_present:0 mpr_val:0x00
+[17:44:06.019] [N3API] [MPR][PC] band:n40 pc:1 v1610:0 isPc1dot5:0 mpr_present:0 mpr_val:0x00
+[17:44:06.022] [N3API] [MPR][PC] done band:n40 mpr_present:0 mpr_val:0x00
+[17:44:06.026] [N3API] [MPR][PC] band:n41 pc:1 v1610:1 isPc1dot5:1 mpr_present:1 mpr_val:0x10
+[17:44:06.029] [N3API] [MPR][PC] set n41 modifiedMPR_Behaviour=0x10
+[17:44:06.033] [N3API] [MPR][PC] done band:n41 mpr_present:1 mpr_val:0x10
+[17:44:06.038] [N3API] [MPR][PC] band:n77 pc:1 v1610:1 isPc1dot5:1 mpr_present:1 mpr_val:0x80
+[17:44:06.041] [N3API] [MPR][PC] set n77 modifiedMPR_Behaviour=0x80
+[17:44:06.044] [N3API] [MPR][PC] done band:n77 mpr_present:1 mpr_val:0x80
+[17:44:06.047] [N3API] [MPR][PC] band:n78 pc:1 v1610:1 isPc1dot5:1 mpr_present:0 mpr_val:0x00
+[17:44:06.050] [N3API] [MPR][PC] set n78 modifiedMPR_Behaviour=0x80
+[17:44:06.052] [N3API] [MPR][PC] done band:n78 mpr_present:1 mpr_val:0x80
+[17:44:06.055] [N3API] === reset UE Capa PDU
+[17:44:06.058] [N3API] [CAPA-MEM][reset-done] pInfo=856c9dd8 SBL(own=0 alloc=00000000) BCL.trk=0 FS.trk=0
+[17:44:06.062] [N3API]   SBL.val=85599458 cnt=14 BCL.main=85594428 cnt=32 ABLF(dec=0/00000000/0 own=0/00000000)
+[17:44:06.065] [N3API]   FS outer: decode-graph (B), trk=0
+[17:44:06.069] [N3API] [CAPA-MEM][op-post] pInfo=856c9dd8 SBL(own=0 alloc=00000000) BCL.trk=0 FS.trk=0
+[17:44:06.073] [N3API]   SBL.val=85599458 cnt=14 BCL.main=85594428 cnt=32 ABLF(dec=0/00000000/0 own=0/00000000)
+[17:44:06.076] [N3API]   FS outer: decode-graph (B), trk=0
+[17:44:06.080] [MRM] Set UE EUTRA Capability PDU - mode: 1 length: 1853
+[17:44:06.083] [L3API][H]  eutraCapaPdu mode:1, size:1853
+[17:44:06.087] [L3API][H]  eutraCapaPdu mode:3, size:1853
+[17:44:06.092] [L3API][H] eutra reset: hasPdu:1 RunSrc=CFG
+[17:44:06.095] [OTA RX][0] 30:UECAPA [1853]->
+[17:44:06.099] E0198057 00103081 43071244 913326CF A54EA14A A5EFDFBF 7E5EBFFF FFF83D7F
+[17:44:06.103] FFFFF07A FFFFFFE0 F5FFFFFF C1EBFFFF FF83D7FF FFFF07AF FFFFFE0F 5FFFFFFC
+[17:44:06.107] 1EBFFFFF F83D7FFF FFF07AFF FFFFE0F5 FFFFFFC1 EBFFFFFF 83D7FFFF FF07AFFF
+[17:44:06.111] FFFE0F5F FFFFFC1E BFFFFFF8 3D7FFFFF F07AFFFF FFE0F5FF FFFFC1EB FFFFFF83
+[17:44:06.114] D7FFFFFF 07AFFFFF FE0F5FFF FFFC1FF8 3FE26800 E6DE039E 40000000 1FEB8000
+[17:44:06.118] 04060D0A 8597F000 00005F78 01801801 80180180 18018018 01801801 80180180
+[17:44:06.121] 18018018 01801801 80180180 18018018 018210C0 0C108600 60843003 04218018
+[17:44:06.124] 210C00C1 08600608 43003042 18018210 C00C1086 00608430 03042180 18210C00
+[17:44:06.128] C1086006 08430030 42180182 10C00C10 86006084 30030421 8018210C 00C10860
+[17:44:06.131] 06084300 30421801 8210C00C 10860060 84300304 21801821 0C00C108 60060843
+[17:44:06.134] 00304218 018210C0 0C108600 60843003 04218018 210C00C1 08600608 43003042
+[17:44:06.137] 18018210 C00C1086 00608430 03042180 18210C00 C1086006 08430030 4212D3E2
+[17:44:06.140] 82EE0600 00208184 00082061 80020818 80008206 28002081 8C000820 63800208
+[17:44:06.143] 19200082 06880020 81A40008 20698002 081B2000 8206D800 2081BE00 08207280
+[17:44:06.146] 02081CE0 00820740 002081D2 00082075 0002081D E0008207 F8002081 FE000820
+[17:44:06.149] 7F800208 1FE00082 06000024 83800008 2801040C 20004907 08001050 82081860
+[17:44:06.152] 00920E18 0020A184 10310001 141C4000 41440820 62800248 38A00082 8A1040C6
+[17:44:06.156] 00049071 80010518 20818E00 08A0E380 020A3841 03240012 41C90004 14908206
+[17:44:06.159] 88002483 A200082A 21040D20 00490748 00105482 081A6000 920E9800 20A98410
+[17:44:06.163] 36400124 1D900041 5908206D 8002483B 600082B6 1040DF00 049077C0 01057C20
+[17:44:06.166] 81CA0009 20F28002 0B284103 9C001241 E7000416 70820740 002483D0 00082D01
+[17:44:06.169] 040E9000 4907A400 105A4208 1D400092 0F500020 B504103B C001241E F000416F
+[17:44:06.172] 08207F80 02483FE0 0082FE10 40FF0004 907FC001 05FC2081 FE000920 FF80020B
+[17:44:06.176] F84103FC 001241FF 000417F0 82060008 24838000 08380000 82061008 24838400
+[17:44:06.180] 08384000 82061808 24838600 08386000 82062004 22838800 08388000 82062808
+[17:44:06.182] 24838A00 0838A000 82063008 24838C00 0838C000 82063804 22838E00 0838E000
+[17:44:06.186] 82064808 24839200 08392000 82068808 2483A200 083A2000 82069008 2483A400
+[17:44:06.190] 083A4000 82069808 2483A600 083A6000 8206C808 2483B200 083B2000 8206D808
+[17:44:06.194] 2483B600 083B6000 8206F808 2483BE00 083BE000 82072808 2483CA00 083CA000
+[17:44:06.197] 82073808 2483CE00 083CE000 82074008 2483D000 083D0000 82074808 2483D200
+[17:44:06.201] 083D2000 82075008 2483D400 083D4000 82077808 2483DE00 083DE000 8207F808
+[17:44:06.204] 2483FE00 083FE000 8207F808 2483FE00 083FE000 8207F808 2483FE00 083FE000
+[17:44:06.207] 8207F808 2483FE00 083FE000 83DEBFFF FFF8397F FFFFF2FF FFFFE5FF FFFFCBFF
+[17:44:06.210] FFFF97FF FFFF2FFF FFFE5FFF FFFCBFFF FFF97FFF FFF2FFFF FFE5FFFF FFCBFFFF
+[17:44:06.213] FF97FFFF FF2FFFFF FE5FFFFF FCBFFFFF F97FFFFF F2FFFFFF E5FFFFFF CBFFFFFF
+[17:44:06.216] 97FFFFFF 2FFFFFFE 5FFFFFFC BFFFFFF9 7FFFFFF2 FFFFFFE5 FFFFFFCB FFFFFF97
+[17:44:06.220] FFFFFF2F FFFFFE5F FFFFFCBF FFFFF97F FFFFF2FF FFFFE5FF FFFFCBFF FFFF97FF
+[17:44:06.223] FFFF2FFF FFFE5FFF FFFCBFFF FFF97FFF FFF2FFFF FFE5FFFF FFCBFFFF FF97FFFF
+[17:44:06.227] FF2FFFFF FE5FFFFF FCBFFFFF F97FFFFF F2FFFFFF E5FFFFFF CBFFFFFF 97FFFFFF
+[17:44:06.230] 2FFFFFFE 5FFFFFFC BFFFFFF9 7FFFFFF2 FFFFFFE5 FFFFFFCB FFFFFF97 FFFFFF2F
+[17:44:06.234] FFFFFE5F FFFFFCBF FFFFF97F FFFFF2FF FFFFE5FF FFFFCBFF FFFF97FF FFFF2FFF
+[17:44:06.237] FFFE5FFF FFFCBFFF FFF97FFF FFF2FFFF FFE5FFFF FFCBFFFF FF97FFFF FF2FFFFF
+[17:44:06.241] FE5FFFFF FCBFFFFF F97FFFFF F2FFFFFF E5FFFFFF CBFFFFFF 97FFFFFF 2FFFFFFE
+[17:44:06.244] 5FFFFFFC BFFFFFF9 7FFFFFF2 FFFFFFE5 FFFFFFCB FFFFFF97 FFFFFF2F FFFFFE5F
+[17:44:06.247] FFFFFCBF FFFFF97F FFFFF2FF FFFFE5FF FFFFCBFF FFFF97FF FFFF2FFF FFFE5FFF
+[17:44:06.251] FFFCBFFF FFF97FFF FFF2FFFF FFE5FFFF FFCBFFFF FF97FFFF FF2FFFFF FE5FFFFF
+[17:44:06.254] FCBFFFFF F97FFFFF F2FFFFFF E5FFFFFF CBFFFFFF 97FFFFFF 2FFFFFFE 5FFFFFFD
+[17:44:06.257] FFC80002 D083B800 0000FF80 000001FE 00000007 F8000000 03FE0000 000FFC00
+[17:44:06.260] 00000000 0FF00000 003FC000 0000FFC0 000003FC 0000000F F0000000 00003FE0
+[17:44:06.264] 0000007F 80000001 FE000000 00FF8000 0003FF00 00000000 03FC0000 000FF000
+[17:44:06.267] 00003FF0 000000FF 00000003 FC000000 00007EE0 00000000 00000000 00000000
+[17:44:06.270] 00000000 00000000 202020C0 21402160 00800020 00080002 00008000 20000800
+[17:44:06.273] 02000080 00200008 00020000 80002000 08000200 00800020 00080002 002020A0
+[17:44:06.276] 28080830 28320C02 140A1485 00858285 A1600080 00200008 00020000 80002000
+[17:44:06.279] 08000200 00800020 00080002 00008000 20000800 02000080 00200008 00020020
+[17:44:06.282] 20A02808 08302832 0C02140A 14850085 8285A172 8401E32D 300C2FFF FFFFDFFF
+[17:44:06.286] F59B9420 08E00452 40000800 00412E68 022605EF 05001040 00100008 00000C10
+[17:44:06.289] 41040043 94008000 82087220 01000021 830C0113 02F41022 00004080 64
+[17:44:06.292] [L3API][H] pdu filter hw sbl 24->21 bcl10 120->105 add 0->0 red 0->0
+[17:44:06.296] [L3API][H]  supportedBandCombination_v10i0 free - 0x856BD7A8
+[17:44:06.299] [L3API][H]  supportedBandCombination_r10 free - 0x856AE758
+[17:44:06.301] [L3API][H] eutra RunSrc:CFG->PDU
+[17:44:06.305] [L3API][H] eutra reset: skip cfg overlay (OSS_DECODE)
+[17:44:06.308] [L3API][H] eutra reset: cfg ca_mode=0 (NON_CA=0)
+[17:44:06.312] [L3API][H] eutra reset: NON_CA - strip CA from run DB
+[17:44:06.315] [L3API][H] eutra keep Non-CA BCL (ca_mode=0) r10 105->21 add 0->0 red 0->0
+[17:44:06.319] [L3API][H] eutra reset: DB from PDU (sz=1853) RunSrc=PDU (no overlay)
+[17:44:06.322] mrd: ca_band_combination_list()
+[17:44:06.325] mrd: CA user_version : 0
+[17:44:06.328] mrd: CA Band combination List file_ver:0, ucfg_user_ver:0
+[17:44:06.332] mrd: /var/nr/param/capa/rrc_ca_combination_list_mode_none.bin : version match
+[17:44:06.336] mrd: File(/var/nr/param/capa/rrc_ca_combination_list_working.bin) size : 330
+[17:44:06.339] mrd: Create New CA Band Combination List File(/var/nr/param/capa/rrc_ca_combination_list_working.bin)
+[17:44:06.342] mrd: ca disable index : 0
+[17:44:06.345] mrd: Enable/Disable Enable_field among CA Band Combination List
+[17:44:06.348] mrd: The Supported CA Band combination list not set.(user_ver(0)
+[17:44:06.353] Modem IPC mode:
+[17:44:06.356]   master_proc_idle=1
+[17:44:06.359]   assert_level=3
+[17:44:06.364]   sdu_prio=1
+[17:44:06.368] Linux IPC mode:
+[17:44:06.372]   proc_idle enabled=1(cpu=0)
+[17:44:06.378]   assert_level=3(3)
+[17:44:06.383]   sdu_prio=1(1)
+[17:44:06.390] mrd: [mrd_db_device_info] MCC[001] MNC[012], MNC len(3), SVN(0)
+[17:44:06.394] mrd: NR UICC INFORMATION INDICATION(DEV_IDX(1)
+[17:44:06.398] mrd: USIM Status 1
+[17:44:06.402] mrd: USIM Slot	0
+[17:44:06.448] mrd: IMSI : 001012345678901
+[17:44:06.454] mrd: IMEI : 123456798213141
+[17:44:06.458] mrd: SV : 0
+[17:44:06.464] mrd: ICCID : 89014103255041700619
+[17:44:06.469] mrd: EID : 00000000000000000000000000000000
+[17:44:06.473] mrautocm: [mrcm_uicc_info_ind] status from (0) to (1)
+[17:44:06.476] mrd: [mrd_db_device_info] MCC[001] MNC[012], MNC len(3), SVN(0)
+[17:44:06.479] mrd: NR UICC INFORMATION INDICATION(DEV_IDX(1)
+[17:44:06.483] mrd: USIM Status 1
+[17:44:06.487] mrd: USIM Slot	0
+[17:44:06.492] mrd: IMSI : 001012345678901
+[17:44:06.496] mrd: IMEI : 123456798213141
+[17:44:06.499] mrd: SV : 0
+[17:44:06.502] mrd: ICCID : 89014103255041700619
+[17:44:06.505] mrd: E[NV] +nv_write [mrd] NET(4) data=0x7f98e85010 offs=0xc7 size=0x1
+[17:44:06.509] ID : 00000000000000000000000000000000
+[17:44:06.512] mrautocm: [mrcm_uicc_info_ind] status from (0) to (1)
+[17:44:06.515] mrd: DEVICE CONFIG SET RESPONSE(DEV_IDX(1) Result(0)
+[17:44:06.518] mrd: [mrd_db_device_info] MCC[001] MNC[012], MNC len(3), SVN(0)
+[17:44:06.523] mrd: NR UICC INFORMATION INDICATION(DEV_IDX(1)
+[17:44:06.526] mrd: USIM Status 1
+[17:44:06.531] mrd: USIM Slot	0
+[17:44:06.535] mrd: IMSI : 001012345678901
+[17:44:06.539] mrd: IMEI : 123456798213141
+[17:44:06.544] mrd: SV : 0
+[17:44:06.548] mrd: ICCID : 89014103255041700619
+[17:44:06.553] mrd: EID : 00000000000000000000000000000000
+[17:44:06.557] mrautocm: [mrcm_uicc_info_ind] status from (0) to (1)
+[17:44:06.561] [NV] [LTE_NV] mrd Write Skip id=4(NET)
+[17:44:06.566] [NV] -nv_write [mrd] NET(4) data=0x7f98e85010 offs=0xc7 size=0x1
+[17:44:06.570] mrd: DEVICE CONFIG SET RESPONSE(DEV_IDX(1) Result(0)
+[17:44:06.574] mrd: NR RRC CAPA SET RESPONSE(DEV_IDX(1))
+[17:44:06.578] mrd: Result : 0
+[17:44:06.581] mrd: NR RRC CAPA SET RESPONSE(DEV_IDX(1))
+[17:44:06.585] mrd: Result : 0
+[17:44:06.588] mrd: NR RRC CAPA SET RESPONSE(DEV_IDX(1))
+[17:44:06.592] mrd: Result : 0
+[17:44:06.595] mrd: LTE RRC CAPA SET R[NV] +nv_write [mrd] NET(4) data=0x7f98e85010 offs=0xc9 size=0x1
+[17:44:06.600] ESPONSE(DEV_IDX(1))
+[17:44:06.604] mrd: Result : 0
+[17:44:06.608] [NV] [LTE_NV] mrd Write Skip id=4(NET)
+[17:44:06.612] [NV] -nv_write [mrd] NET(4) data=0x7f98e85010 offs=0xc9 size=0x1
+[17:44:06.616] mrd: SMS STORAGE CONFIG WRITE RESPONSE
+[17:44:06.620] DM> 
+[17:44:06.623] DM> mrd: ONLINE REQUEST ret=110
+[17:44:06.626] mrd: run_lte_scr nr=0
+[17:44:06.630] mrd: run_cm_online_request_thread() - init_complete
+[17:44:06.634] mrd: [online_request]Watchdog First start
+[17:44:06.637] shell
+[17:44:06.640] # mrbip: LTE PS INIT Completed
+[17:44:06.643] mrbip: Start
+[17:44:06.646] mrautocm: MRAPI_UiccIdReadReq midType (0)
+[17:44:06.649] mrautocm: [MRAPI_UiccIdReadReq]
+[17:44:06.653] mrd: [SERVER] new connection request
+[17:44:06.656] mrd: lted_srv_alloc_client id=4
+[17:44:06.666] $ ifconfig
+[17:44:06.670] atcm(1455)
+[17:44:06.674] c00: gdm_irq_set_type: cpu=0 hwirq=99 type=4
+[17:44:06.677] c00: set_affinity: irq=46(UART RX) cpu=0
+[17:44:06.680] c00: gdm_irq_set_type: cpu=0 hwirq=98 type=4
+[17:44:06.683] c00: set_affinity: irq=47(UART TX) cpu=0
+[17:44:06.687] uart port[1] fc=0 cr=0000002b
+[17:44:06.690] highd open nr=1
+[17:44:06.694] gif_open mratcm 1/0
+[17:44:06.698] mrd: [mrd_db_device_info] MCC[001] MNC[012], MNC len(3), SVN(0)
+[17:44:06.701] mrd: NR UICC INFORMATION INDICATION(DEV_IDX(1)
+[17:44:06.705] mrd: USIM Status 1
+[17:44:06.708] mrd: USIM Slot	0
+[17:44:06.711] mrd: IMSI : 001012345678901
+[17:44:06.715] mrd: IMEI : 123456798213141
+[17:44:06.718] mrd: SV : 0
+[17:44:06.722] mrd: ICCID : 89014103255041700619
+[17:44:06.727] mrd: EID : 00000000000000000000000000000000
+[17:44:06.730] mrautocm: [mrcm_uicc_info_ind] status from (0) to (1)
+[17:44:06.733] mrautocm: [MRAPI_S_GET_UsimOperator]
+[17:44:06.737] mrautocm: [mrcm_uicc_info_ind] USIM Operator From (E_USIM_OPER_UNKNOWN) To(E_USIM_OPER_UNKNOWN)
+[17:44:06.741] ifconfig
+[17:44:06.745] br0       Link encap:Ethernet  HWaddr 00:0A:3B:FF:FF:01  
+[17:44:06.749]           inet addr:192.168.0.1  Bcast:192.168.0.255  Mask:255.255.255.0
+[17:44:06.751]           inet6 addr: fe80::f051:74ff:fe7c:eafe/64 Scope:Link
+[17:44:06.755]           UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1
+[17:44:06.760]           RX packets:105 errors:0 dropped:0 overruns:0 frame:0
+[17:44:06.763]           TX packets:49 errors:0 dropped:0 overruns:0 carrier:0
+[17:44:06.767]           collisions:0 txqueuelen:1000 
+[17:44:06.771]           RX bytes:20571 (20.0 KiB)  TX bytes:4227 (4.1 KiB)
+[17:44:06.775] lo        Link encap:Local Loopback  
+[17:44:06.779]           inet addr:127.0.0.1  Mask:255.0.0.0
+[17:44:06.782]           inet6 addr: ::1/128 Scope:Host
+[17:44:06.784]           UP LOOPBACK RUNNING  MTU:65536  Metric:1
+[17:44:06.787]           RX packets:0 errors:0 dropped:0 overruns:0 frame:0
+[17:44:06.791]           TX packets:0 errors:0 dropped:0 overruns:0 carrier:0
+[17:44:06.794]           collisions:0 txqueuelen:1000 
+[17:44:06.796]           RX bytes:0 (0.0 B)  TX bytes:0 (0.0 B)
+[17:44:06.800] usb0      Link encap:Ethernet  HWaddr 00:0A:3B:FF:FF:01  
+[17:44:06.803]           inet6 addr: fe80::20a:3bff:feff:ff01/64 Scope:Link
+[17:44:06.806]           UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1
+[17:44:06.810]           RX packets:110 errors:0 dropped:0 overruns:0 frame:0
+[17:44:06.813]           TX packets:45 errors:0 dropped:0 overruns:0 carrier:0
+[17:44:06.816]           collisions:0 txqueuelen:1000 
+[17:44:07.810]           RX bytes:21212 (20.7 KiB)  TX bytes:6276 (6.1 KiB)
+[17:44:09.138] $ ping 192.168.0.1
+[17:44:10.146] ping 192.168.0.1
+[17:44:10.150] PING 192.168.0.1 (192.168.0.1): 56 data bytes
+[17:44:10.154] 64 bytes from 192.168.0.1: seq=0 ttl=64 time=0.179 ms
+[17:44:10.157] i2c 2-0047: deferred probe pending: (reason unknown)
+[17:44:11.159] 64 bytes from 192.168.0.1: seq=1 ttl=64 time=0.101 ms
+[17:44:11.164] 64 bytes from 192.168.0.1: seq=2 ttl=64 time=0.082 ms
+[17:44:12.172] 64 bytes from 192.168.0.1: seq=3 ttl=64 time=0.079 ms
+[17:44:12.481] $ (ctrl) Ctrl+C
+[17:44:13.497] ^C
+[17:44:13.501] --- 192.168.0.1 ping statistics ---
+[17:44:13.505] 4 packets transmitted, 4 packets received, 0% packet loss
+[17:44:13.508] round-trip min/avg/max = 0.079/0.110/0.179 ms
+[17:44:14.820] $ ifconfig
+[17:44:14.833] ifconfig
+[17:44:14.837] br0       Link encap:Ethernet  HWaddr 00:0A:3B:FF:FF:01  
+[17:44:14.840]           inet addr:192.168.0.1  Bcast:192.168.0.255  Mask:255.255.255.0
+[17:44:14.844]           inet6 addr: fe80::f051:74ff:fe7c:eafe/64 Scope:Link
+[17:44:14.847]           UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1
+[17:44:14.850]           RX packets:161 errors:0 dropped:0 overruns:0 frame:0
+[17:44:14.853]           TX packets:65 errors:0 dropped:0 overruns:0 carrier:0
+[17:44:14.856]           collisions:0 txqueuelen:1000 
+[17:44:14.860]           RX bytes:25015 (24.4 KiB)  TX bytes:5370 (5.2 KiB)
+[17:44:14.866] lo        Link encap:Local Loopback  
+[17:44:14.874]           inet addr:127.0.0.1  Mask:255.0.0.0
+[17:44:14.880]           inet6 addr: ::1/128 Scope:Host
+[17:44:14.883]           UP LOOPBACK RUNNING  MTU:65536  Metric:1
+[17:44:14.887]           RX packets:8 errors:0 dropped:0 overruns:0 frame:0
+[17:44:14.891]           TX packets:8 errors:0 dropped:0 overruns:0 carrier:0
+[17:44:14.895]           collisions:0 txqueuelen:1000 
+[17:44:14.898]           RX bytes:672 (672.0 B)  TX bytes:672 (672.0 B)
+[17:44:14.901] usb0      Link encap:Ethernet  HWaddr 00:0A:3B:FF:FF:01  
+[17:44:14.904]           inet6 addr: fe80::20a:3bff:feff:ff01/64 Scope:Link
+[17:44:14.908]           UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1
+[17:44:14.912]           RX packets:170 errors:0 dropped:4 overruns:0 frame:0
+[17:44:14.915]           TX packets:61 errors:0 dropped:0 overruns:0 carrier:0
+[17:44:14.919]           collisions:0 txqueuelen:1000 
+[17:44:15.914]           RX bytes:25832 (25.2 KiB)  TX bytes:8252 (8.0 KiB)
+[17:44:17.218] $ lspci
+[17:44:18.232] lspci
+[17:44:19.539] $ cat /proc/interrupt
+[17:44:20.547] cat /proc/interrupt
+[17:44:20.552] cat: can't open '/proc/interrupt': No such file or directory
+[17:44:31.500] $ (knock every 2s) 
+[17:44:34.581] # 
+[17:44:36.663] # 
+[17:44:38.731] # 
+[17:44:40.796] # 
+[17:44:42.850] # 
+[17:44:44.930] # 
+[17:44:46.998] # 
+[17:44:49.052] # 
+[17:44:51.132] # 
+[17:44:53.215] # 
+[17:44:55.283] # 
+[17:44:57.364] # 
+[17:44:59.426] # 
+[17:45:01.516] # 
+[17:45:01.552] $ shell
+[17:45:03.567] shell
+[17:45:03.575] sh: shell: command not found
+[17:45:03.594] $ ifconfig
+[17:45:03.607] ifconfig
+[17:45:03.611] br0       Link encap:Ethernet  HWaddr 00:0A:3B:FF:FF:01  
+[17:45:03.617]           inet addr:192.168.0.1  Bcast:192.168.0.255  Mask:255.255.255.0
+[17:45:03.622]           inet6 addr: fe80::f051:74ff:fe7c:eafe/64 Scope:Link
+[17:45:03.627]           UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1
+[17:45:03.631]           RX packets:218 errors:0 dropped:0 overruns:0 frame:0
+[17:45:03.635]           TX packets:110 errors:0 dropped:0 overruns:0 carrier:0
+[17:45:03.638]           collisions:0 txqueuelen:1000 
+[17:45:03.642]           RX bytes:29068 (28.3 KiB)  TX bytes:9001 (8.7 KiB)
+[17:45:03.646] lo        Link encap:Local Loopback  
+[17:45:03.649]           inet addr:127.0.0.1  Mask:255.0.0.0
+[17:45:03.653]           inet6 addr: ::1/128 Scope:Host
+[17:45:03.657]           UP LOOPBACK RUNNING  MTU:65536  Metric:1
+[17:45:03.661]           RX packets:8 errors:0 dropped:0 overruns:0 frame:0
+[17:45:03.664]           TX packets:8 errors:0 dropped:0 overruns:0 carrier:0
+[17:45:03.668]           collisions:0 txqueuelen:1000 
+[17:45:03.671]           RX bytes:672 (672.0 B)  TX bytes:672 (672.0 B)
+[17:45:03.675] usb0      Link encap:Ethernet  HWaddr 00:0A:3B:FF:FF:01  
+[17:45:03.678]           inet6 addr: fe80::20a:3bff:feff:ff01/64 Scope:Link
+[17:45:03.680]           UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1
+[17:45:03.683]           RX packets:227 errors:0 dropped:4 overruns:0 frame:0
+[17:45:03.686]           TX packets:105 errors:0 dropped:0 overruns:0 carrier:0
+[17:45:03.689]           collisions:0 txqueuelen:1000 
+[17:45:04.701]           RX bytes:29885 (29.1 KiB)  TX bytes:13920 (13.5 KiB)
+[17:45:06.018] $ ping 192.168.0.1
+[17:45:07.032] ping 192.168.0.1
+[17:45:07.037] PING 192.168.0.1 (192.168.0.1): 56 data bytes
+[17:45:07.041] 64 bytes from 192.168.0.1: seq=0 ttl=64 time=0.195 ms
+[17:45:07.045] 64 bytes from 192.168.0.1: seq=1 ttl=64 time=0.108 ms
+[17:45:08.052] 64 bytes from 192.168.0.1: seq=2 ttl=64 time=0.083 ms
+[17:45:09.057] 64 bytes from 192.168.0.1: seq=3 ttl=64 time=0.075 ms
+[17:45:09.377] $ (ctrl) Ctrl+C
+[17:45:10.383] ^C
+[17:45:10.388] --- 192.168.0.1 ping statistics ---
+[17:45:10.391] 4 packets transmitted, 4 packets received, 0% packet loss
+[17:45:10.395] round-trip min/avg/max = 0.075/0.115/0.195 ms
+[17:45:11.702] $ ifconfig
+[17:45:11.714] ifconfig
+[17:45:11.718] br0       Link encap:Ethernet  HWaddr 00:0A:3B:FF:FF:01  
+[17:45:11.721]           inet addr:192.168.0.1  Bcast:192.168.0.255  Mask:255.255.255.0
+[17:45:11.724]           inet6 addr: fe80::f051:74ff:fe7c:eafe/64 Scope:Link
+[17:45:11.728]           UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1
+[17:45:11.731]           RX packets:223 errors:0 dropped:0 overruns:0 frame:0
+[17:45:11.735]           TX packets:113 errors:0 dropped:0 overruns:0 carrier:0
+[17:45:11.739]           collisions:0 txqueuelen:1000 
+[17:45:11.742]           RX bytes:29506 (28.8 KiB)  TX bytes:9262 (9.0 KiB)
+[17:45:11.746] lo        Link encap:Local Loopback  
+[17:45:11.749]           inet addr:127.0.0.1  Mask:255.0.0.0
+[17:45:11.751]           inet6 addr: ::1/128 Scope:Host
+[17:45:11.755]           UP LOOPBACK RUNNING  MTU:65536  Metric:1
+[17:45:11.758]           RX packets:16 errors:0 dropped:0 overruns:0 frame:0
+[17:45:11.762]           TX packets:16 errors:0 dropped:0 overruns:0 carrier:0
+[17:45:11.765]           collisions:0 txqueuelen:1000 
+[17:45:11.769]           RX bytes:1344 (1.3 KiB)  TX bytes:1344 (1.3 KiB)
+[17:45:11.771] usb0      Link encap:Ethernet  HWaddr 00:0A:3B:FF:FF:01  
+[17:45:11.774]           inet6 addr: fe80::20a:3bff:feff:ff01/64 Scope:Link
+[17:45:11.778]           UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1
+[17:45:11.781]           RX packets:232 errors:0 dropped:4 overruns:0 frame:0
+[17:45:11.784]           TX packets:107 errors:0 dropped:0 overruns:0 carrier:0
+[17:45:11.787]           collisions:0 txqueuelen:1000 
+[17:45:12.784]           RX bytes:30323 (29.6 KiB)  TX bytes:14316 (13.9 KiB)
+[17:45:14.087] $ lspci
+[17:45:15.099] lspci
+[17:45:16.415] $ cat /proc/interrupt
+[17:45:17.447] cat /proc/interrupt
+[17:45:17.453] cat: can't open '/proc/interrupt': No such file or directory
+[17:45:27.893] $ (knock every 2s) 
+[17:45:30.950] # 
+[17:45:33.029] # 
+[17:45:35.111] # 
+[17:45:37.170] # 
+[17:45:39.234] # 
+[17:45:41.307] # 
+[17:45:43.401] # 
+[17:45:45.530] # 
+[17:45:47.594] # 
+[17:45:49.675] # 
+[17:45:51.749] # 
+[17:45:53.834] # 
+[17:45:55.883] # 
+[17:45:57.953] # 
+[17:45:57.965] $ shell
+[17:45:59.985] shell
+[17:45:59.989] sh: shell: command not found
+[17:46:00.002] $ ifconfig
+[17:46:00.016] ifconfig
+[17:46:00.023] br0       Link encap:Ethernet  HWaddr 00:0A:3B:FF:FF:01  
+[17:46:00.028]           inet addr:192.168.0.1  Bcast:192.168.0.255  Mask:255.255.255.0
+[17:46:00.032]           inet6 addr: fe80::f051:74ff:fe7c:eafe/64 Scope:Link
+[17:46:00.037]           UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1
+[17:46:00.041]           RX packets:262 errors:0 dropped:0 overruns:0 frame:0
+[17:46:00.045]           TX packets:146 errors:0 dropped:0 overruns:0 carrier:0
+[17:46:00.050]           collisions:0 txqueuelen:1000 
+[17:46:00.055]           RX bytes:32013 (31.2 KiB)  TX bytes:11838 (11.5 KiB)
+[17:46:00.059] lo        Link encap:Local Loopback  
+[17:46:00.063]           inet addr:127.0.0.1  Mask:255.0.0.0
+[17:46:00.066]           inet6 addr: ::1/128 Scope:Host
+[17:46:00.070]           UP LOOPBACK RUNNING  MTU:65536  Metric:1
+[17:46:00.074]           RX packets:16 errors:0 dropped:0 overruns:0 frame:0
+[17:46:00.078]           TX packets:16 errors:0 dropped:0 overruns:0 carrier:0
+[17:46:00.081]           collisions:0 txqueuelen:1000 
+[17:46:00.085]           RX bytes:1344 (1.3 KiB)  TX bytes:1344 (1.3 KiB)
+[17:46:00.088] usb0      Link encap:Ethernet  HWaddr 00:0A:3B:FF:FF:01  
+[17:46:00.091]           inet6 addr: fe80::20a:3bff:feff:ff01/64 Scope:Link
+[17:46:00.096]           UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1
+[17:46:00.099]           RX packets:271 errors:0 dropped:4 overruns:0 frame:0
+[17:46:00.103]           TX packets:140 errors:0 dropped:0 overruns:0 carrier:0
+[17:46:00.107]           collisions:0 txqueuelen:1000 
+[17:46:01.118]           RX bytes:32830 (32.0 KiB)  TX bytes:18392 (17.9 KiB)
+[17:46:02.439] $ ping 192.168.0.1
+[17:46:03.468] ping 192.168.0.1
+[17:46:03.473] PING 192.168.0.1 (192.168.0.1): 56 data bytes
+[17:46:03.477] 64 bytes from 192.168.0.1: seq=0 ttl=64 time=0.175 ms
+[17:46:03.481] 64 bytes from 192.168.0.1: seq=1 ttl=64 time=0.104 ms
+[17:46:04.480] 64 bytes from 192.168.0.1: seq=2 ttl=64 time=0.081 ms
+[17:46:05.489] 64 bytes from 192.168.0.1: seq=3 ttl=64 time=0.077 ms
+[17:46:05.803] $ (ctrl) Ctrl+C
+[17:46:06.818] ^C
+[17:46:06.823] --- 192.168.0.1 ping statistics ---
+[17:46:06.826] 4 packets transmitted, 4 packets received, 0% packet loss
+[17:46:06.830] round-trip min/avg/max = 0.077/0.109/0.175 ms
+[17:46:08.146] $ ifconfig
+[17:46:08.158] ifconfig
+[17:46:08.164] br0       Link encap:Ethernet  HWaddr 00:0A:3B:FF:FF:01  
+[17:46:08.168]           inet addr:192.168.0.1  Bcast:192.168.0.255  Mask:255.255.255.0
+[17:46:08.171]           inet6 addr: fe80::f051:74ff:fe7c:eafe/64 Scope:Link
+[17:46:08.175]           UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1
+[17:46:08.179]           RX packets:266 errors:0 dropped:0 overruns:0 frame:0
+[17:46:08.183]           TX packets:148 errors:0 dropped:0 overruns:0 carrier:0
+[17:46:08.186]           collisions:0 txqueuelen:1000 
+[17:46:08.189]           RX bytes:32313 (31.5 KiB)  TX bytes:11988 (11.7 KiB)
+[17:46:08.193] lo        Link encap:Local Loopback  
+[17:46:08.196]           inet addr:127.0.0.1  Mask:255.0.0.0
+[17:46:08.200]           inet6 addr: ::1/128 Scope:Host
+[17:46:08.205]           UP LOOPBACK RUNNING  MTU:65536  Metric:1
+[17:46:08.208]           RX packets:24 errors:0 dropped:0 overruns:0 frame:0
+[17:46:08.211]           TX packets:24 errors:0 dropped:0 overruns:0 carrier:0
+[17:46:08.215]           collisions:0 txqueuelen:1000 
+[17:46:08.217]           RX bytes:2016 (1.9 KiB)  TX bytes:2016 (1.9 KiB)
+[17:46:08.220] usb0      Link encap:Ethernet  HWaddr 00:0A:3B:FF:FF:01  
+[17:46:08.223]           inet6 addr: fe80::20a:3bff:feff:ff01/64 Scope:Link
+[17:46:08.226]           UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1
+[17:46:08.229]           RX packets:275 errors:0 dropped:4 overruns:0 frame:0
+[17:46:08.232]           TX packets:142 errors:0 dropped:0 overruns:0 carrier:0
+[17:46:08.235]           collisions:0 txqueuelen:1000 
+[17:46:09.231]           RX bytes:33130 (32.3 KiB)  TX bytes:18636 (18.1 KiB)
+[17:46:10.534] $ lspci
+[17:46:11.551] lspci
+[17:46:12.853] $ cat /proc/interrupt
+[17:46:13.866] cat /proc/interrupt
+[17:46:13.869] cat: can't open '/proc/interrupt': No such file or directory
+[17:46:17.259] === TEST STOP ===
