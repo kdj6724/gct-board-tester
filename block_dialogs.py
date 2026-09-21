@@ -315,6 +315,41 @@ def edit_upload_script(parent, params: dict):
     return d.show()
 
 
+def edit_exec(parent, params: dict):
+    d = _Dialog(parent, "Exec 블록", height=580)
+    d._label("실행할 명령어 - 명령 프롬프트에 치듯이 경로+인자를 한 줄로 그대로 적으세요\n"
+             "(예: Y:\\work\\gct-board-tester\\fastboot\\fastboot.exe flash linux "
+             "K:\\...\\Image) - {var} 로 Loop 변수도 쓸 수 있습니다")
+    txt = scrolledtext.ScrolledText(d.body, height=4, width=44, font=("Consolas", 11), bg=FIELD, fg=FG,
+                                     insertbackground=FG, relief="flat", bd=4, wrap="none")
+    txt.pack(fill="x")
+    txt.insert("1.0", params.get("cmd", ""))
+
+    d._label("타임아웃 (초) - 이 시간 안에 안 끝나면 강제 종료합니다")
+    timeout = tk.StringVar(value=str(params.get("timeout", 60)))
+    d._entry(timeout, width=10)
+
+    sep = tk.Frame(d.body, bg=MUTE, height=1); sep.pack(fill="x", pady=(12, 6))
+    d._label("확인할 문자열 (비우면 exit code로만 판정 - 채우면 다른 Check/Wait String "
+             "블록들과 동일하게 \"출력에 이 문자열이 있는가\"로 판정합니다)")
+    pattern = tk.StringVar(value=params.get("check_pattern", ""))
+    d._entry(pattern, width=40)
+    regex = tk.BooleanVar(value=params.get("regex", False))
+    d._check("정규식으로 취급", regex)
+
+    d._label("타임아웃되거나 실패했을 때(exit code 가 0 이 아니거나, 확인할 문자열을 "
+             "못 찾았을 때) 동작")
+    on_timeout = tk.StringVar(value=params.get("on_timeout", "stop"))
+    d._radio_row(on_timeout, [("stop", "테스트 중단"), ("continue", "다음 블록 진행")])
+
+    def collect():
+        return {"cmd": txt.get("1.0", "end").rstrip("\n"), "timeout": float(timeout.get()),
+                 "on_timeout": on_timeout.get(), "check_pattern": pattern.get(),
+                 "regex": bool(regex.get())}
+    d.collect = collect
+    return d.show()
+
+
 def edit_if(parent, params: dict):
     d = _Dialog(parent, "If 블록", height=350)
     d._label("라벨")
@@ -430,6 +465,7 @@ EDITORS = {
     "SAVE_RESULT": edit_save_result,
     "DELAY": edit_delay,
     "UPLOAD_SCRIPT": edit_upload_script,
+    "EXEC": edit_exec,
     "LOOP_START": edit_loop,
     "IF_START": edit_if,
 }

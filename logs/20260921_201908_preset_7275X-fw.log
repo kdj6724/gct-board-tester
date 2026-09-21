@@ -1,0 +1,174 @@
+[20:19:08.336] === PRESET TEST START === preset: 7275X-fw
+[20:19:11.246] $ (knock every 0.5s) 
+[20:19:13.717] ROM(3a97301700)
+[20:19:13.758] NCfg v=33a5 e=2 p=1 a=1
+[20:19:13.790] ID: ad ac 80 16 20 
+[20:19:13.822] BBT not found
+[20:19:13.841] psbl 00000000 r=0 18737us
+[20:19:13.872] c00 sec=0 fb=1 pll=1 lcs=0
+[20:19:13.893] btmd=3 clk(50 1600 1300 100) r=0x660
+[20:19:13.903] rr=0x0(POR)
+[20:19:13.921] sbl r=0 s=8192,4096 r=0 518us
+[20:19:13.938] sbl v=1 ea000003 4d4c4253 0000 1750 cf953058
+[20:19:13.954] sbl sz=5968 csum ok 579us
+[20:19:13.971] - JT j=1021000 r=696
+[20:19:13.987] PBL: 2026-08-07 22:20:42 7c59084a(master)
+[20:19:14.004]   Date: 2026-09-01 16:40:12
+[20:19:14.021]   User: gct@CS-buildserver
+[20:19:14.039]   Path: /home/gct/gct_workspace/dailybuild/repos/openwrt/builds/ast/build_dir/target-aarch64-openwrt-linux-gnu_glibc/sbl-gct-1.  Ver: 1.0.0
+[20:19:14.058] btmd=3 rr=0x0(POR)
+[20:19:14.080] arm=1300 sys=1600
+[20:19:14.091] CMNNV hdr=01022bb4 act=1
+[20:19:14.114]   hdr chksum	: 0x64d206db
+[20:19:14.127]   magic		: 0xcafebabe
+[20:19:14.137]   timstamp	: 0x0000003b
+[20:19:14.146]   data chksum	: 0x520b0cf5
+[20:19:14.156]   data size	: 0x0003ffc0
+[20:19:14.168] hdr[0] magic err 00000000(hdr)!=0xcafebabe
+[20:19:14.178] hdr[1] magic err 00000000(hdr)!=0xcafebabe
+[20:19:14.191] SBL hdr=01022f74 act=2
+[20:19:14.196]   hdr chksum	: 0x7af20757
+[20:19:14.206]   magic		: 0xcafebabe
+[20:19:14.213]   timstamp	: 0x0000000c
+[20:19:14.223]   data chksum	: 0xe75e31fb
+[20:19:14.227]   data size	: 0x00096de4
+[20:19:14.237] sbl image all invalid
+[20:19:14.247] SBL r=0 s=114688 pre=0 vrl=0 r=0
+[20:19:14.253] wdt=5s
+[20:19:14.257] pbl go 01024800 r1723
+[20:19:14.267] �O�
+[20:19:14.277] peri 2x=10303 1x=10707
+[20:19:14.283] grf ver=2(0x7)
+[20:19:14.292] afe pwr down
+[20:19:14.302] SBL: 2026-08-07 22:20:42 7c59084a(master)
+[20:19:14.310]   Date: 2026-09-01 16:40:11
+[20:19:14.317]   User: gct@CS-buildserver
+[20:19:14.326]   Path: /home/gct/gct_workspace/dailybuild/repos/openwrt/builds/ast/build_dir/target-aarch64-openwrt-linux-gnu_glibc/sbl-gct-1.  Ver: 1.2.0
+[20:19:14.340]   Pkg: 1.11.0
+[20:19:14.352]   GCC: 9.3.0
+[20:19:14.357] btmd=3 rr=0x0(POR)
+[20:19:14.368] arm=1600(vcc=8(0.850)) sys=1600(vcc=4(0.750)) ddr=3732
+[20:19:14.373] pmic(0x32): 0x23->0x20
+[20:19:14.386] gate-adj: {0,0,0,0}{9,9,9,9}
+[20:19:14.399] read-adj: {1,0,0,0}{9,9,9,9}
+[20:19:14.410] ddr_main CFG=1 ch=1 PDDS=1
+[20:19:14.421] dynamic: pcg=0 sr=0 pd=0
+[20:19:14.434] ihs_ddr_init(orbit) oic=2 warm=0
+[20:19:14.443] reset ddr
+[20:19:14.447] ddr bus @sys=1600: 2x=266 1x=66
+[20:19:14.456] CH(0), period (20000)
+[20:19:14.460] CH(0), period (20000)
+[20:19:14.465] CH(0), period (536)
+[20:19:14.473] CH(0), period (1072)
+[20:19:14.519] CH(0), period (1250)
+[20:19:14.523] CH(0), period (2500)
+[20:19:14.530] CH(0), period (536)
+[20:19:14.538] CH(0), period (1072)
+[20:19:14.548] CH(0), period (1250)
+[20:19:14.556] CH(0), period (2500)
+[20:19:14.563] CH(0), period (536)
+[20:19:14.571] MR: [5]=01 [6]=06 [7]=00 [8]=0a 
+[20:19:14.578] ddr=3730 vdd1=13(1.800) vdd2=16(1.150) vddq=4(0.650)
+[20:19:14.587] mem(0x80000000) test: ok(6ms)
+[20:19:14.594] IDs: ad ac 80 16 20
+[20:19:14.603]   blk=256
+[20:19:14.610] NCfg v=3325 e=2 p=1 a=1
+[20:19:14.616] ID: ad ac 80 16 20 
+[20:19:14.622] BBT not found
+[20:19:14.626] ------------------------
+[20:19:14.635] Selected CMNNV Header (act : 1)
+[20:19:14.640] ------------------------
+[20:19:14.644] hdr chksum	: 0x64d206db
+[20:19:14.651] magic		: 0xcafebabe
+[20:19:14.657] timstamp	: 0x0000003b
+[20:19:14.663] data chksum	: 0x520b0cf5
+[20:19:14.670] data size	: 0x0003ffc0
+[20:19:14.677] ------------------------
+[20:19:14.685] hdr magic err(0) 0x00000000 != (0xcafebabe)
+[20:19:14.691] hdr magic err(1) 0x00000000 != (0xcafebabe)
+[20:19:14.700] ------------------------
+[20:19:14.706] Selected TFA Header (act : 2)
+[20:19:14.713] ------------------------
+[20:19:14.717] hdr chksum	: 0x49d1065b
+[20:19:14.723] magic		: 0xcafebabe
+[20:19:14.732] timstamp	: 0x00000008
+[20:19:14.739] data chksum	: 0xf1632701
+[20:19:14.743] data size	: 0x00e77000
+[20:19:14.746] ------------------------
+[20:19:14.750] hdr magic err(0) 0x00000000 != (0xcafebabe)
+[20:19:14.754] hdr magic err(1) 0x00000000 != (0xcafebabe)
+[20:19:14.757] ------------------------
+[20:19:14.766] Selected UBOOT Header (act : 2)
+[20:19:14.774] ------------------------
+[20:19:14.783] hdr chksum	: 0x00000000
+[20:19:14.791] magic		: 0x00000000
+[20:19:14.800] timstamp	: 0x00000000
+[20:19:14.809] data chksum	: 0x00000000
+[20:19:14.820] data size	: 0x00000000
+[20:19:14.830] ------------------------
+[20:19:14.840] tfa image all invalid
+[20:19:14.852] TFA r=0 s=250191 r=0
+[20:19:14.861] u-boot image all invalid
+[20:19:14.873] uboot r=0 s=668624 r=0
+[20:19:14.884] wdt=10s
+[20:19:14.888] refx calibration result : dt,dcc 77, 43 : 0x1a4 = 0xfe03820, 0x1e8 = 0x0818060
+[20:19:14.896] refx cal elapsed=304ms
+[20:19:14.906] sbl go 80100000 r3eca
+[20:19:14.909] TF-A: 2026-08-29 00:00:10 bbef1a49(master)
+[20:19:14.913]   Date: 2026/09/01-16:42:50
+[20:19:14.922]   User: gct@CS-buildserver
+[20:19:14.932]   Path: /home/gct/gct_workspace/dailybuild/repos/openwrt/builds/ast/build_dir/target-aarch64-openwrt-linux-gnu_glibc/uboot-gct-1.11.0/arm-trusted-firmware
+[20:19:14.947]   Ver: 1.0.0
+[20:19:14.961]   Pkg: 1.11.0
+[20:19:14.976]   GCC: 13.3.0
+[20:19:14.990]   Log-Level: 30
+[20:19:15.005] EXC-V=8013c000
+[20:19:15.020] TZCLK/TSG=1
+[20:19:15.034] BL33 pc=0x80200800 spsr=0x3c9
+[20:19:15.049] U-Boot 2021.07-gbbef1a49 (Oct 19 2025 - 16:37:45 +0000)
+[20:19:15.066] U-Boot: 2026-08-29 00:00:10 bbef1a49(master) dual_sbl
+[20:19:15.081]   Date: 2026-09-01 16:42:08
+[20:19:15.087]   User: gct@CS-buildserver
+[20:19:15.093]   Path: /home/gct/gct_workspace/dailybuild/repos/openwrt/builds/ast/build_dir/target-aarch64-openwrt-linux-gnu_glibc/uboot-gct-1.11.0
+[20:19:15.101]   Ver: 1.2.0
+[20:19:15.108]   Pkg: 1.11.0
+[20:19:15.116]   GCC: 13.3.0
+[20:19:15.124] DRAM:  512 MiB
+[20:19:15.131] mem_malloc_init: start=0x9eff0000 sz=0x1010000
+[20:19:15.138] copy text/data(0x01020800, 0x802a3b00, 208)
+[20:19:15.152] set bss(0x010208d0 0)
+[20:19:15.159] board init
+[20:19:15.167] ETH_EN(GPF1[44]): 1(dflt)->0(set-low)->10ms->1(set-high)
+[20:19:15.181] ETH_EN(GPE[11]): 1(dflt)->0(set-low)->10ms->1(set-high)
+[20:19:15.188] ECID: S0=0x00000000 S1=0x00000000 S2=0x00000000
+[20:19:15.202] copy from 0x802009d8 to 0x1030000 sz=0
+[20:19:15.215] Device nand0 not found!
+[20:19:15.222] mtdparts_init fail
+[20:19:15.228] adjusted cmpu_par addr: 0x802a3bd0 -> 0x802a3be0
+[20:19:15.245] NO CMPU magic(0x802a3be0: 0x33353135)
+[20:19:15.261] PMIC DCDC off in sleep: 2 3 4 5 6 8
+[20:19:15.271] NAND:  N-Cfg val=33a5 ecc=2 page=1 addr=1
+[20:19:15.274]   chip=512MB
+[20:19:15.284]   block=256KB
+[20:19:15.291]   addr=5cyc
+[20:19:15.300]   page=4KB
+[20:19:16.316]   spare=256B
+[20:19:16.323]   ecc=4bit
+[20:19:16.329] Loading Environment from NAND(3)... OK
+[20:19:16.336] In:    serial
+[20:19:16.342] Out:   serial
+[20:19:16.347] Err:   serial
+[20:19:16.354] dtb: fixed pmic(revC)
+[20:19:16.359] dtb: dis mmc
+[20:19:16.363] Hit any key to stop autoboot:  1  0
+[20:19:16.370] GDM> 
+[20:19:16.373] GDM> 
+[20:19:16.387] $ fastboot usb
+[20:19:17.401] fastboot usb
+[20:19:17.411] c00: cpu_smc_handler: fid=c1000001 x1=5 x2=0 x3=0 x4=0
+[20:19:17.422] c00: cpu_smc_handler: fid=c1000001 x1=4 x2=0 x3=0 x4=0
+[20:19:17.432] c00: cpu_smc_handler: fid=c1000001 x1=3 x2=0 x3=0 x4=0
+[20:19:17.441] usb ssphy init
+[20:19:17.444] sys=1600 usb ref clkgen=0x10f0f sel=1
+[20:19:17.467] $ (exec) Y:\work\gct-board-tester\fastboot\fastboot.exe flash linux K:\ENG\ENG05\CS\Daily_build\20260919\GDM7275X\linuxos_master\Image\Image
+[20:19:20.955] === TEST STOP ===

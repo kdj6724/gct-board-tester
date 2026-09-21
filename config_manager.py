@@ -3,11 +3,16 @@
 
 - settings.json : COM 포트, Baud, Tapo IP 등 연결 설정 + 마지막으로 사용한 프로파일 이름
 - profiles/*.json : 블록 시퀀스(프로파일) 각각. 보드/프로젝트별로 여러 개 저장해두고
-  드롭다운으로 전환한다.
-- saved_blocks/ (기본 저장 폴더) : 블록 에디터에서 "파일로 저장"/"파일 불러오기" 로
-  주고받는 .json 파일들. profiles/ 는 앱 내부 드롭다운 전용이고, 이쪽은 탐색기에서
-  직접 보이는/옮길 수 있는 파일이라 다른 PC 나 사람과 공유할 때 쓴다. 저장 위치는
-  설정에서 바꿀 수 있다.
+  드롭다운으로 전환한다. 블록 편집 화면의 "저장" 버튼도 바로 여기(현재 열려있는
+  프로파일)에 저장한다 - 예전엔 이것과 별개로 saved_blocks/ 폴더에 "파일로
+  저장"/"파일 불러오기" 하는 기능이 따로 있었는데, 저장 위치가 두 군데로 나뉘어
+  헷갈린다는 의견으로 없애고 프로파일 하나로 통일했다. 다른 PC/사람과 공유하고
+  싶으면 이 폴더 안의 .json 파일을 탐색기에서 그대로 복사하면 된다.
+- presets/*.json : 프로파일과 포맷은 같지만(name+blocks), "전체 시퀀스"가 아니라
+  자주 쓰는 블록 묶음(예: 부팅 확인 루틴) 하나를 재사용하려고 저장해두는 것.
+  블록 편집 화면 팔레트에 프리셋 목록이 뜨고, 드래그하면 그 자리에 PRESET
+  타입의 블록 하나로 삽입된다(안에 저장된 블록들을 통째로 담고 있음 - 놓는
+  순간의 스냅샷이라 원본 프리셋을 나중에 고쳐도 이미 놓인 것엔 반영 안 됨).
 - remote_power.env : TAPO_EMAIL / TAPO_PASSWORD / TAPO_IP. 연결 정보는 여기 한
   곳에서만 읽는다(설정 화면에 Tapo IP 입력칸을 따로 두지 않음 - settings.json 에
   저장된 옛날 IP 값과 .env 값이 서로 어긋나던 문제가 있어서 통일함). 예전 이름
@@ -24,32 +29,20 @@ import step_types as st
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 SETTINGS_PATH = os.path.join(BASE_DIR, "settings.json")
 PROFILES_DIR = os.path.join(BASE_DIR, "profiles")
-DEFAULT_SAVE_DIR = os.path.join(BASE_DIR, "saved_blocks")
+PRESETS_DIR = os.path.join(BASE_DIR, "presets")
 LEGACY_CONFIG_PATH = os.path.join(BASE_DIR, "config.json")
 ENV_PATH = os.path.join(BASE_DIR, "remote_power.env")
 _LEGACY_ENV_PATH = os.path.join(BASE_DIR, ".env")
 
 os.makedirs(PROFILES_DIR, exist_ok=True)
-os.makedirs(DEFAULT_SAVE_DIR, exist_ok=True)
+os.makedirs(PRESETS_DIR, exist_ok=True)
 
 DEFAULT_SETTINGS = {
     "com_port": "COM4",
     "baud_rate": "921600",
     "last_profile": "default",
-    "save_dir": DEFAULT_SAVE_DIR,
     "window_geometry": "1000x760",
 }
-
-
-def get_save_dir(settings: dict | None = None) -> str:
-    """블록 파일 저장/불러오기 기본 폴더. 없거나 비어 있으면 만들어서 반환."""
-    d = (settings or load_settings()).get("save_dir") or DEFAULT_SAVE_DIR
-    try:
-        os.makedirs(d, exist_ok=True)
-    except OSError:
-        d = DEFAULT_SAVE_DIR
-        os.makedirs(d, exist_ok=True)
-    return d
 
 
 def load_env(path: str = ENV_PATH) -> dict:
@@ -131,22 +124,38 @@ def rename_profile(old: str, new: str):
     delete_profile(old)
 
 
-def save_blocks_to_file(path: str, blocks: list[dict], name: str | None = None):
-    """블록 에디터의 "파일로 저장" - 프로파일과 같은 {"name","blocks"} 형식이라
-    profiles/ 로 그대로 복사해 넣어도 호환된다."""
-    payload = {"name": name or os.path.splitext(os.path.basename(path))[0], "blocks": blocks}
-    with open(path, "w", encoding="utf-8") as f:
-        json.dump(payload, f, ensure_ascii=False, indent=2)
+def _preset_path(name: str) -> str:
+    safe = "".join(c for c in name if c.isalnum() or c in " _-()가-힣").strip() or "preset"
+    return os.path.join(PRESETS_DIR, safe + ".json")
 
 
-def load_blocks_from_file(path: str) -> list[dict]:
-    """블록 에디터의 "파일 불러오기". {"blocks":[...]} 형식과, blocks 리스트만 담긴
-    파일 둘 다 읽을 수 있다."""
+def list_presets() -> list[str]:
+    names = []
+    for fn in sorted(os.listdir(PRESETS_DIR)):
+        if fn.endswith(".json"):
+            names.append(fn[:-5])
+    return names
+
+
+def load_preset(name: str) -> list[dict]:
+    path = _preset_path(name)
+    if not os.path.exists(path):
+        return []
     with open(path, encoding="utf-8") as f:
         data = json.load(f)
-    if isinstance(data, list):
-        return data
     return data.get("blocks", [])
+
+
+def save_preset(name: str, blocks: list[dict]):
+    path = _preset_path(name)
+    with open(path, "w", encoding="utf-8") as f:
+        json.dump({"name": name, "blocks": blocks}, f, ensure_ascii=False, indent=2)
+
+
+def delete_preset(name: str):
+    path = _preset_path(name)
+    if os.path.exists(path):
+        os.remove(path)
 
 
 def default_blocks() -> list[dict]:

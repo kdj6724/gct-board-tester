@@ -1,0 +1,6 @@
+[19:58:45.267] === TEST START === profile: 처음
+[19:58:51.947] $ (exec) Y:\work\gct-board-tester\fastboot\fastboot.exe flash linux K:\ENG\ENG05\CS\Daily_build\20260919\GDM7275X\linuxos_master\Image\Image
+[19:58:52.153] < waiting for any device >
+[19:59:52.057] $ (exec) Y:\work\gct-board-tester\fastboot\fastboot.exe flash rootfs K:\ENG\ENG05\CS\Daily_build\20260919\GDM7275X\linuxos_master\Image\ramdisk.ubifs
+[19:59:52.293] < waiting for any device >
+[20:00:39.845] === TEST STOP ===

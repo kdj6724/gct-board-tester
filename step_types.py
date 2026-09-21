@@ -15,6 +15,7 @@ LOOP_START / LOOP_END 두 개의 마커로 표현되며, 그 사이에 놓인 �
      SAVE_RESULT(label), POWER(off)]
 """
 from __future__ import annotations
+import copy
 import itertools
 import uuid
 
@@ -29,11 +30,20 @@ CTRL = "CTRL"
 SAVE_RESULT = "SAVE_RESULT"
 DELAY = "DELAY"
 UPLOAD_SCRIPT = "UPLOAD_SCRIPT"
+EXEC = "EXEC"  # PC 에서 로컬 프로그램(.exe 등)을 실행하고 출력을 캡처하는 블록.
+               # UART 가 아니라 subprocess 로 도는 것이라 보드와는 별개 경로다
+               # (예: fastboot.exe 로 USB 를 통해 타겟보드에 이미지 flash).
 LOOP_START = "LOOP_START"
 LOOP_END = "LOOP_END"
 IF_START = "IF_START"
 IF_ELSE = "IF_ELSE"
 IF_END = "IF_END"
+PRESET = "PRESET"  # 저장된 프리셋(블록 묶음)을 캔버스에 놓은 하나의 단일 블록.
+                    # LOOP/IF 와 달리 START/END 짝이 없는 "그냥 블록 하나" 다 - params
+                    # 안에 통째로 다른 블록 리스트를 담고 있을 뿐, 시퀀스 안에서의
+                    # 위치/이동/삭제는 Power/Send 같은 다른 단일 블록과 완전히 동일하게
+                    # 다뤄진다(그래서 move_range/delete_block/top_level_ranges 를 손대지
+                    # 않아도 그대로 동작한다).
 
 # 팔레트(사용자가 새 블록을 추가할 때 고르는 목록)에 노출되는 타입
 # LOOP_END 는 LOOP_START 와, IF_ELSE/IF_END 는 IF_START 와 항상 세트로 생성되므로
@@ -43,7 +53,7 @@ IF_END = "IF_END"
 # Knock 은 Input 과 달리 응답이 올 때까지 일정 간격으로 같은 입력을 반복 전송한다
 # (한 번 찔러서는 안 깨어나는 프롬프트를 대비 - 보통 Input+Check 조합으로 되지만,
 # "한 번만 보내고 끝"인 Input 과 구분하려고 별도 블록으로 분리함).
-PALETTE_TYPES = [POWER, WAIT_STRING, SEND, KNOCK, CTRL, DELAY, UPLOAD_SCRIPT, "LOOP", "IF"]
+PALETTE_TYPES = [POWER, WAIT_STRING, SEND, KNOCK, CTRL, DELAY, UPLOAD_SCRIPT, EXEC, "LOOP", "IF"]
 
 # 블록 타입별 표시 정보 (라벨 / 색상)
 BLOCK_META = {
@@ -55,11 +65,15 @@ BLOCK_META = {
     SAVE_RESULT:   {"label": "\U0001f4be Save",  "color": "#f9e2af", "text_color": "#1e1e2e"},
     DELAY:         {"label": "⏱  Delay",          "color": "#6c7086", "text_color": "#cdd6f4"},
     UPLOAD_SCRIPT: {"label": "\U0001f4c4 Script", "color": "#94e2d5", "text_color": "#1e1e2e"},
+    EXEC:          {"label": "\U0001f4bb Exec",  "color": "#74c7ec", "text_color": "#1e1e2e"},
     LOOP_START:    {"label": "\U0001f501 Loop",         "color": "#cba6f7", "text_color": "#1e1e2e"},
     LOOP_END:      {"label": "└─ End Loop",   "color": "#cba6f7", "text_color": "#1e1e2e"},
     IF_START:      {"label": "\U0001f500 If",           "color": "#fab387", "text_color": "#1e1e2e"},
     IF_ELSE:       {"label": "── Else ──",    "color": "#fab387", "text_color": "#1e1e2e"},
     IF_END:        {"label": "└─ End If",     "color": "#fab387", "text_color": "#1e1e2e"},
+    # label 은 fallback 일 뿐 - 실제 화면엔 block_editor.block_label() 이 이 대신
+    # params["preset_name"] 을 보여준다(어떤 프리셋인지 한눈에 알아보려고).
+    PRESET:        {"label": "\U0001f4e6 Preset",  "color": "#89dceb", "text_color": "#1e1e2e"},
 }
 
 _counter = itertools.count(1)
@@ -93,6 +107,14 @@ def default_params(block_type: str) -> dict:
     if block_type == UPLOAD_SCRIPT:
         return {"script": "#!/bin/sh\necho \"TEST_DONE\"\n", "target_path": "/tmp/runtest.sh",
                 "source_path": ""}
+    if block_type == EXEC:
+        # cmd 는 명령 프롬프트에 치듯이 경로+인자를 한 줄로 그대로 적는다(예:
+        # "Y:\...\fastboot.exe flash linux K:\...\Image"). {var} 로 Loop 변수도 쓸 수 있음.
+        # check_pattern 을 비워두면 exit code(0=성공)만으로 판정하고, 채우면 다른
+        # Check/Wait String 블록들과 똑같이 "출력에 이 문자열이 있는가" 로 판정한다 -
+        # 툴 전체에서 성공/실패를 확인하는 방식을 일관되게 가져가려고 추가함.
+        return {"cmd": "", "timeout": 60.0, "on_timeout": "stop",
+                "check_pattern": "", "regex": False}
     if block_type == LOOP_START:
         # for (var_name = start; var_name OP end; var_name += step) 와 동일한 개념.
         # infinite=True 면 조건 무시하고 Stop 누를 때까지 반복.
@@ -106,6 +128,8 @@ def default_params(block_type: str) -> dict:
         return {"label": "If", "pattern": "", "regex": False, "timeout": 10.0}
     if block_type in (IF_ELSE, IF_END):
         return {}
+    if block_type == PRESET:
+        return {"preset_name": "", "blocks": []}
     raise ValueError(f"unknown block type: {block_type}")
 
 
@@ -124,6 +148,38 @@ def make_loop_pair(params: dict | None = None) -> tuple[dict, dict]:
              "params": params or default_params(LOOP_START)}
     end = {"id": new_id(), "type": LOOP_END, "loop_id": lid, "params": {}}
     return start, end
+
+
+def clone_blocks_with_new_ids(blocks: list[dict]) -> list[dict]:
+    """블록 리스트를 깊은 복사하면서 모든 id(및 loop_id/if_id)를 새로 발급한다.
+    프리셋을 캔버스에 놓을 때마다(같은 프리셋을 여러 번 놓아도) id 가 겹치지 않게
+    하려고 쓴다 - id 가 겹치면 실행 중 하이라이트(id -> 화면 index 매핑)가 엉킨다."""
+    cloned = copy.deepcopy(blocks)
+    id_map: dict[str, str] = {}      # 블록 자신의 "id" 값(old -> new)
+    pair_map: dict[str, str] = {}    # LOOP_START/END, IF_START/ELSE/END 가 공유하는
+                                       # "loop_id"/"if_id" 값(old -> new, 짝이 유지되게)
+    for b in cloned:
+        old = b.get("id")
+        new = new_id()
+        if old is not None:
+            id_map[old] = new
+        b["id"] = new
+        for key in ("loop_id", "if_id"):
+            old_pair = b.get(key)
+            if old_pair is not None and old_pair not in pair_map:
+                pair_map[old_pair] = new_id(key.split("_")[0])
+    for b in cloned:
+        for key in ("loop_id", "if_id"):
+            if key in b:
+                b[key] = pair_map[b[key]]
+    return cloned
+
+
+def make_preset_block(preset_name: str, blocks: list[dict]) -> dict:
+    """저장된 프리셋(blocks)을 캔버스에 놓을 하나의 PRESET 블록으로 만든다.
+    안에 담기는 blocks 는 항상 새 id 로 복제한다(위 clone_blocks_with_new_ids 참고)."""
+    return {"id": new_id(), "type": PRESET,
+            "params": {"preset_name": preset_name, "blocks": clone_blocks_with_new_ids(blocks)}}
 
 
 def make_if_triple(params: dict | None = None) -> tuple[dict, dict, dict]:
@@ -167,6 +223,14 @@ def validate(blocks: list[dict]) -> str | None:
     stack: list[dict] = []
     for b in blocks:
         t = b["type"]
+        if t == PRESET:
+            # 프리셋 안에 담긴 블록 리스트도 그 자체로 온전한 시퀀스여야 한다(방어적 검사 -
+            # 보통은 top_level_ranges() 로 완결된 구간만 선택해서 저장하므로 항상 유효함).
+            err = validate(b.get("params", {}).get("blocks", []))
+            if err:
+                name = b.get("params", {}).get("preset_name", "")
+                return f"프리셋 '{name}' 안: {err}"
+            continue
         if t == LOOP_START:
             stack.append({"type": "LOOP"})
         elif t == IF_START:

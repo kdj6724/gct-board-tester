@@ -46,6 +46,7 @@ class App(tk.Tk):
         self._log_file = None
         self._log_path = None
         self._last_ser = None  # 직전 실행에서 열어둔 시리얼 커넥션 (완료 후에도 안 닫고 유지)
+        self._run_is_preset = False  # 지금 돌고 있는 게 전체 프로필이 아니라 프리셋 단독 실행인지
 
         self._build_ui()
         self.bind("<Configure>", self._on_configure)
@@ -110,15 +111,6 @@ class App(tk.Tk):
         pbtn(r2, "다른 이름으로 저장", self._save_as_profile).grid(row=0, column=3, padx=3)
         pbtn(r2, "삭제", self._delete_profile).grid(row=0, column=4, padx=3)
 
-        r3 = tk.Frame(cfg, bg=CARD); r3.pack(fill="x", padx=14, pady=(0, 10))
-        lbl(r3, "저장 폴더").grid(row=0, column=0, sticky="w", padx=(0, 6))
-        self._v_save_dir = tk.StringVar(value=self._settings.get("save_dir", cm.DEFAULT_SAVE_DIR))
-        e_save_dir = ent(r3, self._v_save_dir, 46)
-        e_save_dir.grid(row=0, column=1, padx=(0, 8))
-        e_save_dir.bind("<FocusOut>", lambda _: self._save_settings())
-        e_save_dir.bind("<Return>", lambda _: self._save_settings())
-        pbtn(r3, "찾아보기", self._browse_save_dir).grid(row=0, column=2)
-
         br = tk.Frame(self, bg=BG); br.pack(fill="x", padx=20, pady=(0, 8))
 
         def btn(p, t, c, color=ACC):
@@ -132,6 +124,11 @@ class App(tk.Tk):
         self._btn_stop.pack(side="left", padx=(0, 8))
         self._btn_stop.config(state="disabled")
         btn(br, "\U0001f9e9  블록 편집", self._edit_blocks, "#313244").pack(side="left", padx=(0, 8))
+        # 프리셋 하나만 따로 실행(디버깅용) - 앞단의 Power/Knock/Delay 등을 다 안 거치고
+        # 그 프리셋만 바로 돌려볼 수 있게. 전체 프로필 Run 과 완전히 같은 방식(같은
+        # StepContext/시리얼/Tapo)으로 돌아가되, 다이어그램만 그 프리셋 블록들로 바뀐다.
+        self._btn_preset_run = btn(br, "\U0001f4e6  프리셋 실행", self._run_preset, "#313244")
+        self._btn_preset_run.pack(side="left", padx=(0, 8))
         btn(br, "\U0001f4c1  Open Log", self._open_log, "#313244").pack(side="left", padx=(0, 8))
         # 메인 화면은 이제 블록 다이어그램이 기본이고(실행 중인 블록 하이라이트),
         # 텍스트 로그는 이 버튼으로 토글해서 다이어그램 아래에 접었다 폈다 한다.
@@ -163,12 +160,23 @@ class App(tk.Tk):
         self._txt.tag_config("mute", foreground=MUTE)
         self._log_visible = False
 
+    # 로그 Text 위젯에 유지할 최대 줄 수. Exec/Knock 처럼 출력이 많은 블록을
+    # Loop 로 여러 번 돌리다 보면 위젯 안 줄 수가 계속 쌓이기만 해서(한 번도
+    # 안 지워짐) 결국 몇 천~몇만 줄이 되면 Tk Text 위젯 자체가 눈에 띄게
+    # 버벅이기 시작한다. 화면에는 최근 것만 보여주고 오래된 줄은 지워서
+    # 위젯 크기를 이 안으로 묶어둔다 - 전체 기록은 어차피 로그 파일에 그대로
+    # 남으므로(=Open Log) 화면에서만 트리밍해도 괜찮다.
+    _LOG_MAX_LINES = 4000
+
     # ------------------------------------------------------------------
     def _log(self, msg, tag="data"):
         ts = datetime.datetime.now().strftime("%H:%M:%S.%f")[:-3]
         line = f"[{ts}] {msg}\n"
         self._txt.config(state="normal")
         self._txt.insert("end", line, tag)
+        total_lines = int(self._txt.index("end-1c").split(".")[0])
+        if total_lines > self._LOG_MAX_LINES:
+            self._txt.delete("1.0", f"{total_lines - self._LOG_MAX_LINES}.0")
         self._txt.see("end")
         self._txt.config(state="disabled")
 
@@ -217,7 +225,6 @@ class App(tk.Tk):
         self._settings.update({
             "com_port": self._v_port.get(),
             "baud_rate": self._v_baud.get(),
-            "save_dir": self._v_save_dir.get() or cm.DEFAULT_SAVE_DIR,
             "last_profile": self._profile_name,
         })
         cm.save_settings(self._settings)
@@ -247,13 +254,6 @@ class App(tk.Tk):
             self._geometry_after_id = None
         self._save_geometry()
         self.destroy()
-
-    def _browse_save_dir(self):
-        path = filedialog.askdirectory(initialdir=self._v_save_dir.get() or cm.DEFAULT_SAVE_DIR,
-                                       title="블록 저장 폴더 선택")
-        if path:
-            self._v_save_dir.set(path)
-            self._save_settings()
 
     # ---- 프로파일 관리 --------------------------------------------------
     def _refresh_profile_menu(self):
@@ -309,24 +309,88 @@ class App(tk.Tk):
         BlockEditorWindow(self, self.blocks, on_save)
 
     # ---- 실행 -------------------------------------------------------------
-    def _run(self):
-        err = st.validate(self.blocks)
+    def _run(self, blocks=None, is_preset=False, preset_name=None):
+        run_blocks = blocks if blocks is not None else self.blocks
+        err = st.validate(run_blocks)
         if err:
-            messagebox.showerror("현재 시퀀스 오류", err)
+            messagebox.showerror(f"{'프리셋 ' + preset_name if is_preset else '현재 시퀀스'} 오류", err)
             return
         self._btn_run.config(state="disabled")
+        self._btn_preset_run.config(state="disabled")
         self._btn_stop.config(state="normal")
         self._running = True
-        # 새로 시작하니 직전 실행에서 남아있던 하이라이트부터 지운다(다이어그램은
-        # 프로필 변경/편집 때 이미 최신 self.blocks 로 갱신돼 있지만 한 번 더 보정).
-        self._diagram_view.update_blocks(self.blocks)
+        self._run_is_preset = is_preset
+        # 프리셋 단독 실행이면 다이어그램을 그 프리셋의 블록들로 통째로 바꿔서, 마치
+        # 별도의 작은 시퀀스처럼 그 블록들 하나하나가 정상적으로 하이라이트되게 한다
+        # (원래 다이어그램은 프리셋을 PRESET 블록 하나로만 뭉뚱그려 보여주므로 안쪽
+        # 블록 id 들에 대한 하이라이트가 안 먹는다). 끝나면 _worker() 의 finally 에서
+        # 원래 프로필 다이어그램으로 되돌린다.
+        self._diagram_view.update_blocks(run_blocks)
         self._diagram_view.clear_active()
+        # 새 실행을 시작하니 화면 로그도 비운다 - 이전 실행들 로그가 계속 쌓여있으면
+        # (특히 Loop/Exec 처럼 출력 많은 블록을 여러 번 돌린 뒤) Text 위젯이 커져서
+        # 버벅이는 원인이 된다. 지난 실행의 전체 기록은 로그 파일에 그대로 남아있다.
+        self._txt.config(state="normal")
+        self._txt.delete("1.0", "end")
+        self._txt.config(state="disabled")
         ts = datetime.datetime.now().strftime("%Y%m%d_%H%M%S")
-        self._log_path = os.path.join(LOG_DIR, f"{ts}_{self._profile_name}.log")
+        label = f"preset_{preset_name}" if is_preset else self._profile_name
+        self._log_path = os.path.join(LOG_DIR, f"{ts}_{label}.log")
         self._log_file = open(self._log_path, "w", encoding="utf-8")
         self._log_lbl.config(text=self._log_path)
-        self._log_result(f"=== TEST START === profile: {self._profile_name}")
-        threading.Thread(target=self._worker, daemon=True).start()
+        if is_preset:
+            self._log(f"프리셋 단독 실행: {preset_name}", "info")
+            self._log_result(f"=== PRESET TEST START === preset: {preset_name}")
+        else:
+            self._log_result(f"=== TEST START === profile: {self._profile_name}")
+        threading.Thread(target=self._worker, args=(run_blocks,), daemon=True).start()
+
+    def _run_preset(self):
+        names = cm.list_presets()
+        if not names:
+            messagebox.showinfo("안내", "저장된 프리셋이 없습니다. 블록 편집 화면에서 블록들을 "
+                                        "선택한 뒤 \"프리셋으로 저장\"으로 먼저 만들어두세요.")
+            return
+        BG, CARD, ACC, FG, MUTE = (self._c[k] for k in ("BG", "CARD", "ACC", "FG", "MUTE"))
+        win = tk.Toplevel(self)
+        win.title("프리셋 실행")
+        win.configure(bg=BG)
+        win.geometry("320x360")
+        win.transient(self)
+        win.grab_set()
+        tk.Label(win, text="따로 실행할 프리셋을 선택하세요\n(더블클릭해도 바로 실행됩니다)",
+                 font=("Consolas", 10), bg=BG, fg=MUTE, justify="left")\
+            .pack(anchor="w", padx=14, pady=(14, 6))
+        lb = tk.Listbox(win, font=("Consolas", 11), bg="#313244", fg=FG, relief="flat", bd=4,
+                         selectbackground=ACC, selectforeground="#1e1e2e", highlightthickness=0)
+        lb.pack(fill="both", expand=True, padx=14)
+        for n in names:
+            lb.insert("end", n)
+        lb.selection_set(0)
+
+        def do_run(_event=None):
+            sel = lb.curselection()
+            if not sel:
+                return
+            name = names[sel[0]]
+            win.destroy()
+            self._start_preset_run(name)
+
+        btnrow = tk.Frame(win, bg=BG); btnrow.pack(fill="x", padx=14, pady=12)
+        tk.Button(btnrow, text="▶  실행", command=do_run, font=("Consolas", 10, "bold"), bg=ACC,
+                  fg="#1e1e2e", relief="flat", bd=0, padx=14, pady=6, cursor="hand2")\
+            .pack(side="left")
+        tk.Button(btnrow, text="취소", command=win.destroy, font=("Consolas", 10), bg="#313244",
+                  fg=FG, relief="flat", bd=0, padx=14, pady=6, cursor="hand2")\
+            .pack(side="left", padx=(8, 0))
+        lb.bind("<Double-Button-1>", do_run)
+
+    def _start_preset_run(self, name):
+        blocks = cm.load_preset(name)
+        if not blocks:
+            messagebox.showwarning("안내", f"'{name}' 프리셋에 블록이 없습니다.")
+            return
+        self._run(blocks=blocks, is_preset=True, preset_name=name)
 
     def _stop(self):
         self._running = False
@@ -354,7 +418,7 @@ class App(tk.Tk):
         # 건드려야 하므로 다른 로그 콜백들과 마찬가지로 after(0, ...) 로 넘긴다.
         self.after(0, self._diagram_view.set_active_by_id, block_id, loop_progress)
 
-    def _worker(self):
+    def _worker(self, blocks):
         ctx = se.StepContext(
             serial_factory=self._serial_factory,
             tapo=self._tapo,
@@ -365,7 +429,7 @@ class App(tk.Tk):
         )
         try:
             self.after(0, self._set_status, "running...", self._c["ACC"])
-            se.run(self.blocks, ctx)
+            se.run(blocks, ctx)
             self.after(0, self._log, "=== 시퀀스 완료 ===", "ok")
         except se.StopRequested:
             self.after(0, self._log, "=== Stopped ===", "err")
@@ -385,7 +449,13 @@ class App(tk.Tk):
                 self._log_file.close()
                 self._log_file = None
             self._running = False
+            if self._run_is_preset:
+                # 프리셋 단독 실행이 끝났으니 다이어그램을 원래 프로필 화면으로 되돌린다.
+                self.after(0, self._diagram_view.update_blocks, self.blocks)
+                self.after(0, self._diagram_view.clear_active)
+            self._run_is_preset = False
             self.after(0, self._btn_run.config, {"state": "normal"})
+            self.after(0, self._btn_preset_run.config, {"state": "normal"})
             self.after(0, self._btn_stop.config, {"state": "disabled"})
             self.after(0, self._set_status, "idle")
 

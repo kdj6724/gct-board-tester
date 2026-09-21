@@ -6,6 +6,10 @@ GUI(Tk)와 분리되어 있어 실제 하드웨어 없이도(가짜 serial/tapo 
 테스트를 수행한다.
 """
 from __future__ import annotations
+import os
+import signal
+import subprocess
+import threading
 import time
 from dataclasses import dataclass, field
 from typing import Callable, Optional
@@ -243,6 +247,150 @@ def _exec_upload_script(block, ctx: StepContext):
     ctx.log("Script uploaded OK", "ok")
 
 
+def _kill_process(proc: subprocess.Popen):
+    """shell=True 로 띄운 프로세스(Windows 는 cmd.exe, POSIX 는 /bin/sh)뿐 아니라
+    그 밑에서 실제로 돌고 있는 자식 프로세스(fastboot.exe 등)까지 통째로 죽인다.
+
+    proc.kill() 만 하면 Windows 에서는 cmd.exe 만 죽고 fastboot.exe 는 안 죽은 채
+    그대로 남아있는 문제가 있었다(taskkill 이 없으면 TerminateProcess 는 자식까지
+    안 내려감) - 그래서 Windows 에서는 taskkill /T(프로세스 트리 전체)로, POSIX 는
+    새 프로세스 그룹 전체를 죽이는 방식으로 확실히 정리한다. _exec_run() 에서
+    Popen 할 때 이 방식이 통하도록 creationflags/start_new_session 을 같이 설정함."""
+    if os.name == "nt":
+        try:
+            subprocess.run(
+                ["taskkill", "/F", "/T", "/PID", str(proc.pid)],
+                stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL,
+            )
+        except Exception:  # noqa: BLE001
+            pass
+    else:
+        try:
+            os.killpg(os.getpgid(proc.pid), signal.SIGKILL)
+        except Exception:  # noqa: BLE001
+            pass
+    try:
+        proc.kill()
+    except Exception:  # noqa: BLE001
+        pass
+    try:
+        proc.wait(timeout=2)
+    except Exception:  # noqa: BLE001
+        pass
+
+
+def _exec_run(block, ctx: StepContext):
+    """PC 에서 로컬 프로그램(.exe 등)을 명령어 한 줄 그대로 실행한다(예: fastboot.exe
+    로 USB 로 붙은 보드에 이미지 flash). UART 가 아니라 subprocess 라서 시리얼 포트와는
+    완전히 별개 경로다 - 시리얼과 동시에/사이사이에 넣어 써도 서로 간섭 안 한다.
+
+    표준출력/표준에러를 한 줄씩 실시간으로 로그에 흘려보낸다(ctx._on_line 재사용 -
+    그래서 이 출력도 뒤에 오는 Save 블록의 PASS/FAIL 패턴 검사 대상에 들어간다).
+
+    성공/실패 판정은 두 가지 방식이 있다:
+    - check_pattern 을 채워두면 프로세스가 끝난 뒤 전체 출력에서 그 문자열이
+      있는지로 판정한다(Wait String/Check 블록과 완전히 같은 방식 - 툴 안에서
+      성공/실패를 확인하는 방법을 일관되게 가져가고 싶다는 요청으로 추가함).
+    - check_pattern 을 비워두면 exit code 로만 판정한다(0 이면 성공) - Windows
+      프로그램도 파이썬 subprocess 에서 리눅스와 동일하게 exit code 를 그대로
+      읽을 수 있어서, fastboot.exe 처럼 관례상 성공 시 0 을 반환하는 프로그램은
+      패턴을 안 정해줘도 기본적인 성공/실패가 잡힌다.
+    시간 안에 안 끝나면 강제 종료하고, 실패/타임아웃났을 때 on_timeout(stop/continue)
+    설정에 따라 테스트를 중단할지 다음 블록으로 넘어갈지 정한다."""
+    p = block["params"]
+    cmd = ctx.subst(p.get("cmd", ""))
+    timeout = float(p.get("timeout", 60) or 60)
+    on_timeout = p.get("on_timeout", "stop")
+    if not cmd.strip():
+        ctx.log("⚠ 실행할 명령어가 비어있습니다.", "err")
+        return
+    ctx.log(f"\U0001f4bb Exec: {cmd}", "info")
+    ctx.log_result(f"$ (exec) {cmd}")
+
+    # 자식 프로세스(fastboot.exe 등)까지 한 번에 죽일 수 있도록 새 프로세스
+    # 그룹/세션으로 띄운다 - _kill_process() 가 이걸 전제로 트리 전체를 정리한다.
+    popen_kwargs: dict = {}
+    if os.name == "nt":
+        popen_kwargs["creationflags"] = subprocess.CREATE_NEW_PROCESS_GROUP
+    else:
+        popen_kwargs["start_new_session"] = True
+    try:
+        proc = subprocess.Popen(cmd, shell=True, stdout=subprocess.PIPE,
+                                 stderr=subprocess.STDOUT, text=True, bufsize=1,
+                                 **popen_kwargs)
+    except OSError as e:
+        ctx.log(f"  → ⚠ 실행 자체가 안 됨: {e}", "err")
+        if on_timeout == "stop":
+            raise StopRequested()
+        return
+
+    lines: list[str] = []
+
+    def _reader():
+        try:
+            assert proc.stdout is not None
+            for line in proc.stdout:
+                lines.append(line.rstrip("\n"))
+        except Exception:  # noqa: BLE001
+            pass
+
+    reader = threading.Thread(target=_reader, daemon=True)
+    reader.start()
+
+    start = time.time()
+    flushed = 0
+    timed_out = False
+    while True:
+        while flushed < len(lines):
+            ctx._on_line(lines[flushed])
+            flushed += 1
+        if proc.poll() is not None and not reader.is_alive():
+            break
+        if time.time() - start > timeout:
+            timed_out = True
+            break
+        try:
+            ctx.check_running()
+        except StopRequested:
+            _kill_process(proc)
+            raise
+        time.sleep(0.05)
+    while flushed < len(lines):  # 루프 빠져나온 뒤 남은 줄 마저 흘려보내기
+        ctx._on_line(lines[flushed])
+        flushed += 1
+
+    if timed_out:
+        _kill_process(proc)
+        ctx.log(f"  → ⚠ Timeout ({timeout:g}s) - 프로세스를 강제 종료했습니다.", "err")
+        if on_timeout == "stop":
+            raise StopRequested()
+        return
+
+    code = proc.returncode
+    pattern = p.get("check_pattern", "")
+    if pattern:
+        pattern_sub = ctx.subst(pattern)
+        regex = bool(p.get("regex", False))
+        captured = "\n".join(lines)
+        if regex:
+            import re
+            found = re.search(pattern_sub, captured) is not None
+        else:
+            found = pattern_sub in captured
+        if found:
+            ctx.log(f"  → ✅ 성공 (출력에서 '{pattern_sub}' 확인됨, exit code {code})", "ok")
+        else:
+            ctx.log(f"  → ❌ 실패 (출력에서 '{pattern_sub}' 못 찾음, exit code {code})", "err")
+            if on_timeout == "stop":
+                raise StopRequested()
+    elif code == 0:
+        ctx.log("  → ✅ 완료 (exit code 0)", "ok")
+    else:
+        ctx.log(f"  → ❌ 실패 (exit code {code})", "err")
+        if on_timeout == "stop":
+            raise StopRequested()
+
+
 def _exec_save_result(block, ctx: StepContext):
     p = block["params"]
     label = ctx.subst(p.get("label", "result"))
@@ -270,6 +418,32 @@ def _exec_save_result(block, ctx: StepContext):
     ctx.log_result(f"=== SAVE [{label}]{suffix} ===\n{captured}")
 
 
+def _exec_preset(block, ctx: StepContext):
+    """PRESET 블록: params["blocks"] 에 통째로 담겨있는 하위 시퀀스를 그대로 실행한다.
+    (LOOP/IF 처럼 진짜 제어 흐름이 있는 게 아니라 "여기에 이 블록들이 있다"는
+    표시일 뿐이라 재귀적으로 그냥 실행하면 됨 - 중첩된 프리셋도 이 함수가 다시
+    호출되므로 몇 겹이든 자동으로 처리된다.)
+
+    다이어그램 하이라이트는 이 프리셋 블록 하나로 통째로 표시한다(이미 _run_nodes
+    가 이 함수를 부르기 전에 report_active 를 호출해뒀음) - 안의 개별 스텝까지
+    하나씩 쫓아가며 하이라이트하지 않는다. 안의 블록들이 갖고 있는 id 는 화면의
+    최상위 블록 리스트엔 없는 id 라서, 그대로 report_active 가 불리면 "못 찾음"
+    으로 처리돼 하이라이트가 꺼져버린다 - 그래서 이 구간 동안은 on_active 콜백을
+    잠깐 꺼뒀다가 끝나면 되돌린다."""
+    p = block["params"]
+    name = p.get("preset_name", "")
+    inner_blocks = p.get("blocks", [])
+    ctx.log(f"\U0001f4e6 Preset: {name} 실행 ({len(inner_blocks)}개 블록)", "info")
+    tree = st.build_tree(inner_blocks)
+    saved_on_active = ctx.on_active
+    ctx.on_active = None
+    try:
+        _run_nodes(tree, ctx)
+    finally:
+        ctx.on_active = saved_on_active
+    ctx.log(f"\U0001f4e6 Preset: {name} 완료", "mute")
+
+
 _ACTIONS = {
     st.POWER: _exec_power,
     st.WAIT_STRING: _exec_wait_string,
@@ -278,7 +452,9 @@ _ACTIONS = {
     st.CTRL: _exec_ctrl,
     st.DELAY: _exec_delay,
     st.UPLOAD_SCRIPT: _exec_upload_script,
+    st.EXEC: _exec_run,
     st.SAVE_RESULT: _exec_save_result,
+    st.PRESET: _exec_preset,
 }
 
 

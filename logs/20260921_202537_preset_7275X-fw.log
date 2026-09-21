@@ -1,0 +1,832 @@
+[20:25:37.298] === PRESET TEST START === preset: 7275X-fw
+[20:25:38.864] $ (knock every 0.5s) 
+[20:25:39.085]  15169536 bytes read: OK
+[20:25:39.102] NAND read: device 0 offset 0x1280000, size 0x5476
+[20:25:39.118]  21622 bytes read: OK
+[20:25:39.128] c00: cpu_smc_handler: fid=c1000031 x1=0 x2=0 x3=0 x4=0
+[20:25:39.139] ## Flattened Device Tree blob at 87000000
+[20:25:39.156]    Booting using the fdt blob at 0x87000000
+[20:25:39.171]    Loading Device Tree to 000000009ef62000, end 000000009efeafff ... OK
+[20:25:39.186] Starting kernel at 80a00000(64) ...
+[20:25:39.201] Booting Linux on physical CPU 0x0000000000 [0x412fd050] at EL1
+[20:25:39.217] Linux version 6.12.49 (gct@CS-buildserver) (arm64v8el-9.3-linux-uclibc-gcc.br_real (Buildroot 2020.02.4) 9.3.0, GNU ld (GNU Binutils) 2.32) #1 SMP Sat Sep 19 01:04:22 KST 2026
+[20:25:39.234] KASLR disabled due to lack of seed
+[20:25:39.252] Machine model: GCT GDM7275X
+[20:25:39.269] BOOT=nand
+[20:25:39.288] Memory limited to 512MB
+[20:25:39.306] READ ONLY FILESYSTEM
+[20:25:39.322] earlycon: gdmuart0 at MMIO32 0x0000000013100000 (options '')
+[20:25:39.340] printk: legacy bootconsole [gdmuart0] enabled
+[20:25:39.366] BOOT=nand
+[20:25:39.381] sbl_ver=1.2.0
+[20:25:39.407] dual_sbl=1
+[20:25:39.416] tfa_ver=1.0.0
+[20:25:39.425] bl_ver=1.2.0
+[20:25:39.429] FW Checksum: disable
+[20:25:39.433] secure_boot=0
+[20:25:39.437] Active linux : sbl
+[20:25:39.441] Active rootfs: tfa
+[20:25:39.453] Active tk    : zp2
+[20:25:39.460] efi: UEFI not found.
+[20:25:39.510] OF: reserved mem: Reserved memory: No reserved-memory node in the DT
+[20:25:39.515] Zone ranges:
+[20:25:39.520]   Normal   [mem 0x0000000080200000-0x000000009fffffff]
+[20:25:39.528] Movable zone start for each node
+[20:25:39.534] Early memory node ranges
+[20:25:39.540]   node   0: [mem 0x0000000080200000-0x0000000083ffffff]
+[20:25:39.545]   node   0: [mem 0x0000000094000000-0x000000009fffffff]
+[20:25:39.552] Initmem setup node 0 [mem 0x0000000080200000-0x000000009fffffff]
+[20:25:39.559] On node 0, zone Normal: 512 pages in unavailable ranges
+[20:25:39.565] On node 0, zone Normal: 32768 pages in unavailable ranges
+[20:25:39.569] psci: probing for conduit method from DT.
+[20:25:39.575] psci: Using PSCI v0.1 Function IDs from DT
+[20:25:39.580] percpu: Embedded 17 pages/cpu s31320 r8192 d30120 u69632
+[20:25:39.585] pcpu-alloc: s31320 r8192 d30120 u69632 alloc=17*4096
+[20:25:39.590] pcpu-alloc: [0] 0 [0] 1 [0] 2 [0] 3 
+[20:25:39.595] Detected VIPT I-cache on CPU0
+[20:25:39.601] CPU features: detected: Qualcomm erratum 1009, or ARM erratum 1286807, 2441009
+[20:25:39.605] CPU features: detected: ARM errata 1165522, 1319367, or 1530923
+[20:25:39.610] alternatives: applying boot alternatives
+[20:25:39.615] Kernel command line: console=ttyS0,921600 boot=nand mem=512M ubi.mtd=19,4096 root=ubi0:rootfs ro rootfstype=ubifs mtdparts=gdm:1m(pbl),512k(secos),1m(sbl),1m(sbl2),1m(tfa),1m(tfa2),3m(uboot),3m(uboot2),1m(env),4m(nr1nv),2m(nr2nv),1m(fdt),1m(fdt2),2m(cmnnv),2m(cmnnv2),2m(crashlog),2m(reserved2),20m(linux),20m(linux2),100m(rootfs),100m(rootfs2),16m(zp),16m(zp2),32m(misc),156m(user) clk_ignore_unused maxcpus=1 earlycon=gdmuart,mmio32,0x13100000 debug loglevel=8 boot=nand attty=ttyS1 sbl_ver=1.2.0 dual_sbl=1 tfa_ver=1.0.0 bl_ver=1.2.0 checksum=disable secboot=0 active=sbl,tfa,uboot,fdt,linux2,rootfs,zp2
+[20:25:39.625] Unknown kernel command line parameters "attty=ttyS1", will be passed to user space.
+[20:25:39.639] Dentry cache hash table entries: 32768 (order: 6, 262144 bytes, linear)
+[20:25:39.653] Inode-cache hash table entries: 16384 (order: 5, 131072 bytes, linear)
+[20:25:39.667] Built 1 zonelists, mobility grouping on.  Total pages: 65024
+[20:25:39.679] mem auto-init: stack:off, heap alloc:off, heap free:off
+[20:25:39.692] software IO TLB: SWIOTLB bounce buffer size adjusted to 0MB
+[20:25:39.707] software IO TLB: area num 4.
+[20:25:39.722] software IO TLB: SWIOTLB bounce buffer size roundup to 1MB
+[20:25:39.737] software IO TLB: mapped [mem 0x000000009f700000-0x000000009f800000] (1MB)
+[20:25:39.753] SLUB: HWalign=64, Order=0-3, MinObjects=0, CPUs=4, Nodes=1
+[20:25:39.762] rcu: Hierarchical RCU implementation.
+[20:25:39.772] rcu: RCU calculated value of scheduler-enlistment delay is 100 jiffies.
+[20:25:39.781] NR_IRQS: 64, nr_irqs: 64, preallocated irqs: 0
+[20:25:39.797] Root IRQ handler: gdm_handle_irq
+[20:25:39.809] set_smp_ipi_range ipi_base=1 n=8 nr_ipi=8
+[20:25:39.822] rcu: srcu_init: Setting srcu_struct sizes based on contention.
+[20:25:39.835] clkout:2
+[20:25:39.847] c00: gdm_irq_set_type: cpu=0 hwirq=64 type=4
+[20:25:39.861] c00: gdm_irq_set_type: cpu=0 hwirq=65 type=4
+[20:25:39.874] c00: gdm_irq_set_type: cpu=0 hwirq=66 type=4
+[20:25:39.887] c00: gdm_irq_set_type: cpu=0 hwirq=67 type=4
+[20:25:39.900] c00: gdm_irq_set_type: cpu=0 hwirq=64 type=4
+[20:25:39.907] arch_timer: cp15 timer(s) running at 50.00MHz (phys).
+[20:25:39.923] clocksource: arch_sys_counter: mask: 0xffffffffffffff max_cycles: 0xb8812736b, max_idle_ns: 440795202655 ns
+[20:25:39.936] sched_clock: 56 bits at 50MHz, resolution 20ns, wraps every 4398046511100ns
+[20:25:39.943] Calibrating delay loop (skipped), value calculated using timer frequency.. 100.00 BogoMIPS (lpj=50000)
+[20:25:39.961] pid_max: default: 32768 minimum: 301
+[20:25:39.976] LSM: initializing lsm=capability
+[20:25:39.992] Mount-cache hash table entries: 512 (order: 0, 4096 bytes, linear)
+[20:25:40.007] Mountpoint-cache hash table entries: 512 (order: 0, 4096 bytes, linear)
+[20:25:40.014] cacheinfo: Unable to detect cache hierarchy for CPU 0
+[20:25:40.020] rcu: Hierarchical SRCU implementation.
+[20:25:40.024] rcu: 	Max phase no-delay instances is 400.
+[20:25:40.029] Build Info:
+[20:25:40.034]   date: 2026-09-19 01:04:10
+[20:25:40.039]   user: gct@CS-buildserver
+[20:25:40.042]   ver : 2026-09-18 22:36:04 e1d4308b30(master)
+[20:25:40.047]   dtbv: gdm7275x-tethys3-ast.dtb - 25c81b741e(master)
+[20:25:40.053]   tfav: 1.0.0
+[20:25:40.056]   pkgv: 1.00.3.0.0
+[20:25:40.061]   appv: 1.00.3.0.0
+[20:25:40.066]   src : /home/gct/gct_workspace/dailybuild/repos/linuxos/gdm7275x
+[20:25:40.071] Config Info:
+[20:25:40.075]   PRODUCT: gdm7275x
+[20:25:40.079]   NO WIFI
+[20:25:40.084]   HZ=1000
+[20:25:40.088]   ARM_ARCH_TIMER
+[20:25:40.092]   NET_NATQ_DEV_SKBQ
+[20:25:40.096]   NET_VLANQ
+[20:25:40.102]   VLAN_8021Q
+[20:25:40.106]   MMC
+[20:25:40.110]   PCI
+[20:25:40.114]   ETH_GDM
+[20:25:40.120]   USB_DWC3
+[20:25:40.124]   NO ARM_DMA_MEM_BUFFERABLE
+[20:25:40.128]   SMP(cpus=1)
+[20:25:40.133]   HZ_PERIODIC
+[20:25:40.138]   NAND_256KB
+[20:25:40.141] rom=3a97301700
+[20:25:40.145] rf_chip_id_val(0xfd)=0x0e000000 rev=2
+[20:25:40.151] CPU: GDM7275X R2C [0x72750000]
+[20:25:40.155] c00: id=0x412fd050
+[20:25:40.159] c00: mpidr=0x0000000081000000
+[20:25:40.162] c00: implementor=65
+[20:25:40.168] c00: part_number=3333
+[20:25:40.172] c00: cachetype=0x84448004
+[20:25:40.175] RTC: primary(internal) osc
+[20:25:40.179] pm_protocol_init(0x0103fc00/0xffffffa00103fc00)
+[20:25:40.184] EFI services will not be available.
+[20:25:40.189] smp: Bringing up secondary CPUs ...
+[20:25:40.192] smp: Brought up 1 node, 1 CPU
+[20:25:40.196] SMP: Total of 1 processors activated.
+[20:25:40.202] CPU: All CPU(s) started at EL1
+[20:25:40.205] CPU features: detected: 32-bit EL0 Support
+[20:25:40.209] CPU features: detected: Data cache clean to the PoU not required for I/D coherence
+[20:25:40.213] CPU features: detected: Common not Private translations
+[20:25:40.217] CPU features: detected: CRC32 instructions
+[20:25:40.221] CPU features: detected: RCpc load-acquire (LDAPR)
+[20:25:40.225] CPU features: detected: LSE atomic instructions
+[20:25:40.229] CPU features: detected: Privileged Access Never
+[20:25:40.235] CPU features: detected: RAS Extension Support
+[20:25:40.239] CPU features: detected: Speculative Store Bypassing Safe (SSBS)
+[20:25:40.243] alternatives: applying system-wide alternatives
+[20:25:40.248] Memory: 234464K/260096K available (8960K kernel code, 1562K rwdata, 2384K rodata, 1792K init, 560K bss, 23924K reserved, 0K cma-reserved)
+[20:25:40.257] devtmpfs: initialized
+[20:25:40.263] clocksource: jiffies: mask: 0xffffffff max_cycles: 0xffffffff, max_idle_ns: 1911260446275000 ns
+[20:25:40.270] futex hash table entries: 1024 (order: 4, 65536 bytes, linear)
+[20:25:40.277] 28912 pages in range for non-PLT usage
+[20:25:40.285] 520432 pages in range for PLT usage
+[20:25:40.291] pinctrl core: initialized pinctrl subsystem
+[20:25:40.298] PMS_RESET_MODE: 0x0(POR)
+[20:25:40.302] PMS_RESET_MODE: 0x0(cleared)
+[20:25:40.309] ihs clock:
+[20:25:40.313]   ref=50000000
+[20:25:40.322]   sys=1600000000
+[20:25:40.330]   cpu=1600000000
+[20:25:40.335]     cpu_per_usec=1600
+[20:25:40.338]     cpu_per_msec=1600000
+[20:25:40.341]   peri=100000000
+[20:25:40.349]   ddr=3730000000
+[20:25:40.353] DMI not present or invalid.
+[20:25:40.361] NET: Registered PF_NETLINK/PF_ROUTE protocol family
+[20:25:40.368] DMA: preallocated 4096 KiB GFP_KERNEL pool for atomic allocations
+[20:25:40.374] gct-sdhost-fixup: sd0_div_clk exists!
+[20:25:40.380] hw-breakpoint: found 6 breakpoint and 4 watchpoint registers.
+[20:25:40.387] ASID allocator initialised with 65536 entries
+[20:25:40.393] usbcore: registered new interface driver usbfs
+[20:25:40.398] usbcore: registered new interface driver hub
+[20:25:40.403] usbcore: registered new device driver usb
+[20:25:40.409] Bluetooth: Core ver 2.22
+[20:25:40.415] NET: Registered PF_BLUETOOTH protocol family
+[20:25:40.422] Bluetooth: HCI device and connection manager initialized
+[20:25:40.428] Bluetooth: HCI socket layer initialized
+[20:25:40.435] Bluetooth: L2CAP socket layer initialized
+[20:25:40.440] Bluetooth: SCO socket layer initialized
+[20:25:40.444] vgaarb: loaded
+[20:25:40.448] clocksource: Switched to clocksource arch_sys_counter
+[20:25:40.453] NET: Registered PF_INET protocol family
+[20:25:40.456] IP idents hash table entries: 4096 (order: 3, 32768 bytes, linear)
+[20:25:40.460] tcp_listen_portaddr_hash hash table entries: 256 (order: 0, 4096 bytes, linear)
+[20:25:40.510] Table-perturb hash table entries: 65536 (order: 6, 262144 bytes, linear)
+[20:25:40.514] TCP established hash table entries: 2048 (order: 2, 16384 bytes, linear)
+[20:25:40.520] TCP bind hash table entries: 2048 (order: 4, 65536 bytes, linear)
+[20:25:40.523] TCP: Hash tables configured (established 2048 bind 2048)
+[20:25:40.527] UDP hash table entries: 256 (order: 1, 8192 bytes, linear)
+[20:25:40.531] UDP-Lite hash table entries: 256 (order: 1, 8192 bytes, linear)
+[20:25:40.536] NET: Registered PF_UNIX/PF_LOCAL protocol family
+[20:25:40.540] PCI: CLS 0 bytes, default 64
+[20:25:40.544] NIF: dt max-mtu=1500
+[20:25:40.548] NIF: ip filter delta: icmp=5 udp=60 tcp=60
+[20:25:40.553] netif ver: 1.1.2
+[20:25:40.557] vlanq ver: 1.1.2 nsra=0
+[20:25:40.561] Initialise system trusted keyrings
+[20:25:40.565] workingset: timestamp_bits=62 max_order=16 bucket_order=0
+[20:25:40.570] Key type asymmetric registered
+[20:25:40.574] Asymmetric key parser 'x509' registered
+[20:25:40.578] gdm-usb31-phy 13610000.usb31-phy: gdm_phy31_probe ver 1.0.0
+[20:25:40.582] phy phy-13610000.usb31-phy.0: incomplete constraints, dummy supplies not allowed (id=phy)
+[20:25:40.588] gdm7275x-pinctrl 10060000.pinctrl: no '' pin for IRQ.
+[20:25:40.592] gpio gpiochip0: Static allocation of GPIO base is deprecated, use dynamic allocation.
+[20:25:40.596] c00: gdm_irq_set_type: cpu=0 hwirq=82 type=4
+[20:25:40.600] c00: gdm_irq_set_type: cpu=0 hwirq=83 type=4
+[20:25:40.605] hw lock_reg:
+[20:25:40.609]   active=110004c0
+[20:25:40.615]   free  =110004c4
+[20:25:40.621] gipc-protocol(ffffffc08101d018): cpu0:0 va=ffffffc08101d018, pa=81c00018 ver=1.11
+[20:25:40.625] ipc init ch=0
+[20:25:40.629] ipc ch[0]:CTRL, irb: va=ffffffc08101d698-ffffffc08101e418 pa=81c00698-81c01418
+[20:25:40.635] ipc ch[0]:CTRL, irb_work: va=ffffffc08101e428-ffffffc08101ed48 pa=81c01428-81c01d48
+[20:25:40.639]   irb nr: tx=16(2080bytes) rx=128(2080bytes)
+[20:25:40.643]    irb tx: va=ffffffc08101d698-ffffffc08101d818 pa=81c00698-81c00818
+[20:25:40.648]    irb rx: va=ffffffc08101d820-ffffffc08101e420 pa=81c00820-81c01420
+[20:25:40.654]   m-ch_enabled=0x1
+[20:25:40.658] ipc init ch=28
+[20:25:40.662] ipc ch[28]:DBG, irb: va=ffffffc08101f018-ffffffc08101fc48 pa=81c02018-81c02c48
+[20:25:40.668] ipc ch[28]:DBG, irb_work: va=ffffffc08101fc58-ffffffc081020498 pa=81c02c58-81c03498
+[20:25:40.672]   irb nr: tx=2(2080bytes) rx=128(2080bytes)
+[20:25:40.676]    irb tx: va=ffffffc08101f018-ffffffc08101f048 pa=81c02018-81c02048
+[20:25:40.681]    irb rx: va=ffffffc08101f050-ffffffc08101fc50 pa=81c02050-81c02c50
+[20:25:40.686]   m-ch_enabled=0x10000001
+[20:25:40.690] IPC Ver: master(1.11) slave(0.0) driver=1.0.0
+[20:25:40.694]   IPC_IF_RX_LIMIT=100
+[20:25:40.698]   IPCIF_SMP
+[20:25:40.703] Linux IPC mode:
+[20:25:40.707]   proc_idle enabled=0(cpu=-1)
+[20:25:40.711]   assert_level=3(3)
+[20:25:40.715]   sdu_prio=0(0)
+[20:25:40.719] c00: gdm_irq_set_type: cpu=0 hwirq=152 type=1
+[20:25:40.723] IPCIF(v1.0.0) initialized: irq=43 hwirq=152
+[20:25:40.727] c00: set_affinity: no online irq=43(IPC) cpu=1
+[20:25:40.731] gdm_uart_init_port: line=0 irq=44 mapbase=0x0000000013100000 membase=ffffffc080f43000 uartclk=100000000
+[20:25:40.736] 13100000.serial: ttyS0 at �uart_trace_init line=0 size=1048576 early_pos=9779
+[20:25:40.740] printk: legacy console [ttyS0] enabled
+[20:25:40.744] printk: legacy console [ttyS0] enabled
+[20:25:40.748] printk: legacy bootconsole [gdmuart0] disabled
+[20:25:40.754] printk: legacy bootconsole [gdmuart0] disabled
+[20:25:40.758] proc_serial_init proc_serial_entry=ffffff80028420c0
+[20:25:40.762] gdm_uart_init_port: line=1 irq=46 mapbase=0x0000000013110000 membase=ffffffc080f45000 uartclk=100000000
+[20:25:40.768] 13110000.serial: ttyS1 at MMIO 0x13110000 (irq = 46, base_baud = 6250000) is a gdm-uart
+[20:25:40.772] gdm_uart_init_port: line=2 irq=48 mapbase=0x0000000013120000 membase=ffffffc080f4d000 uartclk=100000000
+[20:25:40.777] 13120000.serial: ttyS2 at MMIO 0x13120000 (irq = 48, base_baud = 6250000) is a gdm-uart
+[20:25:40.782] UART ver=0.5
+[20:25:40.786] brd: module loaded
+[20:25:40.790] GDM NAND Driver=v1.3.1 oraf
+[20:25:40.794] gpio ecc=2
+[20:25:40.799] Ecc : 4bit
+[20:25:40.803] ecc.bits=4
+[20:25:40.807] fault_ecc_nr=0
+[20:25:40.811] ecc_chk_loop_nr=0
+[20:25:40.817] [NAND] pagesize : 4K
+[20:25:40.821] nand: device found, Manufacturer ID: 0xad, Chip ID: 0xac
+[20:25:40.825] nand: Hynix NAND 512MiB 1,8V 8-bit
+[20:25:40.829] nand: 512 MiB, SLC, erase size: 256 KiB, page size: 4096, OOB size: 256
+[20:25:40.834] Bad block table found at page 131008, version 0x01
+[20:25:40.837] Bad block table found at page 130944, version 0x01
+[20:25:40.841] 25 cmdlinepart partitions found on MTD device gdm
+[20:25:40.846] Creating 25 MTD partitions on "gdm":
+[20:25:40.851] 0x000000000000-0x000000100000 : "pbl"
+[20:25:40.855] 0x000000100000-0x000000180000 : "secos"
+[20:25:40.858] 0x000000180000-0x000000280000 : "sbl"
+[20:25:40.862] 0x000000280000-0x000000380000 : "sbl2"
+[20:25:40.867] 0x000000380000-0x000000480000 : "tfa"
+[20:25:40.871] 0x000000480000-0x000000580000 : "tfa2"
+[20:25:40.875] 0x000000580000-0x000000880000 : "uboot"
+[20:25:40.879] 0x000000880000-0x000000b80000 : "uboot2"
+[20:25:40.884] 0x000000b80000-0x000000c80000 : "env"
+[20:25:40.888] 0x000000c80000-0x000001080000 : "nr1nv"
+[20:25:40.891] 0x000001080000-0x000001280000 : "nr2nv"
+[20:25:40.895] 0x000001280000-0x000001380000 : "fdt"
+[20:25:40.900] 0x000001380000-0x000001480000 : "fdt2"
+[20:25:40.904] 0x000001480000-0x000001680000 : "cmnnv"
+[20:25:40.908] 0x000001680000-0x000001880000 : "cmnnv2"
+[20:25:40.912] 0x000001880000-0x000001a80000 : "crashlog"
+[20:25:40.917] 0x000001a80000-0x000001c80000 : "reserved2"
+[20:25:40.921] 0x000001c80000-0x000003080000 : "linux"
+[20:25:40.925] 0x000003080000-0x000004480000 : "linux2"
+[20:25:40.929] 0x000004480000-0x00000a880000 : "rootfs"
+[20:25:40.934] 0x00000a880000-0x000010c80000 : "rootfs2"
+[20:25:40.939] 0x000010c80000-0x000011c80000 : "zp"
+[20:25:40.942] 0x000011c80000-0x000012c80000 : "zp2"
+[20:25:40.946] 0x000012c80000-0x000014c80000 : "misc"
+[20:25:40.951] 0x000014c80000-0x00001e880000 : "user"
+[20:25:40.955] gdm-ether ver 1.6.1
+[20:25:40.959]   ETH_CH=0
+[20:25:40.963]   CLKOUT_EN_DFLT
+[20:25:40.968] usbcore: registered new interface driver r8152
+[20:25:40.972] usbcore: registered new interface driver cdc_ether
+[20:25:40.976] usbcore: registered new interface driver cdc_eem
+[20:25:40.980] usbcore: registered new interface driver cdc_ncm
+[20:25:40.985] usbcore: registered new interface driver r8153_ecm
+[20:25:40.989] gdm-pmc: power on host domain
+[20:25:40.992] c00: cpu_smc_handler: fid=c1000001 x1=3 x2=0 x3=0 x4=0
+[20:25:40.996] gdm-pmc: power on usb domain
+[20:25:41.000] c00: cpu_smc_handler: fid=c1000001 x1=4 x2=0 x3=0 x4=0
+[20:25:41.004] dwc3_probe entered
+[20:25:41.007] gdm-pmc: power on usb domain
+[20:25:41.011] c00: cpu_smc_handler: fid=c1000001 x1=4 x2=0 x3=0 x4=0
+[20:25:41.016] gdm-pmc: power on host domain
+[20:25:41.020] c00: cpu_smc_handler: fid=c1000001 x1=3 x2=0 x3=0 x4=0
+[20:25:41.024] usb_state_init
+[20:25:41.028] gdm-usb31-phy 13610000.usb31-phy: base 81500000
+[20:25:41.033] gdm-usb31-phy 13610000.usb31-phy: configure protocol registers
+[20:25:41.036] DWC3 probed
+[20:25:41.040] usbcore: registered new interface driver usbserial_generic
+[20:25:41.044] usbserial: USB Serial support registered for generic
+[20:25:41.048] usbcore: registered new interface driver option
+[20:25:41.053] usbserial: USB Serial support registered for GSM modem (1-port)
+[20:25:41.056] i2c_dev: i2c /dev entries driver
+[20:25:41.061] gdm-i2c 13250000.i2c: i2c bus frequency set to 400 KHz
+[20:25:41.065] BUCK3: Bringing 750000uV into 800000-800000uV
+[20:25:41.070] LDO2: Bringing 1800000uV into 2800000-2800000uV
+[20:25:41.074] LDO6: Bringing 1500000uV into 2500000-2500000uV
+[20:25:41.077] LDO10: Bringing 1000000uV into 1200000-1200000uV
+[20:25:41.082] LDO13: Bringing 1050000uV into 1200000-1200000uV
+[20:25:41.086] pmic 0x8: 0x80->0x80
+[20:25:41.090] gdm-i2c 13250000.i2c: i2c-0: GDM I2C adapter
+[20:25:41.096] gdm-i2c 13280000.i2c: i2c bus frequency set to 400 KHz
+[20:25:41.101] sgm7220-typec 2-0047: detected usb-device
+[20:25:41.105] sgm7220-typec 2-0047: SGM7220 Type-C driver ready
+[20:25:41.108] gdm-i2c 13280000.i2c: i2c-2: GDM I2C adapter
+[20:25:41.112] device-mapper: ioctl: 4.48.0-ioctl (2023-03-01) initialised: dm-devel@lists.linux.dev
+[20:25:41.117] Bluetooth: HCI UART driver ver 2.3
+[20:25:41.120] Bluetooth: HCI UART protocol H4 registered
+[20:25:41.125] sdhci: Secure Digital Host Controller Interface driver
+[20:25:41.129] sdhci: Copyright(c) Pierre Ossman
+[20:25:41.136] sdhci-pltfm: SDHCI platform and OF driver helper
+[20:25:41.140] c00: set_affinity: no online task=natq_thrd cpu=3
+[20:25:41.144] natq ver: 0.8.2 qnr=8192
+[20:25:41.148]   Thread
+[20:25:41.153] ipv6q ver: 1.0.1
+[20:25:41.157] lcq ver: 1.0
+[20:25:41.161] ipip: IPv4 and MPLS over IPv4 tunneling driver
+[20:25:41.166] Initializing XFRM netlink socket
+[20:25:41.171] NET: Registered PF_INET6 protocol family
+[20:25:41.174] Segment Routing with IPv6
+[20:25:41.179] In-situ OAM (IOAM) with IPv6
+[20:25:41.185] sit: IPv6, IPv4 and MPLS over IPv4 tunneling driver
+[20:25:41.189] NET: Registered PF_PACKET protocol family
+[20:25:41.195] NET: Registered PF_KEY protocol family
+[20:25:41.201] Bridge firewalling registered
+[20:25:41.205] 8021q: 802.1Q VLAN Support v1.8
+[20:25:41.209] registered taskstats version 1
+[20:25:41.213] Loading compiled-in X.509 certificates
+[20:25:41.218] GDM HL IF(v0.7.4) initialized
+[20:25:41.222] DMA ver 0.6
+[20:25:41.227] MTD Crash partition /dev/mtd15
+[20:25:41.232] ipc mux irb nr=128 bsize=4128
+[20:25:41.236] ipc init ch=16
+[20:25:41.240] ipc ch[16]:MUX, irb: va=ffffffc081635018-ffffffc081635cd8 pa=82400018-82400cd8
+[20:25:41.244] ipc ch[16]:MUX, irb_work: va=ffffffc0810204b8-ffffffc081020d58 pa=81c034b8-81c03d58
+[20:25:41.249]   irb nr: tx=8(4128bytes) rx=128(4128bytes)
+[20:25:41.253]    irb tx: va=ffffffc081635018-ffffffc0816350d8 pa=82400018-824000d8
+[20:25:41.257]    irb rx: va=ffffffc0816350e0-ffffffc081635ce0 pa=824000e0-82400ce0
+[20:25:41.261]   m-ch_enabled=0x10010001
+[20:25:41.267] gdm7275x-pwm 132c0000.pwm: gdm7275x pwm driver probe
+[20:25:41.270] gdm-pmc: power on pcie domain
+[20:25:41.274] c00: cpu_smc_handler: fid=c1000001 x1=6 x2=0 x3=0 x4=0
+[20:25:41.278] gdm-comphy 13820000.gdm-comphy: PCIe0 reg base: 0x0000000016000000
+[20:25:41.284] gdm-comphy 13820000.gdm-comphy: PCIe1 reg base: 0x0000000016800000
+[20:25:41.288] gdm-comphy 13820000.gdm-comphy: PCIe2 reg base: 0x0000000017000000
+[20:25:41.292] gdm-comphy 13820000.gdm-comphy: PCIe3 reg base: 0x0000000017800000
+[20:25:41.297] gdm-comphy 13820000.gdm-comphy: ref-clock rate:100000000
+[20:25:41.301] gdm-comphy 13820000.gdm-comphy: PCIe clock rate(100000000)
+[20:25:41.305] gdm-comphy 13820000.gdm-comphy: usxgmii clock rate(266666667)
+[20:25:41.309] gdm-comphy 13820000.gdm-comphy: wlan power GPIO not configured, skipping
+[20:25:41.314] phy phy-13820000.gdm-comphy.1: incomplete constraints, dummy supplies not allowed (id=phy)
+[20:25:41.319] c00: gdm_irq_set_type: cpu=0 hwirq=192 type=4
+[20:25:41.323] gdm-comphy 13820000.gdm-comphy: Single link: PCIe (1 lanes)
+[20:25:41.327] c00: gdm_irq_set_type: cpu=0 hwirq=104 type=4
+[20:25:41.331] USIM Card Interface(usim0)
+[20:25:41.336] [USIM0] : GDM USIM device driver (1.3.0)
+[20:25:41.340]   PAIR_CMD
+[20:25:41.347] c00: gdm_irq_set_type: cpu=0 hwirq=105 type=4
+[20:25:41.351] USIM Card Interface(usim1)
+[20:25:41.355] [USIM1] : GDM USIM device driver (1.3.0)
+[20:25:41.359]   PAIR_CMD
+[20:25:41.363] ubi0: attaching mtd19
+[20:25:41.367] ubi0: scanning is finished
+[20:25:41.371] ubi0: attached mtd19 (name "rootfs", size 100 MiB)
+[20:25:41.375] ubi0: PEB size: 262144 bytes (256 KiB), LEB size: 253952 bytes
+[20:25:41.380] ubi0: min./max. I/O unit sizes: 4096/4096, sub-page size 4096
+[20:25:41.384] ubi0: VID header offset: 4096 (aligned 4096), data offset: 8192
+[20:25:41.388] ubi0: good PEBs: 400, bad PEBs: 0, corrupted PEBs: 0
+[20:25:41.392] ubi0: user volume: 1, internal volumes: 1, max. volumes count: 128
+[20:25:41.397] ubi0: max/mean erase counter: 1/0, WL threshold: 4096, image sequence number: 741054594
+[20:25:41.404] ubi0: available PEBs: 0, total reserved PEBs: 400, PEBs reserved for bad PEB handling: 40
+[20:25:41.408] ubi0: background thread "ubi_bgt0d" started, PID 1086
+[20:25:41.412] gdm_mux_init
+[20:25:41.418] clk: Not disabling unused clocks
+[20:25:41.422] em_mode=0x00000600:
+[20:25:41.425] b[0]=REBOOT_ON_LINUX_CRASH(off)
+[20:25:41.430] b[1]=REBOOT_ON_APP_CRASH(off)
+[20:25:41.437] b[8]=REBOOT_ON_MODEM_CRASH(off)
+[20:25:41.441] b[9]=REBOOT_ON_MODEM_WDT(ON)
+[20:25:41.446] b[10]=RELOAD_ON_MODEM_CRASH(ON)
+[20:25:41.451] b[11]=RELOAD_ON_MODEM_WDT(off)
+[20:25:41.456] b[16]=RUN_CRASH_SH(off)
+[20:25:41.460] hw_wd_start(15000/20000)
+[20:25:41.465] md wd started: to=3000 du=10000
+[20:25:41.512] PM: genpd: Not disabling unused power domains
+[20:25:41.519] c00: gdm_irq_set_type: cpu=0 hwirq=97 type=4
+[20:25:41.523] c00: set_affinity: irq=44(UART RX) cpu=0
+[20:25:41.526] c00: gdm_irq_set_type: cpu=0 hwirq=96 type=4
+[20:25:41.532] c00: set_affinity: irq=45(UART TX) cpu=0
+[20:25:41.537] uart port[0] fc=0 cr=0000002b
+[20:25:41.541] UBIFS (ubi0:0): Mounting in unauthenticated mode
+[20:25:41.544] UBIFS (ubi0:0): UBIFS: mounted UBI device 0, volume 0, name "rootfs", R/O mode
+[20:25:41.550] UBIFS (ubi0:0): LEB size: 253952 bytes (248 KiB), min./max. I/O unit sizes: 4096 bytes/4096 bytes
+[20:25:41.554] UBIFS (ubi0:0): FS size: 87867392 bytes (83 MiB, 346 LEBs), max 384 LEBs, journal size 9404416 bytes (8 MiB, 38 LEBs)
+[20:25:41.558] UBIFS (ubi0:0): reserved for root: 0 bytes (0 KiB)
+[20:25:41.562] UBIFS (ubi0:0): media format: w4/r0 (latest is w5/r0), UUID CE8DA3E9-F548-40EE-98E8-64CB830896A2, small LPT model
+[20:25:41.568] VFS: Mounted root (ubifs filesystem) readonly on device 0:16.
+[20:25:41.572] devtmpfs: mounted
+[20:25:41.575] Freeing unused kernel memory: 1792K
+[20:25:41.579] Run /sbin/init as init process
+[20:25:41.586]   with arguments:
+[20:25:41.589]     /sbin/init
+[20:25:41.593]   with environment:
+[20:25:41.597]     HOME=/
+[20:25:41.602]     TERM=linux
+[20:25:41.606]     attty=ttyS1
+[20:25:41.610] Welcome to
+[20:25:41.614]   G C T   L T E   M O D E M
+[20:25:41.619] modprobe: module board not found in modules.dep
+[20:25:41.623] backtrace info:
+[20:25:41.627]   LIBC=uClibc
+[20:25:41.633]   __SSP_ALL__
+[20:25:41.638]   guard=0xefbeaddeefbeadde
+[20:25:41.642]   inited=1
+[20:25:41.646]   stack_corr_nr=0
+[20:25:41.652]   load_nr=0
+[20:25:41.656]   unload_nr=0
+[20:25:41.660]   malloc_flags=0x0
+[20:25:41.665] [NV] NV flash Device : NAND FLASH 
+[20:25:41.670] [NV] nv_log mask: 0x0->0x13
+[20:25:41.674] [NV] NVM_VER=3.0
+[20:25:41.678] [NV] +nv_reload ucfg
+[20:25:41.684] [NV] NR1NV(9) map(0x0 0x200000)
+[20:25:41.688] [NV] [SEL-NV] NR1NV(9) hdr[0]: max_nv_size(0x96e24)
+[20:25:41.691] [NV]   hchk=0x7af20757(0x7af20757-ok) magic=0xcafebabe(ok) hsize=0x40 ts=0xc(12)
+[20:25:41.695] [NV]   dchk=0xe75e31fb(0xe75e31fb-ok) dsize=0x96de4(ok)
+[20:25:41.700] [NV] [SEL-NV] NR1NV(9) hdr[1]: max_nv_size(0x96e24)
+[20:25:41.705] [NV]   hchk=0x7b260758(0x7b260758-ok) magic=0xcafebabe(ok) hsize=0x40 ts=0xd(13)
+[20:25:41.709] [NV]   dchk=0xe75e31fb(0xe75e31fb-ok) dsize=0x96de4(ok)
+[20:25:41.712] [NV] NR1NV(9): active=1 map(0x0-0x200000) ts=0xd sz=0x96e24
+[20:25:41.717] [NV] NR2NV(10) map(0x0 0x100000)
+[20:25:41.721] [NV] [SEL-NV] NR2NV(10) hdr[0]: max_nv_size(0x19140)
+[20:25:41.725] [NV]   hchk=0x2f8905b5(0x2f8905b5-ok) magic=0xcafebabe(ok) hsize=0x40 ts=0x4(4)
+[20:25:41.729] [NV]   dchk=0xeb592437(0xeb592437-ok) dsize=0x19100(ok)
+[20:25:41.735] [NV] [SEL-NV] NR2NV(10) hdr[1]: max_nv_size(0x19140)
+[20:25:41.739] [NV]   hchk=0x2bf30594(0x2bf30594-ok) magic=0xcafebabe(ok) hsize=0x40 ts=0x5(5)
+[20:25:41.742] [NV]   dchk=0x1f4024fa(0x1f4024fa-ok) dsize=0x19100(ok)
+[20:25:41.746] [NV] NR2NV(10): active=1 map(0x0-0x100000) ts=0x5 sz=0x19140
+[20:25:41.751] [NV] NR2NV Init active block [1]=0x100000
+[20:25:41.756] [NV] CMNNV(13) map(0x0 0x100000)
+[20:25:41.759] [NV] [SEL-NV] CMNNV(13) hdr[0]: max_nv_size(0x40000)
+[20:25:41.763] [NV]   hchk=0x749c0737(0x749c0737-ok) magic=0xcafebabe(ok) hsize=0x40 ts=0x3a(58)
+[20:25:41.769] [NV]   dchk=0xcd0a0fd5(0xcd0a0fd5-ok) dsize=0x3ffc0(ok)
+[20:25:41.772] [NV] [SEL-NV] CMNNV(13) hdr[1]: max_nv_size(0x40000)
+[20:25:41.777] [NV]   hchk=0x64d206db(0x64d206db-ok) magic=0xcafebabe(ok) hsize=0x40 ts=0x3b(59)
+[20:25:41.781] [NV]   dchk=0x520b0cf5(0x520b0cf5-ok) dsize=0x3ffc0(ok)
+[20:25:41.787] [NV] CMNNV(13): active=1 map(0x0-0x100000) ts=0x3b sz=0x40000
+[20:25:41.791] [NV] CMNNV Init active block [1]=0x100000
+[20:25:41.796] [NV] ucfg nr1nv data read from CMNNV[1] timestamp=0xd
+[20:25:41.801] [NV] NR1NV Init active block [1]=0x200000
+[20:25:41.806] [NV] CMNNV2(14) map(0x0 0x100000)
+[20:25:41.811] [NV] [SEL-NV] CMNNV2(14) hdr[0]: max_nv_size(0xa7c0)
+[20:25:41.815] [NV] [SEL-NV] CMNNV2(14) hdr[1]: max_nv_size(0xa7c0)
+[20:25:41.821] [NV] [SEL-NV-SET] CMNNV2(14) hdr[0]: max_nv_size(0xa7c0)
+[20:25:41.825] [NV]   hchk=0x0(0x0-ok) magic=0x0(ng) hsize=0x0 ts=0x0(0)
+[20:25:41.830] [NV]   dchk=0x0(0x0-ok) dsize=0x0(ok)
+[20:25:41.886] [NV] CMNNV2(14) : all block invalid(map 0x0-0x100000)
+[20:25:41.890] [NV] -nv_reload ucfg
+[20:25:41.894] [UCFG] ucfg(1.1) load xml:
+[20:25:41.898] [UCFG]   var nr: conf=1041(922) fact=1040(921) perm=16(12)
+[20:25:41.904] [UCFG]   def nr: conf=0 conf=0 conf=0
+[20:25:41.908] Use normal log configuration
+[20:25:41.913] +modprobe modem modem_bootp="product_id=0x0000, operator_id=0x0000"
+[20:25:41.918] modem: loading out-of-tree module taints kernel.
+[20:25:41.923] modem driver ver 1.0
+[20:25:41.927]   base: 84100000
+[20:25:41.932]   size: 0ff00000
+[20:25:41.937]   param: 840fe000
+[20:25:41.958] boot param: product_id=0x0000, operator_id=0x0000, boot_mode=0, gipc_phy_base=0x81c00018, mem_base=0x80000000, mem_size=0x20000000, compat=0x0, ipv6=1
+[20:25:41.965] ---------------------
+[20:25:41.972] hdr chksum  : 0x749c0737
+[20:25:41.979] magic       : 0xcafebabe
+[20:25:41.983] timstamp    : 0x0000003a
+[20:25:41.992] data chksum : 0xcd0a0fd5
+[20:25:41.998] data size   : 0x0003ffc0
+[20:25:42.006] ---------------------
+[20:25:42.012] ---------------------
+[20:25:42.020] hdr chksum  : 0x64d206db
+[20:25:42.027] magic       : 0xcafebabe
+[20:25:42.030] timstamp    : 0x0000003b
+[20:25:42.036] data chksum : 0x520b0cf5
+[20:25:42.039] data size   : 0x0003ffc0
+[20:25:42.047] ---------------------
+[20:25:42.054] using block : 1, 0x100000 
+[20:25:42.059] map idx=1
+[20:25:42.066] hdr idx: fs=0 zp=1 zpsize=9157832 read_size=9159880
+[20:25:43.081] ts: fs=14 zp=8
+[20:25:43.089] no such fw files!
+[20:25:43.095]   /lib/firmware/tk.gz
+[20:25:43.101]   /lib/firmware/tk.xz
+[20:25:43.107] read from nand mtd=zp2(9159880)
+[20:25:43.112] modem map info:
+[20:25:43.118]   [0] pa(0000000084100000)
+[20:25:43.124] ->va(ffffffc090000000)
+[20:25:43.130] c00: decompress gzip(1f 8b) at ffffffc090000000... (9159880bytes)
+[20:25:44.609] c00: decompress done 138404920bytes 1603ms ret=0
+[20:25:44.613] modem start
+[20:25:44.617] cpu_smc_powerdomain_up(pt=1, pd=0)
+[20:25:44.623] c00: cpu_smc_handler: fid=c1000001 x1=1 x2=0 x3=0 x4=0
+[20:25:44.629] enable cluster1-pll
+[20:25:44.633] start_modem_cpu: done start=1
+[20:25:44.639] -modprobe modem
+[20:25:44.669] Thu Jan  1 00:00:05 UTC 1970
+[20:25:44.673] cp: can't stat '/etc/sysconfig/lte/param/*': No such file or directory
+[20:25:44.678] BL33 pc=0x84dae704 spsr=0x600002c5
+[20:25:44.682] c10: psci_smc_handler: fid=84000000 x1=0 x2=0 x3=0 x4=0
+[20:25:44.687] TK: gipc-protocol: cpu1:0 addr(v1)=0000000081c00018 magic=4054 ver(master=1.11 slave=1.11) proci=0 assertl=3
+[20:25:44.691] TK: hw lock_reg:
+[20:25:44.696] TK:   active=110004c0
+[20:25:44.700] TK:   free  =110004c4
+[20:25:44.705] TK: ipc config=00000004
+[20:25:44.709] TK:   router-device
+[20:25:44.713] TK: ipc init ch=0
+[20:25:44.719] TK:   peer-genirq=1a111020(152)
+[20:25:44.723] TK:   s-ch_enabled=0x10010001
+[20:25:44.727] TK: ipc init ch=16
+[20:25:44.733] TK:   peer-genirq=1a111020(152)
+[20:25:44.737] TK:   s-ch_enabled=0x10010001
+[20:25:44.741] TK: ipc init ch=28
+[20:25:44.745] TK:   peer-genirq=1a111020(152)
+[20:25:44.752] TK:   s-ch_enabled=0x10010001
+[20:25:44.756] ipc modem boot done
+[20:25:44.760] GDM Modem gdm7259x_board
+[20:25:44.766] [Boot Param] error: token=9, ret=-54
+[20:25:44.772] ============================================================================
+[20:25:44.775]  [0] ZEPHYR OS v4.3.0 (v4.3.0-3049-g03924c3679: 192MB)
+[20:25:44.780] ----------------------------------------------------------------------------
+[20:25:44.786]  - gct@CS-buildserver
+[20:25:44.790]  - 2026-08-31T22:51:44
+[20:25:44.794]  - gdm7259x_nsa_192mb
+[20:25:44.799] ============================================================================
+[20:25:44.803] [MEM] WT DRAM zero initialized 0(0KB)bytes from 000000008d700000 to 000000008d700000
+[20:25:44.808] [MEM] NCH DRAM zero initialized 35348240(34519KB)bytes from 000000008d700000 to 000000008f8b5f10
+[20:25:44.813] [CHIP] GDM7259X(Rev.1C)
+[20:25:44.819] [CLOCK] arm(1300.000MHz) 1x(100.000MHz)
+[20:25:44.825] [MEM]  total : 0x84000000 - 0x90000000 (  192 MB)
+[20:25:44.829] [MEM]  .init : 0x84100000 - 0x841068a8 (   27 kB)
+[20:25:44.834] [MEM]  .text : 0x84100000 - 0x85587000 (21020 kB)
+[20:25:44.838] [MEM]  .data : 0x85586600 - 0x8c4fe438 (114144 kB)
+[20:25:44.843] [MEM]   .bss : 0x8b20b000 - 0x8c4c7a08 (19187 kB)
+[20:25:44.852] I2C3 initialized
+[20:25:44.856] Modem IPC mode:
+[20:25:44.860]   master_proc_idle=0
+[20:25:44.865]   assert_level=3
+[20:25:44.871]   sdu_prio=0
+[20:25:44.875] ########################################
+[20:25:44.879] ####       Board Configuration      ####
+[20:25:44.885] ########################################
+[20:25:44.889] Operator: [0x0000]
+[20:25:44.893] Product : [0x0000]
+[20:25:44.900] LTE>====================================
+[20:25:44.904] IPv6 mode:[0]
+[20:25:44.908] ## UE CONFIG
+[20:25:44.913]  - Combined attach : [0]
+[20:25:44.916]  - UE CAPABILITY
+[20:25:44.920] 	> UE Category  : [0 (0/0)]
+[20:25:44.924] 	> AS Rel Num   : [0]
+[20:25:44.930] 	> FGI          : FDD [00000000 00000000 00000000]
+[20:25:44.933] 	>              : TDD [00000000 00000000 00000000]
+[20:25:44.936] 	> ROHC         : [1]
+[20:25:44.942] 	> eMBMS        : [0]
+[20:25:44.948] 	> TM           : [00/00/00]
+[20:25:44.955] NR>=====================================
+[20:25:44.960] [console] gdm_uart0 enabled
+[20:25:44.966] [console] crash enabled
+[20:25:44.972] [console] gdm_ipc enabled
+[20:25:44.977] ----------------------------------------------------------------------------
+[20:25:44.984]  NR - FW ver: 0.1.0.0
+[20:25:44.989] ----------------------------------------------------------------------------
+[20:25:44.994]  Pkg: 1.11.0
+[20:25:45.000] ----------------------------------------------------------------------------
+[20:25:45.005] ----------------------------------------------------------------------------
+[20:25:45.011]  LTE - FW ver: 0.3.5.0
+[20:25:45.017] ----------------------------------------------------------------------------
+[20:25:45.023] nv_checksum_info: 0
+[20:25:45.029] nr driver ver 1.0
+[20:25:45.036]   usl
+[20:25:45.041] param_mtu=1500
+[20:25:45.048] ipc init ch=1
+[20:25:45.051] ipc ch[1]:SDU, irb: va=ffffffc082605018-ffffffc08264d018 pa=83400018-83448018
+[20:25:45.057] ipc ch[1]:SDU, irb_work: va=ffffffc082685018-ffffffc0826b5038 pa=83480018-834b0038
+[20:25:45.065]   irb nr: tx=4096(2080bytes) rx=8192(2080bytes)
+[20:25:45.071]    irb tx: va=ffffffc082605018-ffffffc08261d018 pa=83400018-83418018
+[20:25:45.077]    irb rx: va=ffffffc08261d020-ffffffc08264d020 pa=83418020-83448020
+[20:25:45.084] ipc init ch=1
+[20:25:45.090]   peer-genirq=1a111020( 1 5m2-)ch
+[20:25:45.095] _enable d =s0-xc10ena003d=0xT D100
+[20:25:45.102] 3
+[20:25:45.107] rb->buffer=83de10f8
+[20:25:45.112]   IPC_BUF_RSVD_SIZE=184(0xb8)
+[20:25:45.118]   NET_IP_ALIGN=0
+[20:25:45.122] [if_net]
+[20:25:45.127]   TEXT=ffffffc078f17000
+[20:25:45.131]   DATA=ffffffc078f22000
+[20:25:45.137]   RO_AFTER_INIT=0000000000000000
+[20:25:45.141]   INIT_TEXT=ffffffc078f2a000
+[20:25:45.145]   INIT_DATA=ffffffc078f2c000
+[20:25:45.151]   INIT_RODATA=0000000000000000
+[20:25:45.154] func ptr:
+[20:25:45.159]   &if_net_xmit=ffffffc078f1b0a8
+[20:25:45.164]   &gdm_net_ipc_rx_handler=ffffffc078f1a720
+[20:25:45.171]   &proc_rx_skb=ffffffc078f1a0a8
+[20:25:45.175] start_net.sh
+[20:25:45.179] VLANEN=0
+[20:25:45.185] act=1
+[20:25:45.188] Run start_br.sh
+[20:25:45.192] local null ip=0.0.0.0 mask=0.0.0.0 00:00:00:00:00:00 en=0
+[20:25:45.197] GDM_LOCAL_DEVIF=br0
+[20:25:45.202] NIF: up(lo)
+[20:25:45.206] [0] br0 addr=192.168.0.1 mask=255.255.255.0 local=192.168.0.1 bcast=192.168.0.255
+[20:25:45.210] netif set local br0 ip=192.168.0.1 mask=255.255.255.0 00:00:00:00:00:00 en=0
+[20:25:45.214] NIF: up(br0)
+[20:25:45.219] brctl: iface eth0: No such device
+[20:25:45.224] ifconfig: SIOCSIFADDR: No such device
+[20:25:45.228] brctl: iface usb0: No such device
+[20:25:45.234] ifconfig: SIOCSIFADDR: No such device
+[20:25:45.238] Setting dhcp configuration..
+[20:25:45.242] Internet Systems Consortium DHCP Server 4.1-ESV-R16-P2
+[20:25:45.248] Copyright 2004-2022 Internet Systems Consortium.
+[20:25:45.253] All rights reserved.
+[20:25:45.357] For info, please visit https://www.isc.org/software/dhcp/
+[20:25:45.362] Wrote 0 leases to leases file.
+[20:25:45.367] Listening on LPF/br0/06:bf:e6:e5:68:16/192.168.0.0/24
+[20:25:45.371] Sending on   LPF/br0/06:bf:e6:e5:68:16/192.168.0.0/24
+[20:25:45.374] Sending on   Socket/fallback/fallback-net
+[20:25:45.379] Loading simple NAT configuration..
+[20:25:45.616] INTF=br0, WANINTF=nr0pdu3
+[20:25:45.620] register ip_conntrack_cb
+[20:25:45.624] <message>[NV] CRIT(cotra:1344): file=nv_7275x.c(345) cmn2_nv_read
+[20:25:45.628] [NV] [cotra] invalid CMN2_PORT(id=1) magic
+[20:25:45.632] [NV] +nv_write [cotra] CMN2_PORT(36) data=0x416010 part=36 size=0xa09
+[20:25:45.753] [NV] cotra CMNNV2 Write Skip (3:CMN2_PORT, 0x0, 2569)
+[20:25:45.758] [NV] -nv_write [cotra] CMN2_PORT(36) data=0x416010 part=36 size=0xa09
+[20:25:45.764] Fail to Check DMZ Setting. Please, restart Command</message>
+[20:25:45.844] 1970-01-01 00:00:06: (../../src/configfile.c.387) Warning: please add "mod_authn_file" to server.modules list in lighttpd.conf.  A future release of lighttpd 1.4.x will not automatically load mod_authn_file and lighttpd will fail to start up since your lighttpd.conf uses auth.backend = "htpasswd".
+[20:25:45.856] Run usb_configfs.sh
+[20:25:45.880] usbeth ENABLE=1, mode=0, serial cfg: gs0=0 gs1=0 gs2=0 dm0=0 dm1=0
+[20:25:45.890] configfs-gadget.g1 gadget.0: HOST MAC 00:0a:3b:ff:ff:02
+[20:25:45.895] configfs-gadget.g1 gadget.0: MAC 00:0a:3b:ff:ff:01
+[20:25:45.907] set hostif=usb0 cnt=0
+[20:25:45.916] net_mode=0
+[20:25:45.923] udc: gadget start
+[20:25:45.930] c00: gdm_irq_set_type: cpu=0 hwirq=208 type=4
+[20:25:46.077] c00: set_affinity: no online irq=51(DWC3) cpu=2
+[20:25:46.091] udc: connect: conn=1 discon=0 rtc=0005434a
+[20:25:46.101] USB gadget configured: ETH=rndis.usb0, serial count=0, UDC=13500000.dwc3
+[20:25:46.131] IPV6Q LOG(00000004):
+[20:25:46.152] ipv6q_enabled=0
+[20:25:46.160] RNDIS multi_pkt_tx_size: host=16384 nv=0 actual=16384 nr=10
+[20:25:46.178] NET EMUL LOG(00000000):
+[20:25:46.192]  NULL
+[20:25:46.200] net_emul_mask=00000000
+[20:25:46.210] net.core.rmem_max = 16777216
+[20:25:46.221] net.core.wmem_max = 16777216
+[20:25:46.242] net.ipv4.tcp_rmem = 4096 131072 16777216
+[20:25:46.250] net.ipv4.tcp_wmem = 4096 131072 16777216
+[20:25:46.262] net.ipv4.tcp_moderate_rcvbuf = 1
+[20:25:46.275] br0: port 1(usb0) entered blocking state
+[20:25:46.289] br0: port 1(usb0) entered disabled state
+[20:25:46.299] configfs-gadget.g1 gadget.0 usb0: entered allmulticast mode
+[20:25:46.309] configfs-gadget.g1 gadget.0 usb0: entered promiscuous mode
+[20:25:46.320] eth_open
+[20:25:46.330] eth_start
+[20:25:46.344] NIF: up(usb0)
+[20:25:46.357] usb0 set host mac: 00:0a:3b:ff:ff:02
+[20:25:46.362] mrd: mrd_lplog_start 
+[20:25:46.372] [mrd_lplog] listening on 0.0.0.0:1011 (id=0, idx=0)
+[20:25:46.378] [mrd_lplog] listening on 0.0.0.0:1012 (id=1, idx=1)
+[20:25:46.387] [mrd_lplog] listening on 0.0.0.0:1013 (id=2, idx=2)
+[20:25:46.394] [mrd_lplog] listening on 0.0.0.0:1014 (id=3, idx=3)
+[20:25:46.407] [mrd_lplog] listening on 0.0.0.0:1015 (id=4, idx=4)
+[20:25:46.420] [mrd_lplog] listening on 0.0.0.0:1016 (id=5, idx=5)
+[20:25:46.433] [mrd_lplog] listening on 0.0.0.0:1017 (id=6, idx=6)
+[20:25:46.437] [mrd_lplog] listening on 0.0.0.0:1018 (id=7, idx=7)
+[20:25:46.446] [mrd_lplog] listening on 0.0.0.0:1019 (id=8, idx=8)
+[20:25:46.456] [mrd_lplog] LP_LOG_ID_ULP0 telnet port:1011
+[20:25:46.468] [mrd_lplog] LP_LOG_ID_ULP1 telnet port:1012
+[20:25:46.511] [mrd_lplog] LP_LOG_ID_ULP2 telnet port:1013
+[20:25:46.552] [mrd_lplog] LP_LOG_ID_ULP3 telnet port:1014
+[20:25:46.569] [mrd_lplog] LP_LOG_ID_DLP0 telnet port:1015
+[20:25:46.584] [mrd_lplog] LP_LOG_ID_DLP1 telnet port:1016
+[20:25:46.602] [mrd_lplog] LP_LOG_ID_DLP2 telnet port:1017
+[20:25:46.619] [mrd_lplog] LP_LOG_ID_DLP3 telnet port:1018
+[20:25:46.641] [mrd_lplog] LP_LOG_ID_SLP  telnet port:1019
+[20:25:46.657] mrd: nrd started
+[20:25:46.674] Open shared map and Init mutex in mrd_main!!
+[20:25:46.695] mrd: ***************************************
+[20:25:46.704] mrd: *          NR DAEMON START           *
+[20:25:46.722] mrd: ***************************************
+[20:25:46.737] mrd: operator_id=0
+[20:25:46.747] lowd open nr=1
+[20:25:46.754] gif_open mrd 1/0
+[20:25:46.777] [mrd] bentry delayed copy: b336(4)
+[20:25:46.782] Disable GPS Module ...
+[20:25:46.788] Not Used
+[20:25:46.792] mrautocm: ucfg_retry : 0
+[20:25:46.810] mrautocm: [LTE UCFG] cfun(0), manual(0)
+[20:25:46.850] mrautocm: NR Search(Core:0, Selection Mode: 0, cellTypeMode: 0, Roam: 0)
+[20:25:46.854] mrautocm: RAT (LTE NV: 0, NR NV: 0)
+[20:25:46.858] mrautocm: [PLMN LTE] Core(0), Mode(0), CellType(0), Roam(0), List Num(0)
+[20:25:46.864] mrautocm: [PLMN LTE] searchMode(0), MCC[0]=0, MCC[1]=0, MCC[2]=0
+[20:25:46.871] mrautocm: [PLMN NR] Core(0), Mode(0), CellType(0), Roam(0), List Num(4)
+[20:25:46.876] mrautocm: [PLMN NR] searchMode(0), MCC[0]=0, MCC[1]=0, MCC[2]=0
+[20:25:46.880] mrautocm: [PLMN NR][MRU] Count(5)
+[20:25:46.887] mrautocm: [PLMN NR][ARFCN](1/1), Band(26), ARFCN(172370)
+[20:25:46.901] mrautocm: [PLMN NR][Band](1/1), Band(26)
+[20:25:46.915] mrautocm: [PLMN NR][ARFCN Range](1/1), Band(26) ARFCN(from: 171800 to: 178800)
+[20:25:46.927] mrautocm: CORE NET (LTE NV: 0, NR NV: 0)
+[20:25:46.931] mrautocm: LTE PDN[1] Enable(1), Connect Order(1) Label(ims), Type(2), APN(IMS) PCO()
+[20:25:46.946] mrautocm: LTE PDN[2] Enable(1), Connect Order(0) Label(admin), Type(2), APN(VZWADMIN) PCO()
+[20:25:46.969] mrautocm: LTE PDN[3] Enable(1), Connect Order(2) Label(internet), Type(2), APN(V5GA01INTERNET) PCO()
+[20:25:46.980] mrautocm: LTE PDN[4] Enable(1), Connect Order(0) Label(app), Type(2), APN(VZWAPP) PCO()
+[20:25:46.989] mrautocm: LTE PDN[5] Enable(1), Connect Order(0) Label(emergency), Type(2), APN() PCO()
+[20:25:47.008] mrautocm: LTE PDN[6] Enable(0), Connect Order(0) Label(enterprise), Type(2), APN(VZWCLASS6) PCO()
+[20:25:47.014] mrautocm: LTE PDN[7] Enable(0), Connect Order(0) Label(b2b), Type(0), APN(VZWCLASS7) PCO()
+[20:25:47.026] mrautocm: LTE PDN[8] Enable(0), Connect Order(0) Label(reserved3), Type(0), APN() PCO()
+[20:25:47.038] mrautocm: NR PDU[1] Enable(0), Connect Order(0) Label(ims), Type(3), DNN(), PCO(), S-NSSAI(len:0 sst:00 sd:000000 mapped_sst:00 mapped_sd:000000)
+[20:25:47.054] mrautocm: NR PDU[2] Enable(0), Connect Order(0) Label(admin), Type(3), DNN(), PCO(), S-NSSAI(len:0 sst:00 sd:000000 mapped_sst:00 mapped_sd:000000)
+[20:25:47.076] mrautocm: NR PDU[3] Enable(1), Connect Order(1) Label(internet), Type(1), DNN(), PCO(), S-NSSAI(len:0 sst:00 sd:000000 mapped_sst:00 mapped_sd:000000)
+[20:25:47.101] mrautenabled=1
+[20:25:47.131] ocm: interval_sec=1(sec)
+[20:25:47.165] user_interval_ticks=0/0(sec)
+[20:25:47.207] log_enabled=0
+[20:25:47.229] NR PDU[4] Enable(0), Connect Order(0) Label(app), Type(3), DNN(), PCO(), S-NSSAI(len:0 sst:00 sd:000000 mapped_sst:00 mapped_sd:000000)
+[20:25:47.252] mrautocm: NR PDU[5] Enable(0), Connect Order(0) Label(emergency), Type(3), DNN(), PCO(), S-NSSAI(len:0 sst:00 sd:000000 mapped_sst:00 mapped_sd:000000)
+[20:25:47.283] mrautocm: NR PDU[6] Enable(0), Connect Order(0) Label(enterprise), Type(3), DNN(), PCO(), S-NSSAI(len:0 sst:00 sd:000000 mapped_sst:00 mapped_sd:000000)
+[20:25:47.310] mrautocm: NR PDU[7] Enable(0), Connect Order(0) Label(b2b), Type(3), DNN(), PCO(), S-NSSAI(len:0 sst:00 sd:000000 mapped_sst:00 mapped_sd:000000)
+[20:25:47.356] mrautocm: NR PDU[8] Enable(0), Connect Order(0) Label(reserved), Type(3), DNN(), PCO(), S-NSSAI(len:0 sst:00 sd:000000 mapped_sst:00 mapped_sd:000000)
+[20:25:47.397] mrautocm: [mrcm_ucfg_get_overheat] Overheat is disable. 
+[20:25:47.433] mrautocm: [mrcm_process_temperature_set] Executing command: kern temp uintv 0
+[20:25:47.467] mrautocm: [IMS] Enable(0)
+[20:25:47.512] mrautocm: [EAP] PDU auth bypass pdu1 (0)
+[20:25:47.534] mrautocm: [EAP] PDU auth bypass pdu2 (0)
+[20:25:47.563] mrautocm: [EAP] PDU auth bypass pdu3 (0)
+[20:25:47.591] mrautocm: [EAP] PDU auth bypass pdu4 (0)
+[20:25:47.628] mrautocm: [EAP] PDU auth bypass pdu5 (0)
+[20:25:47.651] mrautocm: [EAP] PDU auth bypass pdu6 (0)
+[20:25:47.666] mrautocm: [EAP] PDU auth bypass pdu7 (0)
+[20:25:47.686] mrautocm: [EAP] PDU auth bypass pdu8 (0)
+[20:25:47.706] gif_mmap va=0x7f87822000 pa=0x97068000 sz=8192
+[20:25:47.724] mrd: TID list initialized.
+[20:25:47.741] mrd: T-ID Feature Activation is Done.
+[20:25:47.756] gif_to_ipc: delayed req 3335(2044)
+[20:25:47.773] gif_to_ipc: delayed req 3335(2044)
+[20:25:47.787] mrd: get_lted_keep_alive_setting, lted_keep_alive setting (enable=0, expired_time=0, max_retry_val=0)
+[20:25:47.800] mrd: [SERVER] new connection request
+[20:25:47.811] mrd: lted_srv_alloc_client id=0
+[20:25:47.824] gif_to_ipc: delayed req 3335(2044)
+[20:25:47.838] mrd: [SERVER] assigns client index 0 proc=mratcm(1437)
+[20:25:47.852] mrd: [SERVER] new connection request
+[20:25:47.863] mrd: lted_srv_alloc_client id=1
+[20:25:47.876] mrd: [SERVER] assigns client index 1 proc=mrbip(1451)
+[20:25:47.888] mrbip: lgif_to_ipc: delayed req 3335(2044)
+[20:25:47.897] ted_client_init_ex success (id: 1, client_identity : 0x00000000, pid (1451-mrbip) 
+[20:25:47.905] gif_to_ipc: delayed req 3335(2044)
+[20:25:47.912] gif_to_ipc: delayed req 3335(2044)
+[20:25:47.917] mrd: [SERVER] new connection request
+[20:25:47.923] mrd: lted_srv_alloc_client id=2
+[20:25:47.929] mrd: [SERVER] assigns client index 2 proc=cli(1480)
+[20:25:47.935] mrd: [SERVER] new connection request
+[20:25:47.939] mrd: lted_srv_alloc_client id=3
+[20:25:47.944] mrd: [SERVER] assigns client index 3 proc=mrcm(1481)
+[20:25:47.950] mrautocm: lted_client_init_ex success (gif_to_ipc: delayed req 3335(2044)
+[20:25:47.956] id: 3, client_identity : 0x00000040, pid (1481-mrcm) 
+[20:25:47.961] mrbip: Wait LTE PS INIT..
+[20:25:47.965] gif_to_ipc: delayed req 3335(2044)
+[20:25:47.972] DM> DM> DM> DM> DM> DM> DM> DM> DM> DM> DM> gif_to_ipc: delayed req 3335(2044)
+[20:25:47.976] DM> mrd: clearing start - eps_id = 0xffef
+[20:25:47.981] mrd: clearing done
+[20:25:47.987] [NV_HCI] nv checksum is valid(0xc83f56f5/0xc83f56f5)
+[20:25:47.991] mrd: nr rf scr: access(/etc/sysconfig/script/lte_scr/rf/x_6)=-1
+[20:25:47.997] [NVM] READ Head N_INFO         (7243,10,5a) - Status(0)
+[20:25:48.004] [NVM] READ Head N_BCFG         (7243,10,5b) - Status(0)
+[20:25:48.008] mrd: NR  DEVICE INSERT(DEV_IDX(1))
+[20:25:48.013] [NVM] READ Head N_RFCAL        (7243,18,48) - Status(0)
+[20:25:48.022] [NVM] READ Head N_TCCAL        (7243,10,2b) - Status(0)
+[20:25:48.029] [NVM] READ Head N_NETWORK      (0000,00,00) - Status(0)
+[20:25:48.037] [NVM] Default NV Memory Write(4)
+[20:25:48.050] [NVM] NV NETWORK DUMP
+[20:25:48.057] [NVM] READ Head N_SAFE         (7243,10,31) - Status(0)
+[20:25:48.075] [V_SIM]ProcNvBcfgData/gstVsimEnData:0
+[20:25:48.093] default tdm log level=2 (NV:2)
+[20:25:48.103] c10:[MRM] [CHK]MRM: NVM_INIT_CMPL_IND 
+[20:25:48.111] [CHK]UMM: NVM_INIT_CMPL_IND 
+[20:25:48.125] [UMM_ERR] [V_SIM]eVSIM_Enabled::5 
+[20:25:48.139] [UMM_ERR] (UMM_MODE_EMUL)/Virtual SIM :5 
+[20:25:48.147] [UMM_ERR] [V_SIM]UMM_Update_AllCacheItems_forUSIM, eVSIM: :5 
+[20:25:48.163] [MRM_UMM][UMM][UMM_UICC_ACT_IND] nMsgSize:24 
+[20:25:48.172] [UMM_ERR] [V_SIM]Enter UMM_ACTIVE state  
+[20:25:48.182]  LTE L1 initialize...
+[20:25:48.191] l1_modem_init(restart=0,init=0)
+[20:25:48.204]  cpu_smc_handler: fid=c1000030 x1=0 x2=0 x3=0 x4=0
+[20:25:48.213] c10: OIC_TZPROT: 00000000->ffffffff
+[20:25:48.222]  =====   RF NV3  ====== 
+[20:25:48.237] [CSI] INIT: STI=10239
+[20:25:48.244] [rxm_meas_init] Disable Measuremnt
+[20:25:48.253] [RXM_DM_InitDebugOption] INIT (1)
+[20:25:48.266] [L1C] INIT2(RFFE=65542)
+[20:25:48.287] l1_bb_ctrl(0)
+[20:25:48.297] [NAS_CACHE] Access Control Class: 0x0001
+[20:25:48.309] [NAS_CACHE] UE Operation Mode: 0x80 Length of MNC: 3
+[20:25:48.322] [NAS_CACHE] NOT Available the UAC Access Identities Configuration EF
+[20:25:48.337] [NAS_CACHE] Higher Priority PLMN search period (28800 Sec)
+[20:25:48.348] Equivalent HPLMN 0: 0x00f110 
+[20:25:48.357] Equivalent HPLMN 1: 0x130184 
+[20:25:48.374] [NAS_CACHE] SUCI calculation is to be performed by the ME
+[20:25:48.382] [NAS_CACHE] NOT Available Subscription identifier privacy support
+[20:25:48.385] [NAS_CACHE] NOT Available the 5GS Operator PLMN List EF
+[20:25:48.392] [NAS_CACHE] NOT Available the Routing Indicator EF
+[20:25:48.399] [NAS_CACHE] [ERR] Read Failed for PNN EF <IN cacheReadEFPNN 5203>
+[20:25:48.402] [NAS_CACHE] [ERR] Read Failed for OPL EF <IN cacheReadEFOPL 5227>
+[20:25:48.410] [NAS_CACHE] NOT Available the Operator controlled signal threshold per access technology EF
+[20:25:48.419] [NAS_CACHE] Requested the File Count: 29
+[20:25:48.425] [FSM] [H] Cell DB:halfBank 317, blockFree 634, blockNo 634, blockSz 252
+[20:25:48.433] L1_BandInfoNV: B1 B2 B3 B4 B5 B6 B7 B8 B10 B12 B13 B14 B17 B18 B19 B20 B25 B26 B28 B29 B30 B34 B38 B39 B40 B41 B42 B43 B48 B52 B66 B71 B77(x) B78(x)
+[20:25:48.439] [L3API][H]  user FreqTable's init'd: 856AD8F8
+[20:25:48.448] [IMC] [H]Supported Band: B1 B2 B3 B4 B5 B6 B7 B8 B10 B12 B13 B14 B17 B18 B19 B20 B25 B26 B28 B29 B30 B34 B38 B39 B40 B41 B42 B43 B48 B52 B66 B71
+[20:25:48.456] [L3API] 	Max Layer: B71:4/1 B66:4/1
+[20:25:48.467] [L3API] 	Max Layer: B52:4/2 B48:4/2 B43:4/2 B42:4/2 B41:4/1 B40:4/1 B39:4/1 B38:4/1 B34:4/1 B30:4/1
+[20:25:48.511] [L3API][H] 	B29: not support UL
+[20:25:48.524] [L3API] 	Max Layer: B29:4/0 B28:4/1 B26:4/1 B25:4/1 B20:4/1 B19:4/1 B18:4/1 B17:4/1 B14:4/1 B13:4/1
+[20:25:48.531] [L3API] 	Max Layer: B12:4/1 B10:4/1 B8:4/1 B7:4/1 B6:4/1 B5:4/1 B4:4/1 B3:4/1 B2:4/1 B1:4/1
+[20:25:48.544] [L3API][H] Init BC List - mode:0, count:32
+[20:25:48.564] [L3API][H]  BandPair Count: 32 (640)
+[20:25:48.576] [L3API][H]  MakeMimoBandComb:(B1:0x14)
+[20:25:48.597] [L3API][H]  MakeMimoBandComb:(B2:0x14)(B3:0x14)(B4:0x14)(B5:0x14)(B6:0x14)(B7:0x14)(B8:0x14)(B10:0x14)(B12:0x14)([L3API][H]  MakeMimoBandComb:(B14:0x14)(B17:0x14)(B18:0x14)(B19:0x14)(B20:0x14)(B25:0x14)(B26:0x14)(B28:0x14)(B29[L3API][H]  MakeMimoBandComb:(B34:0x14)(B38:0x14)(B39:0x14)(B40:0x14)(B41:0x14)(B42:0x24)(B43:0x24)(B48:0x24)(B52[L3API][H]  MakeMimoBandComb:(B71:0x14)
+[20:25:48.614] === TEST STOP ===

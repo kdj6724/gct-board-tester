@@ -1,0 +1,68 @@
+{
+  "name": "7275X-fw",
+  "blocks": [
+    {
+      "id": "b2_8f6a2c",
+      "type": "POWER",
+      "params": {
+        "state": "off",
+        "delay_after": 1.0
+      }
+    },
+    {
+      "id": "b3_6ed0eb",
+      "type": "POWER",
+      "params": {
+        "state": "on",
+        "delay_after": 1.0
+      }
+    },
+    {
+      "id": "b15_0ff625",
+      "type": "KNOCK",
+      "params": {
+        "text": "",
+        "append_enter": true,
+        "interval": 0.5,
+        "pattern": "GDM>",
+        "regex": false,
+        "timeout": 30.0,
+        "on_timeout": "continue"
+      }
+    },
+    {
+      "id": "b16_5e450b",
+      "type": "SEND",
+      "params": {
+        "text": "fastboot usb",
+        "append_enter": true,
+        "delay_after": 1.0,
+        "check": {
+          "pattern": "usb ssphy init",
+          "regex": false,
+          "timeout": 30.0,
+          "on_timeout": "continue"
+        }
+      }
+    },
+    {
+      "id": "b5_2dc524",
+      "type": "EXEC",
+      "params": {
+        "cmd": "Y:\\work\\gct-board-tester\\fastboot\\fastboot.exe flash fdt K:\\ENG\\ENG05\\CS\\Daily_build\\20260919\\GDM7275X\\linuxos_master\\Image\\tethys3-ast.dtb",
+        "timeout": 60.0,
+        "on_timeout": "continue",
+        "check_pattern": "Writing 'fdt'                                      OKAY",
+        "regex": false
+      }
+    },
+    {
+      "id": "b6_80d2e3",
+      "type": "POWER",
+      "params": {
+        "state": "off",
+        "delay_after": 2.0
+      }
+    }
+  ]
+}

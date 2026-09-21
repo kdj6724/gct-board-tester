@@ -1,0 +1,23 @@
+[20:14:20.193] === PRESET TEST START === preset: 7275X-fw
+[20:14:22.764] $ (knock every 0.5s) 
+[20:14:23.781]  0 
+[20:14:23.796] $ fastboot usb
+[20:14:24.807] fastboot usb
+[20:14:24.812] c00: cpu_smc_handler: fid=c1000001 x1=5 x2=0 x3=0 x4=0
+[20:14:24.819] c00: cpu_smc_handler: fid=c1000001 x1=4 x2=0 x3=0 x4=0
+[20:14:24.825] c00: cpu_smc_handler: fid=c1000001 x1=3 x2=0 x3=0 x4=0
+[20:14:24.830] usb ssphy init
+[20:14:24.836] sys=1600 usb ref clkgen=0x10f0f sel=1
+[20:14:24.850] $ (exec) Y:\work\gct-board-tester\fastboot\fastboot.exe flash linux K:\ENG\ENG05\CS\Daily_build\20260919\GDM7275X\linuxos_master\Image\Image
+[20:14:29.189] Sending 'linux' (14812 KB)                         OKAY [  3.615s]
+[20:14:40.999] Writing 'linux'                                    OKAY [ 11.806s]
+[20:14:41.020] Finished. Total time: 15.758s
+[20:14:41.080] $ (exec) Y:\work\gct-board-tester\fastboot\fastboot.exe flash rootfs K:\ENG\ENG05\CS\Daily_build\20260919\GDM7275X\linuxos_master\Image\ramdisk.ubifs
+[20:14:48.941] Sending 'rootfs' (36608 KB)                        OKAY [  7.141s]
+[20:15:18.820] Writing 'rootfs'                                   OKAY [ 29.840s]
+[20:15:18.859] Finished. Total time: 37.497s
+[20:15:18.939] $ (exec) Y:\work\gct-board-tester\fastboot\fastboot.exe flash fdt K:\ENG\ENG05\CS\Daily_build\20260919\GDM7275X\linuxos_master\Image\tethys3-ast.dtb
+[20:15:19.630] Sending 'fdt' (21 KB)                              OKAY [  0.006s]
+[20:15:19.734] Writing 'fdt'                                      OKAY [  0.127s]
+[20:15:19.817] Finished. Total time: 0.482s
+[20:15:21.140] === TEST STOP ===

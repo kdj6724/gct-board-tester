@@ -27,15 +27,36 @@
   방식을 쓴 건 캔버스 레이아웃 복잡도를 Loop 수준으로 유지하기 위함.
 - Input 블록에 "응답 Check 붙이기" 를 설정하면 옆으로 작은 Check 박스가
   붙어서 "입력을 보내고 바로 그 응답을 확인한다" 는 하나의 짝으로 보인다.
+- 상단의 "저장" 버튼은 별도 파일이 아니라 지금 열려 있는 프로파일에 바로
+  저장한다(main_app.py 의 on_save 콜백 -> cm.save_profile). 예전엔 이거랑
+  별개로 "파일로 저장"/"파일 불러오기" 로 saved_blocks/ 폴더에 내보내는
+  기능도 있었는데, 저장 위치가 두 군데로 나뉘어 헷갈린다는 의견으로 없앴다
+  - 이제 저장은 프로파일 하나로 통일. 다른 PC 로 옮기고 싶으면 profiles/
+  폴더 안의 해당 .json 을 탐색기에서 그대로 복사하면 된다(포맷이 같음).
+- 팔레트 맨 아래엔 저장된 "프리셋" 목록도 함께 뜬다(다른 블록처럼 드래그/클릭
+  으로 삽입). 프리셋은 PRESET 타입의 블록 하나로 들어가는데, 위치 이동/삭제는
+  Power/Send 같은 다른 단일 블록과 완전히 동일하게 취급된다 - 안에 저장된
+  블록들을 params["blocks"] 로 통째로 들고 있을 뿐이다(놓는 순간의 스냅샷).
+  캔버스 위 라벨은 타입 이름 대신 그 프리셋의 이름을 보여준다(block_label()).
+  클릭하면 파라미터 창 대신 안내 토스트만 뜨고, ▦ 아이콘을 누르면 그 자리에서
+  개별 블록들로 "펼치기"(_unpack_preset - 껍데기만 벗기고 내용은 그대로 남김,
+  Loop 벗기기와 같은 개념) 할 수 있다.
+  기존 캔버스에 놓인 블록 구간을 새 프리셋으로 저장할 땐(상단의 "프리셋으로
+  저장" 버튼) Loop 로 "둘러싸기" 할 때와 똑같은 선택 방식(arm 모드 + 캔버스
+  위 드래그)을 재사용한다(_arm_wrap_mode 의 action 파라미터로 구분).
+  프리셋 자체를 고치거나 새로 만들 땐 "프리셋 관리" 버튼으로 작은 목록 창을
+  열고, 편집을 누르면 이 BlockEditorWindow 를 그 프리셋의 블록으로 다시 열어서
+  재사용한다(exclude_preset 로 편집 중인 프리셋 자기 자신은 팔레트에서 빼서
+  무의미한 자기 자신 중첩만 막아준다 - 그 외 프리셋 안에 다른 프리셋을 넣는
+  중첩은 데이터 구조상 자연스럽게 지원되고 특별히 막지 않는다).
 
 캔버스 드로잉/좌표 계산과 순수 리스트 조작 로직(move_range, delete_block,
 unwrap_container)은 분리되어 있어 tkinter 이벤트 없이도 단위 테스트할 수 있다.
 """
 from __future__ import annotations
 import copy
-import os
 import tkinter as tk
-from tkinter import filedialog
+from tkinter import simpledialog, messagebox
 
 import block_dialogs as bd
 import config_manager as cm
@@ -109,8 +130,30 @@ def unwrap_container(blocks: list[dict], index: int) -> list[dict]:
     return blocks[:index] + inner + blocks[end + 1:]
 
 
+def unpack_preset(blocks: list[dict], index: int) -> list[dict]:
+    """PRESET 블록 하나(index)를 그 안에 담겨있던 개별 블록들로 그 자리에서 펼친다
+    (껍데기만 벗기고 내용은 그대로 - Loop 의 unwrap_container() 와 같은 개념이지만
+    PRESET 은 START/END 짝이 아니라 단일 블록이라 훨씬 단순하다). 안의 블록들은
+    이미 프리셋을 놓을 때(make_preset_block) id 를 새로 발급받은 것들이라 여기서
+    또 복제할 필요는 없다."""
+    inner = blocks[index]["params"].get("blocks", [])
+    return blocks[:index] + copy.deepcopy(inner) + blocks[index + 1:]
+
+
+def block_label(block: dict) -> str:
+    """캔버스에 굵은 글씨로 보여줄 블록 이름. 프리셋은 고정된 타입 이름("Preset")
+    대신 저장할 때 지어준 프리셋 이름을 그대로 보여준다 - 어떤 프리셋인지 한눈에
+    알아보려고(사용자 요청)."""
+    if block["type"] == st.PRESET:
+        return "\U0001f4e6 " + (block["params"].get("preset_name") or "(이름 없음)")
+    return st.BLOCK_META[block["type"]]["label"]
+
+
 def summarize(block: dict) -> str:
     t, p = block["type"], block["params"]
+    if t == st.PRESET:
+        n = len(p.get("blocks", []))
+        return f"프리셋 — {n}개 블록"
     if t == st.POWER:
         return f"{p.get('state','on').upper()}  (+{p.get('delay_after',0):g}s)"
     if t == st.WAIT_STRING:
@@ -129,6 +172,11 @@ def summarize(block: dict) -> str:
         return f"{p.get('seconds',0):g}s"
     if t == st.UPLOAD_SCRIPT:
         return p.get("target_path", "")
+    if t == st.EXEC:
+        c = p.get("cmd", "")
+        # 경로가 기니까 파일명(맨 뒤 구간)만 보여주는 게 오히려 한눈에 안 들어와서,
+        # 그냥 앞부분을 잘라서 보여준다 - 긴 fastboot 명령어도 어떤 커맨드인지는 보임.
+        return f"$ {c[:26]}{'…' if len(c) > 26 else ''}" if c else "(명령어 없음)"
     return ""
 
 
@@ -382,14 +430,15 @@ def draw_diagram(canvas, blocks: list[dict], layout: dict, *, active_index=None,
         c.create_rectangle(x0, y0, x1, y1, fill=meta["color"],
                            outline=(ACTIVE_COLOR if is_active else "#1e1e2e"),
                            width=4 if is_active else 2, tags=(f"node{i}",))
+        label_text = block_label(b)
         summ = summarize(b)
         if summ:
-            c.create_text(x0 + 10, (y0 + y1) / 2 - 9, anchor="w", text=meta["label"],
+            c.create_text(x0 + 10, (y0 + y1) / 2 - 9, anchor="w", text=label_text,
                           font=("Consolas", 11, "bold"), fill=meta["text_color"], tags=(f"node{i}",))
             c.create_text(x0 + 10, (y0 + y1) / 2 + 10, anchor="w", text=summ,
                           font=("Consolas", 9), fill=meta["text_color"], tags=(f"node{i}",))
         else:
-            c.create_text(x0 + 10, (y0 + y1) / 2, anchor="w", text=meta["label"],
+            c.create_text(x0 + 10, (y0 + y1) / 2, anchor="w", text=label_text,
                           font=("Consolas", 11, "bold"), fill=meta["text_color"], tags=(f"node{i}",))
         if owner is not None:
             c.create_text(x1 - 10, y0 + 12, anchor="e", text="✕", font=("Consolas", 10, "bold"),
@@ -398,6 +447,13 @@ def draw_diagram(canvas, blocks: list[dict], layout: dict, *, active_index=None,
             c.tag_bind(f"node{i}", "<B1-Motion>", owner._motion)
             c.tag_bind(f"node{i}", "<ButtonRelease-1>", owner._release)
             c.tag_bind(f"del{i}", "<Button-1>", lambda e, ii=i: owner._delete(ii))
+            if b["type"] == st.PRESET:
+                # 프리셋은 ✕(삭제) 옆에 "펼치기" 아이콘도 하나 더 - 이 인스턴스만
+                # 개별 블록들로 풀어서 그 자리에서 커스터마이즈하고 싶을 때 쓴다.
+                c.create_text(x1 - 32, y0 + 12, anchor="e", text="▣",
+                             font=("Consolas", 11, "bold"), fill=meta["text_color"],
+                             tags=(f"unpack{i}",))
+                c.tag_bind(f"unpack{i}", "<Button-1>", lambda e, ii=i: owner._unpack_preset(ii))
 
         check = b["params"].get("check") if b["type"] == st.SEND else None
         if check:
@@ -422,7 +478,7 @@ def draw_diagram(canvas, blocks: list[dict], layout: dict, *, active_index=None,
 # ─────────────────────────────────────────────
 
 class BlockEditorWindow(tk.Toplevel):
-    def __init__(self, parent, blocks: list[dict], on_save):
+    def __init__(self, parent, blocks: list[dict], on_save, exclude_preset: str | None = None):
         super().__init__(parent)
         self.title("테스트 시퀀스 편집 (블록 조립)")
         self.geometry("980x680")
@@ -432,18 +488,24 @@ class BlockEditorWindow(tk.Toplevel):
 
         self.blocks: list[dict] = copy.deepcopy(blocks)
         self.on_save = on_save
+        # 지금 이 창 자체가 어떤 프리셋을 편집하는 중이면(프리셋 관리 -> 편집),
+        # 팔레트의 프리셋 목록에서 그 프리셋 자기 자신은 빼둔다 - 편집 중인 프리셋을
+        # 자기 안에 다시 집어넣는 무의미한 자기 중첩만 막기 위함(그 외의 중첩은 허용).
+        self._exclude_preset = exclude_preset
         self._slots: list[dict] = []
         self._loop_boxes: list[dict] = []
         self._if_boxes: list[dict] = []
         self._drag = None       # {"start":i,"end":i,"moved":False,"press_y":..}
         self._pal_drag = None   # {"type":..., "ghost":Toplevel|None}
         self._insert_line = None
-        self._span_box = None       # Loop 로 "둘러싸기" 드래그 중 보여주는 미리보기 사각형
+        self._span_box = None       # Loop/프리셋 "선택" 드래그 중 보여주는 미리보기 사각형
         self._span_selected = []    # 그 사각형이 현재 감싸고 있는 최상위 항목들
-        self._wrap_armed = False    # 팔레트에서 Loop 를 뗀 뒤, 캔버스에서 감쌀 범위를 기다리는 중
+        self._wrap_armed = False    # 캔버스에서 범위를 고르길 기다리는 중(Loop 감싸기/프리셋 저장 공용)
+        self._wrap_action = "loop"  # 그 범위를 고른 뒤 뭘 할지: "loop"(Loop로 감싸기) / "save_preset"
         self._wrap_press_y = None   # wrap 모드에서 캔버스 위에 실제로 마우스를 누른 지점(정확한 시작점)
         self._active_index = None   # 실행 중 강조 표시할 블록의 flat index (Run 연결 후 사용)
         self._active_progress = None  # Loop 진행률 표시용 {loop_start_index: (cur, total)}
+        self._preset_palette_frame = None  # 팔레트 안, 프리셋 버튼들만 담는 프레임(새로고침용)
 
         self._build_ui()
         self.redraw()
@@ -460,10 +522,8 @@ class BlockEditorWindow(tk.Toplevel):
         tk.Button(top, text="취소", command=self.destroy, font=("Consolas", 10),
                   bg=FIELD, fg=FG, relief="flat", bd=0, padx=14, pady=5,
                   cursor="hand2").pack(side="right", padx=(0, 6))
-        tk.Button(top, text="\U0001f4be 파일로 저장", command=self._export_to_file,
-                  font=("Consolas", 10), bg=FIELD, fg=FG, relief="flat", bd=0,
-                  padx=10, pady=5, cursor="hand2").pack(side="right", padx=(0, 6))
-        tk.Button(top, text="\U0001f4c2 파일 불러오기", command=self._import_from_file,
+        tk.Button(top, text="\U0001f4e6 프리셋으로 저장",
+                  command=lambda: self._arm_wrap_mode("save_preset"),
                   font=("Consolas", 10), bg=FIELD, fg=FG, relief="flat", bd=0,
                   padx=10, pady=5, cursor="hand2").pack(side="right", padx=(0, 16))
 
@@ -483,6 +543,16 @@ class BlockEditorWindow(tk.Toplevel):
             btn.bind("<ButtonPress-1>", lambda e, tt=t: self._palette_press(e, tt))
             btn.bind("<B1-Motion>", self._palette_motion)
             btn.bind("<ButtonRelease-1>", lambda e, tt=t: self._palette_release(e, tt))
+
+        sep = tk.Frame(palette, bg=MUTE, height=1); sep.pack(fill="x", padx=10, pady=(8, 0))
+        tk.Label(palette, text="프리셋 (드래그 / 클릭)", font=("Consolas", 9),
+                 bg=PANEL, fg=MUTE).pack(anchor="w", padx=10, pady=(8, 4))
+        self._preset_palette_frame = tk.Frame(palette, bg=PANEL)
+        self._preset_palette_frame.pack(fill="x")
+        self._refresh_preset_palette()
+        tk.Button(palette, text="\U0001f4e6 프리셋 관리", command=self._manage_presets,
+                  font=("Consolas", 9), bg=BG, fg=MUTE, relief="flat", bd=0,
+                  padx=10, pady=5, cursor="hand2").pack(fill="x", padx=10, pady=(6, 10))
 
         canvas_frame = tk.Frame(body, bg=BG)
         canvas_frame.pack(side="left", fill="both", expand=True, padx=(10, 0))
@@ -505,12 +575,36 @@ class BlockEditorWindow(tk.Toplevel):
 
     @staticmethod
     def _palette_real_type(t: str) -> str:
-        """팔레트 표시용 타입("LOOP"/"IF")을 실제 블록 타입(시작 마커)으로 변환."""
+        """팔레트 표시용 타입("LOOP"/"IF"/"PRESET:이름")을 실제 블록 타입으로 변환."""
         if t == "LOOP":
             return st.LOOP_START
         if t == "IF":
             return st.IF_START
+        if isinstance(t, str) and t.startswith("PRESET:"):
+            return st.PRESET
         return t
+
+    def _refresh_preset_palette(self):
+        """팔레트 안의 프리셋 버튼 목록을 저장된 presets/ 로 다시 그린다
+        (프리셋을 새로 저장/삭제/수정한 직후에 호출)."""
+        frame = self._preset_palette_frame
+        for w in frame.winfo_children():
+            w.destroy()
+        meta = st.BLOCK_META[st.PRESET]
+        names = [n for n in cm.list_presets() if n != self._exclude_preset]
+        if not names:
+            tk.Label(frame, text="(저장된 프리셋 없음)", font=("Consolas", 9),
+                     bg=PANEL, fg=MUTE).pack(anchor="w", padx=10, pady=2)
+            return
+        for name in names:
+            btn = tk.Label(frame, text=f"\U0001f4e6 {name}", font=("Consolas", 10, "bold"),
+                           bg=meta["color"], fg=meta["text_color"], relief="flat",
+                           padx=10, pady=8, cursor="hand2")
+            btn.pack(fill="x", padx=10, pady=4)
+            block_type = f"PRESET:{name}"
+            btn.bind("<ButtonPress-1>", lambda e, tt=block_type: self._palette_press(e, tt))
+            btn.bind("<B1-Motion>", self._palette_motion)
+            btn.bind("<ButtonRelease-1>", lambda e, tt=block_type: self._palette_release(e, tt))
 
     # ---- 레이아웃 계산 ---------------------------------------------------
     def _layout(self):
@@ -582,10 +676,12 @@ class BlockEditorWindow(tk.Toplevel):
                                  abs(event.y_root - pd["y0"]) > DRAG_THRESHOLD):
             pd["moved"] = True
             meta = st.BLOCK_META[self._palette_real_type(pd["type"])]
+            ghost_text = (pd["type"][len("PRESET:"):] if isinstance(pd["type"], str)
+                          and pd["type"].startswith("PRESET:") else meta["label"])
             ghost = tk.Toplevel(self)
             ghost.overrideredirect(True)
             ghost.attributes("-alpha", 0.85)
-            tk.Label(ghost, text=meta["label"], font=("Consolas", 10, "bold"),
+            tk.Label(ghost, text=ghost_text, font=("Consolas", 10, "bold"),
                      bg=meta["color"], fg=meta["text_color"], padx=10, pady=6).pack()
             pd["ghost"] = ghost
         if pd["moved"] and pd["ghost"] is not None:
@@ -624,15 +720,21 @@ class BlockEditorWindow(tk.Toplevel):
         idx, _ = self._find_insertion(y)
         self._add_block(block_type, idx)
 
-    # ---- Loop 로 기존 블록 구간 "둘러싸기" ---------------------------------
-    # 팔레트에서 Loop 를 드래그해서 떼면(1) wrap 모드가 켜지고(_arm_wrap_mode),
-    # 그 다음 캔버스 위에서 직접 누르고(2) 끌고(3) 떼는(4) 것으로 범위를 잡는다.
+    # ---- Loop 로 기존 블록 구간 "둘러싸기" / 기존 구간을 "프리셋으로 저장" ----------
+    # 팔레트에서 Loop 를 드래그해서 떼거나 "프리셋으로 저장" 버튼을 누르면(1)
+    # wrap 모드가 켜지고(_arm_wrap_mode), 그 다음 캔버스 위에서 직접 누르고(2)
+    # 끌고(3) 떼는(4) 것으로 범위를 잡는다 - 둘 다 "범위 선택" 동작은 완전히
+    # 같고, 그 범위를 고른 뒤 뭘 할지(action: "loop" | "save_preset")만 다르다.
     # (2)~(4) 는 전부 캔버스 위젯 좌표라서 시작/끝 모두 "누른/뗀 그 지점"이 정확히 맞는다.
-    def _arm_wrap_mode(self):
+    def _arm_wrap_mode(self, action="loop"):
         self._wrap_armed = True
+        self._wrap_action = action
         self._wrap_press_y = None
         self._clear_span_box()
-        self._toast("Loop 로 감쌀 블록들을 캔버스에서 위→아래로 눌러서 드래그하세요 (Esc: 취소)")
+        if action == "save_preset":
+            self._toast("프리셋으로 저장할 블록들을 캔버스에서 위→아래로 눌러서 드래그하세요 (Esc: 취소)")
+        else:
+            self._toast("Loop 로 감쌀 블록들을 캔버스에서 위→아래로 눌러서 드래그하세요 (Esc: 취소)")
 
     def _cancel_wrap_mode(self, event=None):
         if not self._wrap_armed:
@@ -670,7 +772,10 @@ class BlockEditorWindow(tk.Toplevel):
         self._wrap_press_y = None
         self._clear_span_box()
         if selected:
-            self._wrap_in_loop(selected[0]["start"], selected[-1]["end"])
+            if self._wrap_action == "save_preset":
+                self._save_as_preset(selected[0]["start"], selected[-1]["end"])
+            else:
+                self._wrap_in_loop(selected[0]["start"], selected[-1]["end"])
 
     def _top_level_item_boxes(self):
         """self._slots (직전 _layout() 결과) 기준으로 최상위 항목별 (start,end,top,bottom) 목록."""
@@ -743,6 +848,79 @@ class BlockEditorWindow(tk.Toplevel):
                        [end_b] + self.blocks[end + 1:])
         self.redraw()
 
+    def _save_as_preset(self, start, end):
+        """이미 캔버스에 놓인 blocks[start:end+1] 구간을 이름 붙여 presets/ 에 저장한다.
+        (이 창 자체의 self.blocks 는 안 건드린다 - 저장만 하고 현재 시퀀스는 그대로.)"""
+        name = simpledialog.askstring("프리셋으로 저장", "프리셋 이름:", parent=self)
+        if not name:
+            return
+        snippet = copy.deepcopy(self.blocks[start:end + 1])
+        cm.save_preset(name, snippet)
+        self._refresh_preset_palette()
+        self._toast(f"프리셋 저장됨: {name} ({len(snippet)}개 블록)")
+
+    def _manage_presets(self):
+        """프리셋 목록 창: 새로 만들기 / 편집 / 삭제. 편집은 이 BlockEditorWindow 를
+        그 프리셋의 블록으로 다시 열어서(on_save 가 프로파일 대신 그 프리셋에 저장)
+        재사용한다 - 프리셋 전용 편집 화면을 따로 만들지 않는다."""
+        win = tk.Toplevel(self)
+        win.title("프리셋 관리")
+        win.configure(bg=BG)
+        win.transient(self)
+        win.geometry("380x360")
+        tk.Label(win, text="편집을 누르면 그 프리셋의 블록을 바로 수정할 수 있습니다",
+                 font=("Consolas", 9), bg=BG, fg=MUTE, wraplength=350,
+                 justify="left").pack(anchor="w", padx=12, pady=(12, 6))
+        list_frame = tk.Frame(win, bg=BG)
+        list_frame.pack(fill="both", expand=True, padx=12)
+
+        def _rebuild():
+            for w in list_frame.winfo_children():
+                w.destroy()
+            names = cm.list_presets()
+            if not names:
+                tk.Label(list_frame, text="(저장된 프리셋 없음)", font=("Consolas", 9),
+                         bg=BG, fg=MUTE).pack(anchor="w", pady=4)
+            for name in names:
+                row = tk.Frame(list_frame, bg=FIELD)
+                row.pack(fill="x", pady=2)
+                tk.Label(row, text=name, font=("Consolas", 10), bg=FIELD, fg=FG).pack(
+                    side="left", padx=8, pady=4)
+                tk.Button(row, text="삭제", command=lambda n=name: _delete(n), font=("Consolas", 9),
+                          bg=BG, fg=FG, relief="flat", bd=0, padx=8, cursor="hand2").pack(
+                    side="right", padx=(0, 4), pady=2)
+                tk.Button(row, text="편집", command=lambda n=name: _edit(n), font=("Consolas", 9),
+                          bg=ACC, fg="#1e1e2e", relief="flat", bd=0, padx=8, cursor="hand2").pack(
+                    side="right", padx=4, pady=2)
+
+        def _on_preset_saved(name, new_blocks):
+            cm.save_preset(name, new_blocks)
+            self._refresh_preset_palette()
+            _rebuild()
+
+        def _edit(name):
+            BlockEditorWindow(win, cm.load_preset(name),
+                              lambda b, n=name: _on_preset_saved(n, b), exclude_preset=name)
+
+        def _new():
+            new_name = simpledialog.askstring("새 프리셋", "프리셋 이름:", parent=win)
+            if not new_name:
+                return
+            BlockEditorWindow(win, [], lambda b, n=new_name: _on_preset_saved(n, b),
+                              exclude_preset=new_name)
+
+        def _delete(name):
+            if not messagebox.askyesno("삭제 확인", f"'{name}' 프리셋을 삭제합니까?", parent=win):
+                return
+            cm.delete_preset(name)
+            self._refresh_preset_palette()
+            _rebuild()
+
+        tk.Button(win, text="+ 새 프리셋", command=_new, font=("Consolas", 10, "bold"),
+                  bg=ACC, fg="#1e1e2e", relief="flat", bd=0, padx=12, pady=6,
+                  cursor="hand2").pack(anchor="w", padx=12, pady=(6, 12))
+        _rebuild()
+
     def _canvas_y_from_root(self, y_root) -> float | None:
         c = self.canvas
         cy = y_root - c.winfo_rooty()
@@ -751,6 +929,14 @@ class BlockEditorWindow(tk.Toplevel):
         return c.canvasy(cy)
 
     def _add_block(self, block_type, idx):
+        if isinstance(block_type, str) and block_type.startswith("PRESET:"):
+            # 프리셋은 Power/Send 처럼 파라미터 다이얼로그 없이 바로 그 자리에 놓인다
+            # (설정할 게 없음 - 안의 내용은 이미 저장된 프리셋 그대로).
+            name = block_type[len("PRESET:"):]
+            block = st.make_preset_block(name, cm.load_preset(name))
+            self.blocks = self.blocks[:idx] + [block] + self.blocks[idx:]
+            self.redraw()
+            return
         if block_type == "LOOP":
             start, end = st.make_loop_pair()
             new_params = bd.edit_loop(self, start["params"])
@@ -814,6 +1000,13 @@ class BlockEditorWindow(tk.Toplevel):
         # LOOP_START/IF_START 는 헤더를 클릭하면 다시 설정을 열 수 있게 한다.
         if block["type"] in (st.LOOP_END, st.IF_ELSE, st.IF_END):
             return
+        if block["type"] == st.PRESET:
+            # 프리셋 블록은 클릭해도 파라미터 창이 없다(설정할 게 없음) - 대신
+            # 안내만 보여준다. 개별적으로 손보고 싶으면 ▦ 아이콘으로 펼치면 된다.
+            n = len(block["params"].get("blocks", []))
+            name = block["params"].get("preset_name", "")
+            self._toast(f"프리셋 '{name}' ({n}개 블록) — 펼치려면 ▦ 아이콘을 누르세요")
+            return
         new_params = bd.edit_block(self, block)
         if new_params is not None:
             block["params"] = new_params
@@ -823,6 +1016,14 @@ class BlockEditorWindow(tk.Toplevel):
         if self._wrap_armed:
             return
         self.blocks = delete_block(self.blocks, index)
+        self.redraw()
+
+    def _unpack_preset(self, index):
+        """PRESET 블록 하나를 그 자리에서 개별 블록들로 펼친다(껍데기만 벗기고
+        내용은 남김 - Loop 의 _unwrap 과 같은 개념)."""
+        if self._wrap_armed:
+            return
+        self.blocks = unpack_preset(self.blocks, index)
         self.redraw()
 
     def _unwrap(self, index):
@@ -840,45 +1041,6 @@ class BlockEditorWindow(tk.Toplevel):
             return
         self.on_save(self.blocks)
         self.destroy()
-
-    # ---- 파일로 저장 / 파일 불러오기 (프로파일과 별개, 탐색기에서 보이는 .json) ------
-    def _export_to_file(self):
-        err = st.validate(self.blocks)
-        if err:
-            self._toast(err)
-            return
-        save_dir = cm.get_save_dir()
-        path = filedialog.asksaveasfilename(
-            parent=self, title="블록 시퀀스를 파일로 저장", initialdir=save_dir,
-            defaultextension=".json", filetypes=[("Block sequence", "*.json"), ("All files", "*.*")])
-        if not path:
-            return
-        try:
-            cm.save_blocks_to_file(path, self.blocks)
-        except OSError as e:
-            self._toast(f"저장 실패: {e}")
-            return
-        self._toast(f"저장됨: {os.path.basename(path)}")
-
-    def _import_from_file(self):
-        save_dir = cm.get_save_dir()
-        path = filedialog.askopenfilename(
-            parent=self, title="블록 시퀀스 파일 불러오기", initialdir=save_dir,
-            filetypes=[("Block sequence", "*.json"), ("All files", "*.*")])
-        if not path:
-            return
-        try:
-            blocks = cm.load_blocks_from_file(path)
-        except (OSError, ValueError) as e:
-            self._toast(f"불러오기 실패: {e}")
-            return
-        err = st.validate(blocks)
-        if err:
-            self._toast(f"불러온 파일이 올바르지 않습니다: {err}")
-            return
-        self.blocks = copy.deepcopy(blocks)
-        self.redraw()
-        self._toast(f"불러옴: {os.path.basename(path)} (블록 {len(blocks)}개)")
 
     def _toast(self, msg):
         win = tk.Toplevel(self)
