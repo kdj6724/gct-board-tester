@@ -4400,3 +4400,2085 @@
 [20:41:02.351]           collisions:0 txqueuelen:1000 
 [20:41:03.360]           RX bytes:27293 (26.6 KiB)  TX bytes:10720 (10.4 KiB)
 [20:41:04.675] $ lspci
+[20:41:05.694] lspci
+[20:41:07.011] $ cat /proc/interrupt
+[20:41:08.028] cat /proc/interrupt
+[20:41:08.035] cat: can't open '/proc/interrupt': No such file or directory
+[20:41:19.170] $ (knock every 2s) 
+[20:41:19.175]  ROM(3a97301700)
+[20:41:19.180] NCfg v=33a5 e=2 p=1 a=1
+[20:41:19.185] ID: ad ac 80 16 20 
+[20:41:19.191] BBT not found
+[20:41:19.195] psbl 00000000 r=0 18737us
+[20:41:19.201] c00 sec=0 fb=1 pll=1 lcs=0
+[20:41:19.205] btmd=3 clk(50 1600 1300 100) r=0x660
+[20:41:19.208] rr=0x0(POR)
+[20:41:19.212] sbl r=0 s=8192,4096 r=0 518us
+[20:41:19.217] sbl v=1 ea000003 4d4c4253 0000 1750 cf953058
+[20:41:19.222] sbl sz=5968 csum ok 579us
+[20:41:19.228] - JT j=1021000 r=696
+[20:41:19.231] PBL: 2026-08-07 22:20:42 7c59084a(master)
+[20:41:19.234]   Date: 2026-09-01 16:40:12
+[20:41:19.239]   User: gct@CS-buildserver
+[20:41:19.245]   Path: /home/gct/gct_workspace/dailybuild/repos/openwrt/builds/ast/build_dir/target-aarch64-openwrt-linux-gnu_glibc/sbl-gct-1.  Ver: 1.0.0
+[20:41:19.250] btmd=3 rr=0x0(POR)
+[20:41:19.260] arm=1300 sys=1600
+[20:41:19.268] CMNNV hdr=01022bb4 act=1
+[20:41:19.276]   hdr chksum	: 0x6fac0720
+[20:41:19.282]   magic		: 0xcafebabe
+[20:41:19.293]   timstamp	: 0x00000045
+[20:41:19.299]   data chksum	: 0x94c70c32
+[20:41:19.310]   data size	: 0x0003ffc0
+[20:41:19.323] hdr[0] magic err 00000000(hdr)!=0xcafebabe
+[20:41:19.334] hdr[1] magic err 00000000(hdr)!=0xcafebabe
+[20:41:19.341] SBL hdr=01022f74 act=2
+[20:41:19.348]   hdr chksum	: 0x7af20757
+[20:41:19.355]   magic		: 0xcafebabe
+[20:41:19.363]   timstamp	: 0x0000000c
+[20:41:19.370]   data chksum	: 0xe75e31fb
+[20:41:19.377]   data size	: 0x00096de4
+[20:41:19.384] sbl image all invalid
+[20:41:19.391] SBL r=0 s=114688 pre=0 vrl=0 r=0
+[20:41:19.404] wdt=5s
+[20:41:19.415] pbl go 01024800 r1723
+[20:41:19.427] B�M띊peri 2x=10303 1x=10707
+[20:41:19.437] grf ver=2(0x7)
+[20:41:19.454] afe pwr down
+[20:41:19.467] SBL: 2026-08-07 22:20:42 7c59084a(master)
+[20:41:19.481]   Date: 2026-09-01 16:40:11
+[20:41:19.521]   User: gct@CS-buildserver
+[20:41:19.531]   Path: /home/gct/gct_workspace/dailybuild/repos/openwrt/builds/ast/build_dir/target-aarch64-openwrt-linux-gnu_glibc/sbl-gct-1.  Ver: 1.2.0
+[20:41:19.539]   Pkg: 1.11.0
+[20:41:19.549]   GCC: 9.3.0
+[20:41:19.558] btmd=3 rr=0x0(POR)
+[20:41:19.567] arm=1600(vcc=8(0.850)) sys=1600(vcc=4(0.750)) ddr=3732
+[20:41:19.581] pmic(0x32): 0x23->0x20
+[20:41:19.593] gate-adj: {0,0,0,0}{9,9,9,9}
+[20:41:19.602] read-adj: {1,0,0,0}{9,9,9,9}
+[20:41:19.612] ddr_main CFG=1 ch=1 PDDS=1
+[20:41:19.630] dynamic: pcg=0 sr=0 pd=0
+[20:41:19.643] ihs_ddr_init(orbit) oic=2 warm=0
+[20:41:19.653] reset ddr
+[20:41:19.669] ddr bus @sys=1600: 2x=266 1x=66
+[20:41:19.681] CH(0), period (20000)
+[20:41:19.692] CH(0), period (20000)
+[20:41:19.701] CH(0), period (536)
+[20:41:19.706] CH(0), period (1072)
+[20:41:19.715] CH(0), period (1250)
+[20:41:19.724] CH(0), period (2500)
+[20:41:19.735] CH(0), period (536)
+[20:41:19.740] CH(0), period (1072)
+[20:41:19.746] CH(0), period (1250)
+[20:41:19.755] CH(0), period (2500)
+[20:41:19.760] CH(0), period (536)
+[20:41:19.765] MR: [5]=01 [6]=06 [7]=00 [8]=0a 
+[20:41:19.772] ddr=3730 vdd1=13(1.800) vdd2=16(1.150) vddq=4(0.650)
+[20:41:19.780] mem(0x80000000) test: ok(6ms)
+[20:41:19.788] IDs: ad ac 80 16 20
+[20:41:19.792]   blk=256
+[20:41:19.801] NCfg v=3325 e=2 p=1 a=1
+[20:41:19.810] ID: ad ac 80 16 20 
+[20:41:19.817] BBT not found
+[20:41:19.824] ------------------------
+[20:41:19.831] Selected CMNNV Header (act : 1)
+[20:41:19.835] ------------------------
+[20:41:19.841] hdr chksum	: 0x6fac0720
+[20:41:19.849] magic		: 0xcafebabe
+[20:41:19.858] timstamp	: 0x00000045
+[20:41:19.866] data chksum	: 0x94c70c32
+[20:41:19.872] data size	: 0x0003ffc0
+[20:41:19.875] ------------------------
+[20:41:19.879] hdr magic err(0) 0x00000000 != (0xcafebabe)
+[20:41:19.882] hdr magic err(1) 0x00000000 != (0xcafebabe)
+[20:41:19.887] ------------------------
+[20:41:19.893] Selected TFA Header (act : 2)
+[20:41:19.898] ------------------------
+[20:41:19.903] hdr chksum	: 0x4a39065d
+[20:41:19.907] magic		: 0xcafebabe
+[20:41:19.911] timstamp	: 0x0000000a
+[20:41:19.917] data chksum	: 0xf1632701
+[20:41:19.925] data size	: 0x00e77000
+[20:41:19.932] ------------------------
+[20:41:19.938] hdr magic err(0) 0x00000000 != (0xcafebabe)
+[20:41:19.945] hdr magic err(1) 0x00000000 != (0xcafebabe)
+[20:41:19.952] ------------------------
+[20:41:19.955] Selected UBOOT Header (act : 2)
+[20:41:19.961] ------------------------
+[20:41:19.969] hdr chksum	: 0x00000000
+[20:41:19.974] magic		: 0x00000000
+[20:41:19.982] timstamp	: 0x00000000
+[20:41:19.989] data chksum	: 0x00000000
+[20:41:19.999] data size	: 0x00000000
+[20:41:20.003] ------------------------
+[20:41:20.010] tfa image all invalid
+[20:41:20.018] TFA r=0 s=250191 r=0
+[20:41:20.027] u-boot image all invalid
+[20:41:20.034] uboot r=0 s=668624 r=0
+[20:41:20.040] wdt=10s
+[20:41:20.047] refx calibration result : dt,dcc 77, 43 : 0x1a4 = 0xfe03820, 0x1e8 = 0x0818060
+[20:41:20.053] refx cal elapsed=304ms
+[20:41:20.060] sbl go 80100000 r3ec9
+[20:41:20.066] TF-A: 2026-08-29 00:00:10 bbef1a49(master)
+[20:41:20.071]   Date: 2026/09/01-16:42:50
+[20:41:20.077]   User: gct@CS-buildserver
+[20:41:20.082]   Path: /home/gct/gct_workspace/dailybuild/repos/openwrt/builds/ast/build_dir/target-aarch64-openwrt-linux-gnu_glibc/uboot-gct-1.11.0/arm-trusted-firmware
+[20:41:20.089]   Ver: 1.0.0
+[20:41:20.098]   Pkg: 1.11.0
+[20:41:20.109]   GCC: 13.3.0
+[20:41:20.119]   Log-Level: 30
+[20:41:20.126] EXC-V=8013c000
+[20:41:20.133] TZCLK/TSG=1
+[20:41:20.142] BL33 pc=0x80200800 spsr=0x3c9
+[20:41:20.149] U-Boot 2021.07-gbbef1a49 (Oct 19 2025 - 16:37:45 +0000)
+[20:41:20.156] U-Boot: 2026-08-29 00:00:10 bbef1a49(master) dual_sbl
+[20:41:20.170]   Date: 2026-09-01 16:42:08
+[20:41:20.176]   User: gct@CS-buildserver
+[20:41:20.188]   Path: /home/gct/gct_workspace/dailybuild/repos/openwrt/builds/ast/build_dir/target-aarch64-openwrt-linux-gnu_glibc/uboot-gct-1.11.0
+[20:41:20.199]   Ver: 1.2.0
+[20:41:20.206]   Pkg: 1.11.0
+[20:41:20.215]   GCC: 13.3.0
+[20:41:20.225] DRAM:  512 MiB
+[20:41:20.237] mem_malloc_init: start=0x9eff0000 sz=0x1010000
+[20:41:20.250] copy text/data(0x01020800, 0x802a3b00, 208)
+[20:41:20.260] set bss(0x010208d0 0)
+[20:41:20.270] board init
+[20:41:20.282] ETH_EN(GPF1[44]): 1(dflt)->0(set-low)->10ms->1(set-high)
+[20:41:20.288] ETH_EN(GPE[11]): 1(dflt)->0(set-low)->10ms->1(set-high)
+[20:41:20.298] ECID: S0=0x00000000 S1=0x00000000 S2=0x00000000
+[20:41:20.303] copy from 0x802009d8 to 0x1030000 sz=0
+[20:41:20.316] Device nand0 not found!
+[20:41:20.326] mtdparts_init fail
+[20:41:20.336] adjusted cmpu_par addr: 0x802a3bd0 -> 0x802a3be0
+[20:41:20.345] NO CMPU magic(0x802a3be0: 0x33353135)
+[20:41:20.352] PMIC DCDC off in sleep: 2 3 4 5 6 8
+[20:41:20.361] NAND:  N-Cfg val=33a5 ecc=2 page=1 addr=1
+[20:41:20.370]   chip=512MB
+[20:41:20.376]   block=256KB
+[20:41:20.385]   addr=5cyc
+[20:41:20.394]   page=4KB
+[20:41:20.405]   spare=256B
+[20:41:20.417]   ecc=4bit
+[20:41:20.429] Loading Environment from NAND(3)... OK
+[20:41:20.436] In:    serial
+[20:41:20.442] Out:   serial
+[20:41:20.445] Err:   serial
+[20:41:20.450] dtb: fixed pmic(revC)
+[20:41:20.454] dtb: dis mmc
+[20:41:20.457] Hit any key to stop autoboot:  1  0 
+[20:41:20.460] do_run_modem: runmodem=0
+[20:41:20.465] [CMNNV] map(0x00000000 0x00100000)
+[20:41:20.469] [CMNNV] using block idx=1 addr=0x100000 ts=0x45
+[20:41:20.472] ************************
+[20:41:20.520] CMNNV Header (act=1)
+[20:41:20.524] ************************
+[20:41:20.529] ------------------------
+[20:41:20.532] hdr chksum  : 0x6fac0720
+[20:41:20.536] magic       : 0xcafebabe
+[20:41:20.540] timstamp    : 0x00000045
+[20:41:20.543] data chksum : 0x94c70c32
+[20:41:20.547] data size   : 0x0003ffc0
+[20:41:20.549] ------------------------
+[20:41:20.552] ************************
+[20:41:20.556] SBL Header (act=2)
+[20:41:20.559] ************************
+[20:41:20.563] ------------------------
+[20:41:20.565] hdr chksum  : 0x00000000
+[20:41:20.568] magic       : 0x00000000
+[20:41:20.571] timstamp    : 0x00000000
+[20:41:20.574] data chksum : 0x00000000
+[20:41:20.578] data size   : 0x00000000
+[20:41:20.581] ------------------------
+[20:41:20.584] ------------------------
+[20:41:20.586] hdr chksum  : 0x00000000
+[20:41:20.590] magic       : 0x00000000
+[20:41:20.593] timstamp    : 0x00000000
+[20:41:20.596] data chksum : 0x00000000
+[20:41:20.599] data size   : 0x00000000
+[20:41:20.603] ------------------------
+[20:41:20.606] ************************
+[20:41:20.610] TFA Header (act=2)
+[20:41:20.614] ************************
+[20:41:20.617] ------------------------
+[20:41:20.620] hdr chksum  : 0x00000000
+[20:41:20.624] magic       : 0x00000000
+[20:41:20.627] timstamp    : 0x00000000
+[20:41:20.631] data chksum : 0x00000000
+[20:41:20.635] data size   : 0x00000000
+[20:41:20.662] ------------------------
+[20:41:20.677] ------------------------
+[20:41:20.687] hdr chksum  : 0x00000000
+[20:41:20.698] magic       : 0x00000000
+[20:41:20.705] timstamp    : 0x00000000
+[20:41:20.708] data chksum : 0x00000000
+[20:41:20.714] data size   : 0x00000000
+[20:41:20.717] ------------------------
+[20:41:20.722] ************************
+[20:41:20.726] U-boot Header (act=2)
+[20:41:20.729] ************************
+[20:41:20.733] ------------------------
+[20:41:20.737] hdr chksum  : 0x00000000
+[20:41:20.742] magic       : 0x00000000
+[20:41:20.747] timstamp    : 0x00000000
+[20:41:20.750] data chksum : 0x00000000
+[20:41:20.754] data size   : 0x00000000
+[20:41:20.759] ------------------------
+[20:41:20.763] ------------------------
+[20:41:20.767] hdr chksum  : 0x00000000
+[20:41:20.771] magic       : 0x00000000
+[20:41:20.775] timstamp    : 0x00000000
+[20:41:20.778] data chksum : 0x00000000
+[20:41:20.782] data size   : 0x00000000
+[20:41:20.786] ------------------------
+[20:41:20.791] ************************
+[20:41:20.795] FDT Header (act=0)
+[20:41:20.799] ************************
+[20:41:20.803] ------------------------
+[20:41:20.807] hdr chksum  : 0x83060779
+[20:41:20.811] magic       : 0xcafebabe
+[20:41:20.815] timstamp    : 0x0000000e
+[20:41:20.820] data chksum : 0xd771fadf
+[20:41:20.824] data size   : 0x00005476
+[20:41:20.828] ------------------------
+[20:41:20.831] ------------------------
+[20:41:20.834] hdr chksum  : 0x82d20778
+[20:41:20.837] magic       : 0xcafebabe
+[20:41:20.840] timstamp    : 0x0000000d
+[20:41:20.843] data chksum : 0xd771fadf
+[20:41:20.847] data size   : 0x00005476
+[20:41:20.850] ------------------------
+[20:41:20.854] ************************
+[20:41:20.857] Linux Header (act=1)
+[20:41:20.861] ************************
+[20:41:20.865] ------------------------
+[20:41:20.869] hdr chksum  : 0x4a39065d
+[20:41:20.873] magic       : 0xcafebabe
+[20:41:20.876] timstamp    : 0x0000000a
+[20:41:20.880] data chksum : 0xf1632701
+[20:41:20.883] data size   : 0x00e77000
+[20:41:20.886] ------------------------
+[20:41:20.891] ------------------------
+[20:41:20.894] hdr chksum  : 0x4a6d065e
+[20:41:20.897] magic       : 0xcafebabe
+[20:41:20.901] timstamp    : 0x0000000b
+[20:41:20.906] data chksum : 0xf1632701
+[20:41:20.909] data size   : 0x00e77000
+[20:41:20.912] ------------------------
+[20:41:20.915] ************************
+[20:41:20.918] ROOT_FS Header (act=0)
+[20:41:20.922] ************************
+[20:41:20.925] ------------------------
+[20:41:20.928] hdr chksum  : 0x1c07053d
+[20:41:20.932] magic       : 0xcafebabe
+[20:41:20.935] timstamp    : 0x00000010
+[20:41:20.938] data chksum : 0x4f21ff00
+[20:41:20.941] data size   : 0x023c0000
+[20:41:20.944] ------------------------
+[20:41:20.947] ------------------------
+[20:41:20.951] hdr chksum  : 0x1bd3053c
+[20:41:20.955] magic       : 0xcafebabe
+[20:41:20.958] timstamp    : 0x0000000f
+[20:41:20.961] data chksum : 0x4f21ff00
+[20:41:20.964] data size   : 0x023c0000
+[20:41:20.967] ------------------------
+[20:41:20.971] ************************
+[20:41:20.975] ZP Header (act=1)
+[20:41:20.980] ************************
+[20:41:20.983] ------------------------
+[20:41:20.987] hdr chksum  : 0x40a70624
+[20:41:20.990] magic       : 0xcafebabe
+[20:41:20.993] timstamp    : 0x00000005
+[20:41:20.997] data chksum : 0x9c373d1e
+[20:41:21.000] data size   : 0x008ad116
+[20:41:21.004] ------------------------
+[20:41:21.008] ------------------------
+[20:41:21.012] hdr chksum  : 0xc00b08e2
+[20:41:21.015] magic       : 0xcafebabe
+[20:41:21.019] timstamp    : 0x00000008
+[20:41:21.022] data chksum : 0x9cccf6ed
+[20:41:21.024] data size   : 0x008bbcc8
+[20:41:21.028] ------------------------
+[20:41:21.032] ************************
+[20:41:21.035] NR1NV Header (act=1)
+[20:41:21.038] ************************
+[20:41:21.042] ------------------------
+[20:41:21.046] hdr chksum  : 0x7af20757
+[20:41:21.050] magic       : 0xcafebabe
+[20:41:21.053] timstamp    : 0x0000000c
+[20:41:21.057] data chksum : 0xe75e31fb
+[20:41:21.061] data size   : 0x00096de4
+[20:41:21.065] ------------------------
+[20:41:21.069] ------------------------
+[20:41:21.072] hdr chksum  : 0x7b260758
+[20:41:21.075] magic       : 0xcafebabe
+[20:41:21.080] timstamp    : 0x0000000d
+[20:41:21.083] data chksum : 0xe75e31fb
+[20:41:21.087] data size   : 0x00096de4
+[20:41:21.091] ------------------------
+[20:41:21.095] NAND read: device 0 offset 0x3080000, size 0xe77800
+[20:41:21.098]  15169536 bytes read: OK
+[20:41:21.102] NAND read: device 0 offset 0x1280000, size 0x5476
+[20:41:21.106]  21622 bytes read: OK
+[20:41:21.110] c00: cpu_smc_handler: fid=c1000031 x1=0 x2=0 x3=0 x4=0
+[20:41:21.113] ## Flattened Device Tree blob at 87000000
+[20:41:21.117]    Booting using the fdt blob at 0x87000000
+[20:41:21.121]    Loading Device Tree to 000000009ef62000, end 000000009efeafff ... OK
+[20:41:21.125] Starting kernel at 80a00000(64) ...
+[20:41:21.129] Booting Linux on physical CPU 0x0000000000 [0x412fd050] at EL1
+[20:41:21.133] Linux version 6.12.49 (gct@CS-buildserver) (arm64v8el-9.3-linux-uclibc-gcc.br_real (Buildroot 2020.02.4) 9.3.0, GNU ld (GNU Binutils) 2.32) #1 SMP Sat Sep 19 01:04:22 KST 2026
+[20:41:21.136] KASLR disabled due to lack of seed
+[20:41:21.141] Machine model: GCT GDM7275X
+[20:41:21.145] BOOT=nand
+[20:41:21.150] Memory limited to 512MB
+[20:41:21.154] READ ONLY FILESYSTEM
+[20:41:21.158] earlycon: gdmuart0 at MMIO32 0x0000000013100000 (options '')
+[20:41:21.164] printk: legacy bootconsole [gdmuart0] enabled
+[20:41:21.167] BOOT=nand
+[20:41:21.171] sbl_ver=1.2.0
+[20:41:21.174] dual_sbl=1
+[20:41:21.183] tfa_ver=1.0.0
+[20:41:21.188] bl_ver=1.2.0
+[20:41:21.193] FW Checksum: disable
+[20:41:21.199] secure_boot=0
+[20:41:21.204] Active linux : sbl
+[20:41:21.210] Active rootfs: tfa
+[20:41:21.216] Active tk    : zp2
+[20:41:21.223] efi: UEFI not found.
+[20:41:21.230] OF: reserved mem: Reserved memory: No reserved-memory node in the DT
+[20:41:21.235] Zone ranges:
+[20:41:21.239]   Normal   [mem 0x0000000080200000-0x000000009fffffff]
+[20:41:21.245] Movable zone start for each node
+[20:41:21.250] Early memory node ranges
+[20:41:21.255]   node   0: [mem 0x0000000080200000-0x0000000083ffffff]
+[20:41:21.261]   node   0: [mem 0x0000000094000000-0x000000009fffffff]
+[20:41:21.269] Initmem setup node 0 [mem 0x0000000080200000-0x000000009fffffff]
+[20:41:21.277] On node 0, zone Normal: 512 pages in unavailable ranges
+[20:41:21.283] On node 0, zone Normal: 32768 pages in unavailable ranges
+[20:41:21.291] psci: probing for conduit method from DT.
+[20:41:21.297] psci: Using PSCI v0.1 Function IDs from DT
+[20:41:21.303] percpu: Embedded 17 pages/cpu s31320 r8192 d30120 u69632
+[20:41:21.311] pcpu-alloc: s31320 r8192 d30120 u69632 alloc=17*4096
+[20:41:21.318] pcpu-alloc: [0] 0 [0] 1 [0] 2 [0] 3 
+[20:41:21.326] Detected VIPT I-cache on CPU0
+[20:41:21.333] CPU features: detected: Qualcomm erratum 1009, or ARM erratum 1286807, 2441009
+[20:41:21.337] CPU features: detected: ARM errata 1165522, 1319367, or 1530923
+[20:41:21.341] alternatives: applying boot alternatives
+[20:41:21.346] Kernel command line: console=ttyS0,921600 boot=nand mem=512M ubi.mtd=19,4096 root=ubi0:rootfs ro rootfstype=ubifs mtdparts=gdm:1m(pbl),512k(secos),1m(sbl),1m(sbl2),1m(tfa),1m(tfa2),3m(uboot),3m(uboot2),1m(env),4m(nr1nv),2m(nr2nv),1m(fdt),1m(fdt2),2m(cmnnv),2m(cmnnv2),2m(crashlog),2m(reserved2),20m(linux),20m(linux2),100m(rootfs),100m(rootfs2),16m(zp),16m(zp2),32m(misc),156m(user) clk_ignore_unused maxcpus=1 earlycon=gdmuart,mmio32,0x13100000 debug loglevel=8 boot=nand attty=ttyS1 sbl_ver=1.2.0 dual_sbl=1 tfa_ver=1.0.0 bl_ver=1.2.0 checksum=disable secboot=0 active=sbl,tfa,uboot,fdt,linux2,rootfs,zp2
+[20:41:21.359] Unknown kernel command line parameters "attty=ttyS1", will be passed to user space.
+[20:41:21.377] Dentry cache hash table entries: 32768 (order: 6, 262144 bytes, linear)
+[20:41:21.393] Inode-cache hash table entries: 16384 (order: 5, 131072 bytes, linear)
+[20:41:21.411] Built 1 zonelists, mobility grouping on.  Total pages: 65024
+[20:41:21.433] mem auto-init: stack:off, heap alloc:off, heap free:off
+[20:41:21.452] software IO TLB: SWIOTLB bounce buffer size adjusted to 0MB
+[20:41:21.470] software IO TLB: area num 4.
+[20:41:21.492] software IO TLB: SWIOTLB bounce buffer size roundup to 1MB
+[20:41:21.520] software IO TLB: mapped [mem 0x000000009f700000-0x000000009f800000] (1MB)
+[20:41:21.540] SLUB: HWalign=64, Order=0-3, MinObjects=0, CPUs=4, Nodes=1
+[20:41:21.564] rcu: Hierarchical RCU implementation.
+[20:41:21.584] rcu: RCU calculated value of scheduler-enlistment delay is 100 jiffies.
+[20:41:21.606] NR_IRQS: 64, nr_irqs: 64, preallocated irqs: 0
+[20:41:21.619] Root IRQ handler: gdm_handle_irq
+[20:41:21.637] set_smp_ipi_range ipi_base=1 n=8 nr_ipi=8
+[20:41:21.655] rcu: srcu_init: Setting srcu_struct sizes based on contention.
+[20:41:21.669] clkout:2
+[20:41:21.683] c00: gdm_irq_set_type: cpu=0 hwirq=64 type=4
+[20:41:21.695] c00: gdm_irq_set_type: cpu=0 hwirq=65 type=4
+[20:41:21.706] c00: gdm_irq_set_type: cpu=0 hwirq=66 type=4
+[20:41:21.721] c00: gdm_irq_set_type: cpu=0 hwirq=67 type=4
+[20:41:21.729] c00: gdm_irq_set_type: cpu=0 hwirq=64 type=4
+[20:41:21.741] arch_timer: cp15 timer(s) running at 50.00MHz (phys).
+[20:41:21.754] clocksource: arch_sys_counter: mask: 0xffffffffffffff max_cycles: 0xb8812736b, max_idle_ns: 440795202655 ns
+[20:41:21.766] sched_clock: 56 bits at 50MHz, resolution 20ns, wraps every 4398046511100ns
+[20:41:21.772] Calibrating delay loop (skipped), value calculated using timer frequency.. 100.00 BogoMIPS (lpj=50000)
+[20:41:21.787] pid_max: default: 32768 minimum: 301
+[20:41:21.798] LSM: initializing lsm=capability
+[20:41:21.808] Mount-cache hash table entries: 512 (order: 0, 4096 bytes, linear)
+[20:41:21.822] Mountpoint-cache hash table entries: 512 (order: 0, 4096 bytes, linear)
+[20:41:21.829] cacheinfo: Unable to detect cache hierarchy for CPU 0
+[20:41:21.841] rcu: Hierarchical SRCU implementation.
+[20:41:21.853] rcu: 	Max phase no-delay instances is 400.
+[20:41:21.868] Build Info:
+[20:41:21.886]   date: 2026-09-19 01:04:10
+[20:41:21.913]   user: gct@CS-buildserver
+[20:41:21.940]   ver : 2026-09-18 22:36:04 e1d4308b30(master)
+[20:41:21.964]   dtbv: gdm7275x-tethys3-ast.dtb - 25c81b741e(master)
+[20:41:21.971]   tfav: 1.0.0
+[20:41:21.975]   pkgv: 1.00.3.0.0
+[20:41:21.979]   appv: 1.00.3.0.0
+[20:41:21.982]   src : /home/gct/gct_workspace/dailybuild/repos/linuxos/gdm7275x
+[20:41:21.986] Config Info:
+[20:41:21.989]   PRODUCT: gdm7275x
+[20:41:21.992]   NO WIFI
+[20:41:21.996]   HZ=1000
+[20:41:21.998]   ARM_ARCH_TIMER
+[20:41:22.001]   NET_NATQ_DEV_SKBQ
+[20:41:22.004]   NET_VLANQ
+[20:41:22.007]   VLAN_8021Q
+[20:41:22.010]   MMC
+[20:41:22.014]   PCI
+[20:41:22.017]   ETH_GDM
+[20:41:22.020]   USB_DWC3
+[20:41:22.023]   NO ARM_DMA_MEM_BUFFERABLE
+[20:41:22.027]   SMP(cpus=1)
+[20:41:22.031]   HZ_PERIODIC
+[20:41:22.036]   NAND_256KB
+[20:41:22.039] rom=3a97301700
+[20:41:22.043] rf_chip_id_val(0xfd)=0x0e000000 rev=2
+[20:41:22.046] CPU: GDM7275X R2C [0x72750000]
+[20:41:22.050] c00: id=0x412fd050
+[20:41:22.054] c00: mpidr=0x0000000081000000
+[20:41:22.057] c00: implementor=65
+[20:41:22.060] c00: part_number=3333
+[20:41:22.063] c00: cachetype=0x84448004
+[20:41:22.067] RTC: primary(internal) osc
+[20:41:22.071] pm_protocol_init(0x0103fc00/0xffffffa00103fc00)
+[20:41:22.075] EFI services will not be available.
+[20:41:22.079] smp: Bringing up secondary CPUs ...
+[20:41:22.082] smp: Brought up 1 node, 1 CPU
+[20:41:22.087] SMP: Total of 1 processors activated.
+[20:41:22.090] CPU: All CPU(s) started at EL1
+[20:41:22.093] CPU features: detected: 32-bit EL0 Support
+[20:41:22.097] CPU features: detected: Data cache clean to the PoU not required for I/D coherence
+[20:41:22.101] CPU features: detected: Common not Private translations
+[20:41:22.104] CPU features: detected: CRC32 instructions
+[20:41:22.107] CPU features: detected: RCpc load-acquire (LDAPR)
+[20:41:22.110] CPU features: detected: LSE atomic instructions
+[20:41:22.114] CPU features: detected: Privileged Access Never
+[20:41:22.118] CPU features: detected: RAS Extension Support
+[20:41:22.121] CPU features: detected: Speculative Store Bypassing Safe (SSBS)
+[20:41:22.125] alternatives: applying system-wide alternatives
+[20:41:22.128] Memory: 234464K/260096K available (8960K kernel code, 1562K rwdata, 2384K rodata, 1792K init, 560K bss, 23924K reserved, 0K cma-reserved)
+[20:41:22.133] devtmpfs: initialized
+[20:41:22.137] clocksource: jiffies: mask: 0xffffffff max_cycles: 0xffffffff, max_idle_ns: 1911260446275000 ns
+[20:41:22.142] futex hash table entries: 1024 (order: 4, 65536 bytes, linear)
+[20:41:22.147] 28912 pages in range for non-PLT usage
+[20:41:22.152] 520432 pages in range for PLT usage
+[20:41:22.156] pinctrl core: initialized pinctrl subsystem
+[20:41:22.162] PMS_RESET_MODE: 0x0(POR)
+[20:41:22.166] PMS_RESET_MODE: 0x0(cleared)
+[20:41:22.171] ihs clock:
+[20:41:22.175]   ref=50000000
+[20:41:22.180]   sys=1600000000
+[20:41:22.185]   cpu=1600000000
+[20:41:22.190]     cpu_per_usec=1600
+[20:41:22.192]     cpu_per_msec=1600000
+[20:41:22.199]   peri=100000000
+[20:41:22.210]   ddr=3730000000
+[20:41:22.215] DMI not present or invalid.
+[20:41:22.219] NET: Registered PF_NETLINK/PF_ROUTE protocol family
+[20:41:22.226] DMA: preallocated 4096 KiB GFP_KERNEL pool for atomic allocations
+[20:41:22.234] gct-sdhost-fixup: sd0_div_clk exists!
+[20:41:22.242] hw-breakpoint: found 6 breakpoint and 4 watchpoint registers.
+[20:41:22.250] ASID allocator initialised with 65536 entries
+[20:41:22.257] usbcore: registered new interface driver usbfs
+[20:41:22.262] usbcore: registered new interface driver hub
+[20:41:22.267] usbcore: registered new device driver usb
+[20:41:22.272] Bluetooth: Core ver 2.22
+[20:41:22.276] NET: Registered PF_BLUETOOTH protocol family
+[20:41:22.285] Bluetooth: HCI device and connection manager initialized
+[20:41:22.293] Bluetooth: HCI socket layer initialized
+[20:41:22.302] Bluetooth: L2CAP socket layer initialized
+[20:41:22.310] Bluetooth: SCO socket layer initialized
+[20:41:22.317] vgaarb: loaded
+[20:41:22.322] clocksource: Switched to clocksource arch_sys_counter
+[20:41:22.328] NET: Registered PF_INET protocol family
+[20:41:22.334] IP idents hash table entries: 4096 (order: 3, 32768 bytes, linear)
+[20:41:22.341] tcp_listen_portaddr_hash hash table entries: 256 (order: 0, 4096 bytes, linear)
+[20:41:22.346] Table-perturb hash table entries: 65536 (order: 6, 262144 bytes, linear)
+[20:41:22.351] TCP established hash table entries: 2048 (order: 2, 16384 bytes, linear)
+[20:41:22.353] TCP bind hash table entries: 2048 (order: 4, 65536 bytes, linear)
+[20:41:22.359] TCP: Hash tables configured (established 2048 bind 2048)
+[20:41:22.362] UDP hash table entries: 256 (order: 1, 8192 bytes, linear)
+[20:41:22.366] UDP-Lite hash table entries: 256 (order: 1, 8192 bytes, linear)
+[20:41:22.370] NET: Registered PF_UNIX/PF_LOCAL protocol family
+[20:41:22.373] PCI: CLS 0 bytes, default 64
+[20:41:22.376] NIF: dt max-mtu=1500
+[20:41:22.379] NIF: ip filter delta: icmp=5 udp=60 tcp=60
+[20:41:22.381] netif ver: 1.1.2
+[20:41:22.384] vlanq ver: 1.1.2 nsra=0
+[20:41:22.387] Initialise system trusted keyrings
+[20:41:22.390] workingset: timestamp_bits=62 max_order=16 bucket_order=0
+[20:41:22.392] Key type asymmetric registered
+[20:41:22.395] Asymmetric key parser 'x509' registered
+[20:41:22.398] gdm-usb31-phy 13610000.usb31-phy: gdm_phy31_probe ver 1.0.0
+[20:41:22.401] phy phy-13610000.usb31-phy.0: incomplete constraints, dummy supplies not allowed (id=phy)
+[20:41:22.405] gdm7275x-pinctrl 10060000.pinctrl: no '' pin for IRQ.
+[20:41:22.408] gpio gpiochip0: Static allocation of GPIO base is deprecated, use dynamic allocation.
+[20:41:22.412] c00: gdm_irq_set_type: cpu=0 hwirq=82 type=4
+[20:41:22.416] c00: gdm_irq_set_type: cpu=0 hwirq=83 type=4
+[20:41:22.420] hw lock_reg:
+[20:41:22.424]   active=110004c0
+[20:41:22.428]   free  =110004c4
+[20:41:22.432] gipc-protocol(ffffffc08101d018): cpu0:0 va=ffffffc08101d018, pa=81c00018 ver=1.11
+[20:41:22.437] ipc init ch=0
+[20:41:22.441] ipc ch[0]:CTRL, irb: va=ffffffc08101d698-ffffffc08101e418 pa=81c00698-81c01418
+[20:41:22.445] ipc ch[0]:CTRL, irb_work: va=ffffffc08101e428-ffffffc08101ed48 pa=81c01428-81c01d48
+[20:41:22.450]   irb nr: tx=16(2080bytes) rx=128(2080bytes)
+[20:41:22.454]    irb tx: va=ffffffc08101d698-ffffffc08101d818 pa=81c00698-81c00818
+[20:41:22.457]    irb rx: va=ffffffc08101d820-ffffffc08101e420 pa=81c00820-81c01420
+[20:41:22.461]   m-ch_enabled=0x1
+[20:41:22.463] ipc init ch=28
+[20:41:22.466] ipc ch[28]:DBG, irb: va=ffffffc08101f018-ffffffc08101fc48 pa=81c02018-81c02c48
+[20:41:22.469] ipc ch[28]:DBG, irb_work: va=ffffffc08101fc58-ffffffc081020498 pa=81c02c58-81c03498
+[20:41:22.472]   irb nr: tx=2(2080bytes) rx=128(2080bytes)
+[20:41:22.520]    irb tx: va=ffffffc08101f018-ffffffc08101f048 pa=81c02018-81c02048
+[20:41:22.525]    irb rx: va=ffffffc08101f050-ffffffc08101fc50 pa=81c02050-81c02c50
+[20:41:22.529]   m-ch_enabled=0x10000001
+[20:41:22.533] IPC Ver: master(1.11) slave(0.0) driver=1.0.0
+[20:41:22.536]   IPC_IF_RX_LIMIT=100
+[20:41:22.540]   IPCIF_SMP
+[20:41:22.544] Linux IPC mode:
+[20:41:22.547]   proc_idle enabled=0(cpu=-1)
+[20:41:22.550]   assert_level=3(3)
+[20:41:22.554]   sdu_prio=0(0)
+[20:41:22.557] c00: gdm_irq_set_type: cpu=0 hwirq=152 type=1
+[20:41:22.561] IPCIF(v1.0.0) initialized: irq=43 hwirq=152
+[20:41:22.563] c00: set_affinity: no online irq=43(IPC) cpu=1
+[20:41:22.567] gdm_uart_init_port: line=0 irq=44 mapbase=0x0000000013100000 membase=ffffffc080f43000 uartclk=100000000
+[20:41:22.570] 13100000.serial: ttyS0 at M�uart_trace_init line=0 size=1048576 early_pos=9779
+[20:41:22.574] printk: legacy console [ttyS0] enabled
+[20:41:22.578] printk: legacy console [ttyS0] enabled
+[20:41:22.581] printk: legacy bootconsole [gdmuart0] disabled
+[20:41:22.584] printk: legacy bootconsole [gdmuart0] disabled
+[20:41:22.588] proc_serial_init proc_serial_entry=ffffff80028350c0
+[20:41:22.592] gdm_uart_init_port: line=1 irq=46 mapbase=0x0000000013110000 membase=ffffffc080f45000 uartclk=100000000
+[20:41:22.594] 13110000.serial: ttyS1 at MMIO 0x13110000 (irq = 46, base_baud = 6250000) is a gdm-uart
+[20:41:22.597] gdm_uart_init_port: line=2 irq=48 mapbase=0x0000000013120000 membase=ffffffc080f4d000 uartclk=100000000
+[20:41:22.601] 13120000.serial: ttyS2 at MMIO 0x13120000 (irq = 48, base_baud = 6250000) is a gdm-uart
+[20:41:22.604] UART ver=0.5
+[20:41:22.608] brd: module loaded
+[20:41:22.611] GDM NAND Driver=v1.3.1 oraf
+[20:41:22.614] gpio ecc=2
+[20:41:22.617] Ecc : 4bit
+[20:41:22.620] ecc.bits=4
+[20:41:22.625] fault_ecc_nr=0
+[20:41:22.629] ecc_chk_loop_nr=0
+[20:41:22.631] [NAND] pagesize : 4K
+[20:41:22.635] nand: device found, Manufacturer ID: 0xad, Chip ID: 0xac
+[20:41:22.638] nand: Hynix NAND 512MiB 1,8V 8-bit
+[20:41:22.641] nand: 512 MiB, SLC, erase size: 256 KiB, page size: 4096, OOB size: 256
+[20:41:22.645] Bad block table found at page 131008, version 0x01
+[20:41:22.648] Bad block table found at page 130944, version 0x01
+[20:41:22.651] 25 cmdlinepart partitions found on MTD device gdm
+[20:41:22.654] Creating 25 MTD partitions on "gdm":
+[20:41:22.658] 0x000000000000-0x000000100000 : "pbl"
+[20:41:22.662] 0x000000100000-0x000000180000 : "secos"
+[20:41:22.665] 0x000000180000-0x000000280000 : "sbl"
+[20:41:22.667] 0x000000280000-0x000000380000 : "sbl2"
+[20:41:22.670] 0x000000380000-0x000000480000 : "tfa"
+[20:41:22.674] 0x000000480000-0x000000580000 : "tfa2"
+[20:41:22.677] 0x000000580000-0x000000880000 : "uboot"
+[20:41:22.684] 0x000000880000-0x000000b80000 : "uboot2"
+[20:41:22.689] 0x000000b80000-0x000000c80000 : "env"
+[20:41:22.693] 0x000000c80000-0x000001080000 : "nr1nv"
+[20:41:22.696] 0x000001080000-0x000001280000 : "nr2nv"
+[20:41:22.699] 0x000001280000-0x000001380000 : "fdt"
+[20:41:22.702] 0x000001380000-0x000001480000 : "fdt2"
+[20:41:22.706] 0x000001480000-0x000001680000 : "cmnnv"
+[20:41:22.710] 0x000001680000-0x000001880000 : "cmnnv2"
+[20:41:22.713] 0x000001880000-0x000001a80000 : "crashlog"
+[20:41:22.717] 0x000001a80000-0x000001c80000 : "reserved2"
+[20:41:22.721] 0x000001c80000-0x000003080000 : "linux"
+[20:41:22.726] 0x000003080000-0x000004480000 : "linux2"
+[20:41:22.729] 0x000004480000-0x00000a880000 : "rootfs"
+[20:41:22.733] 0x00000a880000-0x000010c80000 : "rootfs2"
+[20:41:22.738] 0x000010c80000-0x000011c80000 : "zp"
+[20:41:22.742] 0x000011c80000-0x000012c80000 : "zp2"
+[20:41:22.745] 0x000012c80000-0x000014c80000 : "misc"
+[20:41:22.749] 0x000014c80000-0x00001e880000 : "user"
+[20:41:22.753] gdm-ether ver 1.6.1
+[20:41:22.756]   ETH_CH=0
+[20:41:22.760]   CLKOUT_EN_DFLT
+[20:41:22.764] usbcore: registered new interface driver r8152
+[20:41:22.767] usbcore: registered new interface driver cdc_ether
+[20:41:22.770] usbcore: registered new interface driver cdc_eem
+[20:41:22.772] usbcore: registered new interface driver cdc_ncm
+[20:41:22.778] usbcore: registered new interface driver r8153_ecm
+[20:41:22.785] gdm-pmc: power on host domain
+[20:41:22.788] c00: cpu_smc_handler: fid=c1000001 x1=3 x2=0 x3=0 x4=0
+[20:41:22.791] gdm-pmc: power on usb domain
+[20:41:22.794] c00: cpu_smc_handler: fid=c1000001 x1=4 x2=0 x3=0 x4=0
+[20:41:22.797] dwc3_probe entered
+[20:41:22.800] gdm-pmc: power on usb domain
+[20:41:22.803] c00: cpu_smc_handler: fid=c1000001 x1=4 x2=0 x3=0 x4=0
+[20:41:22.806] gdm-pmc: power on host domain
+[20:41:22.809] c00: cpu_smc_handler: fid=c1000001 x1=3 x2=0 x3=0 x4=0
+[20:41:22.813] usb_state_init
+[20:41:22.816] gdm-usb31-phy 13610000.usb31-phy: base 81500000
+[20:41:22.819] gdm-usb31-phy 13610000.usb31-phy: configure protocol registers
+[20:41:22.822] DWC3 probed
+[20:41:22.825] usbcore: registered new interface driver usbserial_generic
+[20:41:22.829] usbserial: USB Serial support registered for generic
+[20:41:22.833] usbcore: registered new interface driver option
+[20:41:22.836] usbserial: USB Serial support registered for GSM modem (1-port)
+[20:41:22.840] i2c_dev: i2c /dev entries driver
+[20:41:22.844] gdm-i2c 13250000.i2c: i2c bus frequency set to 400 KHz
+[20:41:22.847] BUCK3: Bringing 750000uV into 800000-800000uV
+[20:41:22.850] LDO2: Bringing 1800000uV into 2800000-2800000uV
+[20:41:22.853] LDO6: Bringing 1500000uV into 2500000-2500000uV
+[20:41:22.856] LDO10: Bringing 1000000uV into 1200000-1200000uV
+[20:41:22.860] LDO13: Bringing 1050000uV into 1200000-1200000uV
+[20:41:22.864] pmic 0x8: 0x80->0x80
+[20:41:22.867] gdm-i2c 13250000.i2c: i2c-0: GDM I2C adapter
+[20:41:22.870] gdm-i2c 13280000.i2c: i2c bus frequency set to 400 KHz
+[20:41:22.873] sgm7220-typec 2-0047: detected usb-device
+[20:41:22.876] sgm7220-typec 2-0047: SGM7220 Type-C driver ready
+[20:41:22.878] gdm-i2c 13280000.i2c: i2c-2: GDM I2C adapter
+[20:41:22.882] device-mapper: ioctl: 4.48.0-ioctl (2023-03-01) initialised: dm-devel@lists.linux.dev
+[20:41:22.885] Bluetooth: HCI UART driver ver 2.3
+[20:41:22.888] Bluetooth: HCI UART protocol H4 registered
+[20:41:22.890] sdhci: Secure Digital Host Controller Interface driver
+[20:41:22.893] sdhci: Copyright(c) Pierre Ossman
+[20:41:22.896] sdhci-pltfm: SDHCI platform and OF driver helper
+[20:41:22.899] c00: set_affinity: no online task=natq_thrd cpu=3
+[20:41:22.903] natq ver: 0.8.2 qnr=8192
+[20:41:22.907]   Thread
+[20:41:22.909] ipv6q ver: 1.0.1
+[20:41:22.913] lcq ver: 1.0
+[20:41:22.916] ipip: IPv4 and MPLS over IPv4 tunneling driver
+[20:41:22.919] Initializing XFRM netlink socket
+[20:41:22.923] NET: Registered PF_INET6 protocol family
+[20:41:22.927] Segment Routing with IPv6
+[20:41:22.930] In-situ OAM (IOAM) with IPv6
+[20:41:22.933] sit: IPv6, IPv4 and MPLS over IPv4 tunneling driver
+[20:41:22.937] NET: Registered PF_PACKET protocol family
+[20:41:22.940] NET: Registered PF_KEY protocol family
+[20:41:22.943] Bridge firewalling registered
+[20:41:22.946] 8021q: 802.1Q VLAN Support v1.8
+[20:41:22.950] registered taskstats version 1
+[20:41:22.953] Loading compiled-in X.509 certificates
+[20:41:22.956] GDM HL IF(v0.7.4) initialized
+[20:41:22.963] DMA ver 0.6
+[20:41:22.969] MTD Crash partition /dev/mtd15
+[20:41:22.972] ipc mux irb nr=128 bsize=4128
+[20:41:22.975] ipc init ch=16
+[20:41:22.979] ipc ch[16]:MUX, irb: va=ffffffc081635018-ffffffc081635cd8 pa=82400018-82400cd8
+[20:41:22.984] ipc ch[16]:MUX, irb_work: va=ffffffc0810204b8-ffffffc081020d58 pa=81c034b8-81c03d58
+[20:41:22.988]   irb nr: tx=8(4128bytes) rx=128(4128bytes)
+[20:41:22.990]    irb tx: va=ffffffc081635018-ffffffc0816350d8 pa=82400018-824000d8
+[20:41:22.996]    irb rx: va=ffffffc0816350e0-ffffffc081635ce0 pa=824000e0-82400ce0
+[20:41:23.000]   m-ch_enabled=0x10010001
+[20:41:23.004] gdm7275x-pwm 132c0000.pwm: gdm7275x pwm driver probe
+[20:41:23.008] gdm-pmc: power on pcie domain
+[20:41:23.011] c00: cpu_smc_handler: fid=c1000001 x1=6 x2=0 x3=0 x4=0
+[20:41:23.016] gdm-comphy 13820000.gdm-comphy: PCIe0 reg base: 0x0000000016000000
+[20:41:23.020] gdm-comphy 13820000.gdm-comphy: PCIe1 reg base: 0x0000000016800000
+[20:41:23.025] gdm-comphy 13820000.gdm-comphy: PCIe2 reg base: 0x0000000017000000
+[20:41:23.029] gdm-comphy 13820000.gdm-comphy: PCIe3 reg base: 0x0000000017800000
+[20:41:23.033] gdm-comphy 13820000.gdm-comphy: ref-clock rate:100000000
+[20:41:23.036] gdm-comphy 13820000.gdm-comphy: PCIe clock rate(100000000)
+[20:41:23.041] gdm-comphy 13820000.gdm-comphy: usxgmii clock rate(266666667)
+[20:41:23.044] gdm-comphy 13820000.gdm-comphy: wlan power GPIO not configured, skipping
+[20:41:23.047] phy phy-13820000.gdm-comphy.1: incomplete constraints, dummy supplies not allowed (id=phy)
+[20:41:23.050] c00: gdm_irq_set_type: cpu=0 hwirq=192 type=4
+[20:41:23.054] gdm-comphy 13820000.gdm-comphy: Single link: PCIe (1 lanes)
+[20:41:23.058] c00: gdm_irq_set_type: cpu=0 hwirq=104 type=4
+[20:41:23.063] USIM Card Interface(usim0)
+[20:41:23.067] [USIM0] : GDM USIM device driver (1.3.0)
+[20:41:23.070]   PAIR_CMD
+[20:41:23.073] c00: gdm_irq_set_type: cpu=0 hwirq=105 type=4
+[20:41:23.076] USIM Card Interface(usim1)
+[20:41:23.081] [USIM1] : GDM USIM device driver (1.3.0)
+[20:41:23.085]   PAIR_CMD
+[20:41:23.089] ubi0: attaching mtd19
+[20:41:23.094] ubi0: scanning is finished
+[20:41:23.099] ubi0: attached mtd19 (name "rootfs", size 100 MiB)
+[20:41:23.103] ubi0: PEB size: 262144 bytes (256 KiB), LEB size: 253952 bytes
+[20:41:23.106] ubi0: min./max. I/O unit sizes: 4096/4096, sub-page size 4096
+[20:41:23.109] ubi0: VID header offset: 4096 (aligned 4096), data offset: 8192
+[20:41:23.114] ubi0: good PEBs: 400, bad PEBs: 0, corrupted PEBs: 0
+[20:41:23.118] ubi0: user volume: 1, internal volumes: 1, max. volumes count: 128
+[20:41:23.124] ubi0: max/mean erase counter: 1/0, WL threshold: 4096, image sequence number: 741054594
+[20:41:23.128] ubi0: available PEBs: 0, total reserved PEBs: 400, PEBs reserved for bad PEB handling: 40
+[20:41:23.131] ubi0: background thread "ubi_bgt0d" started, PID 1086
+[20:41:23.135] gdm_mux_init
+[20:41:23.138] clk: Not disabling unused clocks
+[20:41:23.143] em_mode=0x00000600:
+[20:41:23.147] b[0]=REBOOT_ON_LINUX_CRASH(off)
+[20:41:23.151] b[1]=REBOOT_ON_APP_CRASH(off)
+[20:41:23.155] b[8]=REBOOT_ON_MODEM_CRASH(off)
+[20:41:23.158] b[9]=REBOOT_ON_MODEM_WDT(ON)
+[20:41:23.162] b[10]=RELOAD_ON_MODEM_CRASH(ON)
+[20:41:23.165] b[11]=RELOAD_ON_MODEM_WDT(off)
+[20:41:23.169] b[16]=RUN_CRASH_SH(off)
+[20:41:23.173] hw_wd_start(15000/20000)
+[20:41:23.176] md wd started: to=3000 du=10000
+[20:41:23.179] PM: genpd: Not disabling unused power domains
+[20:41:23.182] c00: gdm_irq_set_type: cpu=0 hwirq=97 type=4
+[20:41:23.185] c00: set_affinity: irq=44(UART RX) cpu=0
+[20:41:23.188] c00: gdm_irq_set_type: cpu=0 hwirq=96 type=4
+[20:41:23.191] c00: set_affinity: irq=45(UART TX) cpu=0
+[20:41:23.195] uart port[0] fc=0 cr=0000002b
+[20:41:23.199] UBIFS (ubi0:0): Mounting in unauthenticated mode
+[20:41:23.204] UBIFS (ubi0:0): UBIFS: mounted UBI device 0, volume 0, name "rootfs", R/O mode
+[20:41:23.209] UBIFS (ubi0:0): LEB size: 253952 bytes (248 KiB), min./max. I/O unit sizes: 4096 bytes/4096 bytes
+[20:41:23.213] UBIFS (ubi0:0): FS size: 87867392 bytes (83 MiB, 346 LEBs), max 384 LEBs, journal size 9404416 bytes (8 MiB, 38 LEBs)
+[20:41:23.216] UBIFS (ubi0:0): reserved for root: 0 bytes (0 KiB)
+[20:41:23.220] UBIFS (ubi0:0): media format: w4/r0 (latest is w5/r0), UUID CE8DA3E9-F548-40EE-98E8-64CB830896A2, small LPT model
+[20:41:23.224] VFS: Mounted root (ubifs filesystem) readonly on device 0:16.
+[20:41:23.227] devtmpfs: mounted
+[20:41:23.230] Freeing unused kernel memory: 1792K
+[20:41:23.234] Run /sbin/init as init process
+[20:41:23.237]   with arguments:
+[20:41:23.241]     /sbin/init
+[20:41:23.246]   with environment:
+[20:41:23.249]     HOME=/
+[20:41:23.254]     TERM=linux
+[20:41:23.258]     attty=ttyS1
+[20:41:23.262] Welcome to
+[20:41:23.265]   G C T   L T E   M O D E M
+[20:41:23.269] modprobe: module board not found in modules.dep
+[20:41:23.273] backtrace info:
+[20:41:23.278]   LIBC=uClibc
+[20:41:23.281]   __SSP_ALL__
+[20:41:23.286]   guard=0xefbeaddeefbeadde
+[20:41:23.290]   inited=1
+[20:41:23.295]   stack_corr_nr=0
+[20:41:23.298]   load_nr=0
+[20:41:23.302]   unload_nr=0
+[20:41:23.306]   malloc_flags=0x0
+[20:41:23.309] [NV] NV flash Device : NAND FLASH 
+[20:41:23.312] [NV] nv_log mask: 0x0->0x13
+[20:41:23.315] [NV] NVM_VER=3.0
+[20:41:23.320] [NV] +nv_reload ucfg
+[20:41:23.323] [NV] NR1NV(9) map(0x0 0x200000)
+[20:41:23.327] [NV] [SEL-NV] NR1NV(9) hdr[0]: max_nv_size(0x96e24)
+[20:41:23.332] [NV]   hchk=0x7af20757(0x7af20757-ok) magic=0xcafebabe(ok) hsize=0x40 ts=0xc(12)
+[20:41:23.336] [NV]   dchk=0xe75e31fb(0xe75e31fb-ok) dsize=0x96de4(ok)
+[20:41:23.340] [NV] [SEL-NV] NR1NV(9) hdr[1]: max_nv_size(0x96e24)
+[20:41:23.344] [NV]   hchk=0x7b260758(0x7b260758-ok) magic=0xcafebabe(ok) hsize=0x40 ts=0xd(13)
+[20:41:23.347] [NV]   dchk=0xe75e31fb(0xe75e31fb-ok) dsize=0x96de4(ok)
+[20:41:23.350] [NV] NR1NV(9): active=1 map(0x0-0x200000) ts=0xd sz=0x96e24
+[20:41:23.354] [NV] NR2NV(10) map(0x0 0x100000)
+[20:41:23.358] [NV] [SEL-NV] NR2NV(10) hdr[0]: max_nv_size(0x19140)
+[20:41:23.362] [NV]   hchk=0x2f8905b5(0x2f8905b5-ok) magic=0xcafebabe(ok) hsize=0x40 ts=0x4(4)
+[20:41:23.366] [NV]   dchk=0xeb592437(0xeb592437-ok) dsize=0x19100(ok)
+[20:41:23.370] [NV] [SEL-NV] NR2NV(10) hdr[1]: max_nv_size(0x19140)
+[20:41:23.373] [NV]   hchk=0x2bf30594(0x2bf30594-ok) magic=0xcafebabe(ok) hsize=0x40 ts=0x5(5)
+[20:41:23.376] [NV]   dchk=0x1f4024fa(0x1f4024fa-ok) dsize=0x19100(ok)
+[20:41:23.380] [NV] NR2NV(10): active=1 map(0x0-0x100000) ts=0x5 sz=0x19140
+[20:41:23.384] [NV] NR2NV Init active block [1]=0x100000
+[20:41:23.387] [NV] CMNNV(13) map(0x0 0x100000)
+[20:41:23.390] [NV] [SEL-NV] CMNNV(13) hdr[0]: max_nv_size(0x40000)
+[20:41:23.393] [NV]   hchk=0x79b1074f(0x79b1074f-ok) magic=0xcafebabe(ok) hsize=0x40 ts=0x44(68)
+[20:41:23.396] [NV]   dchk=0x21d70cc5(0x21d70cc5-ok) dsize=0x3ffc0(ok)
+[20:41:23.400] [NV] [SEL-NV] CMNNV(13) hdr[1]: max_nv_size(0x40000)
+[20:41:23.403] [NV]   hchk=0x6fac0720(0x6fac0720-ok) magic=0xcafebabe(ok) hsize=0x40 ts=0x45(69)
+[20:41:23.406] [NV]   dchk=0x94c70c32(0x94c70c32-ok) dsize=0x3ffc0(ok)
+[20:41:23.409] [NV] CMNNV(13): active=1 map(0x0-0x100000) ts=0x45 sz=0x40000
+[20:41:23.412] [NV] CMNNV Init active block [1]=0x100000
+[20:41:23.415] [NV] ucfg nr1nv data read from CMNNV[1] timestamp=0xd
+[20:41:23.418] [NV] NR1NV Init active block [1]=0x200000
+[20:41:23.421] [NV] CMNNV2(14) map(0x0 0x100000)
+[20:41:23.424] [NV] [SEL-NV] CMNNV2(14) hdr[0]: max_nv_size(0xa7c0)
+[20:41:23.428] [NV] [SEL-NV] CMNNV2(14) hdr[1]: max_nv_size(0xa7c0)
+[20:41:23.432] [NV] [SEL-NV-SET] CMNNV2(14) hdr[0]: max_nv_size(0xa7c0)
+[20:41:23.437] [NV]   hchk=0x0(0x0-ok) magic=0x0(ng) hsize=0x0 ts=0x0(0)
+[20:41:23.441] [NV]   dchk=0x0(0x0-ok) dsize=0x0(ok)
+[20:41:23.445] [NV] CMNNV2(14) : all block invalid(map 0x0-0x100000)
+[20:41:23.449] [NV] -nv_reload ucfg
+[20:41:23.451] [UCFG] ucfg(1.1) load xml:
+[20:41:23.455] [UCFG]   var nr: conf=1041(922) fact=1040(921) perm=16(12)
+[20:41:23.458] [UCFG]   def nr: conf=0 conf=0 conf=0
+[20:41:23.462] Use normal log configuration
+[20:41:23.470] +modprobe modem modem_bootp="product_id=0x0000, operator_id=0x0000"
+[20:41:23.520] modem: loading out-of-tree module taints kernel.
+[20:41:23.526] modem driver ver 1.0
+[20:41:23.530]   base: 84100000
+[20:41:23.535]   size: 0ff00000
+[20:41:23.540]   param: 840fe000
+[20:41:23.546] boot param: product_id=0x0000, operator_id=0x0000, boot_mode=0, gipc_phy_base=0x81c00018, mem_base=0x80000000, mem_size=0x20000000, compat=0x0, ipv6=1
+[20:41:23.556] ---------------------
+[20:41:23.563] hdr chksum  : 0x79b1074f
+[20:41:23.569] magic       : 0xcafebabe
+[20:41:23.576] timstamp    : 0x00000044
+[20:41:23.584] data chksum : 0x21d70cc5
+[20:41:23.592] data size   : 0x0003ffc0
+[20:41:23.598] ---------------------
+[20:41:23.605] ---------------------
+[20:41:23.611] hdr chksum  : 0x6fac0720
+[20:41:23.620] magic       : 0xcafebabe
+[20:41:23.627] timstamp    : 0x00000045
+[20:41:23.635] data chksum : 0x94c70c32
+[20:41:23.644] data size   : 0x0003ffc0
+[20:41:23.649] ---------------------
+[20:41:23.657] using block : 1, 0x100000 
+[20:41:23.666] map idx=1
+[20:41:23.671] hdr idx: fs=0 zp=1 zpsize=9157832 read_size=9159880
+[20:41:23.676] ts: fs=16 zp=8
+[20:41:23.682] no such fw files!
+[20:41:23.688]   /lib/firmware/tk.gz
+[20:41:23.692]   /lib/firmware/tk.xz
+[20:41:23.699] read from nand mtd=zp2(9159880)
+[20:41:23.706] modem map info:
+[20:41:23.712]   [0] pa(0000000084100000)
+[20:41:23.716] ->va(ffffffc090000000)
+[20:41:23.723] c00: decompress gzip(1f 8b) at ffffffc090000000... (9159880bytes)
+[20:41:23.729] c00: decompress done 138404920bytes 1603ms ret=0
+[20:41:23.737] modem start
+[20:41:23.746] cpu_smc_powerdomain_up(pt=1, pd=0)
+[20:41:23.756] c00: cpu_smc_handler: fid=c1000001 x1=1 x2=0 x3=0 x4=0
+[20:41:23.764] enable cluster1-pll
+[20:41:23.772] start_modem_cpu: done start=1
+[20:41:23.778] -modprobe modem
+[20:41:23.787] Thu Jan  1 00:00:05 UTC 1970
+[20:41:23.794] cp: can't stat '/etc/sysconfig/lte/param/*': No such file or directory
+[20:41:23.799] BL33 pc=0x84dae704 spsr=0x600002c5
+[20:41:23.807] c10: psci_smc_handler: fid=84000000 x1=0 x2=0 x3=0 x4=0
+[20:41:23.816] TK: gipc-protocol: cpu1:0 addr(v1)=0000000081c00018 magic=4054 ver(master=1.11 slave=1.11) proci=0 assertl=3
+[20:41:23.823] TK: hw lock_reg:
+[20:41:23.827] TK:   active=110004c0
+[20:41:23.830] TK:   free  =110004c4
+[20:41:23.834] TK: ipc config=00000004
+[20:41:23.839] TK:   router-device
+[20:41:23.843] TK: ipc init ch=0
+[20:41:23.848] TK:   peer-genirq=1a111020(152)
+[20:41:23.852] TK:   s-ch_enabled=0x10010001
+[20:41:23.858] TK: ipc init ch=16
+[20:41:23.862] TK:   peer-genirq=1a111020(152)
+[20:41:23.866] TK:   s-ch_enabled=0x10010001
+[20:41:23.869] TK: ipc init ch=28
+[20:41:23.872] TK:   peer-genirq=1a111020(152)
+[20:41:23.876] TK:   s-ch_enabled=0x10010001
+[20:41:23.880] ipc modem boot done
+[20:41:23.884] GDM Modem gdm7259x_board
+[20:41:23.889] Boot Param] error: token=9, ret=-54
+[20:41:23.894] ============================================================================
+[20:41:23.898]  [0] ZEPHYR OS v4.3.0 (v4.3.0-3049-g03924c3679: 192MB)
+[20:41:23.902] ----------------------------------------------------------------------------
+[20:41:23.907]  - gct@CS-buildserver
+[20:41:23.912]  - 2026-08-31T22:51:44
+[20:41:23.918]  - gdm7259x_nsa_192mb
+[20:41:23.922] ============================================================================
+[20:41:23.926] [MEM] WT DRAM zero initialized 0(0KB)bytes from 000000008d700000 to 000000008d700000
+[20:41:23.933] [MEM] NCH DRAM zero initialized 35348240(34519KB)bytes from 000000008d700000 to 000000008f8b5f10
+[20:41:23.937] [CHIP] GDM7259X(Rev.1C)
+[20:41:23.943] [CLOCK] arm(1300.000MHz) 1x(100.000MHz)
+[20:41:23.948] [MEM]  total : 0x84000000 - 0x90000000 (  192 MB)
+[20:41:23.952] [MEM]  .init : 0x84100000 - 0x841068a8 (   27 kB)
+[20:41:23.956] [MEM]  .text : 0x84100000 - 0x85587000 (21020 kB)
+[20:41:23.962] [MEM]  .data : 0x85586600 - 0x8c4fe438 (114144 kB)
+[20:41:23.966] [MEM]   .bss : 0x8b20b000 - 0x8c4c7a08 (19187 kB)
+[20:41:23.971] I2C3 initialized
+[20:41:23.975] Modem IPC mode:
+[20:41:23.979]   master_proc_idle=0
+[20:41:23.982]   assert_level=3
+[20:41:23.985]   sdu_prio=0
+[20:41:23.989] ########################################
+[20:41:23.993] ####       Board Configuration      ####
+[20:41:23.996] ########################################
+[20:41:23.999] Operator: [0x0000]
+[20:41:24.003] Product : [0x0000]
+[20:41:24.006] LTE>====================================
+[20:41:24.010] IPv6 mode:[0]
+[20:41:24.013] ## UE CONFIG
+[20:41:24.018]  - Combined attach : [0]
+[20:41:24.022]  - UE CAPABILITY
+[20:41:24.028] 	> UE Category  : [0 (0/0)]
+[20:41:24.034] 	> AS Rel Num   : [0]
+[20:41:24.037] 	> FGI          : FDD [00000000 00000000 00000000]
+[20:41:24.043] 	>              : TDD [00000000 00000000 00000000]
+[20:41:24.049] 	> ROHC         : [1]
+[20:41:24.055] 	> eMBMS        : [0]
+[20:41:24.060] 	> TM           : [00/00/00]
+[20:41:24.067] NR>=====================================
+[20:41:24.075] [console] gdm_uart0 enabled
+[20:41:24.084] [console] crash enabled
+[20:41:24.089] [console] gdm_ipc enabled
+[20:41:24.094] ----------------------------------------------------------------------------
+[20:41:24.101]  NR - FW ver: 0.1.0.0
+[20:41:24.109] ----------------------------------------------------------------------------
+[20:41:24.123]  Pkg: 1.11.0
+[20:41:24.130] ----------------------------------------------------------------------------
+[20:41:24.138] ----------------------------------------------------------------------------
+[20:41:24.145]  LTE - FW ver: 0.3.5.0
+[20:41:24.153] ----------------------------------------------------------------------------
+[20:41:24.160] nv_checksum_info: 0
+[20:41:24.164] nr driver ver 1.0
+[20:41:24.167]   usl
+[20:41:24.171] param_mtu=1500
+[20:41:24.174] ipc init ch=1
+[20:41:24.181] ipc ch[1]:SDU, irb: va=ffffffc0825f1018-ffffffc082639018 pa=83400018-83448018
+[20:41:24.184] ipc ch[1]:SDU, irb_work: va=ffffffc082671018-ffffffc0826a1038 pa=83480018-834b0038
+[20:41:24.187]   irb nr: tx=4096(2080bytes) rx=8192(2080bytes)
+[20:41:24.191]    irb tx: va=ffffffc0825f1018-ffffffc082609018 pa=83400018-83418018
+[20:41:24.197]    irb rx: va=ffffffc082609020-ffffffc082639020 pa=83418020-83448020
+[20:41:24.200] ipc init ch=1
+[20:41:24.205]   peer-genirq=1a111020 ( 1m5-2c)h_
+[20:41:24.209] enabled = 0sx-1c001nab3
+[20:41:24.216] =ET 001
+[20:41:24.222] 03
+[20:41:24.233] b->buffer=83de90f8
+[20:41:24.242]   IPC_BUF_RSVD_SIZE=184(0xb8)
+[20:41:24.250]   NET_IP_ALIGN=0
+[20:41:24.257] [if_net]
+[20:41:24.262]   TEXT=ffffffc078f17000
+[20:41:24.270]   DATA=ffffffc078f22000
+[20:41:24.276]   RO_AFTER_INIT=0000000000000000
+[20:41:24.281]   INIT_TEXT=ffffffc078f2a000
+[20:41:24.287]   INIT_DATA=ffffffc078f2c000
+[20:41:24.290]   INIT_RODATA=0000000000000000
+[20:41:24.294] func ptr:
+[20:41:24.298]   &if_net_xmit=ffffffc078f1b0a8
+[20:41:24.303]   &gdm_net_ipc_rx_handler=ffffffc078f1a720
+[20:41:24.307]   &proc_rx_skb=ffffffc078f1a0a8
+[20:41:24.311] start_net.sh
+[20:41:24.314] VLANEN=0
+[20:41:24.320] act=1
+[20:41:24.326] Run start_br.sh
+[20:41:24.330] local null ip=0.0.0.0 mask=0.0.0.0 00:00:00:00:00:00 en=0
+[20:41:24.335] GDM_LOCAL_DEVIF=br0
+[20:41:24.341] NIF: up(lo)
+[20:41:24.345] [0] br0 addr=192.168.0.1 mask=255.255.255.0 local=192.168.0.1 bcast=192.168.0.255
+[20:41:24.347] netif set local br0 ip=192.168.0.1 mask=255.255.255.0 00:00:00:00:00:00 en=0
+[20:41:24.350] NIF: up(br0)
+[20:41:24.353] brctl: iface eth0: No such device
+[20:41:24.357] ifconfig: SIOCSIFADDR: No such device
+[20:41:24.360] brctl: iface usb0: No such device
+[20:41:24.364] ifconfig: SIOCSIFADDR: No such device
+[20:41:24.367] Setting dhcp configuration..
+[20:41:24.370] Internet Systems Consortium DHCP Server 4.1-ESV-R16-P2
+[20:41:24.374] Copyright 2004-2022 Internet Systems Consortium.
+[20:41:24.377] All rights reserved.
+[20:41:24.381] For info, please visit https://www.isc.org/software/dhcp/
+[20:41:24.385] Wrote 0 leases to leases file.
+[20:41:24.388] Listening on LPF/br0/fe:46:d3:39:0d:20/192.168.0.0/24
+[20:41:24.392] Sending on   LPF/br0/fe:46:d3:39:0d:20/192.168.0.0/24
+[20:41:24.396] Sending on   Socket/fallback/fallback-net
+[20:41:24.398] Loading simple NAT configuration..
+[20:41:24.401] INTF=br0, WANINTF=nr0pdu3
+[20:41:24.535] register ip_conntrack_cb
+[20:41:24.539] <message>[NV] CRIT(cotra:1344): file=nv_7275x.c(345) cmn2_nv_read
+[20:41:24.544] [NV] [cotra] invalid CMN2_PORT(id=1) magic
+[20:41:24.547] [NV] +nv_write [cotra] CMN2_PORT(36) data=0x416010 part=36 size=0xa09
+[20:41:24.550] [NV] cotra CMNNV2 Write Skip (3:CMN2_PORT, 0x0, 2569)
+[20:41:24.672] [NV] -nv_write [cotra] CMN2_PORT(36) data=0x416010 part=36 size=0xa09
+[20:41:24.676] Fail to Check DMZ Setting. Please, restart Command</message>
+[20:41:24.791] 1970-01-01 00:00:06: (../../src/configfile.c.387) Warning: please add "mod_authn_file" to server.modules list in lighttpd.conf.  A future release of lighttpd 1.4.x will not automatically load mod_authn_file and lighttpd will fail to start up since your lighttpd.conf uses auth.backend = "htpasswd".
+[20:41:24.802] Run usb_configfs.sh
+[20:41:24.815] usbeth ENABLE=1, mode=0, serial cfg: gs0=0 gs1=0 gs2=0 dm0=0 dm1=0
+[20:41:24.829] configfs-gadget.g1 gadget.0: HOST MAC 00:0a:3b:ff:ff:02
+[20:41:24.843] configfs-gadget.g1 gadget.0: MAC 00:0a:3b:ff:ff:01
+[20:41:24.856] set hostif=usb0 cnt=0
+[20:41:24.871] net_mode=0
+[20:41:24.885] udc: gadget start
+[20:41:24.898] c00: gdm_irq_set_type: cpu=0 hwirq=208 type=4
+[20:41:24.972] c00: set_affinity: no online irq=51(DWC3) cpu=2
+[20:41:25.032] udc: connect: conn=1 discon=0 rtc=000543b2
+[20:41:25.058] USB gadget configured: ETH=rndis.usb0, serial count=0, UDC=13500000.dwc3
+[20:41:25.179] IPV6Q LOG(00000004):
+[20:41:25.226] ipv6q_enabled=0
+[20:41:25.251] NET EMUL LOG(00000000):
+[20:41:25.276]  NULL
+[20:41:25.335] net_emul_mask=00000000
+[20:41:25.408] net.core.rmem_max = 16777216
+[20:41:25.426] net.core.wmem_max = 16777216
+[20:41:25.454] net.ipv4.tcp_rmem = 4096 131072 16777216
+[20:41:25.481] net.ipv4.tcp_wmem = 4096 131072 16777216
+[20:41:25.524] net.ipv4.tcp_moderate_rcvbuf = 1
+[20:41:25.552] RNDIS multi_pkt_tx_size: host=16384 nv=0 actual=16384 nr=10
+[20:41:25.579] br0: port 1(usb0) entered blocking state
+[20:41:25.625] br0: port 1(usb0) entered disabled state
+[20:41:25.675] configfs-gadget.g1 gadget.0 usb0: entered allmulticast mode
+[20:41:25.700] configfs-gadget.g1 gadget.0 usb0: entered promiscuous mode
+[20:41:25.722] eth_open
+[20:41:25.757] eth_start
+[20:41:25.788] NIF: up(usb0)
+[20:41:25.837] mrd: mrd_lplog_start 
+[20:41:25.870] [mrd_lplog] listening on 0.0.0.0:1011 (id=0, idx=0)
+[20:41:25.935] [mrd_lplog] listening on 0.0.0.0:1012 (id=1, idx=1)
+[20:41:25.970] [mrd_lplog] listening on 0.0.0.0:1013 (id=2, idx=2)
+[20:41:26.003] [mrd_lplog] listening on 0.0.0.0:1014 (id=3, idx=3)
+[20:41:26.039] [mrd_lplog] listening on 0.0.0.0:1015 (id=4, idx=4)
+[20:41:26.086] [mrd_lplog] listening on 0.0.0.0:1016 (id=5, idx=5)
+[20:41:26.159] [mrd_lplog] listening on 0.0.0.0:1017 (id=6, idx=6)
+[20:41:26.219] [mrd_lplog] listening on 0.0.0.0:1018 (id=7, idx=7)
+[20:41:26.276] [mrd_lplog] listening on 0.0.0.0:1019 (id=8, idx=8)
+[20:41:26.298] [mrd_lplog] LP_LOG_ID_ULP0 telnet port:1011
+[20:41:26.319] [mrd_lplog] LP_LOG_ID_ULP1 telnet port:1012
+[20:41:26.340] [mrd_lplog] LP_LOG_ID_ULP2 telnet port:1013
+[20:41:26.360] [mrd_lplog] LP_LOG_ID_ULP3 telnet port:1014
+[20:41:26.383] [mrd_lplog] LP_LOG_ID_DLP0 telnet port:1015
+[20:41:26.402] [mrd_lplog] LP_LOG_ID_DLP1 telnet port:1016
+[20:41:26.427] [mrd_lplog] LP_LOG_ID_DLP2 telnet port:1017
+[20:41:26.447] [mrd_lplog] LP_LOG_ID_DLP3 telnet port:1018
+[20:41:26.474] [mrd_lplog] LP_LOG_ID_SLP  telnet port:1019
+[20:41:26.529] mrd: nrd started
+[20:41:26.556] Open shared map and Init mutex in mrd_main!!
+[20:41:26.621] mrd: ***************************************
+[20:41:26.672] mrd: *          NR DAEMON START           *
+[20:41:26.707] mrd: ***************************************
+[20:41:26.739] mrd: operator_id=0
+[20:41:26.776] lowd open nr=1
+[20:41:26.868] gif_open mrd 1/0
+[20:41:26.942] [mrd] bentry delayed copy: b336(4)
+[20:41:26.958] usb0 set host mac: 00:0a:3b:ff:ff:02
+[20:41:26.988] Disable GPS Module ...
+[20:41:27.004] Not Used
+[20:41:27.019] mrautocm: ucfg_retry : 0
+[20:41:27.042] mrautocm: [LTE UCFG] cfun(0), manual(0)
+[20:41:27.075] mrautocm: NR Search(Core:0, Selection Mode: 0, cellTypeMode: 0, Roam: 0)
+[20:41:27.093] mrautocm: RAT (LTE NV: 0, NR NV: 0)
+[20:41:27.122] mrautocm: [PLMN LTE] Core(0), Mode(0), CellType(0), Roam(0), List Num(0)
+[20:41:27.152] mrautocm: [PLMN LTE] searchMode(0), MCC[0]=0, MCC[1]=0, MCC[2]=0
+[20:41:27.173] mrautocm: [PLMN NR] Core(0), Mode(0), CellType(0), Roam(0), List Num(4)
+[20:41:27.202] mrautocm: [PLMN NR] searchMode(0), MCC[0]=0, MCC[1]=0, MCC[2]=0
+[20:41:27.220] mrautocm: [PLMN NR][MRU] Count(5)
+[20:41:27.260] mrautocm: [PLMN NR][ARFCN](1/1), Band(26), ARFCN(172370)
+[20:41:27.341] mrautocm: [PLMN NR][Band](1/1), Band(26)
+[20:41:27.412] mrautocm: [PLMN NR][ARFCN Range](1/1), Band(26) ARFCN(from: 171800 to: 178800)
+[20:41:27.459] mrautocm: CORE NET (LTE NV: 0, NR NV: 0)
+[20:41:27.484] mrautocm: LTE PDN[1] Enable(1), Connect Order(1) Label(ims), Type(2), APN(IMS) PCO()
+[20:41:27.661] mrautocm: LTE PDN[2] Enable(1), Connect Order(0) Label(admin), Type(2), APN(VZWADMIN) PCO()
+[20:41:27.683] mrautocm: LTE PDN[3] Enable(1), Connect Order(2) Label(internet), Type(2), APN(V5GA01INTERNET) PCO()
+[20:41:27.707] mrautocm: LTE PDN[4] Enable(1), Connect Order(0) Label(app), Type(2), APN(VZWAPP) PCO()
+[20:41:27.734] mrautocm: LTE PDN[5] Enable(1), Connect Order(0) Label(emergency), Type(2), APN() PCO()
+[20:41:27.740] mrautocm: LTE PDN[6] Enable(0), Connect Order(0) Label(enterprise), Type(2), APN(VZWCLASS6) PCO()
+[20:41:27.775] mrautocm: LTE PDN[7] Enable(0), Connect Order(0) Label(b2b), Type(0), APN(VZWCLASS7) PCO()
+[20:41:27.784] mrautocm: LTE PDN[8] Enable(0), Connect Order(0) Label(reserved3), Type(0), APN() PCO()
+[20:41:27.805] mrautocm: NR PDU[1] Enable(0), Connect Order(0) Label(ims), Type(3), DNN(), PCO(), S-NSSAI(len:0 sst:00 sd:000000 mapped_sst:00 mapped_sd:000000)
+[20:41:27.831] mrautocm: NR PDU[2] Enable(0), Connect Order(0) Label(admin), Type(3), DNN(), PCO(), S-NSSAI(len:0 sst:00 sd:000000 mapped_sst:00 mapped_sd:000000)
+[20:41:27.874] mrautocm: NR PDU[3] Enable(1), Connect Order(1) Label(internet), Type(1), DNN(), PCO(), S-NSSAI(len:0 sst:00 sd:000000 mapped_sst:00 mapped_sd:000000)
+[20:41:27.924] mrautocm: NR PDU[4] Enable(0), Connect Order(0) Label(app), Type(3), DNN(), PCO(), S-NSSAI(len:0 sst:00 sd:000000 mapped_sst:00 mapped_sd:000000)
+[20:41:27.973] mrautocm: NR PDU[5] Enable(0), Connect Order(0) enabled=1
+[20:41:28.054] Labelinterval_sec=1(sec)
+[20:41:28.167] user_interval_ticks=0/0(sec)
+[20:41:28.237] log_enabled=0
+[20:41:28.303] (emergency), Type(3), DNN(), PCO(), S-NSSAI(len:0 sst:00 sd:000000 mapped_sst:00 mapped_sd:000000)
+[20:41:28.338] mrautocm: NR PDU[6] Enable(0), Connect Order(0) Label(enterprise), Type(3), DNN(), PCO(), S-NSSAI(len:0 sst:00 sd:000000 mapped_sst:00 mapped_sd:000000)
+[20:41:28.377] mrautocm: NR PDU[7] Enable(0), Connect Order(0) Label(b2b), Type(3), DNN(), PCO(), S-NSSAI(len:0 sst:00 sd:000000 mapped_sst:00 mapped_sd:000000)
+[20:41:28.420] mrautocm: NR PDU[8] Enable(0), Connect Order(0) Label(reserved), Type(3), DNN(), PCO(), S-NSSAI(len:0 sst:00 sd:000000 mapped_sst:00 mapped_sd:000000)
+[20:41:28.476] mrautocm: [mrcm_ucfg_get_overheat] Overheat is disable. 
+[20:41:28.588] mrautocm: [mrcm_process_temperature_set] Executing command: kern temp uintv 0
+[20:41:28.648] mrautocm: [IMS] Enable(0)
+[20:41:28.722] mrautocm: [EAP] PDU auth bypass pdu1 (0)
+[20:41:28.768] mrautocm: [EAP] PDU auth bypass pdu2 (0)
+[20:41:28.811] mrautocm: [EAP] PDU auth bypass pdu3 (0)
+[20:41:28.885] mrautocm: [EAP] PDU auth bypass pdu4 (0)
+[20:41:28.934] mrautocm: [EAP] PDU auth bypass pdu5 (0)
+[20:41:28.997] mrautocm: [EAP] PDU auth bypass pdu6 (0)
+[20:41:29.071] mrautocm: [EAP] PDU auth bypass pdu7 (0)
+[20:41:29.139] mrautocm: [EAP] PDU auth bypass pdu8 (0)
+[20:41:29.203] gif_mmap va=0x7f8333e000 pa=0x97480000 sz=8192
+[20:41:29.266] mrd: TID list initialized.
+[20:41:29.311] mrd: T-ID Feature Activation is Done.
+[20:41:29.396] gif_to_ipc: delayed req 3335(2044)
+[20:41:29.435] mrd: get_lted_keep_alive_setting, lted_keep_alive setting (enable=0, expired_time=0, max_retry_val=0)
+[20:41:29.477] mrd: [SERVER] new connection request
+[20:41:29.542] mrd: lted_srv_alloc_client id=0
+[20:41:29.605] gif_to_ipc: delayed req 3335(2044)
+[20:41:29.659] mrd: [SERVER] assigns client index 0 proc=mratcm(1437)
+[20:41:29.727] mrd: [SERVER] new connection request
+[20:41:29.783] mrd: lted_srv_alloc_client id=1
+[20:41:29.833] mrbip: lted_client_init_ex success (id: 1, client_identity : 0x00000000, pid (1451-mrbip) 
+[20:41:29.866] gif_to_ipc: delayed req 3335(2044)
+[20:41:29.895] mrd: [SERVER] assigns client index 1 proc=mrbip(1451)
+[20:41:29.938] mrbip: Wait LTE PS INIT..
+[20:41:29.965] mrd: [SERVER] new connection request
+[20:41:29.989] mrd: lted_srv_alloc_client id=2
+[20:41:30.021] gif_to_ipc: delayed req 3335(2044)
+[20:41:30.043] mrd: [SERVER] assigns client index 2 proc=cli(1481)
+[20:41:30.071] mrd: [SERVER] new connection request
+[20:41:30.091] mrd: lted_srv_alloc_client id=3
+[20:41:30.124] mrd: [SERVER] assigns client index 3 proc=mrcm(1480)
+[20:41:30.145] mrautocm: lted_client_init_ex success (id: 3, client_identity : 0x00000040, pid (gif_to_ipc: delayed req 3335(2044)
+[20:41:30.165] 1480-mrcm) 
+[20:41:30.180] DM> DM> DM> DM> mrd: clearing start - eps_id = 0xffef
+[20:41:30.197] mrd: clearing done
+[20:41:30.223] $ shell
+[20:41:30.231] checksum is valid(0xc83f56f5/0xc83f56f5)
+[20:41:30.236] mrd: nr rf scr: access(/etc/sysconfig/script/lte_scr/rf/x_6)=-1
+[20:41:30.240] [NVM] READ Head N_INFO         (7243,10,5a) - Status(0)
+[20:41:30.246] [NVM] READ Head N_BCFG         (7243,10,5b) - Status(0)
+[20:41:30.253] mrd: NR  DEVICE INSERT(DEV_IDX(1))
+[20:41:30.260] [NVM] READ Head N_RFCAL        (7243,18,48) - Status(0)
+[20:41:30.265] [NVM] READ Head N_TCCAL        (7243,10,2b) - Status(0)
+[20:41:30.270] [NVM] READ Head N_NETWORK      (0000,00,00) - Status(0)
+[20:41:30.277] [NVM] Default NV Memory Write(4)
+[20:41:30.283] [NVM] NV NETWORK DUMP
+[20:41:30.287] [NVM] READ Head N_SAFE         (7243,10,31) - Status(0)
+[20:41:30.290] [V_SIM]ProcNvBcfgData/gstVsimEnData:0
+[20:41:30.295] default tdm log level=2 (NV:2)
+[20:41:30.299] [MRM] [CHK]MRM: NVM_INIT_CMPL_IND 
+[20:41:30.303] [CHK]UMM: NVM_INIT_CMPL_IND 
+[20:41:30.306] [UMM_ERR] [V_SIM]eVSIM_Enabled::5 
+[20:41:30.310] [UMM_ERR] (UMM_MODE_EMUL)/Virtual SIM :5 
+[20:41:30.315] [UMM_ERR] [V_SIM]UMM_Update_AllCacheItems_forUSIM, eVSIM: :5 
+[20:41:30.318] [MRM_UMM][UMM][UMM_UICC_ACT_IND] nMsgSize:24 
+[20:41:30.322] [UMM_ERR] [V_SIM]Enter UMM_ACTIVE state  
+[20:41:30.328]  LTE L1 initialize...
+[20:41:30.332] l1_modem_init(restart=0,init=0)
+[20:41:30.335] c10: cpu_smc_handler: fid=c1000030 x1=0 x2=0 x3=0 x4=0
+[20:41:30.339] c10: OIC_TZPROT: 00000000->ffffffff
+[20:41:30.343]  =====   RF NV3  ====== 
+[20:41:30.350] [CSI] INIT: STI=10239
+[20:41:30.354] [rxm_meas_init] Disable Measuremnt
+[20:41:30.361] [RXM_DM_InitDebugOption] INIT (1)
+[20:41:30.367] [L1C] INIT2(RFFE=65542)
+[20:41:30.373] l1_bb_ctrl(0)
+[20:41:30.379] [NAS_CACHE] Access Control Class: 0x0001
+[20:41:30.383] [NAS_CACHE] UE Operation Mode: 0x80 Length of MNC: 3
+[20:41:30.388] [NAS_CACHE] NOT Available the UAC Access Identities Configuration EF
+[20:41:30.395] [NAS_CACHE] Higher Priority PLMN search period (28800 Sec)
+[20:41:30.399] Equivalent HPLMN 0: 0x00f110 
+[20:41:30.404] Equivalent HPLMN 1: 0x130184 
+[20:41:30.408] [NAS_CACHE] SUCI calculation is to be performed by the ME
+[20:41:30.414] [NAS_CACHE] NOT Available Subscription identifier privacy support
+[20:41:30.420] [NAS_CACHE] NOT Available the 5GS Operator PLMN List EF
+[20:41:30.428] [NAS_CACHE] NOT Available the Routing Indicator EF
+[20:41:30.433] [NAS_CACHE] [ERR] Read Failed for PNN EF <IN cacheReadEFPNN 5203>
+[20:41:30.438] [NAS_CACHE] [ERR] Read Failed for OPL EF <IN cacheReadEFOPL 5227>
+[20:41:30.445] [NAS_CACHE] NOT Available the Operator controlled signal threshold per access technology EF
+[20:41:30.450] [NAS_CACHE] Requested the File Count: 29
+[20:41:30.454] [FSM] [H] Cell DB:halfBank 317, blockFree 634, blockNo 634, blockSz 252
+[20:41:30.462] L1_BandInfoNV: B1 B2 B3 B4 B5 B6 B7 B8 B10 B12 B13 B14 B17 B18 B19 B20 B25 B26 B28 B29 B30 B34 B38 B39 B40 B41 B42 B43 B48 B52 B66 B71 B77(x) B78(x)
+[20:41:30.476] [L3API][H]  user FreqTable's init'd: 856AD8F8
+[20:41:30.521] [IMC] [H]Supported Band: B1 B2 B3 B4 B5 B6 B7 B8 B10 B12 B13 B14 B17 B18 B19 B20 B25 B26 B28 B29 B30 B34 B38 B39 B40 B41 B42 B43 B48 B52 B66 B71
+[20:41:30.532] [L3API] 	Max Layer: B71:4/1 B66:4/1
+[20:41:30.540] [L3API] 	Max Layer: B52:4/2 B48:4/2 B43:4/2 B42:4/2 B41:4/1 B40:4/1 B39:4/1 B38:4/1 B34:4/1 B30:4/1
+[20:41:30.549] [L3API][H] 	B29: not support UL
+[20:41:30.557] [L3API] 	Max Layer: B29:4/0 B28:4/1 B26:4/1 B25:4/1 B20:4/1 B19:4/1 B18:4/1 B17:4/1 B14:4/1 B13:4/1
+[20:41:30.567] [L3API] 	Max Layer: B12:4/1 B10:4/1 B8:4/1 B7:4/1 B6:4/1 B5:4/1 B4:4/1 B3:4/1 B2:4/1 B1:4/1
+[20:41:30.576] [L3API][H] Init BC List - mode:0, count:32
+[20:41:30.586] [L3API][H]  BandPair Count: 32 (640)
+[20:41:30.599] [L3API][H]  MakeMimoBandComb:(B1:0x14)
+[20:41:30.613] [L3API][H]  MakeMimoBandComb:(B2:0x14)(B3:0x14)(B4:0x14)(B5:0x14)(B6:0x14)(B7:0x14)(B8:0x14)(B10:0x14)(B12:0x14)([L3API][H]  MakeMimoBandComb:(B14:0x14)(B17:0x14)(B18:0x14)(B19:0x14)(B20:0x14)(B25:0x14)(B26:0x14)(B28:0x14)(B29[L3API][H]  MakeMimoBandComb:(B34:0x14)(B38:0x14)(B39:0x14)(B40:0x14)(B41:0x14)(B42:0x24)(B43:0x24)(B48:0x24)(B52[L3API][H]  MakeMimoBandComb:(B71:0x14)
+[20:41:30.648] [L3API][E]  RRC_UE_EUTRA_Capability_v9a0_IEs is NULL
+[20:41:30.685] [L3API][H] Set PHY Capability Parameters
+[20:41:30.722] [L3API][H] 	multiClusterPUSCH_WithinCC (1)
+[20:41:30.786] [L3AP[NV] +nv_write [mrd] SAFE(5) data=0x7f8328e010 offs=0x139a8 size=0x1
+[20:41:30.812] I][H]  Support  B1 B2 B3 B4 B5 B6 B7 B8 B10 B12 B13 B14 B17 B18 B19 B20 B25 B26 B28 B29 B30 B34 B38 B39 B40 [L3API][H] Set modifiedMPR_Behavior_r10 : 60 00 00 00 (32)
+[20:41:30.859] [L3API][H] 	freqBandRetrieval (1)
+[20:41:30.904] [L3API] 	Set dl_256QAM_r12: 1
+[20:41:30.951] [L3API] 	Set ul_64QAM_r12 1
+[20:41:31.015] [L3API][H]  set_db_capability_r12_rf : DL256-1, UL64-1 (32)
+[20:41:31.084] [L3API][H]  set_db_capability_r13_rf : MaxCCs-1, ReducedINCComb-1, SkipFallbackComb-1
+[20:41:31.126] [L3API][H] Default BCL cnt 32
+[20:41:31.153] [L3API][H] 	[0] - 1(1) *
+[20:41:31.185] [L3API][H] 	[1] - 1(2) *
+[20:41:31.242] [L3API][H] 	[2] - 1(3) *
+[20:41:31.278] [L3API][H] 	[3] - 1(4) *
+[20:41:31.332] [L3API][H] 	[4] - 1(5) *
+[20:41:31.383] [L3API][H] 	[5] - 1(6) *
+[20:41:31.436] [L3API][H] 	[6] - 1(7) *
+[20:41:31.471] [L3API][H] 	[7] - 1(8) *
+[20:41:31.521] [L3API][H] 	[8] - 1(10) *
+[20:41:31.551] [L3API][H] 	[9] - 1(12) *
+[20:41:31.589] [L3API][H] 	[10] - 1(13) *
+[20:41:31.621] [L3API][H] 	[11] - 1(14) *
+[20:41:31.664] [L3API][H] 	[12] - 1(17) *
+[20:41:31.701] [L3API][H] 	[13] - 1(18) *
+[20:41:31.731] [L3API][H] 	[14] - 1(19) *
+[20:41:31.778] [L3API][H] 	[15] - 1(20) *
+[20:41:31.815] [L3API][H] 	[16] - 1(25) *
+[20:41:31.844] [L3API][H] 	[17] - 1(26) *
+[20:41:31.883] [L3API][H] 	[18] - 1(28) *
+[20:41:31.921] [L3API][H] 	[19[NV] [LTE_NV] mrd Write Skip id=5(SAFE)
+[20:41:31.958] [NV] -nv_write [mrd] SAFE(5) data=0x7f8328e010 offs=0x139a8 size=0x1
+[20:41:31.994] ] - 1(29) :DB 64
+[20:41:32.034] [L3API][H] 	[20] - 1(30) *
+[20:41:32.067] [L3API][H] 	[21] - 1(34) *
+[20:41:32.100] [L3API][H] 	[22] - 1(38) *
+[20:41:32.145] [L3API][H] 	[23] - 1(39) *
+[20:41:32.166] [L3API][H] 	[24] - 1(40) *
+[20:41:32.181] [L3API][H] 	[25] - 1(41) *
+[20:41:32.202] [L3API][H] 	[26] - 1(42) *
+[20:41:32.226] [L3API][H] 	[27] - 1(43) *
+[20:41:32.244] [L3API][H] 	[28] - 1(48) *
+[20:41:32.270] [L3API][H] 	[29] - 1(52) *
+[20:41:32.296] [L3API][H] 	[30] - 1(66) *
+[20:41:32.304] [L3API][H] 	[31] - 1(71) *
+[20:41:32.322] [L3API][H] Set modifiedMPR_Behavior_r10 : 60 00 00 00 (32)
+[20:41:32.336] [L3API][H]  Making band combination list (31)
+[20:41:32.348] [L3API][H]  supportedBandCombination_r10 malloc - 0x856AE758 (1984 * 31)
+[20:41:32.366] [L3API] Set BC: 1(1), 0(0)
+[20:41:32.384] [L3API] Set BC: 1(2), 0(0)
+[20:41:32.401] [L3API] Set BC: 1(3), 0(0)
+[20:41:32.422] [L3API] Set BC: 1(4), 0(0)
+[20:41:32.437] [L3API] Set BC: 1(5), 0(0)
+[20:41:32.456] [L3API] Set BC: 1(6), 0(0)
+[20:41:32.470] [L3API] Set BC: 1(7), 0(0)
+[20:41:32.477] [L3API] Set BC: 1(8), 0(0)
+[20:41:32.522] [L3API] Set BC: 1(10), 0(0)
+[20:41:32.541] [L3API] Set BC: 1(12), 0(0)
+[20:41:32.559] [L3API] Set BC: 1(13), 0(0)
+[20:41:32.571] [L3API] Set BC: 1(14), 0(0)
+[20:41:32.588] [L3API] Set BC: 1(17), 0(0)
+[20:41:32.600] [L3API] Set BC: 1(18), 0(0)
+[20:41:32.612] [L3API] Set BC: 1(19), 0(0)
+[20:41:32.622] [L3API] Set BC: 1(20), 0(0)
+[20:41:32.632] [L3API] Set BC: 1(25), 0(0)
+[20:41:32.641] [L3API] Set BC: 1(26), 0(0)
+[20:41:32.652] [L3API] Set BC: 1(28), 0(0)mrd: NR force_dhcp == 0
+[20:41:32.659] mrd: Don't start DHCP procedure for
+[20:41:32.666] [L3API] Set BC: 1(30), 0(0)
+[20:41:32.677] [L3API] Set BC: 1(34), 0(0)
+[20:41:32.689] [L3API] Set BC: 1(38), 0(0)
+[20:41:32.698] [L3API] Set BC: 1(39), 0(0)
+[20:41:32.707] [L3API] Set BC: 1(40), 0(0)
+[20:41:32.713] [L3API] Set BC: 1(41), 0(0)
+[20:41:32.718] [L3API] Set BC: 1(42), 0(0)
+[20:41:32.725] [L3API] Set BC: 1(43), 0(0)
+[20:41:32.736] [L3API] Set BC: 1(48), 0(0)
+[20:41:32.743] [L3API] Set BC: 1(52), 0(0)
+[20:41:32.749] [L3API] Set BC: 1(66), 0(0)
+[20:41:32.757] [L3API] Set BC: 1(71), 0(0)
+[20:41:32.765] [L3API][H]  Set SupportedBandCombination R10 (31 of 31)
+[20:41:32.769] [L3API][H]  Set maxLayersMIMO_Indication_r12
+[20:41:32.774] [L3API][H] Enable UL MIMO
+[20:41:32.780] [L3API][H] TDD UL MIMO
+[20:41:32.785] [L3API][H] Disable CA
+[20:41:32.789] [L3API][H] Set modifiedMPR_Behavior_r10 : 60 00 00 00 (32)
+[20:41:32.794] [L3API][H] Bit 13 : disabled
+[20:41:32.801] [L3API][H] Bit 18 : disabled
+[20:41:32.804] [L3API][H] Bit 13 : disabled
+[20:41:32.808] [L3API][H] Bit 18 : disabled
+[20:41:32.814] [L3API][H]  SetFgi: 1E9805FE 00000000 0000C1FF / 1E9805FE 00000000 0000C1FF
+[20:41:32.819] [L3API][H]  SetFgi: FDD/TDD configured
+[20:41:32.825] [L3API][H] Bit 13 : disabled
+[20:41:32.830] [L3API][H] Bit 18 : disabled
+[20:41:32.836] [L3API][H]  Set FGI Common (1E9805FE 00000000 0000C1FF)
+[20:41:32.842] [L3API][H]  Set FGI FDD only (00000000 00000000 00000000)
+[20:41:32.847] [L3API][H]  Set FGI TDD only (00000000 00000000 00000000)
+[20:41:32.850] [L3API][H] Bit 13 : disabled
+[20:41:32.854] [L3API][H] Bit 18 : disabled
+[20:41:32.857] [L3API][H] Bit 13 : disabled
+[20:41:32.860] [L3API][H] Bit 18 : disabled
+[20:41:32.865] [L3API][H]  SetFgi: 1E9805FE 00000000 0000C1FF / 1E9805FE 00000000 0000C1FF
+[20:41:32.869] [L3API][H]  SetFgi: FDD/TDD configured
+[20:41:32.873] [L3API][H] Bit 13 : disabled
+[20:41:32.876] [L3API][H] Bit 18 : disabled
+[20:41:32.880] [L3API][H]  Set FGI Common (1E9805FE 00000000 0000C1FF)
+[20:41:32.884] [L3API][H]  Set FGI FDD only (00000000 00000000 00000000)
+[20:41:32.888] [L3API][H]  Set FGI TDD only (00000000 00000000 00000000)
+[20:41:32.891] [L3API][H] BandNR: 0 (NR list not ready)
+[20:41:32.895] [L3API][H]  set v1540:0  No NR supported band
+[20:41:32.900] [L3API][H]  Set ul_RRC_Segmentation_r16
+[20:41:32.904] [L3API][H] reset all default bcl
+[20:41:32.909] [L3API][H]  default supportedBandCombination_v10i0 - 0x856BD7A8
+[20:41:32.914] [L3API][H]  default supportedBandCombination_r10 - 0x856AE758
+[20:41:32.918] [L3API][H] eutra seed: RunSrc=CFG
+[20:41:32.922] [FSM] [L3>S][FSM_IMC_WaitInitialize__NASRRC_RRC_INITIALIZE_REQ] NASRRC_RRC_INITIALIZE_CNF
+[20:41:32.926] [NL3] [H] Cell DB:halfBank 209, blockFree 418, blockNo 418, blockSz 764
+[20:41:32.931] [32mNR_DB_SERV_CELL_DDCT(34) : 8780
+[20:41:32.935] [0mL1_NrBandInfoNV:34
+[20:41:32.940] filtering:
+[20:41:32.944] [N3API]  user FreqTable's init'd: 856C8FD8
+[20:41:32.949] [N3API] [CAPA-MEM][op-pre] pInfo=00000000 SBL(own=0 alloc=00000000) BCL.trk=0 FS.trk=0
+[20:41:32.952] [N3API] [CAPA-MEM][cfg-cache] reset: empty
+[20:41:32.956] [OTA RX:10240] 31:NRCAPA [2486]->
+[20:41:32.960] E1A23000 47465A03 1F8D8387 20000160 93170001 83F0D802 6EFF8204 41020174
+[20:41:32.964] 48005005 810A6260 04800000 86400035 68300018 01E81C79 0E7C0000 82FFE3F8
+[20:41:32.968] FE3FF8FE 3F854408 000EDD00 01000100 01D00010 00100000 0140A626 01480000
+[20:41:32.972] 08640003 56830001 801E81C7 90E7C000 082FFE3F 8FE3FF8F E3F85440 8000EDD8
+[20:41:32.975] 00180018 001D8001 80018000 00140A62 60248000 00864000 35683000 1801E81C
+[20:41:32.980] 790E7C00 0082DF03 C0DE0380 54008000 140A6260 34800000 86400035 68300018
+[20:41:32.983] 01E81C79 0E7C0000 82FFE3F8 FE3FF8FE 3F854408 000EDC80 00800080 01C80008
+[20:41:32.987] 00080000 0140A626 03C80000 08640003 56830001 801E81C7 90E7C000 082DE038
+[20:41:32.991] 0DE03805 44080007 9C800080 00800001 40A62609 C8000008 64000356 83000180
+[20:41:32.996] 1E81C790 E7C00008 2DE0380D E0380540 08000140 A6260CC8 00000864 00035683
+[20:41:33.000] 0001801E 81C790E7 C000082D F83E0DE0 38054008 000140A6 260DC800 00086400
+[20:41:33.004] 03568300 01801E81 C790E7C0 00082DF8 3E0DF83E 05400800 0140A636 12C80000
+[20:41:33.007] 08640003 56830001 801E81C7 90E7C000 082BFF0F C3F0FFC3 F0FC1500 20000502
+[20:41:33.011] 98D84F20 00002190 000D5A0C 0006007A 071E439F 000020AF FE3FEFFB FF8FFBFE
+[20:41:33.016] 54408000 ACE40024 000E4002 40000014 0E636140 84800000 86400035 68300018
+[20:41:33.020] 01E81C79 0E7C0000 82BFF8FF BFEFFE3F EFF95142 0003B760 00E000E0 0076000E
+[20:41:33.023] 000E0000 01000200 00005029 89883200 00021900 00D5A0C0 006007A0 71E439F0
+[20:41:33.027] 00020BFF 0FC3F0FF C3F0FC15 1020003B 76000600 06000760 00600060 00000502
+[20:41:33.031] 98988D20 00002190 000D5A0C 0006007A 071E439F 000020B7 E0F83780 E0151020
+[20:41:33.035] 002B6200 02000620 00200000 05029898 95200000 2190000D 5A0C0006 007A071E
+[20:41:33.038] 439F0000 20BFF8FE 3F8FFE3F 8FE15002 00005029 89897200 00021900 00D5A0C0
+[20:41:33.041] 006007A0 71E439F0 00020A40 09001500 20000503 98D89901 20000021 90000D5A
+[20:41:33.046] 0C000600 7A071E43 9F000020 AEFE3FEF FBBF8FFB FE545080 00ACE000 20000E00
+[20:41:33.051] 02000000 40008000 00140A63 626C8000 00864000 35683000 1801E81C 790E7C00
+[20:41:33.057] 0082BBF8 FFBFEEFE 3FEFF951 420002B3 80008000 38000800 00010002 00000050
+[20:41:33.061] 1E800E00 00000000 38040000 0000E020 00001003 80C00000 000E0380 00020038
+[20:41:33.068] 2600000C 00E0C800 00200383 60000100 0E128000 0508384E 00001820 E1400000
+[20:41:33.071] 60038820 0001400E 23000004 08389800 001820E2 68000061 07800001 C0200000
+[20:41:33.074] E5EC41E0 00007010 00003963 10780000 1C060000 0E5CC41E 00000701 C0000387
+[20:41:33.079] 10780000 1C130000 0E58C41E 00000706 C0000387 10780000 18250004 0220E000
+[20:41:33.083] 0E128000 090441E0 0000709C 00003973 10780000 1C280000 0E1C41E0 00006118
+[20:41:33.087] 00100883 8000388C 00002411 07800001 84A00041 63107800 00184B00 040220F0
+[20:41:33.091] 00003898 00001CB1 883C0000 0E268000 072FE20F 00800380 800001C1 10780400
+[20:41:33.096] 1C060000 0E5CC41E 01000701 C0000397 31078040 01C13000 00E58C41 E0100070
+[20:41:33.100] 6C000039 7F107804 001C2500 000E0883 C02000E1 38000072 F620F008 00385000
+[20:41:33.104] 001CBF88 3C02000C 23000201 10700407 11800004 8220F008 00309400 082C620F
+[20:41:33.110] 00800389 800001CB 9883C020 00E26800 0072E620 F0100038 0C00001C B1883C04
+[20:41:33.116] 000C1280 02011070 08070940 00048220 F0100038 4E00001C 11078080 01C28000
+[20:41:33.122] 00E0883C 04000E26 0000072C 620F0100 0389A000 01CB9883 C06000E0 38000070
+[20:41:33.128] 441E0300 0704C000 03943107 80C001C1 B00000E0 883C0600 0C128002 0110700C
+[20:41:33.133] 07094000 048220F0 1800384E 00001C11 0780C001 82800040 220E0180 E1400000
+[20:41:33.139] 90441E03 00061180 01058C41 C0301C46 00001258 C41E0300 06128001 058C41E0
+[20:41:33.142] 3000612C 00100883 C06000E2 60000072 C620F018 00389A00 001CB988 3C07000C
+[20:41:33.148] 12800201 10700E07 09400004 8220F01C 00384E00 001CB188 3C07000E 14000007
+[20:41:33.154] 2E620F01 C0038980 0001C110 780E001C 4D00000E 5CC41E09 80060940 01008838
+[20:41:33.160] 130384A0 00024110 78260018 27000402 20E04C0E 13800009 0441E098 0060A000
+[20:41:33.164] 10088381 30385000 00241107 82600184 C0004022 0E04C0E2 60000090 441E0980
+[20:41:33.167] 07134000 03963107 836001C2 700000E5 CC41E0D8 0070A000 00397310 78360018
+[20:41:33.171] 4A00040B 883C1B00 0C258002 01107836 001C4C00 000E5CC4 1E0D8007 13400003
+[20:41:33.174] 97310784 A0018270 0040220E 0940E138 00009044 1E128006 11800100 88382503
+[20:41:33.177] 88C00002 4110784A 00184A00 040220F0 94003096 00080441 E1280061 30001008
+[20:41:33.181] 83825038 98000024 110784A0 01C4D000 00E5CC41 E1380070 A0000039 7310784E
+[20:41:33.184] 00184600 040220E0 9C0E2300 00090441 E1380061 28001008 83C27000 C2580020
+[20:41:33.187] 110784E0 01C4C000 00E0883C 27000E26 8000072E 620F0A00 0388C000 01CB9883
+[20:41:33.190] C28000C2 50002011 07850001 84B00040 220F0A00 03898000 01CB9883 C28000E2
+[20:41:33.195] 68000072 E620F118 00389800 001CB188 3C46000E 26800007 2C620E12 80E26800
+[20:41:33.198] 0092C620 F1300030 9A00082C 620E1300 E2680000 92C620F0 00003000 00080441
+[20:41:33.201] E0100060 0800101C 41E03000 60180010 0883C280 00C14000 207E20F1 1800308C
+[20:41:33.205] 00080441 E2600061 3000101C 41E26800 61340010 2E2070A0 208050B8 81C4C082
+[20:41:33.208] 0141C40E 2684100A 0E5A4000 0404C4F4 00000000 00000000 00023011 8000008C
+[20:41:33.212] 04608020 08020080 20080200 80200802 00802008 02008020 08020080 20080200
+[20:41:33.216] 80200802 00802008 02008020 08020080 20080200 80200802 00802008 02008020
+[20:41:33.219] 08020080 20080200 80200802 00802008 02008020 08020080 20080200 80200802
+[20:41:33.224] 00802008 02008020 08020080 20080200 80200802 00802008 02008020 08020080
+[20:41:33.229] 20080200 0000036C 7A000000 00000000 00004000 02040000 00000000 00000000
+[20:41:34.244] $ ifconfig
+[20:41:34.250] 000000 00000000 00000000 00000000 00000000 00000000
+[20:41:34.254] 00000000 00000000 00000000 00000000 00000000 00000000 00000000 00000000
+[20:41:34.259] 00000000 00000000 00000000 00000000 00000000 07EFFFFF C6600007 00050382
+[20:41:34.264] 80381804 200C03C0 D0000000 00000000 04000000 04000000 03000000 02000000
+[20:41:34.267] 01400000 00C00000 00700000 00400000 00240000 00140000 000B0000 00060000
+[20:41:34.271] 000340D6 4ED60ED6 8ED648D6 08D64AD6 0AD646D6 06D64CD6 0CD68CD6 54D694D0
+[20:41:34.275] 30100000 6DB6D040 0005B6DB 41000026 DB6D0400 00DB6DB4 1000046D B6D04000
+[20:41:34.279] 15B6DB41 000066DB 6D040001 DB6DB410 00086DB6 D0400025 B6DB4100 00A6DB6D
+[20:41:34.282] 040002DB 6DB41000 0C6DB6D0 3149EAA8 3D5547AA A475540E AA92D550 5AAA4D55
+[20:41:34.286] 41AAAA35 552AAAA9 55548EA0 14005002 00600801 40180300 18040090 0A014006
+[20:41:34.290] 01802403 80500180 80090120 14006018 03403807 00280A01 10160260 30050014
+[20:41:34.294] 0680B802 00501C03 02020200 68080801 A1010100 34040400 00808080 00020200
+[20:41:34.299] 68004040 0D1AA030 401032F6 70000000 014A2000 0420
+[20:41:34.303] [N3API] init_BCL param - 122
+[20:41:34.308] [N3API] RF bit_mask : a2 00 00 00 00
+[20:41:34.312] [N3API] [CAPA-MEM][post-decode] pInfo=00000000 SBL(own=0 alloc=00000000) BCL.trk=0 FS.trk=0
+[20:41:34.316] [N3API] nr pdu filter hw=26 sbl 17->15 bcl 122->108
+[20:41:34.321] [N3API] [CAPA-MEM][DB-set] pInfo=856c9dd8 SBL(own=0 alloc=00000000) BCL.trk=0 FS.trk=0
+[20:41:34.326] [N3API]   SBL.val=85795858 cnt=15 BCL.main=857ab578 cnt=108 ABLF(dec=0/00000000/0 own=0/00000000)
+[20:41:34.331] [N3API]   FS outer: decode-graph (B), trk=0
+[20:41:34.336] [L3API][H] Set BandNR[15]:  1, 3, 5, 7, 8, 20, 26, 28, 38, 40, 41, 66, 71, 77, 78,
+[20:41:34.339] [L3API][H] BandNR: 0 (NR list not ready)
+[20:41:34.344] [L3API][H]  set v1540:15  n1 n3 n5 n7 n8 n20 n26 n28 n38 n40 n41 n66 n71 n77 n78
+[20:41:34.349] [N3API]  EUTRA band[32]:
+[20:41:34.354] [N3API] 	 B1 B2 B3 B4 B5 B6 B7 B8 B10 B12 B13 B14 B17 B18 B19 B20
+[20:41:34.359] [N3API] 	 B25 B26 B28 B29 B30 B34 B38 B39 B40 B41 B42 B43 B48 B52 B66 B71
+[20:41:34.366] [N3API] 
+[20:41:34.372] Set bit-mask: 856CB4E4(000000E0) - 0 00000010
+[20:41:34.378] [N3API] [MPR][PC] band:n38 pc:1 v1610:0 isPc1dot5:0 mpr_present:0 mpr_val:0x00
+[20:41:34.383] [N3API] [MPR][PC] done band:n38 mpr_present:0 mpr_val:0x00
+[20:41:34.386] [N3API] [MPR][PC] band:n40 pc:1 v1610:0 isPc1dot5:0 mpr_present:0 mpr_val:0x00
+[20:41:34.392] [N3API] [MPR][PC] done band:n40 mpr_present:0 mpr_val:0x00
+[20:41:34.398] [N3API] [MPR][PC] band:n41 pc:1 v1610:1 isPc1dot5:1 mpr_present:1 mpr_val:0x10
+[20:41:34.402] [N3API] [MPR][PC] set n41 modifiedMPR_Behaviour=0x10
+[20:41:34.406] [N3API] [MPR][PC] done band:n41 mpr_present:1 mpr_val:0x10
+[20:41:34.410] [N3API] [MPR][PC] band:n77 pc:1 v1610:1 isPc1dot5:1 mpr_present:1 mpr_val:0x80
+[20:41:34.415] [N3API] [MPR][PC] set n77 modifiedMPR_Behaviour=0x80
+[20:41:34.421] [N3API] [MPR][PC] done band:n77 mpr_present:1 mpr_val:0x80
+[20:41:34.426] [N3API] [MPR][PC] band:n78 pc:1 v1610:1 isPc1dot5:1 mpr_present:0 mpr_val:0x00
+[20:41:34.433] [N3API] [MPR][PC] set n78 modifiedMPR_Behaviour=0x80
+[20:41:34.439] [N3API] [MPR][PC] done band:n78 mpr_present:1 mpr_val:0x80
+[20:41:34.443] [N3API] === reset UE Capa PDU
+[20:41:34.449] [N3API] [CAPA-MEM][reset-done] pInfo=856c9dd8 SBL(own=0 alloc=00000000) BCL.trk=0 FS.trk=0
+[20:41:34.453] [N3API]   SBL.val=85795858 cnt=15 BCL.main=857ab578 cnt=108 ABLF(dec=0/00000000/0 own=0/00000000)
+[20:41:34.456] [N3API]   FS outer: decode-graph (B), trk=0
+[20:41:34.459] [N3API] [CAPA-MEM][op-post] pInfo=856c9dd8 SBL(own=0 alloc=00000000) BCL.trk=0 FS.trk=0
+[20:41:34.463] [N3API]   SBL.val=85795858 cnt=15 BCL.main=857ab578 cnt=108 ABLF(dec=0/00000000/0 own=0/00000000)
+[20:41:34.467] [N3API]   FS outer: decode-graph (B), trk=0
+[20:41:34.470] [NL3:   0][>S][nrrc_send_NNASRRC_RRC_INITIALIZE_CNF] NNASRRC_RRC_INITIALIZE_CNF
+[20:41:34.518] [NAS_NSM] nsmSetPduAuthControlByUpperEnabled()
+[20:41:34.521] [NAS_NSM] 	 flag(1)
+[20:41:34.525] [NAS_INSIG] EPLMN|NASRRC_RRC_INITIALIZE_CNF(18)|PLMN_NULL(0)
+[20:41:34.528] [NAS_INSIG] NPLMN|NNASRRC_RRC_INITIALIZE_CNF(18)|PLMN_NULL(0)
+[20:41:34.532] [NAS_INSIG] CACHE|NASNVM_READ_CNF(8)|CACHE_WAIT_FOR_CACHE_INIT(0)
+[20:41:34.536] [NAS_INSIG] CACHE|NASNVM_READ_CNF(8)|CACHE_WAIT_FOR_CACHE_INIT(0)
+[20:41:34.539] [NAS_INSIG] CACHE|NASNVM_READ_CNF(8)|CACHE_WAIT_FOR_CACHE_INIT(0)
+[20:41:34.543] [NAS_CACHE] [WAR] Invalid 5GSLOCI in the NV (0xffffff)!!!
+[20:41:34.547] [NAS_INSIG] CACHE|NASNVM_READ_CNF(8)|CACHE_WAIT_FOR_CACHE_INIT(0)
+[20:41:34.551] [NAS_INSIG] CACHE|NASNVM_READ_CNF(8)|CACHE_WAIT_FOR_CACHE_INIT(0)
+[20:41:34.554] [NAS_INSIG] CACHE|NASNVM_READ_CNF(8)|CACHE_WAIT_FOR_CACHE_INIT(0)
+[20:41:34.558] [NAS_INSIG] CACHE|NASNVM_READ_CNF(8)|CACHE_WAIT_FOR_CACHE_INIT(0)
+[20:41:34.564] [NAS_INSIG] CACHE|NASNVM_READ_CNF(8)|CACHE_WAIT_FOR_CACHE_INIT(0)
+[20:41:34.568] [NAS_INSIG] CACHE|NASNVM_READ_CNF(8)|CACHE_WAIT_FOR_CACHE_INIT(0)
+[20:41:34.571] [NAS_INSIG] CACHE|NASNVM_READ_CNF(8)|CACHE_WAIT_FOR_CACHE_INIT(0)
+[20:41:34.575] [NAS_CACHE] Read UTC Time: 0
+[20:41:34.579] [NAS_INSIG] CACHE|NASNVM_READ_CNF(8)|CACHE_WAIT_FOR_CACHE_INIT(0)
+[20:41:34.582] [NAS_INSIG] CACHE|NASNVM_READ_CNF(8)|CACHE_WAIT_FOR_CACHE_INIT(0)
+[20:41:34.585] [NAS_INSIG] CACHE|NASNVM_READ_CNF(8)|CACHE_WAIT_FOR_CACHE_INIT(0)
+[20:41:34.588] [NAS_INSIG] CACHE|NASNVM_READ_CNF(8)|CACHE_WAIT_FOR_CACHE_INIT(0)
+[20:41:34.593] [NAS_CACHE] [ERR] Invalid IMEI: 0x000000000000000000 <IN cacheReadNVMCnf 528>
+[20:41:34.599] [NAS_INSIG] CACHE|NASNVM_READ_CNF(8)|CACHE_WAIT_FOR_CACHE_INIT(0)
+[20:41:34.603] [NAS_CACHE] [ERR] Invalid IMEI2: 0x000000000000000000 <IN cacheReadNVMCnf 550>
+[20:41:34.609] [NAS_INSIG] CACHE|NASNVM_READ_CNF(8)|CACHE_WAIT_FOR_CACHE_INIT(0)
+[20:41:34.613] [NAS_INSIG] CACHE|NASNVM_READ_CNF(8)|CACHE_WAIT_FOR_CACHE_INIT(0)
+[20:41:34.619] [NAS_INSIG] CACHE|NASNVM_READ_CNF(8)|CACHE_WAIT_FOR_CACHE_INIT(0)
+[20:41:34.623] [NAS_CACHE] Read T3245 lte:0 nr: 0
+[20:41:34.626] [NAS_INSIG] CACHE|NASNVM_READ_CNF(8)|CACHE_WAIT_FOR_CACHE_INIT(0)
+[20:41:34.631] [NAS_INSIG] CACHE|NASNVM_READ_CNF(8)|CACHE_WAIT_FOR_CACHE_INIT(0)
+[20:41:34.636] [NAS_INSIG] CACHE|NASNVM_READ_CNF(8)|CACHE_WAIT_FOR_CACHE_INIT(0)
+[20:41:34.640] [NAS_INSIG] CACHE|NASNVM_READ_CNF(8)|CACHE_WAIT_FOR_CACHE_INIT(0)
+[20:41:34.646] [NAS_INSIG] CACHE|NASNVM_READ_CNF(8)|CACHE_WAIT_FOR_CACHE_INIT(0)
+[20:41:34.651] [NAS_INSIG] CACHE|NASNVM_READ_CNF(8)|CACHE_WAIT_FOR_CACHE_INIT(0)
+[20:41:34.656] [NAS_INSIG] CACHE|NASNVM_READ_CNF(8)|CACHE_WAIT_FOR_CACHE_INIT(0)
+[20:41:34.661] [NAS_INSIG] CACHE|NASNVM_READ_CNF(8)|CACHE_WAIT_FOR_CACHE_INIT(0)
+[20:41:34.667] [NAS_INSIG] CACHE|NASNVM_READ_CNF(8)|CACHE_WAIT_FOR_CACHE_INIT(0)
+[20:41:34.672] [NAS_INSIG] CACHE|NASNVM_READ_CNF(8)|CACHE_WAIT_FOR_CACHE_INIT(0)
+[20:41:34.677] [NAS_INSIG] CACHE|NASNVM_READ_CNF(8)|CACHE_WAIT_FOR_CACHE_INIT(0)
+[20:41:34.683] [NAS_CACHE] ICCID Matched: No USIM change detected
+[20:41:34.687] [NAS_CACHE] State Change (CACHE_WAIT_FOR_CACHE_INIT => CACHE_VALID_USIM)
+[20:41:34.691] [NAS_INSIG] EMM|EMM_INT_USIM_INSERTED_IND(2)|EMM_NULL(0)
+[20:41:34.694] [FSM] [ERR]EHPLMN list cnt:2
+[20:41:34.699] [FSM] EHPLMN :[0] F110
+[20:41:34.705] [FSM] EHPLMN :[1] 130184
+[20:41:34.708] [L3API][H] Init CSG DB: 0
+[20:41:34.712] [FSM] [L3>S][RRC_send_NASRRC_USIM_INSERTED_CNF] NASRRC_USIM_INSERTED_CNF
+[20:41:34.717] [NAS_INSIG] EPLMN|EPLMN_USIM_INSERTED_IND(5)|PLMN_NULL(0)
+[20:41:34.722] [NAS_EPLMN] PLMN_PERIODIC_HPLMN_SEARCH_TIMER Timer value Changed: 28800000 ms
+[20:41:34.727] [NAS_EPLMN] State Change (PLMN_NULL => PLMN_IDLE)
+[20:41:34.732] [NAS_INSIG] NMM|NMM_INT_USIM_INSERTED_IND(3)|NMM_NULL(0)
+[20:41:34.737] [NL3:   0]<- NNASRRC_USIM_INSERTED_REQ
+[20:41:34.740] [NL3:   0]EHPLMN :[0] F110
+[20:41:34.743] [NL3:   0]EHPLMN :[1] 130184
+[20:41:34.754] [NL3:   0][>S][NRRC_Read_NVM_DRX] NVM_READ_REQ
+[20:41:34.758] [NL3:   0][>S][NRRC_Read_NVM_User_DRX] NVM_READ_REQ
+[20:41:34.761] [NAS_INSIG] NPLMN|NPLMN_USIM_INSERTED_IND(5)|PLMN_NULL(0)
+[20:41:34.765] [NAS_NPLMN] PLMN_PERIODIC_HPLMN_SEARCH_TIMER Timer value Changed: 28800000 ms
+[20:41:34.769] [NAS_NPLMN] State Change (PLMN_NULL => PLMN_IDLE)
+[20:41:34.773] [NAS_INSIG] EMM|NASRRC_USIM_INSERTED_CNF(45)|EMM_NULL(0)
+[20:41:34.777] [NAS_EMM] FSM_EMM_NULL__NASRRC_USIM_INSERTED_CNF
+[20:41:34.783] [FSM] [L3<-][RMCI][0] NASRRC_COUNT_UPDATE_IND
+[20:41:34.788] [RMC] [H] NAS count:0
+[20:41:34.792] NAS_MsgHandler, messageType(0x360014)
+[20:41:34.796] [NL3:   0][<-][NL3USI][2][3] NVM_READ_CNF
+[20:41:34.801] [N3USI] NV name : LDRX_NV
+[20:41:34.804] [N3USI] NV DRX not used: 0
+[20:41:34.809] [NL3:   0][<-][NL3USI][2][3] NVM_READ_CNF
+[20:41:34.814] [N3USI] NV name : NDRX_NV
+[20:41:34.819] [N3USI] NV User DRX not used :0
+[20:41:34.823] [NL3:   0][>S][FSM_NL3USI_Read__NVM_READ_CNF] NNASRRC_USIM_INSERTED_CNF
+[20:41:34.828] [NAS_INSIG] NMM|NASRRC_USIM_INSERTED_CNF(44)|NMM_NULL(0)
+[20:41:34.833] [NAS_NMM] FSM_NMM_NULL__NASRRC_USIM_INSERTED_CNF
+[20:41:34.838] [NAS_INSIG] NSM_CONNECTION_MANAGEMENT|NMMNSM_UICC_USIM_CACHE_END_IND(22)|NSM_CONNECTION_MANAGEMENT(0)
+[20:41:34.841] L1 initialize...
+[20:41:34.848] nr_slp_shmem : 28500000
+[20:41:34.854] nr_dlp_shmem[0] : 20500000
+[20:41:34.860] nr_dlp_shmem[1] : 21500000
+[20:41:34.866] nr_dlp_shmem[2] : 22500000
+[20:41:34.871] nr_dlp_shmem[3] : 23500000
+[20:41:34.876] nr_dlp_shmem[4] : 24500000
+[20:41:34.882] nr_dlp_shmem[5] : 25500000
+[20:41:34.887] nr_dlp_shmem[6] : 26500000
+[20:41:34.891] nr_dlp_shmem[7] : 27500000
+[20:41:34.894] nr_ulp_shmem[0] : 20d00000
+[20:41:34.899] nr_ulp_shmem[1] : 21d00000
+[20:41:34.902] nr_ulp_shmem[2] : 22d00000
+[20:41:34.907] nr_ulp_shmem[3] : 23d00000
+[20:41:34.910]  =====   RF NV3  ====== 
+[20:41:34.915]  RFD_GetAdcMetalfix() nv_bcfg cmn_ext_rfconfig 0x0030 bit#3(0 metal fix, 1 no fix) adc_metal_fix 1
+[20:41:34.922] [MRM] Read MRM Mode: 0
+[20:41:34.927] [MRM] NOT Enabled MRM FSM: 0
+[20:41:34.931] [MRM] 0x6c Connected assigned ConnId: 0x1
+[20:41:34.934] [SMS] ENAS SMS INIT REQ rxed
+[20:41:34.939] [MRM] 0x55 Connected assigned ConnId: 0x2
+[20:41:34.944] [ATM] ATMManager_RegisterUMM(evt:35, nPortId:0)...
+[20:41:34.950] SMSMGR : bSmsFormat(3GPP)
+[20:41:34.953] [SMS] SMSMGR : UICC FILE INFO rxed(FID = 0x0)
+[20:41:34.956]  IPv6/NAS mode. pdn_ip_type = 0, ip_alloc = 0
+[20:41:34.960] mrd: clearing start - eps_id = 0xfeff
+[20:41:34.964] mrd: UICC Activation done : driver open fail(-1)
+[20:41:34.968] mrd: 
+[20:41:34.971] UICC INDICATION(DEV_IDX(1))
+[20:41:34.975] mrd: clearing done
+[20:41:34.978] mrd: UICC ACTIVATED INDICATION
+[20:41:34.982] mrd: 
+[20:41:34.986] INITIALIZATION PROTOCOL STACK RESPONSE(DEV_IDX(1))
+[20:41:34.989] mrd: Result : 0
+[20:41:34.993] mrd: WTD: LAPI_NotiArm1Reset : Hold[0]
+[20:41:34.999] mrautocm: [mrcm_ind_uicc_ind]
+[20:41:35.004] mrautocm: UICC ACTIVATED INDICATION
+[20:41:35.009] mrd: ucfg Scramble (0)
+[20:41:35.012] VLAN: all hmac cleared
+[20:41:35.015] br0: port 1(usb0) entered blocking state
+[20:41:35.019] br0: port 1(usb0) entered forwarding state
+[20:41:35.024] mrd: NRAPI_DeviceCfgSetReq Scramble (0)
+[20:41:35.030] mrd: SET SCRAMBLE LOG : DISABLE
+[20:41:35.035] LTE LOG(000001c4): NOTI WARN2 WARN3 ERR
+[20:41:35.041] mrd: cm_set_smsCfgWriteReq()
+[20:41:35.044] [MRM] Disable Scrumble Log
+[20:41:35.047] [NAS_INSIG] CACHE|NAS_PROTOCOL_CONFIG_WRITE_REQ(3)|CACHE_VALID_USIM(1)
+[20:41:35.050] [NAS_CACHE] Scrumble Log: 0
+[20:41:35.053] mrd: cm_set_RaDeploymentReq()
+[20:41:35.057] [NV] +nv_write [mrd] CMN_USER(23) data=0x560980 part=23 size=0xa806
+[20:41:35.061] [NV] mrd CMNNV Write Skip (23:CMN_USER, 0x0, 43014)
+[20:41:35.065] [NV] -nv_write [mrd] CMN_USER(23) data=0x560980 part=23 size=0xa806
+[20:41:35.068] [NV] +nv_write [mrd] CMN_USER(23) data=0x560980 part=23 size=0xa806
+[20:41:35.071] [NV] mrd CMNNV Write Skip (23:CMN_USER, 0x0, 43014)
+[20:41:35.075] [NV] -nv_write [mrd] CMN_USER(23) data=0x560980 part=23 size=0xa806
+[20:41:35.078] [NV] +nv_write [mrd] CMN_USER(23) data=0x560980 part=23 size=0xa806
+[20:41:35.082] [NV] mrd CMNNV Write Skip (23:CMN_USER, 0x0, 43014)
+[20:41:35.086] [NV] -nv_write [mrd] CMN_USER(23) data=0x560980 part=23 size=0xa806
+[20:41:35.090] [MRM] 5G NR SA: 1 NSA: 0 LTE SA: 0
+[20:41:35.094] [MRM] Set NR SA Mode for RRC: 1
+[20:41:35.099] [L3API][H] Set BandNR[15]:  n1 n3 n5 n7 n8 n20 n26 n28 n38 n40 n41 n66 n71 n77 n78
+[20:41:35.104] [MRM] Set Endc Enable for RRC: 0
+[20:41:35.109] [L3API][H] 	Set EN-DC Enable:0
+[20:41:35.114] [L3API][H]  set v1540:15  n1 n3 n5 n7 n8 n20 n26 n28 n38 n40 n41 n66 n71 n77 n78
+[20:41:35.118] [MRM] Set LTE Only Mode for RRC: 1
+[20:41:35.121] [L3API][H] Enable UL MIMO
+[20:41:35.124] [L3API][H] TDD UL MIMO
+[20:41:35.128] [L3API][H] Disable CA
+[20:41:35.133] [L3API][H] Bit 13 : disabled
+[20:41:35.137] [L3API][H] Bit 18 : disabled
+[20:41:35.141] [L3API][H] Bit 13 : disabled
+[20:41:35.144] [L3API][H] Bit 18 : disabled
+[20:41:35.148] [L3API][H]  SetFgi: 1E9805FE 00000000 0000C1FF / 1E9805FE 00000000 0000C1FF
+[20:41:35.152] [L3API][H]  SetFgi: FDD/TDD configured
+[20:41:35.155] [L3API][H] Bit 13 : disabled
+[20:41:35.158] [L3API][H] Bit 18 : disabled
+[20:41:35.163] [L3API][H]  Set FGI Common (1E9805FE 00000000 0000C1FF)
+[20:41:35.166] [L3API][H]  Set FGI FDD only (00000000 00000000 00000000)
+[20:41:35.168] [L3API][H]  Set FGI TDD only (00000000 00000000 00000000)
+[20:41:35.171] [L3API][H] 	[Y]Set interRAT_BandList(0) in BCL(31)
+[20:41:35.176] [NAS_INSIG] CACHE|NAS_PROTOCOL_CONFIG_WRITE_REQ(3)|CACHE_VALID_USIM(1)
+[20:41:35.182] [NAS_CACHE] 5G NR SA: 1 5G NR NSA: 0 LTE SA: 0
+[20:41:35.186] mrd: NRAPI_NrRRCFuncSetReq eType(7)
+[20:41:35.190] mrd: NRAPI_LteRRCFuncSetReq eType(7)
+[20:41:35.194] mrd: get_load_capa_pdu_uper_file(1) - isFirstChunk=1
+[20:41:35.198] mrd: read_rrc_capa_pdu_chunk(/var/nr/param/capa/UE_MRDC_Capability.uper) - (0~962)/fileSize(962)
+[20:41:35.202] 81 12 9A C4 16 04 01 C0 00 00 00 00 88 2C 10 03 ....
+[20:41:35.208] mrd: cm_set_nrUeRadioCapaReq()
+[20:41:35.212] mrd: get_load_capa_pdu_uper_file(0) - isFirstChunk=1
+[20:41:35.215] mrd: read_rrc_capa_pdu_chunk(/var/nr/param/capa/UE_NR_Capability.uper) - (0~2490)/fileSize(2490)
+[20:41:35.219] E1 A2 30 00 47 46 5A 03 1F 8D 83 87 20 00 01 60 ....
+[20:41:35.222] mrd: cm_set_nrUeRadioCapaReq()
+[20:41:35.228] [MRM] Set UE MRDC Capability PDU - mode: 1 length: 962
+[20:41:35.234] [N3API]  mrdcCapaPdu mode:1, size:962
+[20:41:35.239] [N3API]  mrdcCapaPdu mode:3, size:962
+[20:41:35.243] [N3API] MRDC reset: load default into DB (hasPdu:1)
+[20:41:35.247] mrd: get_load_capa_pdu_uper_file(2) - isFirstChunk=1
+[20:41:35.251] mrd: read_rrc_capa_pdu_chunk(/var/nr/param/capa/UE_EUTRA_Capability.uper) - (0~5359)/fileSize(5359)
+[20:41:35.255] [OTA RX:10240] 29:MRDC [962]->
+[20:41:35.260] 81129AC4 160401C0 00000000 882C1003 80000000 01105830 07000000 000220B0
+[20:41:35.266] 700E0000 00000441 62601C00 00000008 82C6C038 00000000 11059280 70000000
+[20:41:35.272] 00220B27 00E00000 00004416 5001C000 00000088 2D180380 00000001 10580007
+[20:41:35.279] 00800000 0220B040 0E010000 00044160 C01C0200 00000882 C1C03804 00000011
+[20:41:35.283] 05898070 08000000 220B1B00 E0100000 0044164A 01C02000 0000882C 9C038040
+[20:41:35.286] 00000110 59400700 80000002 20B4600E 01000000 04416000 1C040000 000882C0
+[20:41:35.290] 80380800 00001105 83007010 00000022 0B2500E0 20000000 44164E01 C0400000
+[20:41:35.293] 00882CA0 03808000 00011058 00070180 00000220 B0200E03 00000004 4160801C
+[20:41:35.297] 06000000 0882C1C0 380C0000 00110589 80701800 0000220B 1B00E030 00000044
+[20:41:35.301] 164E01C0 60000000 882CA003 80C00000 01105A30 07018000 000220B0 000E0380
+[20:41:35.304] 00000441 60401C07 00000008 82C18038 0E000000 11059280 701C0000 00220B27
+[20:41:35.307] 00E03800 00004416 5001C070 00000088 2C000382 60000001 10581007 04C00000
+[20:41:35.311] 0220B060 0E098000 00044164 A01C1300 00000882 C9C03826 00000011 05800070
+[20:41:35.316] 6C000000 220B0200 E0D80000 0044160C 01C1B000 0000882C 94038360 00000110
+[20:41:35.319] 59380706 C0000002 20B2800E 0D800000 04416000 1C250000 000882C0 80384A00
+[20:41:35.323] 00001105 82007094 00000022 0B0600E1 28000000 44160E01 C2500000 00882C4C
+[20:41:35.326] 0384A000 00011058 D8070940 00000220 B2700E12 80000004 4168C01C 25000000
+[20:41:35.330] 0882C000 384E0000 00110581 00709C00 0000220B 0400E138 00000044 160C01C2
+[20:41:35.335] 70000000 882C1C03 84E00000 01105898 0709C000 000220B1 B00E1380 00000441
+[20:41:35.339] 64A01C27 00000008 82D18038 4E000000 11058000 70A00000 00220B02 00E14000
+[20:41:35.344] 00004416 0801C280 00000088 2C180385 00000001 10583807 0A000000 0220B130
+[20:41:35.348] 0E140000 00044163 601C2800 00000882 C9C03850 00000011 05A30070 A0000000
+[20:41:35.353] 220B0000 E2300000 00441604 01C46000 0000882C 180388C0 00000110 59280711
+[20:41:35.357] 80000002 20B2700E 23000000 04416500 1C460000 000882C0 00389800 00001105
+[20:41:35.361] 81007130 00000022 0B0400E2 60000000 44160C01 C4C00000 00882C1C 03898000
+[20:41:35.365] 00011058 98071300 00000220 B1B00E26 00000004 4164A01C 4C000000 0882C9C0
+[20:41:35.371] 38980000 00110594 00713000 0000220B 4600E260 00000044 160001C4 D0000000
+[20:41:35.376] 882C0803 89A00000 01105820 07134000 000220B0 600E2680 00000441 60E01C4D
+[20:41:35.382] 00000008 82C4C038 9A000000 11058D80 71340000 00220B25 00E26800 00004416
+[20:41:35.386] 4E01C4D0 00000088 2CA00389 A0000001 105A3007 13400000 02000400 02010101
+[20:41:35.392] 0034
+[20:41:35.396] [N3API] mrdc pdu filter nrHw=26 bcl 107->107
+[20:41:35.401] [N3API][E] MRDC reset: EUTRA band 2 not in DB BCL
+[20:41:35.406] [N3API][E] MRDC reset: EUTRA band 4 not in DB BCL
+[20:41:35.411] [N3API][E] MRDC reset: EUTRA band 6 not in DB BCL
+[20:41:35.417] [N3API][E] MRDC reset: EUTRA band 10 not in DB BCL
+[20:41:35.422] [N3API][E] MRDC reset: EUTRA band 12 not in DB BCL
+[20:41:35.426] [N3API][E] MRDC reset: EUTRA band 13 not in DB BCL
+[20:41:35.432] [N3API][E] MRDC reset: EUTRA band 14 not in DB BCL
+[20:41:35.438] [N3API][E] MRDC reset: EUTRA band 17 not in DB BCL
+[20:41:35.443] [N3API][E] MRDC reset: EUTRA band 18 not in DB BCL
+[20:41:35.448] [N3API][E] MRDC reset: EUTRA band 19 not in DB BCL
+[20:41:35.451] [N3API][E] MRDC reset: EUTRA band 25 not in DB BCL
+[20:41:35.455] [N3API][E] MRDC reset: EUTRA band 26 not in DB BCL
+[20:41:35.458] [N3API][E] MRDC reset: EUTRA band 29 not in DB BCL
+[20:41:35.462] [N3API][E] MRDC reset: EUTRA band 30 not in DB BCL
+[20:41:35.466] [N3API][E] MRDC reset: EUTRA band 34 not in DB BCL
+[20:41:35.469] [N3API][E] MRDC reset: EUTRA band 39 not in DB BCL
+[20:41:35.518] [N3API][E] MRDC reset: EUTRA band 42 not in DB BCL
+[20:41:35.522] [N3API][E] MRDC reset: EUTRA band 43 not in DB BCL
+[20:41:35.525] [N3API][E] MRDC reset: EUTRA band 48 not in DB BCL
+[20:41:35.529] [N3API][E] MRDC reset: EUTRA band 52 not in DB BCL
+[20:41:35.534] [N3API][E] MRDC reset: EUTRA band 66 not in DB BCL
+[20:41:35.539] [N3API][E] MRDC reset: NR band 26 not in DB BCL
+[20:41:35.542] [N3API][E] MRDC reset: NR band 66 not in DB BCL
+[20:41:35.546] [N3API] MRDC update: reset DB from default PDU
+[20:41:35.549] [MRM] Set UE NR Capability PDU - mode: 1 length: 2490
+[20:41:35.552] [N3API]  ueCapaPdu mode:1, size:2490
+[20:41:35.556] [N3API]  ueCapaPdu mode:3, size:2490
+[20:41:35.559] [N3API] [CAPA-MEM][op-pre] pInfo=856c9dd8 SBL(own=0 alloc=00000000) BCL.trk=0 FS.trk=0
+[20:41:35.562] [N3API]   SBL.val=85795858 cnt=15 BCL.main=857ab578 cnt=108 ABLF(dec=0/00000000/0 own=0/00000000)
+[20:41:35.567] [N3API]   FS outer: decode-graph (B), trk=0
+[20:41:35.570] [N3API] [CAPA-MEM][pre-ASNFreePdu] pInfo=856c9dd8 SBL(own=0 alloc=00000000) BCL.trk=0 FS.trk=0
+[20:41:35.573] [N3API]   SBL.val=85795858 cnt=15 BCL.main=857ab578 cnt=108 ABLF(dec=0/00000000/0 own=0/00000000)
+[20:41:35.576] [N3API]   FS outer: decode-graph (B), trk=0
+[20:41:35.580] [N3API] L3_NR_FREE_BCL: supportedBandCombinationList, num: 108
+[20:41:35.585] [N3API] BCL: free dec 857ab578 (detach untrk)
+[20:41:35.589] [N3API] L3_NR_FREE_BCL: supportedBandCombinationList_v1540, num: 108
+[20:41:35.592] [N3API] BCL: free dec 857b3358 (detach untrk)
+[20:41:35.595] [N3API] L3_NR_FREE_BCL: supportedBandCombinationList_v1610, num: 108
+[20:41:35.598] [N3API] BCL: free dec 85815258 (detach untrk)
+[20:41:35.602] [N3API] [CAPA-MEM][post-ASNFreePdu] pInfo=856c9dd8 SBL(own=0 alloc=00000000) BCL.trk=0 FS.trk=0
+[20:41:35.606] [N3API]   SBL.val=85795858 cnt=15 BCL.main=00000000 cnt=0 ABLF(dec=0/00000000/0 own=0/00000000)
+[20:41:35.609] [N3API]   FS outer: decode-graph (B), trk=0
+[20:41:35.614] [N3API] [CAPA-MEM][cfg-cache] reset: empty
+[20:41:35.618] [OTA RX:10240] 31:NRCAPA [2490]->
+[20:41:35.621] E1A23000 47465A03 1F8D8387 20000160 93170001 83F0D802 6EFF8204 41020174
+[20:41:35.626] 48005005 810A6260 04800000 86400035 68300018 01E81C79 0E7C0000 82FFE3F8
+[20:41:35.631] FE3FF8FE 3F854408 000EDD00 01000100 01D00010 00100000 0140A626 01480000
+[20:41:35.635] 08640003 56830001 801E81C7 90E7C000 082FFE3F 8FE3FF8F E3F85440 8000EDD8
+[20:41:35.640] 00180018 001D8001 80018000 00140A62 60248000 00864000 35683000 1801E81C
+[20:41:35.645] 790E7C00 0082DF03 C0DE0380 54008000 140A6260 34800000 86400035 68300018
+[20:41:35.650] 01E81C79 0E7C0000 82FFE3F8 FE3FF8FE 3F854408 000EDC80 00800080 01C80008
+[20:41:35.653] 00080000 0140A626 03C80000 08640003 56830001 801E81C7 90E7C000 082DE038
+[20:41:35.658] 0DE03805 44080007 9C800080 00800001 40A62609 C8000008 64000356 83000180
+[20:41:35.661] 1E81C790 E7C00008 2DE0380D E0380540 08000140 A6260CC8 00000864 00035683
+[20:41:35.666] 0001801E 81C790E7 C000082D F83E0DE0 38054008 000140A6 260DC800 00086400
+[20:41:35.669] 03568300 01801E81 C790E7C0 00082DF8 3E0DF83E 05400800 0140A636 12C80000
+[20:41:35.673] 08640003 56830001 801E81C7 90E7C000 082BFF0F C3F0FFC3 F0FC1500 20000502
+[20:41:35.676] 98D84F20 00002190 000D5A0C 0006007A 071E439F 000020AF FE3FEFFB FF8FFBFE
+[20:41:35.680] 54408000 ACE40024 000E4002 40000014 0E636140 84800000 86400035 68300018
+[20:41:35.685] 01E81C79 0E7C0000 82BFF8FF BFEFFE3F EFF95142 0003B760 00E000E0 0076000E
+[20:41:35.690] 000E0000 01000200 00005029 89883200 00021900 00D5A0C0 006007A0 71E439F0
+[20:41:35.693] 00020BFF 0FC3F0FF C3F0FC15 1020003B 76000600 06000760 00600060 00000502
+[20:41:35.698] 98988D20 00002190 000D5A0C 0006007A 071E439F 000020B7 E0F83780 E0151020
+[20:41:35.703] 002B6200 02000620 00200000 05029898 95200000 2190000D 5A0C0006 007A071E
+[20:41:35.707] 439F0000 20BFF8FE 3F8FFE3F 8FE15002 00005029 89897200 00021900 00D5A0C0
+[20:41:35.713] 006007A0 71E439F0 00020A40 09001500 20000503 98D89901 20000021 90000D5A
+[20:41:35.717] 0C000600 7A071E43 9F000020 AEFE3FEF FBBF8FFB FE545080 00ACE000 20000E00
+[20:41:35.720] 02000000 40008000 00140A63 626C8000 00864000 35683000 1801E81C 790E7C00
+[20:41:35.724] 0082BBF8 FFBFEEFE 3FEFF951 420002B3 80008000 38000800 00010002 00000050
+[20:41:35.730] 1E800E00 00000000 38040000 0000E020 00001003 80C00000 000E0380 00020038
+[20:41:35.734] 2600000C 00E0C800 00200383 60000100 0E128000 0500384E 00001800 E1400000
+[20:41:35.737] 60038820 0001400E 23000004 00389800 001800E2 68000061 07800001 C0200000
+[20:41:35.742] E5EC41E0 00007010 00003963 10780000 1C060000 0E5CC41E 00000701 C0000387
+[20:41:35.745] 10780000 1C130000 0E58C41E 00000706 C0000387 10780000 18250004 0220E000
+[20:41:35.749] 0E128000 090441E0 0000709C 00003973 10780000 1C280000 0E1C41E0 00006118
+[20:41:35.753] 00100883 8000388C 00002411 07800001 84A00041 63107800 00184B00 040220F0
+[20:41:35.758] 00003898 00001CB1 883C0000 0E268000 072FE20F 00800380 800001C1 10780400
+[20:41:35.764] 1C060000 0E5CC41E 01000701 C0000397 31078040 01C13000 00E58C41 E0100070
+[20:41:35.768] 6C000039 7F107804 001C2500 000E0883 C02000E1 38000072 F620F008 00385000
+[20:41:35.773] 001CBF88 3C02000C 23000201 10700407 11800004 8220F008 00309400 082C620F
+[20:41:35.777] 00800389 800001CB 9883C020 00E26800 0072E620 F0100038 0C00001C B1883C04
+[20:41:35.781] 000C1280 02011070 08070940 00048220 F0100038 4E00001C 11078080 01C28000
+[20:41:35.786] 00E0883C 04000E26 0000072C 620F0100 0389A000 01CB9883 C06000E0 38000070
+[20:41:35.790] 441E0300 0704C000 03943107 80C001C1 B00000E0 883C0600 0C128002 0110700C
+[20:41:35.795] 07094000 048220F0 1800384E 00001C11 0780C001 82800040 220E0180 E1400000
+[20:41:35.799] 90441E03 00061180 01058C41 C0301C46 00001258 C41E0300 06128001 058C41E0
+[20:41:35.803] 3000612C 00100883 C06000E2 60000072 C620F018 00389A00 001CB988 3C07000C
+[20:41:35.806] 12800201 10700E07 09400004 8220F01C 00384E00 001CB188 3C07000E 14000007
+[20:41:35.810] 2E620F01 C0038980 0001C110 780E001C 4D00000E 5CC41E09 80060940 01008838
+[20:41:35.814] 130384A0 00024110 78260018 27000402 20E04C0E 13800009 0441E098 0060A000
+[20:41:35.818] 10088381 30385000 00241107 82600184 C0004022 0E04C0E2 60000090 441E0980
+[20:41:35.821] 07134000 03963107 836001C2 700000E5 CC41E0D8 0070A000 00397310 78360018
+[20:41:35.824] 4A00040B 883C1B00 0C258002 01107836 001C4C00 000E5CC4 1E0D8007 13400003
+[20:41:35.827] 97310784 A0018270 0040220E 0940E138 00009044 1E128006 11800100 88382503
+[20:41:35.832] 88C00002 4110784A 00184A00 040220F0 94003096 00080441 E1280061 30001008
+[20:41:35.835] 83825038 98000024 110784A0 01C4D000 00E5CC41 E1380070 A0000039 7310784E
+[20:41:35.839] 00184600 040220E0 9C0E2300 00090441 E1380061 28001008 83C27000 C2580020
+[20:41:35.842] 110784E0 01C4C000 00E0883C 27000E26 8000072E 620F0A00 0388C000 01CB9883
+[20:41:35.846] C28000C2 50002011 07850001 84B00040 220F0A00 03898000 01CB9883 C28000E2
+[20:41:35.849] 68000072 E620F118 00389800 001CB188 3C46000E 26800007 2C620E12 80E26800
+[20:41:35.853] 0092C620 F1300030 9A00082C 620E1300 E2680000 92C620F0 00003000 00080441
+[20:41:35.857] E0100060 0800101C 41E03000 60180010 0883C280 00C14000 207E20F1 1800308C
+[20:41:35.861] 00080441 E2600061 3000101C 41E26800 61340010 2E2070A0 208050B8 81C4C082
+[20:41:35.866] 0141C40E 2684100A 0E5A4000 0404E4F4 00000000 00000000 02301180 8C046023
+[20:41:35.870] 01180020 08020080 20100100 10010010 01001001 00100100 10010008 02008020
+[20:41:35.875] 08020080 20080200 80200802 00802008 02008020 08020080 20080200 80200802
+[20:41:35.878] 00802008 02008020 08020080 20080200 80200802 00802008 02008020 08020080
+[20:41:35.882] 20080200 80200802 00802008 02008020 08020000 00008020 08020080 20080200
+[20:41:35.885] 80200802 00802000 0000036C 7A000000 00000000 00000081 02000000 00000000
+[20:41:35.888] 00000000 00000000 00000000 00000000 00000000 00000000 00000000 00000000
+[20:41:35.891] 00000000 00000000 00000000 00000000 00000000 00000000 00000000 00000000
+[20:41:35.895] 00000000 00000000 00000000 00000000 00000000 00000000 07EFFFFF C6600007
+[20:41:35.900] 00050382 80381804 200C03C0 D0000000 00000000 04000000 04000000 03000000
+[20:41:35.905] 02000000 01400000 00C00000 00700000 00400000 00240000 00140000 000B0000
+[20:41:35.908] 00060000 000340D6 4ED60ED6 8ED648D6 08D64AD6 0AD646D6 06D64CD6 0CD68CD6
+[20:41:35.912] 54D694D0 30100000 6DB6D040 0005B6DB 41000026 DB6D0400 00DB6DB4 1000046D
+[20:41:35.916] B6D04000 15B6DB41 000066DB 6D040001 DB6DB410 00086DB6 D0400025 B6DB4100
+[20:41:35.919] 00A6DB6D 040002DB 6DB41000 0C6DB6D0 3149EAA8 3D5547AA A475540E AA92D550
+[20:41:35.922] 5AAA4D55 41AAAA35 552AAAA9 55548EA0 14005002 00600801 40180300 18040090
+[20:41:35.925] 0A014006 01802403 80500180 80090120 14006018 03403807 00280A01 10160260
+[20:41:35.929] 30050014 0680B802 00501C03 02020200 68080801 A1010100 34040400 00808080
+[20:41:35.933] 00020200 68004040 0D1AA030 401032F6 70000000 014A2000 0420
+[20:41:35.936] [N3API] init_BCL param - 122
+[20:41:35.940] [N3API] RF bit_mask : a2 00 00 00 00
+[20:41:35.944] [N3API] [CAPA-MEM][post-decode] pInfo=00000000 SBL(own=0 alloc=00000000) BCL.trk=0 FS.trk=0
+[20:41:35.949] [N3API][E] BCL[20] v1540 bandList mismatch (main=2 ext=3). truncate
+[20:41:35.955] [N3API][E] BCL[21] v1540 bandList mismatch (main=2 ext=3). truncate
+[20:41:35.958] [N3API][E] BCL[22] v1540 bandList mismatch (main=2 ext=3). truncate
+[20:41:35.964] [N3API][E] BCL[23] v1540 bandList mismatch (main=2 ext=3). truncate
+[20:41:35.970] [N3API][E] BCL[24] v1540 bandList mismatch (main=2 ext=3). truncate
+[20:41:35.975] [N3API][E] BCL[25] v1540 bandList mismatch (main=2 ext=3). truncate
+[20:41:35.979] [N3API][E] BCL[26] v1540 bandList mismatch (main=2 ext=3). truncate
+[20:41:35.983] [N3API][E] BCL[27] v1540 bandList mismatch (main=2 ext=3). truncate
+[20:41:35.987] [N3API][E] BCL[28] v1540 bandList mismatch (main=2 ext=3). truncate
+[20:41:35.990] [N3API][E] BCL[29] v1540 bandList mismatch (main=2 ext=3). truncate
+[20:41:35.994] [N3API][E] BCL[30] v1540 bandList mismatch (main=2 ext=3). truncate
+[20:41:35.998] [N3API][E] BCL[31] v1540 bandList mismatch (main=2 ext=3). truncate
+[20:41:36.001] [N3API][E] BCL[102] v1540 bandList mismatch (main=2 ext=1). pad-copy-prev
+[20:41:36.005] [N3API][E] BCL[103] v1540 bandList mismatch (main=2 ext=1). pad-copy-prev
+[20:41:36.008] [N3API][E] BCL[104] v1540 bandList mismatch (main=2 ext=1). pad-copy-prev
+[20:41:36.012] [N3API][E] nr capa: repaired 15 BCL ext bandList row(s) after decode (before HW filter)
+[20:41:36.015] [N3API] nr pdu filter hw=26 sbl 17->15 bcl 122->108
+[20:41:36.019] [N3API] [CAPA-MEM][DB-set] pInfo=856c9dd8 SBL(own=0 alloc=00000000) BCL.trk=0 FS.trk=0
+[20:41:36.023] [N3API]   SBL.val=855a4618 cnt=15 BCL.main=85795858 cnt=108 ABLF(dec=0/00000000/0 own=0/00000000)
+[20:41:36.026] [N3API]   FS outer: decode-graph (B), trk=0
+[20:41:36.030] [L3API][H] Enable UL MIMO
+[20:41:36.034] [L3API][H] TDD UL MIMO
+[20:41:36.037] [L3API][H] Disable CA
+[20:41:36.040] [L3API][H] Bit 13 : disabled
+[20:41:36.044] [L3API][H] Bit 18 : disabled
+[20:41:36.048] [L3API][H] Bit 13 : disabled
+[20:41:36.052] [L3API][H] Bit 18 : disabled
+[20:41:36.056] [L3API][H]  SetFgi: 1E9805FE 00000000 0000C1FF / 1E9805FE 00000000 0000C1FF
+[20:41:36.059] [L3API][H]  SetFgi: FDD/TDD configured
+[20:41:36.063] [L3API][H] Bit 13 : disabled
+[20:41:36.066] [L3API][H] Bit 18 : disabled
+[20:41:36.069] [L3API][H]  Set FGI Common (1E9805FE 00000000 0000C1FF)
+[20:41:36.072] [L3API][H]  Set FGI FDD only (00000000 00000000 00000000)
+[20:41:36.075] [L3API][H]  Set FGI TDD only (00000000 00000000 00000000)
+[20:41:36.079] [L3API][H] 	[Y]Set interRAT_BandList(0) in BCL(31)
+[20:41:36.082] [N3API]  EUTRA band[32]:
+[20:41:36.086] [N3API] 	 B1 B2 B3 B4 B5 B6 B7 B8 B10 B12 B13 B14 B17 B18 B19 B20
+[20:41:36.089] [N3API] 	 B25 B26 B28 B29 B30 B34 B38 B39 B40 B41 B42 B43 B48 B52 B66 B71
+[20:41:36.092] [N3API] 
+[20:41:36.097] Set bit-mask: 856CB4E4(000000E0) - 0 00000010
+[20:41:36.101] [N3API] [MPR][PC] band:n38 pc:1 v1610:0 isPc1dot5:0 mpr_present:0 mpr_val:0x39
+[20:41:36.105] [N3API] [MPR][PC] done band:n38 mpr_present:0 mpr_val:0x39
+[20:41:36.108] [N3API] [MPR][PC] band:n40 pc:1 v1610:0 isPc1dot5:0 mpr_present:0 mpr_val:0x00
+[20:41:36.111] [N3API] [MPR][PC] done band:n40 mpr_present:0 mpr_val:0x00
+[20:41:36.117] [N3API] [MPR][PC] band:n41 pc:1 v1610:1 isPc1dot5:1 mpr_present:1 mpr_val:0x10
+[20:41:36.122] [N3API] [MPR][PC] set n41 modifiedMPR_Behaviour=0x10
+[20:41:36.127] [N3API] [MPR][PC] done band:n41 mpr_present:1 mpr_val:0x10
+[20:41:36.133] [N3API] [MPR][PC] band:n77 pc:1 v1610:1 isPc1dot5:1 mpr_present:1 mpr_val:0x80
+[20:41:36.138] [N3API] [MPR][PC] set n77 modifiedMPR_Behaviour=0x80
+[20:41:36.145] [N3API] [MPR][PC] done band:n77 mpr_present:1 mpr_val:0x80
+[20:41:36.149] [N3API] [MPR][PC] band:n78 pc:1 v1610:1 isPc1dot5:1 mpr_present:0 mpr_val:0x00
+[20:41:36.152] [N3API] [MPR][PC] set n78 modifiedMPR_Behaviour=0x80
+[20:41:36.157] [N3API] [MPR][PC] done band:n78 mpr_present:1 mpr_val:0x80
+[20:41:36.159] [N3API] === reset UE Capa PDU
+[20:41:36.166] [N3API] [CAPA-MEM][reset-done] pInfo=856c9dd8 SBL(own=0 alloc=00000000) BCL.trk=0 FS.trk=0
+[20:41:36.171] [N3API]   SBL.val=855a4618 cnt=15 BCL.main=85795858 cnt=108 ABLF(dec=0/00000000/0 own=0/00000000)
+[20:41:36.174] [N3API]   FS outer: decode-graph (B), trk=0
+[20:41:36.178] [N3API] [CAPA-MEM][op-post] pInfo=856c9dd8 SBL(own=0 alloc=00000000) BCL.trk=0 FS.trk=0
+[20:41:36.182] [N3API]   SBL.val=855a4618 cnt=15 BCL.main=85795858 cnt=108 ABLF(dec=0/00000000/0 own=0/00000000)
+[20:41:36.190] [N3API]   FS outer: decode-graph (B), trk=0
+[20:41:36.196] E0 19 80 4F 00 10 40 C1 C9 99 36 7D 2A 75 0A 55 ....
+[20:41:36.203] mrd: cm_set_lteUeRadioCapaReq()
+[20:41:36.207] mrd: ca_band_combination_list()
+[20:41:36.210] mrd: CA user_version : 0
+[20:41:36.215] mrd: CA Band combination List file_ver:0, ucfg_user_ver:0
+[20:41:36.222] mrd: /var/nr/param/capa/rrc_ca_combination_list_mode_none.bin : version match
+[20:41:36.227] mrd: File(/var/nr/param/capa/rrc_ca_combination_list_working.bin) size : 330
+[20:41:36.233] mrd: Create New CA Band Combination List File(/var/nr/param/capa/rrc_ca_combination_list_working.bin)
+[20:41:36.236] [MRM] Set UE EUTRA Capability PDU - mode: 1 length: 5359
+[20:41:36.239] [L3API][H]  eutraCapaPdu mode:1, size:5359
+[20:41:36.244] [L3API][H]  eutraCapaPdu mode:3, size:5359
+[20:41:36.250] [L3API][H] eutra reset: hasPdu:1 RunSrc=CFG
+[20:41:36.253] mrd: ca disable index : 0
+[20:41:36.257] mrd: Enable/Disable Enable_field among CA Band Combination List
+[20:41:36.261] mrd: The Supported CA Band combination list not set.(user_ver(0)
+[20:41:36.266] [OTA RX][0] 30:UECAPA [5359]->
+[20:41:36.269] E019804F 001040C1 C999367D 2A750A55 3F7E5EBF FFFFF83D 7FFFFFF0 7AFFFFFF
+[20:41:36.272] E0F5FFFF FFC1EBFF FFFF83D7 FFFFFF07 AFFFFFFE 0F5FFFFF FC1EBFFF FFF83D7F
+[20:41:36.276] FFFFF07A FFFFFFE0 F5FFFFFF C1EBFFFF FF83D7FF FFFF07AF FFFFFE0F 5FFFFFFC
+[20:41:36.279] 1EBFFFFF F83D7FFF FFF07AFF FFFFE0F5 FFFFFFC1 EBFFFFFF 83D7FFFF FF07AFFF
+[20:41:36.283] FFFE0F5F FFFFFC1F F83FE268 00E6DE09 6E400000 001FE780 01018317 F0000000
+[20:41:36.286] 5FF80180 18018018 01801801 80180180 18018018 01801801 8210C108 60843042
+[20:41:36.290] 18210C10 86084304 218210C1 08608430 4218210C 10860843 04218210 C1086084
+[20:41:36.292] 30421821 0C108608 43042182 10C10860 84304218 210C1086 08430421 8210C108
+[20:41:36.296] 60843042 18210C10 86084304 218210C1 08608430 4218210C 10860843 04218210
+[20:41:36.300] C1086084 30421821 0C108608 43042182 10C10860 84304218 210C1086 08430421
+[20:41:36.303] 8210C108 60843042 18210C10 86084304 218210C1 08608430 4218210C 10860843
+[20:41:36.306] 04218210 C1086084 30421821 0C108608 43042182 10C10860 84304218 210C1086
+[20:41:36.309] 08430421 8210C108 60843042 18210C10 86084304 218210C1 08608430 4218210C
+[20:41:36.313] 10860843 04218210 DDA41086 08430421 8210C108 60843042 18210C10 86084304
+[20:41:36.318] 218210C1 08608430 4218210C 10860843 04218210 C00C00C0 0C00C00C 00C00C00
+[20:41:36.322] C1086084 30421821 0C108608 43042182 10C10860 84304218 210C1086 08430421
+[20:41:36.327] 8210C108 60843042 18210C10 86084304 218210C1 08608430 42180180 18018018
+[20:41:36.333] 01801801 84108610 42184108 61042184 10861042 18410861 04218410 86104218
+[20:41:36.338] 41086104 21841086 10421841 08610421 84108610 42184108 61042184 10861042
+[20:41:36.344] 18410861 04218410 86104218 41086104 21841086 10421841 08610421 84108610
+[20:41:36.348] 42184108 61042184 10861042 18410861 04218410 86104218 41086104 21841086
+[20:41:36.354] 10421841 08610421 84108610 42184108 61042184 10861042 18410861 04218410
+[20:41:36.358] 86104218 41086104 21841086 10421841 08610421 84108610 42184108 61042184
+[20:41:36.362] 10861042 10000000 00000343 E282FE06 00401040 C2080208 18810041 03182008
+[20:41:36.367] 20638401 040D3080 2081B210 041036C2 00820728 401040E7 0802081D 01004103
+[20:41:36.372] A4200820 75040104 0FF08020 81FE1004 10700200 82841041 40083841 00410700
+[20:41:36.375] 20082881 04140083 88100410 70020082 8C104140 0838C100 41070020 0828E104
+[20:41:36.380] 1400838E 10041070 020082A6 10414008 3A610041 07002008 2B610414 0083B610
+[20:41:36.384] 04107002 0082BE10 41C00802 0B284105 0020F284 01041C00 8020B384 1050020F
+[20:41:36.388] 38401041 C008020B 40410500 20F40401 041C0080 20B48410 50020F48 401041C0
+[20:41:36.391] 08020B50 41050020 F5040104 1C008020 BF841050 020FF840 1041C208 020A2041
+[20:41:36.395] 050820E2 0401041C 208020A3 04105082 0E304010 41C20802 0A384105 0820E384
+[20:41:36.401] 01041C20 8020A984 1050820E 98401041 C208020A D8410508 20ED8401 041C2080
+[20:41:36.405] 20AF8410 70820082 CA104142 083CA100 41070820 082CE104 142083CE 10041070
+[20:41:36.408] 820082D0 10414208 3D010041 07082008 2D210414 2083D210 04107082 0082D410
+[20:41:36.415] 4142083D 41004107 0820082F E1041420 83FE1004 10710200 828C1041 440838C1
+[20:41:36.419] 00410710 20082CA1 04144083 CA100410 71020082 CE104144 083CE100 41071020
+[20:41:36.423] 082D0104 144083D0 10041071 8200828E 10414608 38E10041 07182008 2A610414
+[20:41:36.426] 6083A610 04107182 0082B610 4146083B 61004107 1820082B E1041C60 8020B284
+[20:41:36.430] 1051820F 28401041 C608020B 38410518 20F38401 041C6080 20B40410 51820F40
+[20:41:36.433] 401041C6 08020B48 41051820 F4840104 1C608020 B5041051 820F5040 1041C608
+[20:41:36.437] 020BF841 051820FF 8401041C 708020AF 841071C2 0082CA10 4147083C A1004107
+[20:41:36.440] 1C20082C E1041470 83CE1004 1071C200 82D01041 47083D01 0041071C 20082D21
+[20:41:36.444] 04147083 D2100410 74C20082 BE1041D3 08020B28 41054C20 F2840104 1D308020
+[20:41:36.447] B3841054 C20F3840 1041D308 020B4041 054C20F4 0401041D 308020B4 841054C2
+[20:41:36.450] 0F484010 41DB0802 0AF84107 6C20082C A10415B0 83CA1004 1076C200 82CE1041
+[20:41:36.453] 5B083CE1 0041076C 20082D01 0415B083 D0100410 76C20082 D210415B 083D2100
+[20:41:36.457] 41079420 082CE104 165083CE 10041079 420082D0 10416508 3D010041 07942008
+[20:41:36.460] 2D210416 5083D210 0410794mrd: [h2 0082FE10 4165083F E1004107 9C20082D 01041670
+[20:41:36.464] 83D01004 1079C200 82D2107F 8FFFFF1F FFFE3FFF FC7FFFF8 FFFFF1FF FFE3FFFF
+[20:41:36.468] C7FFFF8F FFFF1FFF FE3FFFFC 7FFFF8FF FFF1FFFF E3FFFFC7 FFFF8FFF FF1FFFFE
+[20:41:36.471] 3FFFFC7F FFF8FFFF F1FFFFE3 FFFFC7FF FF8FFFFF 1FFFFE3F FFFC7FFF F8FFFFF1
+[20:41:36.474] FFFFE3FF FFC7FFFF 8FFFFF1F FFFE3FFF FC7FFFF8 FFFFF1FF FFE3FFFF C7FFFF8F
+[20:41:36.521] FFFF1FFF FE3FFFFC 7FFFF8FF FFF1FFFF E3FFFFC7 FFFF8FFF FF1FFFFE 3FFFFC7F
+[20:41:36.524] FFF8FFFF F1FFFFE3 FFFFC7FF FF8FFFFF 1FFFFE3F FFFC7FFF F8FFFFF1 FFFFE3FF
+[20:41:36.528] FFC7FFFF 8FFFFF1F FFFE3FFF FC7FFFF8 FFFFF1FF FFE3FFFF C7FFFF8F FFFF1FFF
+[20:41:36.531] FE3FFFFC 7FFFF8FF FFF1FFFF E3FFFFC7 FFFF8FFF FF1FFFFE 3FFFFC7F FFF8FFFF
+[20:41:36.534] F1FFFFE3 FFFFC7FF FF8FFFFF 1FFFFE3F FFFC7FFF F8FFFFF1 FFFFE3FF FFC7FFFF
+[20:41:36.538] 8FFFFF1F FFFE3FFF FC7FFFF8 FFFFF1FF FFE3FFFF C7FFFF8F FFFF1FFF FE3FFFFC
+[20:41:36.541] 7FFFF8FF FFF1FFFF E3FFFFC7 FFFF8FFF FF1FFFFE 3FFFFC7F FFF8FFFF F1FFFFE3
+[20:41:36.545] FFFFC7FF FF8FFFFF 1FFFFE3F FFFC7FFF F8FFFFF1 FFFFE3FF FFC7FFFF BFF90000
+[20:41:36.548] 5A107F00 01FE0000 0007F800 00001FE0 0000007F 80000001 FE000000 07F80000
+[20:41:36.551] 001FF000 00007FC0 0000007F 80000001 FE000000 003FC000 0000FF00 0000000F
+[20:41:36.555] FE000000 3FF80000 00FF0000 0003FC00 00000FFC 0000003F F0000000 FF000000
+[20:41:36.558] 03FC0000 000FF000 00003FC0 0000001F E0000000 7F800000 01FE0000 0007F800
+[20:41:36.562] 0000007F 80000001 FE000000 01FE0000 0007F800 000007FC 0000001F F0000000
+[20:41:36.565] 7FC00000 01FF0000 0007F800 00001FE0 00000000 007F8000 0001FE00 000007F8
+[20:41:36.569] 0000001F E0000000 1FE00000 001FE000 00007F80 00000000 FF000000 03FC0000
+[20:41:36.572] 0003FC00 00000FF0 00000000 1FF80000 00000000 00000000 00000008 08083020
+[20:41:36.576] 08020080 20080200 80200802 00802008 02008020 08020080 20080200 8830220C
+[20:41:36.580] 08020080 20080200 80200802 00802008 02008020 08020080 20080220 C0883020
+[20:41:36.583] 08020080 20080200 80200802 00802008 02008020 08020080 20080200 80200883
+[20:41:36.586] 0220C080 20080200 80200802 00802008 02008020 08020080 20080200 80200802
+[20:41:36.589] 00802008 02008020 08020080 220C0883 02008021 28401E36 D00144E1 07148401
+[20:41:36.592] 047FFFF8 0389C200 828A8208 FFFFF005 13841C54 100411FF FFE00E27 08020A46
+[20:41:36.596] 0823FFFF C0144E10 72304010 47FFFF80 38A02008 28A4208F FFFF0051 4041C521
+[20:41:36.600] 00411FFF FE00E280 8020A2A0 823FFFFC 01450107 15040104 7FFFF803 8A020082
+[20:41:36.603] 918208FF FFF00514 041C8C10 0411FFFF E00E2908 020A2A08 23FFFFC0 14521071
+[20:41:36.607] 50401047 FFFF8038 00200828 00208FFF FF407010 40105010 41FF0000 0000FFFF
+[20:41:36.610] F4070304 01050304 1FF80000 000FFFFF 40713840 10513841 FE000000 00FFFFF4
+[20:41:36.616] 07140401 0514041F E0000000 0FFFFF00 71484010 5148411F FFFE00E2 A08020A2
+[20:41:36.619] A0823FFF FD00C001 0049FE00 000000FF FFF00301 0401247F FFFA0181 820093FE
+[20:41:36.622] 00000001 FFFFE006 25080248 FFFFF403 13840127 F8000000 03FFFFD0 0C501004
+[20:41:36.626] 9FF80000 000FFFFF 40314840 127F8000 00003FFF FC00C541 00491FFF FE80E000
+[20:41:36.629] 8020E020 8020FF00 0000007F FFFA0380 02008381 020083FC 00000001 FFFFE80E
+[20:41:36.633] 0008020E 0608020F F0000000 07FFFFA0 38002008 381C2008 3FE00000 001FFFFE
+[20:41:36.636] 00E00080 20E13080 208FFFFF 40700040 1070D840 107F8000 00003FFF FD01C001
+[20:41:36.641] 0041C501 0041FE00 000000FF FFF00700 04010714 8401047F FFFA0380 82008381
+[20:41:36.644] 020083FF 80000001 FFFFE80E 0208020E 0608020F F0000000 07FFFFA0 38082008
+[20:41:36.647] 381C2008 3FF00000 001FFFFE 80E02080 20E13080 20FF0000 00007FFF FA038082
+[20:41:36.650] 008386C2 0083FC00 000001FF FFE00E02 08020E25 080208FF FFF40701 04010713
+[20:41:36.654] 840107F8 00000003 FFFFD01C 0410041C 5010041F E0000000 0FFFFF00 70104010
+[20:41:36.657] 71484010 47FFFFA0 38102008 38182008 3FC00000 001FFFFE 80E04080 20E27080
+[20:41:36.661] 20FF0000 00007FFF FA038182 008381C2 0083FE00 000001FF FFE80E06 08020E13
+[20:41:36.664] 08020FF8 00000007 FFFFA038 18200838 6C20083F C0000000 1FFFFE80 E0708020
+[20:41:36.668] E2808020 FF000000 007FFFFA 0386C200 838A0200 83FC0000 0001FFFF E00E1B08
+[20:41:36.672] 020E2908 0208FFFF F0071384 01071484 01047FFF F8038A02 00838A42 00823FFF
+[20:41:36.675] FD00C001 2049FE00 000000FF FFF00301 0481247F FFFA0181 824093FE 00000001
+[20:41:36.678] FFFFE006 25090248 FFFFF403 13848127 F8000000 03FFFFD0 0C501204 9FF80000
+[20:41:36.685] 000FFFFF 40314848 127F8000 00003FFF FD02C001 0041C041 00414081 07F80000
+[20:41:36.690] 0003FFFF D02C0010 04140410 70204010 7F800000 003FFFFD 02400107 01040107
+[20:41:36.696] 02040107 F8000000 03FFFFD0 2C001004 1C041004 140C107F 80000000 3FFFFD02
+[20:41:36.700] C0010041 40410703 040107F8 00000003 FFFFD024 00107010 40107030 40107F80
+[20:41:36.706] 0000003F FFFD02C0 010041C0 41004140 E107FE00 000003FF FFD02C00 10041404
+[20:41:36.712] 10703840 107FE000 00003FFF FD024001 07010401 07038401 07FE0000 0003FFFF
+[20:41:36.715] C02C0010 041C0410 04142610 47FFFF80 58002008 280820E1 3080208F FFFF0090
+[20:41:36.720] 0041C041 0041C261 00411FFF FE016000 8020E020 8020A1B0 823FFFFC 02C00100
+[20:41:36.724] 41404107 0D840104 7FFFF804 80020E02 08020E1B 080208FF FFF00B00 04010501
+[20:41:36.728] 04143E10 47FFFF80 480020E0 208020A1 F0823FFF FC02C001 0041C041 004144A1
+[20:41:36.733] 047FFFF8 05800200 83808200 8289C208 FFFFF00B 00040107 01040105 140411FF
+[20:41:36.739] FFE01600 08020A02 08291820 8FFFFF00 900041C0 41004148 C1047FFF F8048002
+[20:41:36.744] 0A020839 18200823 FFFFD02C 0010041C 08100414 0C107F80 0000003F FFFD02C0
+[20:41:36.748] 01004140 81070304 0107F800 000003FF FFD02400 10702040 10703040 107F8000
+[20:41:36.751] 00003FFF FD02C001 0041C0C1 004140E1 07F80000 0003FFFF D02C0010 04140C10
+[20:41:36.757] 70384010 7F800000 003FFFFD 02400107 03040107 03840107 F8000000 03FFFFD0
+[20:41:36.761] 2C001004 1C0C1004 1426107F C0000000 3FFFFD02 C0010041 40C10709 840107FC
+[20:41:36.766] 00000003 FFFFD024 00107030 40107098 40107FC0 0000003F FFFD02C0 010041C0
+[20:41:36.772] C1004143 6107FC00 000003FF FFD02C00 1004140C 1070D840 107FC000 00003FFF
+[20:41:36.777] FD024001 07030401 070D8401 07FC0000 0003FFFF C02C0010 04140C10 50F8411F
+[20:41:36.781] FFFE0120 00838182 008287C2 08FFFFF0 0B000401 05030414 8C1047FF FF804800
+[20:41:36.785] 20E06080 20A46082 3FFFFC02 40010503 041C8C10 0411FFFF E8160208 020E0408
+[20:41:36.788] 020A0608 3FC00000 001FFFFE 81602080 20A04083 81820083 FC000000 01FFFFE8
+[20:41:36.793] 12020838 10200838 1820083F C0000000 1FFFFE81 60208020 E0608020 A07083FE
+[20:41:36.797] 00000001 FFFFE816 0208020A 0608381C 20083FE0 0000001F FFFE8120 20838182
+[20:41:36.800] 008381C2 0083FE00 000001FF FFE81602 08020E06 08020A13 083FC000 00001FFF
+[20:41:36.804] FE816020 8020A060 8384C200 83FC0000 0001FFFF E8120208 38182008 384C2008
+[20:41:36.807] 3FC00000 001FFFFE 01602080 20E06080 20A1B082 3FFFFC02 C0410041 40C1070D
+[20:41:36.811] 8401047F FFF80480 820E0608 020E1B08 0208FFFF F00B0104 01070304 01050F84
+[20:41:36.814] 11FFFFE0 16020802 0A060828 94208FFF FF009010 41C0C100 4144A104 7FFFF804
+[20:41:36.817] 80820A06 08389420 0823FFFF C02C0410 04140C10 5138411F FFFE0120 20838182
+[20:41:36.821] 008289C2 08FFFFF0 09010414 0C107138 401047FF FF805808 20082818 20A28082
+[20:41:36.824] 3FFFFC02 40410703 04010514 0411FFFF E0120208 281820E2 8080208F FFFF00B0
+[20:41:36.827] 10401050 304148C1 047FFFF8 0480820E 0608020A 460823FF FFC02404 10503041
+[20:41:36.831] C8C10041 1FFFFE01 60208020 A0708287 C208FFFF F0090104 1C0E1004 143E1047
+[20:41:36.834] FFFF8058 08200838 4C200828 7C208FFF FF00B010 401050D8 4143E104 7FFFF804
+[20:41:36.837] 80820E1B 08020A1F 0823FFFF C03C0010 040C0410 04040810 1030401F FFFE01E0
+[20:41:36.840] 00802020 20818102 00808182 00FFFFF0 0F000401 01010404 08103030 401007FF
+[20:41:36.844] FF806800 20602080 20604080 20206080 3FFFFC03 40010301 04010102 040C0C10
+[20:41:36.847] 0401FFFF E01A0008 08082060 40802060 6080200F FFFF40F0 00401030 10401010
+[20:41:36.851] 304040E1 03F80000 0003FFFF D03C0010 04040410 30304010 103840FE 00000000
+[20:41:36.855] FFFFF40F 00040101 0104040C 10303840 103F8000 00003FFF FD034001 03010401
+[20:41:36.858] 03030401 0103840F E0000000 0FFFFF40 D00040C0 41004040 C1030384 0103F800
+[20:41:36.862] 000003FF FFD03400 10101040 C0C10040 C0E10040 FE000000 00FFFFF4 0F000401
+[20:41:36.867] 03010401 01030404 26103F80 0000003F FFFD03C0 01004040 41030304 01010984
+[20:41:36.871] 0FE00000 000FFFFF 40F00040 10101040 40C10309 840103F8 00000003 FFFFD034
+[20:41:36.874] 00103010 40103030 40101098 40FE0000 0000FFFF F40D0004 0C041004 040C1030
+[20:41:36.877] 9840103F 80000000 3FFFFD03 40010101 040C0C10 040C2610 040FE000 00000FFF
+[20:41:36.882] FF40F000 40103010 40101030 40436103 F8000000 03FFFFD0 3C001004 04041030
+[20:41:36.888] 30401010 D840FE00 000000FF FFF40F00 04010101 04040C10 30D84010 3F800000
+[20:41:36.891] 003FFFFD 03400103 01040103 03040101 0D840FE0 0000000F FFFF40D0 0040C041
+[20:41:36.897] 004040C1 030D8401 03F80000 0003FFFF D0340010 101040C0 C10040C3 610040FE
+[20:41:36.900] 00000000 FFFFF00F 00040101 0104040C 1010F840 1FFFFE01 A0008180 82008081
+[20:41:36.904] 82021F08 03FFFFC0 34001010 1040C0C1 004043E1 007FFFF8 07800200 80808202
+[20:41:36.910] 06080918 200FFFFF 00D00040 C0410040 40C10123 0401FFFF E01A0008 08082060
+[20:41:36.916] 60802024 60803FFF FC034001 01010404 0C103230 401007FF FF807800 20080808
+[20:41:36.921] 20207080 87C200FF FFF00D00 040C0410 04040E10 10F8401F FFFE01A0 00808082
+[20:41:36.926] 06070802 021F0803 FFFFD03C 00100404 04101098 4043E103 F8000000 03FFFFD0
+[20:41:36.932] 34001030 10401010 984043E1 03F80000 0003FFFF D0340010 101040C2 61004043
+[20:41:36.938] E103F800 000003FF FFC03C00 10040404 1010D840 43E1007F FFF80680 02060208
+[20:41:36.944] 02021B08 087C200F FFFF00D0 00404041 030D8401 010F8401 FFFFE01E 00080202
+[20:41:36.949] 0608081C 2021F080 3FFFFC03 40010303 04010103 84043E10 07FFFF80 68002020
+[20:41:36.952] 608181C2 008087C2 00FFFFF0 0F000401 01030404 261010F8 401FFFFE 01A00081
+[20:41:36.958] 81820080 84C2021F 0803FFFF C0340010 103040C2 61004043 E1007FFF F8078002
+[20:41:36.963] 00808182 021B0808 7C200FFF FF00D000 40C0C100 40436101 0F8401FF FFE01A00
+[20:41:36.967] 08081820 61B08020 21F0803F FFFED300 C2FFFFFF FDFFFF59 B942008E 00452400
+[20:41:36.973] 00800004 12E68022 605EF090 01041042 04104304 10411010 41041002 04208208
+[20:41:36.978] 20830820 82102082 0820F460 08004208 22041046 08208240 41041041 04002000
+[20:41:36.983] 04306180 22605E82 04400008 100C80
+[20:41:36.987] [L3API][H] pdu filter hw sbl 16->15 bcl10 128->122 add 181->150 red 0->0
+[20:41:36.992] [L3API][H]  supportedBandCombination_v10i0 free - 0x856BD7A8
+[20:41:36.998] [L3API][H]  supportedBandCombination_r10 free - 0x856AE758
+[20:41:37.003] [L3API][H] eutra RunSrc:CFG->PDU
+[20:41:37.007] [L3API][H] eutra reset: skip cfg overlay (OSS_DECODE)
+[20:41:37.012] [L3API][H] eutra reset: cfg ca_mode=0 (NON_CA=0)
+[20:41:37.016] [L3API][H] eutra reset: NON_CA - strip CA from run DB
+[20:41:37.020] [L3API][H] drop empty add-r11 BCL present (encode would be undecodeable)
+[20:41:37.023] [L3API][H] eutra keep Non-CA BCL (ca_mode=0) r10 122->15 add 150->0 red 0->0
+[20:41:37.028] [L3API][H] eutra reset: DB from PDU (sz=5359) RunSrc=PDU (no overlay)
+[20:41:37.033] ci_dec_nr_uicc_info_ind] 
+[20:41:37.037] mrd: [mrd_db_device_info] MCC[001] MNC[012], MNC len(3), SVN(0)
+[20:41:37.040] mrd: NR UICC INFORMATION INDICATION(DEV_IDX(1)
+[20:41:37.045] mrd: USIM Status 1
+[20:41:37.051] mrd: USIM Slot	0
+[20:41:37.055] mrd: IMSI : 001012345678901
+[20:41:37.059] mrd: IMEI : 123456798213141
+[20:41:37.065] mrd: SV : 0
+[20:41:37.069] mrd: ICCID : 89014103255041700619
+[20:41:37.073] mrd: EID : 00000000000000000000000000000000
+[20:41:37.077] mrautocm: [mrcm_uicc_info_ind] status from (0) to (1)
+[20:41:37.082] mrautocm: [mr[NV] +nv_write [mrd] NET(4) data=0x7f8328e010 offs=0xc7 size=0x1
+[20:41:37.087] cm_uicc_info_ind] Not init done.
+[20:41:37.091] mrd: [mrd_db_device_info] MCC[001] MNC[012], MNC len(3), SVN(0)
+[20:41:37.098] mrd: NR UICC INFORMATION INDICATION(DEV_IDX(1)
+[20:41:37.101] mrd: USIM Status 1
+[20:41:37.105] mrd: USIM Slot	0
+[20:41:37.109] mrd: IMSI : 001012345678901
+[20:41:37.114] mrd: IMEI : 123456798213141
+[20:41:37.117] mrd: SV : 0
+[20:41:37.120] mrd: ICCID : 89014103255041700619
+[20:41:37.124] mrd: EID : 00000000000000000000000000000000
+[20:41:37.127] mrd: DEVICE CONFIG SET RESPONSE(DEV_IDX(1) Result(0)
+[20:41:37.131] mrautocm: [mrcm_uicc_info_ind] status from (0) to (1)
+[20:41:37.135] mrautocm: [mrcm_uicc_info_ind] Not init done.
+[20:41:37.138] mrd: [mrd_db_device_info] MCC[001] MNC[012], MNC len(3), SVN(0)
+[20:41:37.141] mrd: NR UICC INFORMATION INDICATION(DEV_IDX(1)
+[20:41:37.145] mrd: USIM Status 1
+[20:41:37.151] mrd: USIM Slot	0
+[20:41:37.157] mrd: IMSI : 001012345678901
+[20:41:37.160] mrd: IMEI : 123456798213141
+[20:41:37.163] mrd: SV : 0
+[20:41:37.167] mrd: ICCID : 89014103255041700619
+[20:41:37.171] mrd: EID : 00000000000000000000000000000000
+[20:41:37.174] mrautocm: [mrcm_uicc_info_ind] status from (0) to (1)
+[20:41:37.178] mrautocm: [mrcm_uicc_info_ind] Not init done.
+[20:41:37.182] [NV] [LTE_NV] mrd Write Skip id=4(NET)
+[20:41:37.185] [NV] -nv_write [mrd] NET(4) data=0x7f8328e010 offs=0xc7 size=0x1
+[20:41:37.190] mrd: DEVICE CONFIG SET RESPONSE(DEV_IDX(1) Result(0)
+[20:41:37.195] mrd: NR RRC FUNCTION SET RESPONSE(DEV_IDX(1))
+[20:41:37.202] mrd: 	 Result: 0
+[20:41:37.208] mrd: 	 Type: 7
+[20:41:37.213] mrd: LTE RRC FUNCTION SET RESPONSE(DEV_IDX(1))
+[20:41:37.216] mrd: 	 Result: 0
+[20:41:37.220] mrd: 	 Type: 7
+[20:41:37.224] mrd: NR RRC CAPA SET RESPONSE(DEV_ID[NV] +nv_write [mrd] NET(4) data=0x7f8328e010 offs=0xc9 size=0x1
+[20:41:37.228] X(1))
+[20:41:37.233] mrd: Result : 0
+[20:41:37.237] mrd: NR RRC CAPA SET RESPONSE(DEV_IDX(1))
+[20:41:37.241] mrd: Result : 0
+[20:41:37.248] mrd: LTE RRC CAPA SET RESPONSE(DEV_IDX(1))
+[20:41:37.252] mrd: Result : 0
+[20:41:37.256] [NV] [LTE_NV] mrd Write Skip id=4(NET)
+[20:41:37.568] $ ping 192.168.0.1
+[20:41:37.573] e=0x1
+[20:41:37.604] mrd: SMS STORAGE CONFIG WRITE RESPONSE
+[20:41:37.624] DM> mrd: ONLINE REQUEST ret=110
+[20:41:37.654] mrd: run_lte_scr nr=0
+[20:41:37.658] mrd: run_cm_online_request_thread() - init_complete
+[20:41:37.670] mrd: [online_request]Watchdog First start
+[20:41:37.680] mrbip: LTE PS INIT Completed
+[20:41:37.693] mrbip: Start
+[20:41:37.708] mrautocm: mrcm_init_done : 1
+[20:41:37.717] mrautocm: MRAPI_UiccIdReadReq midType (0)
+[20:41:37.738] mrautocm: [MRAPI_UiccIdReadReq]
+[20:41:37.743] mrd: [mrd_db_device_info] MCC[001] MNC[012], MNC len(3), SVN(0)
+[20:41:37.749] mrd: NR UICC INFORMATION INDICATION(DEV_IDX(1)
+[20:41:37.757] mrd: USIM Status 1
+[20:41:37.767] mrd: USIM Slot	0
+[20:41:37.774] mrd: IMSI : 001012345678901
+[20:41:37.784] mrd: IMEI : 123456798213141
+[20:41:37.792] mrd: SV : 0
+[20:41:37.803] mrd: ICCID : 89014103255041700619
+[20:41:37.811] mrd: EID : 00000000000000000000000000000000
+[20:41:37.821] mrautocm: [mrcm_uicc_info_ind] status from (0) to (1)
+[20:41:37.859] mrautocm: [MRAPI_S_GET_UsimOperator]
+[20:41:37.874] mrautocm: [MRAPI_S_GET_UsimOperator] ret(0), eUsimOperator(0)
+[20:41:37.896] mrautocm: [mrcm_uicc_info_ind] USIM Operator From (E_USIM_OPER_UNKNOWN) To(E_USIM_OPER_UNKNOWN)
+[20:41:37.920] mrd: [SERVER] new connection request
+[20:41:37.926] mrd: lted_srv_alloc_client id=4
+[20:41:37.940] mrd: [SERVER] assigns client index 4 proc=mratcm(1437)
+[20:41:37.948] c00: gdm_irq_set_type: cpu=0 hwirq=99 type=4
+[20:41:37.957] c00: set_affinity: irq=46(UART RX) cpu=0
+[20:41:37.964] c00: gdm_irq_set_type: cpu=0 hwirq=98 type=4
+[20:41:37.975] c00: set_affinity: irq=47(UART TX) cpu=0
+[20:41:37.984] uart port[1] fc=0 cr=0000002b
+[20:41:37.992] highd open nr=1
+[20:41:38.000] gif_open mratcm 1/0
+[20:41:38.006] DM> shell
+[20:41:38.013] # ifconfig
+[20:41:38.020] br0       Link encap:Ethernet  HWaddr 00:0A:3B:FF:FF:01  
+[20:41:38.044]           inet addr:192.168.0.1  Bcast:192.168.0.255  Mask:255.255.255.0
+[20:41:38.072]           inet6 addr: fe80::fc46:d3ff:fe39:d20/64 Scope:Link
+[20:41:38.089]           UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1
+[20:41:38.123]           RX packets:132 errors:0 dropped:0 overruns:0 frame:0
+[20:41:38.150]           TX packets:65 errors:0 dropped:0 overruns:0 carrier:0
+[20:41:38.177]           collisions:0 txqueuelen:1000 
+[20:41:38.268]           RX bytes:22244 (21.7 KiB)  TX bytes:5403 (5.2 KiB)
+[20:41:38.323] lo        Link encap:Local Loopback  
+[20:41:38.348]           inet addr:127.0.0.1  Mask:255.0.0.0
+[20:41:38.386]           inet6 addr: ::1/128 Scope:Host
+[20:41:38.411]           UP LOOPBACK RUNNING  MTU:65536  Metric:1
+[20:41:38.422]           RX packets:0 errors:0 dropped:0 overruns:0 frame:0
+[20:41:38.437]           TX packets:0 errors:0 dropped:0 overruns:0 carrier:0
+[20:41:38.449]           collisions:0 txqueuelen:1000 
+[20:41:38.472]           RX bytes:0 (0.0 B)  TX bytes:0 (0.0 B)
+[20:41:38.533] usb0      Link encap:Ethernet  HWaddr 00:0A:3B:FF:FF:01  
+[20:41:38.558]           inet6 addr: fe80::20a:3bff:feff:ff01/64 Scope:Link
+[20:41:38.580]           UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1
+[20:41:38.587]           RX packets:138 errors:0 dropped:1 overruns:0 frame:0
+[20:41:38.601]           TX packets:62 errors:0 dropped:0 overruns:0 carrier:0
+[20:41:38.619]           collisions:0 txqueuelen:1000 
+[20:41:39.631]           RX bytes:22660 (22.1 KiB)  TX bytes:8172 (7.9 KiB)
+[20:41:40.954] $ (ctrl) Ctrl+C
+[20:41:42.266] $ ifconfig
+[20:41:43.579] $ lspci
+[20:41:44.895] $ cat /proc/interrupt
+[20:41:45.913] === TEST STOP ===
