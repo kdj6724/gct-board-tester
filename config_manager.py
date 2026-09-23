@@ -84,6 +84,26 @@ def save_settings(settings: dict):
         json.dump(settings, f, ensure_ascii=False, indent=2)
 
 
+def update_settings(patch: dict | None = None, remove: list[str] | None = None) -> dict:
+    """settings.json 에서 patch 로 준 키들만 바꾸고 나머지는 그대로 둔 채 저장한다
+    (remove 로 준 키는 지운다). main_app.py 의 메인 윈도우와 block_editor.py 의
+    블록 편집기 창처럼, 서로 다른 창이 서로 다른 시점에 각자 자기가 시작할 때
+    읽어둔 settings 사본만 들고 있다가 그걸 그대로 통째로 저장해버리면, 먼저
+    저장된 다른 창의 값(예: 창 크기)을 나중에 저장하는 쪽이 몰랐다는 이유로
+    지워버리는 문제가 생긴다 - "메인 윈도우 크기는 저장되는데 블록 편집기 창
+    크기는 저장 안 된다" 같은 버그가 실제로 있었음. 그래서 각 창은 자기가 아는
+    값만 patch 로 넘기고, 저장 직전에 파일에서 "지금 남아있는" 전체 내용을 다시
+    읽어서 그 위에 patch 만 얹어쓴다."""
+    current = load_settings()
+    if remove:
+        for k in remove:
+            current.pop(k, None)
+    if patch:
+        current.update(patch)
+    save_settings(current)
+    return current
+
+
 def _profile_path(name: str) -> str:
     safe = "".join(c for c in name if c.isalnum() or c in " _-()가-힣").strip() or "profile"
     return os.path.join(PROFILES_DIR, safe + ".json")

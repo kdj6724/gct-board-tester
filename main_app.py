@@ -26,7 +26,8 @@ class App(tk.Tk):
         self.resizable(True, True)
 
         self._settings = cm.load_settings()
-        self._settings.pop("tapo_ip", None)  # 옛 설정 잔재 정리 - Tapo IP는 이제 remote_power.env 에서만 읽음
+        if "tapo_ip" in self._settings:  # 옛 설정 잔재 정리 - Tapo IP는 이제 remote_power.env 에서만 읽음
+            self._settings = cm.update_settings(remove=["tapo_ip"])
         cm.migrate_legacy_if_needed()
         if not cm.list_profiles():
             cm.save_profile("default", cm.default_blocks())
@@ -134,6 +135,12 @@ class App(tk.Tk):
         # 텍스트 로그는 이 버튼으로 토글해서 다이어그램 아래에 접었다 폈다 한다.
         self._btn_log_toggle = btn(br, "\U0001f4dc  로그 보기", self._toggle_log, "#313244")
         self._btn_log_toggle.pack(side="left", padx=(0, 8))
+        # Tapo 연결이 앱 켤 때 자동으로 한 번(+ 내부 재시도 몇 번) 시도되는데, 그래도
+        # 안 붙은 상태로 남아있으면 지금까진 앱을 다시 켜는 것 말고는 방법이 없었다 -
+        # "connect 자체가 안 되는 경우가 많다"는 요청으로, 수동으로 다시 시도할 수 있는
+        # 버튼을 추가함(Power on/off 블록이 실패하는 것과는 별개로, "아예 안 붙어있는"
+        # 상태를 벗어나기 위한 용도).
+        btn(br, "\U0001f50c  Tapo 재연결", self._auto_connect_tapo, "#313244").pack(side="left", padx=(0, 8))
         self._log_lbl = tk.Label(br, text="", font=("Consolas", 9), bg=BG, fg=MUTE)
         self._log_lbl.pack(side="left")
 
@@ -221,13 +228,11 @@ class App(tk.Tk):
         threading.Thread(target=_do, daemon=True).start()
 
     def _save_settings(self):
-        self._settings.pop("tapo_ip", None)
-        self._settings.update({
+        self._settings = cm.update_settings({
             "com_port": self._v_port.get(),
             "baud_rate": self._v_baud.get(),
             "last_profile": self._profile_name,
-        })
-        cm.save_settings(self._settings)
+        }, remove=["tapo_ip"])
 
     # ---- 창 크기/위치 저장 -------------------------------------------------
     def _on_configure(self, event):
@@ -243,8 +248,7 @@ class App(tk.Tk):
 
     def _save_geometry(self):
         self._geometry_after_id = None
-        self._settings["window_geometry"] = self.geometry()
-        cm.save_settings(self._settings)
+        self._settings = cm.update_settings({"window_geometry": self.geometry()})
 
     def _on_close(self):
         # 디바운스(500ms)가 끝나기 전에 바로 닫아버리는 경우를 위해, 닫을 때

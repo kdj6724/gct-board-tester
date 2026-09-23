@@ -1,435 +1,0 @@
-[20:29:29.717] === TEST START === profile: 처음
-[20:29:37.179] $ (knock every 0.5s) 
-[20:29:39.297] ROM(3a97301700)
-[20:29:39.302] NCfg v=33a5 e=2 p=1 a=1
-[20:29:39.306] ID: ad ac 80 16 20 
-[20:29:39.310] BBT not found
-[20:29:39.314] psbl 00000000 r=0 18737us
-[20:29:39.317] c00 sec=0 fb=1 pll=1 lcs=0
-[20:29:39.321] btmd=3 clk(50 1600 1300 100) r=0x660
-[20:29:39.325] rr=0x0(POR)
-[20:29:39.330] sbl r=0 s=8192,4096 r=0 518us
-[20:29:39.334] sbl v=1 ea000003 4d4c4253 0000 1750 cf953058
-[20:29:39.338] sbl sz=5968 csum ok 579us
-[20:29:39.344] - JT j=1021000 r=696
-[20:29:39.349] PBL: 2026-08-07 22:20:42 7c59084a(master)
-[20:29:39.354]   Date: 2026-09-01 16:40:12
-[20:29:39.361]   User: gct@CS-buildserver
-[20:29:39.410]   Path: /home/gct/gct_workspace/dailybuild/repos/openwrt/builds/ast/build_dir/target-aarch64-openwrt-linux-gnu_glibc/sbl-gct-1.  Ver: 1.0.0
-[20:29:39.416] btmd=3 rr=0x0(POR)
-[20:29:39.422] arm=1300 sys=1600
-[20:29:39.429] CMNNV hdr=01022bb4 act=1
-[20:29:39.435]   hdr chksum	: 0x64d206db
-[20:29:39.442]   magic		: 0xcafebabe
-[20:29:39.455]   timstamp	: 0x0000003b
-[20:29:39.507]   data chksum	: 0x520b0cf5
-[20:29:39.519]   data size	: 0x0003ffc0
-[20:29:39.530] hdr[0] magic err 00000000(hdr)!=0xcafebabe
-[20:29:39.544] hdr[1] magic err 00000000(hdr)!=0xcafebabe
-[20:29:39.554] SBL hdr=01022f74 act=2
-[20:29:39.566]   hdr chksum	: 0x7af20757
-[20:29:39.579]   magic		: 0xcafebabe
-[20:29:39.589]   timstamp	: 0x0000000c
-[20:29:39.600]   data chksum	: 0xe75e31fb
-[20:29:39.611]   data size	: 0x00096de4
-[20:29:39.620] sbl image all invalid
-[20:29:39.626] SBL r=0 s=114688 pre=0 vrl=0 r=0
-[20:29:39.634] wdt=5s
-[20:29:39.640] pbl go 01024800 r1723
-[20:29:39.650] B�N띂peri 2x=10303 1x=10707
-[20:29:39.657] grf ver=2(0x7)
-[20:29:39.662] afe pwr down
-[20:29:39.672] SBL: 2026-08-07 22:20:42 7c59084a(master)
-[20:29:39.683]   Date: 2026-09-01 16:40:11
-[20:29:39.692]   User: gct@CS-buildserver
-[20:29:39.703]   Path: /home/gct/gct_workspace/dailybuild/repos/openwrt/builds/ast/build_dir/target-aarch64-openwrt-linux-gnu_glibc/sbl-gct-1.  Ver: 1.2.0
-[20:29:39.710]   Pkg: 1.11.0
-[20:29:39.718]   GCC: 9.3.0
-[20:29:39.725] btmd=3 rr=0x0(POR)
-[20:29:39.731] arm=1600(vcc=8(0.850)) sys=1600(vcc=4(0.750)) ddr=3732
-[20:29:39.737] pmic(0x32): 0x23->0x20
-[20:29:39.745] gate-adj: {0,0,0,0}{9,9,9,9}
-[20:29:39.756] read-adj: {1,0,0,0}{9,9,9,9}
-[20:29:39.763] ddr_main CFG=1 ch=1 PDDS=1
-[20:29:39.769] dynamic: pcg=0 sr=0 pd=0
-[20:29:39.776] ihs_ddr_init(orbit) oic=2 warm=0
-[20:29:39.783] reset ddr
-[20:29:39.788] ddr bus @sys=1600: 2x=266 1x=66
-[20:29:39.799] CH(0), period (20000)
-[20:29:39.806] CH(0), period (20000)
-[20:29:39.813] CH(0), period (536)
-[20:29:39.817] CH(0), period (1072)
-[20:29:39.825] CH(0), period (1250)
-[20:29:39.829] CH(0), period (2500)
-[20:29:39.837] CH(0), period (536)
-[20:29:39.840] CH(0), period (1072)
-[20:29:39.849] CH(0), period (1250)
-[20:29:39.857] CH(0), period (2500)
-[20:29:39.867] CH(0), period (536)
-[20:29:39.873] MR: [5]=01 [6]=06 [7]=00 [8]=0a 
-[20:29:39.883] ddr=3730 vdd1=13(1.800) vdd2=16(1.150) vddq=4(0.650)
-[20:29:39.890] mem(0x80000000) test: ok(6ms)
-[20:29:39.897] IDs: ad ac 80 16 20
-[20:29:39.904]   blk=256
-[20:29:39.911] NCfg v=3325 e=2 p=1 a=1
-[20:29:39.915] ID: ad ac 80 16 20 
-[20:29:39.918] BBT not found
-[20:29:39.924] ------------------------
-[20:29:39.927] Selected CMNNV Header (act : 1)
-[20:29:39.934] ------------------------
-[20:29:39.940] hdr chksum	: 0x64d206db
-[20:29:39.949] magic		: 0xcafebabe
-[20:29:39.956] timstamp	: 0x0000003b
-[20:29:39.966] data chksum	: 0x520b0cf5
-[20:29:39.972] data size	: 0x0003ffc0
-[20:29:39.979] ------------------------
-[20:29:39.985] hdr magic err(0) 0x00000000 != (0xcafebabe)
-[20:29:39.991] hdr magic err(1) 0x00000000 != (0xcafebabe)
-[20:29:39.994] ------------------------
-[20:29:40.001] Selected TFA Header (act : 2)
-[20:29:40.006] ------------------------
-[20:29:40.013] hdr chksum	: 0x49d1065b
-[20:29:40.019] magic		: 0xcafebabe
-[20:29:40.026] timstamp	: 0x00000008
-[20:29:40.035] data chksum	: 0xf1632701
-[20:29:40.043] data size	: 0x00e77000
-[20:29:40.048] ------------------------
-[20:29:40.055] hdr magic err(0) 0x00000000 != (0xcafebabe)
-[20:29:40.065] hdr magic err(1) 0x00000000 != (0xcafebabe)
-[20:29:40.072] ------------------------
-[20:29:40.081] Selected UBOOT Header (act : 2)
-[20:29:40.084] ------------------------
-[20:29:40.092] hdr chksum	: 0x00000000
-[20:29:40.101] magic		: 0x00000000
-[20:29:40.105] timstamp	: 0x00000000
-[20:29:40.114] data chksum	: 0x00000000
-[20:29:40.119] data size	: 0x00000000
-[20:29:40.128] ------------------------
-[20:29:40.138] tfa image all invalid
-[20:29:40.147] TFA r=0 s=250191 r=0
-[20:29:40.151] u-boot image all invalid
-[20:29:40.155] uboot r=0 s=668624 r=0
-[20:29:40.164] wdt=10s
-[20:29:40.168] refx calibration result : dt,dcc 77, 43 : 0x1a4 = 0xfe03820, 0x1e8 = 0x0818060
-[20:29:40.172] refx cal elapsed=304ms
-[20:29:40.181] sbl go 80100000 r3eca
-[20:29:40.189] TF-A: 2026-08-29 00:00:10 bbef1a49(master)
-[20:29:40.193]   Date: 2026/09/01-16:42:50
-[20:29:40.203]   User: gct@CS-buildserver
-[20:29:40.212]   Path: /home/gct/gct_workspace/dailybuild/repos/openwrt/builds/ast/build_dir/target-aarch64-openwrt-linux-gnu_glibc/uboot-gct-1.11.0/arm-trusted-firmware
-[20:29:40.225]   Ver: 1.0.0
-[20:29:40.239]   Pkg: 1.11.0
-[20:29:40.254]   GCC: 13.3.0
-[20:29:40.261]   Log-Level: 30
-[20:29:40.270] EXC-V=8013c000
-[20:29:40.283] TZCLK/TSG=1
-[20:29:40.289] BL33 pc=0x80200800 spsr=0x3c9
-[20:29:40.302] U-Boot 2021.07-gbbef1a49 (Oct 19 2025 - 16:37:45 +0000)
-[20:29:40.316] U-Boot: 2026-08-29 00:00:10 bbef1a49(master) dual_sbl
-[20:29:40.328]   Date: 2026-09-01 16:42:08
-[20:29:40.335]   User: gct@CS-buildserver
-[20:29:40.349]   Path: /home/gct/gct_workspace/dailybuild/repos/openwrt/builds/ast/build_dir/target-aarch64-openwrt-linux-gnu_glibc/uboot-gct-1.11.0
-[20:29:40.356]   Ver: 1.2.0
-[20:29:40.364]   Pkg: 1.11.0
-[20:29:40.371]   GCC: 13.3.0
-[20:29:40.384] DRAM:  512 MiB
-[20:29:40.398] mem_malloc_init: start=0x9eff0000 sz=0x1010000
-[20:29:40.405] copy text/data(0x01020800, 0x802a3b00, 208)
-[20:29:40.412] set bss(0x010208d0 0)
-[20:29:40.423] board init
-[20:29:40.430] ETH_EN(GPF1[44]): 1(dflt)->0(set-low)->10ms->1(set-high)
-[20:29:40.436] ETH_EN(GPE[11]): 1(dflt)->0(set-low)->10ms->1(set-high)
-[20:29:40.442] ECID: S0=0x00000000 S1=0x00000000 S2=0x00000000
-[20:29:40.454] copy from 0x802009d8 to 0x1030000 sz=0
-[20:29:40.465] Device nand0 not found!
-[20:29:40.507] mtdparts_init fail
-[20:29:40.513] adjusted cmpu_par addr: 0x802a3bd0 -> 0x802a3be0
-[20:29:40.518] NO CMPU magic(0x802a3be0: 0x33353135)
-[20:29:40.529] PMIC DCDC off in sleep: 2 3 4 5 6 8
-[20:29:40.540] NAND:  N-Cfg val=33a5 ecc=2 page=1 addr=1
-[20:29:40.552]   chip=512MB
-[20:29:40.564]   block=256KB
-[20:29:40.570]   addr=5cyc
-[20:29:40.582]   page=4KB
-[20:29:41.594]   spare=256B
-[20:29:41.604]   ecc=4bit
-[20:29:41.612] Loading Environment from NAND(3)... OK
-[20:29:41.620] In:    serial
-[20:29:41.624] Out:   serial
-[20:29:41.628] Err:   serial
-[20:29:41.635] dtb: fixed pmic(revC)
-[20:29:41.640] dtb: dis mmc
-[20:29:41.650] Hit any key to stop autoboot:  1  0
-[20:29:41.658] GDM> 
-[20:29:41.666] GDM> 
-[20:29:41.681] $ fastboot usb
-[20:29:42.693] fastboot usb
-[20:29:42.702] c00: cpu_smc_handler: fid=c1000001 x1=5 x2=0 x3=0 x4=0
-[20:29:42.709] c00: cpu_smc_handler: fid=c1000001 x1=4 x2=0 x3=0 x4=0
-[20:29:42.714] c00: cpu_smc_handler: fid=c1000001 x1=3 x2=0 x3=0 x4=0
-[20:29:42.718] usb ssphy init
-[20:29:42.722] sys=1600 usb ref clkgen=0x10f0f sel=1
-[20:29:42.738] $ (exec) Y:\work\gct-board-tester\fastboot\fastboot.exe flash linux K:\ENG\ENG05\CS\Daily_build\20260919\GDM7275X\linuxos_master\Image\Image
-[20:29:47.288] Sending 'linux' (14812 KB)                         OKAY [  4.075s]
-[20:29:59.105] Writing 'linux'                                    OKAY [ 11.800s]
-[20:29:59.130] Finished. Total time: 16.152s
-[20:29:59.189] $ (exec) Y:\work\gct-board-tester\fastboot\fastboot.exe flash rootfs K:\ENG\ENG05\CS\Daily_build\20260919\GDM7275X\linuxos_master\Image\ramdisk.ubifs
-[20:30:07.323] Sending 'rootfs' (36608 KB)                        OKAY [  7.302s]
-[20:30:37.150] Writing 'rootfs'                                   OKAY [ 29.825s]
-[20:30:37.189] Finished. Total time: 37.705s
-[20:30:37.248] $ (exec) Y:\work\gct-board-tester\fastboot\fastboot.exe flash fdt K:\ENG\ENG05\CS\Daily_build\20260919\GDM7275X\linuxos_master\Image\tethys3-ast.dtb
-[20:30:37.683] Sending 'fdt' (21 KB)                              OKAY [  0.006s]
-[20:30:37.787] Writing 'fdt'                                      OKAY [  0.127s]
-[20:30:37.854] Finished. Total time: 0.233s
-[20:30:39.332] $ (knock every 2s) 
-[20:30:39.396] lled
-[20:30:39.470] [CMNNV] map(0x00000000 0x00100000)
-[20:30:39.550] [CMNNV] using block idx=1 addr=0x100000 ts=0x3b
-[20:30:39.642] ************************
-[20:30:39.883] CMNNV Header (act=1)
-[20:30:39.950] ************************
-[20:30:39.997] ------------------------
-[20:30:40.053] hdr chksum  : 0x64d206db
-[20:30:40.094] magic       : 0xcafebabe
-[20:30:40.128] timstamp    : 0x0000003b
-[20:30:40.184] data chksum : 0x520b0cf5
-[20:30:40.244] data size   : 0x0003ffc0
-[20:30:40.312] ------------------------
-[20:30:40.369] ************************
-[20:30:40.428] SBL Header (act=2)
-[20:30:40.490] ************************
-[20:30:40.548] ------------------------
-[20:30:40.632] hdr chksum  : 0x00000000
-[20:30:40.682] magic       : 0x00000000
-[20:30:40.776] timstamp    : 0x00000000
-[20:30:40.852] data chksum : 0x00000000
-[20:30:40.907] data size   : 0x00000000
-[20:30:40.974] ------------------------
-[20:30:41.046] ------------------------
-[20:30:41.094] hdr chksum  : 0x00000000
-[20:30:41.140] magic       : 0x00000000
-[20:30:41.160] timstamp    : 0x00000000
-[20:30:41.193] data chksum : 0x00000000
-[20:30:41.227] data size   : 0x00000000
-[20:30:41.268] ------------------------
-[20:30:41.289] ************************
-[20:30:41.294] TFA Header (act=2)
-[20:30:41.301] ************************
-[20:30:41.307] ------------------------
-[20:30:41.312] hdr chksum  : 0x00000000
-[20:30:41.323] magic       : 0x00000000
-[20:30:41.332] timstamp    : 0x00000000
-[20:30:41.338] data chksum : 0x00000000
-[20:30:41.344] data size   : 0x00000000
-[20:30:41.350] ------------------------
-[20:30:41.357] ------------------------
-[20:30:41.367] hdr chksum  : 0x00000000
-[20:30:41.376] magic       : 0x00000000
-[20:30:41.385] timstamp    : 0x00000000
-[20:30:41.395] data chksum : 0x00000000
-[20:30:41.402] data size   : 0x00000000
-[20:30:41.412] ------------------------
-[20:30:41.423] ************************
-[20:30:41.433] U-boot Header (act=2)
-[20:30:41.443] ************************
-[20:30:41.452] ------------------------
-[20:30:41.455] hdr chksum  : 0x00000000
-[20:30:41.501] magic       : 0x00000000
-[20:30:41.506] timstamp    : 0x00000000
-[20:30:41.510] data chksum : 0x00000000
-[20:30:41.515] data size   : 0x00000000
-[20:30:41.520] ------------------------
-[20:30:41.524] ------------------------
-[20:30:41.528] hdr chksum  : 0x00000000
-[20:30:41.537] magic       : 0x00000000
-[20:30:41.551] timstamp    : 0x00000000
-[20:30:41.559] data chksum : 0x00000000
-[20:30:41.564] data size   : 0x00000000
-[20:30:41.569] ------------------------
-[20:30:41.574] ************************
-[20:30:41.578] FDT Header (act=0)
-[20:30:41.584] ************************
-[20:30:41.588] ------------------------
-[20:30:41.592] hdr chksum  : 0x81ce0773
-[20:30:41.596] magic       : 0xcafebabe
-[20:30:41.601] timstamp    : 0x00000008
-[20:30:41.605] data chksum : 0xd771fadf
-[20:30:41.611] data size   : 0x00005476
-[20:30:41.617] ------------------------
-[20:30:41.622] ------------------------
-[20:30:41.629] hdr chksum  : 0x819a0772
-[20:30:41.636] magic       : 0xcafebabe
-[20:30:41.640] timstamp    : 0x00000007
-[20:30:41.644] data chksum : 0xd771fadf
-[20:30:41.655] data size   : 0x00005476
-[20:30:41.665] ------------------------
-[20:30:41.675] ************************
-[20:30:41.680] Linux Header (act=1)
-[20:30:41.690] ************************
-[20:30:41.700] ------------------------
-[20:30:41.709] hdr chksum  : 0x49d1065b
-[20:30:41.718] magic       : 0xcafebabe
-[20:30:41.727] timstamp    : 0x00000008
-[20:30:41.733] data chksum : 0xf1632701
-[20:30:41.745] data size   : 0x00e77000
-[20:30:41.750] ------------------------
-[20:30:41.755] ------------------------
-[20:30:41.760] hdr chksum  : 0x4a05065c
-[20:30:41.767] magic       : 0xcafebabe
-[20:30:41.772] timstamp    : 0x00000009
-[20:30:41.780] data chksum : 0xf1632701
-[20:30:41.790] data size   : 0x00e77000
-[20:30:41.795] ------------------------
-[20:30:41.802] ************************
-[20:30:41.814] ROOT_FS Header (act=0)
-[20:30:41.819] ************************
-[20:30:41.828] ------------------------
-[20:30:41.839] hdr chksum  : 0x1b9f053b
-[20:30:41.846] magic       : 0xcafebabe
-[20:30:41.851] timstamp    : 0x0000000e
-[20:30:41.855] data chksum : 0x4f21ff00
-[20:30:41.864] data size   : 0x023c0000
-[20:30:41.870] ------------------------
-[20:30:41.878] ------------------------
-[20:30:41.888] hdr chksum  : 0x1b6b053a
-[20:30:41.893] magic       : 0xcafebabe
-[20:30:41.905] timstamp    : 0x0000000d
-[20:30:41.913] data chksum : 0x4f21ff00
-[20:30:41.923] data size   : 0x023c0000
-[20:30:41.933] ------------------------
-[20:30:41.943] ************************
-[20:30:41.953] ZP Header (act=1)
-[20:30:41.962] ************************
-[20:30:41.970] ------------------------
-[20:30:41.984] hdr chksum  : 0x40a70624
-[20:30:41.989] magic       : 0xcafebabe
-[20:30:41.995] timstamp    : 0x00000005
-[20:30:42.004] data chksum : 0x9c373d1e
-[20:30:42.013] data size   : 0x008ad116
-[20:30:42.017] ------------------------
-[20:30:42.021] ------------------------
-[20:30:42.033] hdr chksum  : 0xc00b08e2
-[20:30:42.037] magic       : 0xcafebabe
-[20:30:42.045] timstamp    : 0x00000008
-[20:30:42.049] data chksum : 0x9cccf6ed
-[20:30:42.053] data size   : 0x008bbcc8
-[20:30:42.058] ------------------------
-[20:30:42.065] ************************
-[20:30:42.070] NR1NV Header (act=1)
-[20:30:42.075] ************************
-[20:30:42.082] ------------------------
-[20:30:42.087] hdr chksum  : 0x7af20757
-[20:30:42.095] magic       : 0xcafebabe
-[20:30:42.100] timstamp    : 0x0000000c
-[20:30:42.104] data chksum : 0xe75e31fb
-[20:30:42.109] data size   : 0x00096de4
-[20:30:42.114] ------------------------
-[20:30:42.119] ------------------------
-[20:30:42.125] hdr chksum  : 0x7b260758
-[20:30:42.130] magic       : 0xcafebabe
-[20:30:42.134] timstamp    : 0x0000000d
-[20:30:42.144] data chksum : 0xe75e31fb
-[20:30:42.152] data size   : 0x00096de4
-[20:30:42.158] ------------------------
-[20:30:42.166] .Starting download of 15167488 bytes
-[20:30:42.176] ..........................................................................
-[20:30:42.182] .........................................
-[20:30:42.186] downloading of 15167488 bytes finished
-[20:30:42.193] Flashing raw image at offset 0x1c80000
-[20:30:42.200] Erasing at 0x1c80000 --   1% complete.Erasing at 0x1cc0000 --   2% complete.Erasing at 0x1d00000 --   3% complete.Erasing at 0x1d40000 --   5% complete.Erasing at 0x1d80000 --   6% complete.Erasing at 0x1dc0000 --   7% complete.Erasing at 0x1e00000 --   8% complete.Erasing at 0x1e40000 --  10% complete.Erasing at 0x1e80000 --  11% complete.Erasing at 0x1ec0000 --  12% complete.Erasing at 0x1f00000 --  13% complete.Erasing at 0x1f40000 --  15% complete.Erasing at 0x1f80000 --  16% complete.Erasing at 0x1fc0000 --  17% complete.Erasing at 0x2000000 --  18% complete.Erasing at 0x2040000 --  20% complete.Erasing at 0x2080000 --  21% complete.Erasing at 0x20c0000 --  22% complete.Erasing at 0x2100000 --  23% complete.Erasing at 0x2140000 --  25% complete.Erasing at 0x2180000 --  26% complete.Erasing at 0x21c0000 --  27% complete.Erasing at 0x2200000 --  28% complete.Erasing at 0x2240000 --  30% complete.Erasing at 0x2280000 --  31% complete.Erasing at 0x22c0000 --  32% complete.Erasing at 0x2300000 --  33% complete.Erasing at 0x2340000 --  35% complete.Erasing at 0x2380000 --  36% complete.Erasing at 0x23c0000 --  37% complete.Erasing at 0x2400000 --  38% complete.Erasing at 0x2440000 --  40% complete.Erasing at 0x2480000 --  41% complete.Erasing at 0x24c0000 --  42% complete.Erasing at 0x2500000 --  43% complete.Erasing at 0x2540000 --  45% complete.Erasing at 0x2580000 --  46% complete.Erasing at 0x25c0000 --  47% complete.Erasing at 0x2600000 --  48% complete.Erasing at 0x2640000 --  50% complete.Erasing at 0x2680000 --  51% complete.Erasing at 0x26c0000 --  52% complete.Erasing at 0x2700000 --  53% complete.Erasing at 0x2740000 --  55% complete.Erasing at 0x2780000 --  56% complete.Erasing at 0x27c0000 --  57% complete.Erasing at 0x2800000 --  58% complete.Erasing at 0x2840000 --  60% complete.Erasing at 0x2880000 --  61% complete.Erasing at 0x28c0000 --  62% complete.Erasing at 0x2900000 --  63% complete.Erasing at 0x2940000 --  65% complete.Erasing at 0x2980000 --  66% complete.Erasing at 0x29c0000 --  67% complete.Erasing at 0x2a00000 --  68% complete.Erasing at 0x2a40000 --  70% complete.Erasing at 0x2a80000 --  71% complete.Erasing at 0x2ac0000 --  72% complete.Erasing at 0x2b00000 --  73% complete.Erasing at 0x2b40000 --  75% complete.Erasing at 0x2b80000 --  76% complete.Erasing at 0x2bc0000 --  77% complete.Erasing at 0x2c00000 --  78% complete.Erasing at 0x2c40000 --  80% complete.Erasing at 0x2c80000 --  81% complete.Erasing at 0x2cc0000 --  82% complete.Erasing at 0x2d00000 --  83% complete.Erasing at 0x2d40000 --  85% complete.Erasing at 0x2d80000 --  86% complete.Erasing at 0x2dc0000 --  87% complete.Erasing at 0x2e00000 --  88% complete.Erasing at 0x2e40000 --  90% complete.Erasing at 0x2e80000 --  91% complete.Erasing at 0x2ec0000 --  92% complete.Erasing at 0x2f00000 --  93% complete.Erasing at 0x2f40000 --  95% complete.Erasing at 0x2f80000 --  96% complete.Erasing at 0x2fc0000 --  97% complete.Erasing at 0x3000000 --  98% complete.Erasing at 0x3040000 -- 100% complete.
-[20:30:42.616] nand_write ofs=0x1c80000 len=0xe77000
-[20:30:43.072] ........ wrote 15167488 bytes to 'linux'
-[20:30:43.502] KERNEL image header update idx(1) -> idx(0)
-[20:30:43.859] ************************
-[20:30:44.316] Update LINUX Header
-[20:30:44.631] ************************
-[20:30:45.069] ------------------------
-[20:30:45.471] hdr chksum  : 0x4a39065d
-[20:30:45.873] magic       : 0xcafebabe
-[20:30:46.356] timstamp    : 0x0000000a
-[20:30:46.827] data chksum : 0xf1632701
-[20:30:47.285] data size   : 0x00e77000
-[20:30:47.709] ------------------------
-[20:30:47.960] CMNNV header update idx(1) -> idx(0)
-[20:30:48.218] ************************
-[20:30:48.499] CMNNV Header[1]
-[20:30:48.793] ************************
-[20:30:49.075] ------------------------
-[20:30:49.417] hdr chksum  : 0x75420740
-[20:30:49.781] magic       : 0xcafebabe
-[20:30:50.107] timstamp    : 0x0000003c
-[20:30:50.430] data chksum : 0xe86c0c62
-[20:30:50.647] data size   : 0x0003ffc0
-[20:30:50.895] ------------------------
-[20:30:51.320] nand_write ofs=0x1480000 len=0x40000
-[20:30:51.830] .Starting download of 37486592 bytes
-[20:30:52.251] ..........................................................................
-[20:30:52.650] ..........................................................................
-[20:30:53.056] ..........................................................................
-[20:30:53.508] ................................................................
-[20:30:53.912] downloading of 37486592 bytes finished
-[20:30:54.283] Flashing raw image at offset 0xa880000
-[20:30:54.645] Erasing at 0xa880000 --   0% complete.Erasing at 0xa940000 --   1% complete.Erasing at 0xaa40000 --   2% complete.Erasing at 0xab40000 --   3% complete.Erasing at 0xac40000 --   4% complete.Erasing at 0xad40000 --   5% complete.Erasing at 0xae40000 --   6% complete.Erasing at 0xaf40000 --   7% complete.Erasing at 0xb040000 --   8% complete.Erasing at 0xb140000 --   9% complete.Erasing at 0xb240000 --  10% complete.Erasing at 0xb340000 --  11% complete.Erasing at 0xb440000 --  12% complete.Erasing at 0xb540000 --  13% complete.Erasing at 0xb640000 --  14% complete.Erasing at 0xb740000 --  15% complete.Erasing at 0xb840000 --  16% complete.Erasing at 0xb940000 --  17% complete.Erasing at 0xba40000 --  18% complete.Erasing at 0xbb40000 --  19% complete.Erasing at 0xbc40000 --  20% complete.Erasing at 0xbd40000 --  21% complete.Erasing at 0xbe40000 --  22% complete.Erasing at 0xbf40000 --  23% complete.Erasing at 0xc040000 --  24% complete.Erasing at 0xc140000 --  25% complete.Erasing at 0xc240000 --  26% complete.Erasing at 0xc340000 --  27% complete.Erasing at 0xc440000 --  28% complete.Erasing at 0xc540000 --  29% complete.Erasing at 0xc640000 --  30% complete.Erasing at 0xc740000 --  31% complete.Erasing at 0xc840000 --  32% complete.Erasing at 0xc940000 --  33% complete.Erasing at 0xca40000 --  34% complete.Erasing at 0xcb40000 --  35% complete.Erasing at 0xcc40000 --  36% complete.Erasing at 0xcd40000 --  37% complete.Erasing at 0xce40000 --  38% complete.Erasing at 0xcf40000 --  39% complete.Erasing at 0xd040000 --  40% complete.Erasing at 0xd140000 --  41% complete.Erasing at 0xd240000 --  42% complete.Erasing at 0xd340000 --  43% complete.Erasing at 0xd440000 --  44% complete.Erasing at 0xd540000 --  45% complete.Erasing at 0xd640000 --  46% complete.Erasing at 0xd740000 --  47% complete.Erasing at 0xd840000 --  48% complete.Erasing at 0xd940000 --  49% complete.Erasing at 0xda40000 --  50% complete.Erasing at 0xdb40000 --  51% complete.Erasing at 0xdc40000 --  52% complete.Erasing at 0xdd40000 --  53% complete.Erasing at 0xde40000 --  54% complete.Erasing at 0xdf40000 --  55% complete.Erasing at 0xe040000 --  56% complete.Erasing at 0xe140000 --  57% complete.Erasing at 0xe240000 --  58% complete.Erasing at 0xe340000 --  59% complete.Erasing at 0xe440000 --  60% complete.Erasing at 0xe540000 --  61% complete.Erasing at 0xe640000 --  62% complete.Erasing at 0xe740000 --  63% complete.Erasing at 0xe840000 --  64% complete.Erasing at 0xe940000 --  65% complete.Erasing at 0xea40000 --  66% complete.Erasing at 0xeb40000 --  67% complete.Erasing at 0xec40000 --  68% complete.Erasing at 0xed40000 --  69% complete.Erasing at 0xee40000 --  70% complete.Erasing at 0xef40000 --  71% complete.Erasing at 0xf040000 --  72% complete.Erasing at 0xf140000 --  73% complete.Erasing at 0xf240000 --  74% complete.Erasing at 0xf340000 --  75% complete.Erasing at 0xf440000 --  76% complete.Erasing at 0xf540000 --  77% complete.Erasing at 0xf640000 --  78% complete.Erasing at 0xf740000 --  79% complete.Erasing at 0xf840000 --  80% complete.Erasing at 0xf940000 --  81% complete.Erasing at 0xfa40000 --  82% complete.Erasing at 0xfb40000 --  83% complete.Erasing at 0xfc40000 --  84% complete.Erasing at 0xfd40000 --  85% complete.Erasing at 0xfe40000 --  86% complete.Erasing at 0xff40000 --  87% complete.Erasing at 0x10040000 --  88% complete.Erasing at 0x10140000 --  89% complete.Erasing at 0x10240000 --  90% complete.Erasing at 0x10340000 --  91% complete.Erasing at 0x10440000 --  92% complete.Erasing at 0x10540000 --  93% complete.Erasing at 0x10640000 --  94% complete.Erasing at 0x10740000 --  95% complete.Erasing at 0x10840000 --  96% complete.Erasing at 0x10940000 --  97% complete.Erasing at 0x10a40000 --  98% complete.Erasing at 0x10b40000 --  99% complete.Erasing at 0x10c40000 -- 100% complete.
-[20:30:55.515] nand_write ofs=0xa880000 len=0x23c0000
-[20:30:56.015] ........ wrote 37486592 bytes to 'rootfs2'
-[20:30:56.556] ROOTFS image header update idx(0) -> idx(1)
-[20:30:57.202] ************************
-[20:30:57.779] Update ROOTFS Header
-[20:30:58.394] ************************
-[20:30:59.095] ------------------------
-[20:30:59.531] hdr chksum  : 0x1bd3053c
-[20:31:00.104] magic       : 0xcafebabe
-[20:31:00.750] timstamp    : 0x0000000f
-[20:31:01.473] data chksum : 0x4f21ff00
-[20:31:02.276] data size   : 0x023c0000
-[20:31:03.010] ------------------------
-[20:31:03.311] CMNNV header update idx(0) -> idx(1)
-[20:31:03.626] ************************
-[20:31:03.954] CMNNV Header[0]
-[20:31:04.274] ************************
-[20:31:04.602] ------------------------
-[20:31:04.917] hdr chksum  : 0x7aa60755
-[20:31:05.245] magic       : 0xcafebabe
-[20:31:05.594] timstamp    : 0x0000003d
-[20:31:05.948] data chksum : 0x28d40cce
-[20:31:06.311] data size   : 0x0003ffc0
-[20:31:06.777] ------------------------
-[20:31:07.295] nand_write ofs=0x1580000 len=0x40000
-[20:31:07.829] .Starting download of 21622 bytes
-[20:31:08.335] downloading of 21622 bytes finished
-[20:31:08.786] Flashing raw image at offset 0x1380000
-[20:31:09.220] Erasing at 0x1380000 --  25% complete.Erasing at 0x13c0000 --  50% complete.Erasing at 0x1400000 --  75% complete.Erasing at 0x1440000 -- 100% complete.
-[20:31:09.686] nand_write ofs=0x1380000 len=0x5476
-[20:31:15.594] $ shell
-[20:31:15.955] e 21622 bytes to 'fdt2'
-[20:31:16.345] FDT image header update idx(0) -> idx(1)
-[20:31:16.709] ************************
-[20:31:17.093] Update FDT Header
-[20:31:17.461] ************************
-[20:31:17.563] ------------------------
-[20:31:17.578] hdr chksum  : 0x82020774
-[20:31:17.873] magic       : 0xcafebabe
-[20:31:17.884] timstamp    : 0x00000009
-[20:31:17.901] data chksum : 0xd771fadf
-[20:31:17.919] data size   : 0x00005476
-[20:31:17.926] ------------------------
-[20:31:17.943] CMNNV header update idx(1) -> idx(0)
-[20:31:17.958] ************************
-[20:31:17.966] CMNNV Header[1]
-[20:31:17.984] ************************
-[20:31:17.991] ------------------------
-[20:31:18.004] hdr chksum  : 0x6ba2070b
-[20:31:18.014] magic       : 0xcafebabe
-[20:31:19.031] timstamp    : 0x0000003e
-[20:31:19.047] data chksum : 0xc0840c3b
-[20:31:19.054] data size   : 0x0003ffc0
-[20:31:19.070] ------------------------
-[20:31:19.083] nand_write ofs=0x1480000 len=0x40000
-[20:31:19.096] .Starting download of 37486592 bytes
-[20:31:20.104] $ ifconfig
-[20:31:21.419] $ ping 192.168.0.1
-[20:31:22.739] $ (ctrl) Ctrl+C
-[20:31:24.053] $ ifconfig
-[20:31:25.365] $ lspci
-[20:31:26.681] $ cat /proc/interrupt
-[20:31:34.064] === TEST STOP ===

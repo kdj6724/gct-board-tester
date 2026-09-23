@@ -1,0 +1,294 @@
+{
+  "name": "wifi-connect",
+  "blocks": [
+    {
+      "id": "b2_8c988d",
+      "type": "LOOP_START",
+      "loop_id": "loop1_a6f584",
+      "params": {
+        "label": "WiFi 재시도",
+        "var_name": "attempt",
+        "start": "1",
+        "op": "<=",
+        "end": "5",
+        "step": "1",
+        "infinite": false
+      }
+    },
+    {
+      "id": "b5_f600a5",
+      "type": "LOOP_START",
+      "loop_id": "loop4_0789aa",
+      "params": {
+        "label": "SSID 스캔 대기(강제 재스캔)",
+        "var_name": "scan_try",
+        "start": "1",
+        "op": "<=",
+        "end": "4",
+        "step": "1",
+        "infinite": false
+      }
+    },
+    {
+      "id": "b8_016d2a",
+      "type": "IF_START",
+      "if_id": "if7_12a32f",
+      "params": {
+        "label": "SSID 스캔됨? (강제 재스캔)",
+        "source": "exec",
+        "pattern": "",
+        "regex": false,
+        "timeout": 20.0,
+        "cmd": "powershell -NoProfile -Command \"Disable-NetAdapter -Name 'Wi-Fi' -Confirm:$false; Start-Sleep -Seconds 2; Enable-NetAdapter -Name 'Wi-Fi' -Confirm:$false; Start-Sleep -Seconds 3; netsh wlan show networks\"",
+        "check_pattern": "SYNC4384_5G",
+        "files": [
+          "",
+          "",
+          "",
+          "",
+          ""
+        ]
+      }
+    },
+    {
+      "id": "b11_2de5d8",
+      "type": "BREAK",
+      "params": {}
+    },
+    {
+      "id": "b9_90d156",
+      "type": "IF_ELSE",
+      "if_id": "if7_12a32f",
+      "params": {}
+    },
+    {
+      "id": "b10_007ae5",
+      "type": "IF_END",
+      "if_id": "if7_12a32f",
+      "params": {}
+    },
+    {
+      "id": "b12_9c99bc",
+      "type": "DELAY",
+      "params": {
+        "seconds": 2.0
+      }
+    },
+    {
+      "id": "b6_858563",
+      "type": "LOOP_END",
+      "loop_id": "loop4_0789aa",
+      "params": {}
+    },
+    {
+      "id": "b14_9e3a67",
+      "type": "IF_START",
+      "if_id": "if13_9f6fa1",
+      "params": {
+        "label": "스캔 결과 확인",
+        "source": "exec",
+        "pattern": "",
+        "regex": false,
+        "timeout": 20.0,
+        "cmd": "powershell -NoProfile -Command \"Disable-NetAdapter -Name 'Wi-Fi' -Confirm:$false; Start-Sleep -Seconds 2; Enable-NetAdapter -Name 'Wi-Fi' -Confirm:$false; Start-Sleep -Seconds 3; netsh wlan show networks\"",
+        "check_pattern": "SYNC4384_5G",
+        "files": [
+          "",
+          "",
+          "",
+          "",
+          ""
+        ]
+      }
+    },
+    {
+      "id": "b17_2b3b63",
+      "type": "EXEC",
+      "params": {
+        "cmd": "netsh wlan add profile filename=\"wifi\\Wi-Fi-SYNC4384_5G.xml\"",
+        "timeout": 15.0,
+        "on_timeout": "continue",
+        "check_pattern": "",
+        "regex": false,
+        "files": [
+          "",
+          "",
+          "",
+          "",
+          ""
+        ]
+      }
+    },
+    {
+      "id": "b18_980e0d",
+      "type": "EXEC",
+      "params": {
+        "cmd": "netsh wlan connect name=\"SYNC4384_5G\" ssid=\"SYNC4384_5G\"",
+        "timeout": 20.0,
+        "on_timeout": "continue",
+        "check_pattern": "",
+        "regex": false,
+        "files": [
+          "",
+          "",
+          "",
+          "",
+          ""
+        ]
+      }
+    },
+    {
+      "id": "b19_98a34c",
+      "type": "DELAY",
+      "params": {
+        "seconds": 5.0
+      }
+    },
+    {
+      "id": "b21_5547d9",
+      "type": "IF_START",
+      "if_id": "if20_ac6566",
+      "params": {
+        "label": "WiFi 연결 확인",
+        "source": "exec",
+        "pattern": "",
+        "regex": false,
+        "timeout": 10.0,
+        "cmd": "netsh wlan show interfaces",
+        "check_pattern": "SYNC4384_5G",
+        "files": [
+          "",
+          "",
+          "",
+          "",
+          ""
+        ]
+      }
+    },
+    {
+      "id": "b24_59943e",
+      "type": "BREAK",
+      "params": {}
+    },
+    {
+      "id": "b22_6f28df",
+      "type": "IF_ELSE",
+      "if_id": "if20_ac6566",
+      "params": {}
+    },
+    {
+      "id": "b30_4c6214",
+      "type": "PRESET",
+      "params": {
+        "preset_name": "openwrt-boot",
+        "blocks": [
+          {
+            "id": "b31_cb0b2e",
+            "type": "POWER",
+            "params": {
+              "state": "off",
+              "delay_after": 2.0
+            }
+          },
+          {
+            "id": "b32_db631f",
+            "type": "POWER",
+            "params": {
+              "state": "on",
+              "delay_after": 0.0
+            }
+          },
+          {
+            "id": "b33_82991b",
+            "type": "DELAY",
+            "params": {
+              "seconds": 5.0
+            }
+          },
+          {
+            "id": "b34_81c074",
+            "type": "KNOCK",
+            "params": {
+              "text": "",
+              "append_enter": true,
+              "interval": 2.0,
+              "pattern": "DM>",
+              "regex": false,
+              "timeout": 60.0,
+              "on_timeout": "stop"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "b23_8c3a49",
+      "type": "IF_END",
+      "if_id": "if20_ac6566",
+      "params": {}
+    },
+    {
+      "id": "b15_697450",
+      "type": "IF_ELSE",
+      "if_id": "if13_9f6fa1",
+      "params": {}
+    },
+    {
+      "id": "b25_67eaea",
+      "type": "PRESET",
+      "params": {
+        "preset_name": "openwrt-boot",
+        "blocks": [
+          {
+            "id": "b26_fd8ea9",
+            "type": "POWER",
+            "params": {
+              "state": "off",
+              "delay_after": 2.0
+            }
+          },
+          {
+            "id": "b27_07a639",
+            "type": "POWER",
+            "params": {
+              "state": "on",
+              "delay_after": 0.0
+            }
+          },
+          {
+            "id": "b28_a51098",
+            "type": "DELAY",
+            "params": {
+              "seconds": 5.0
+            }
+          },
+          {
+            "id": "b29_b3d584",
+            "type": "KNOCK",
+            "params": {
+              "text": "",
+              "append_enter": true,
+              "interval": 2.0,
+              "pattern": "DM>",
+              "regex": false,
+              "timeout": 60.0,
+              "on_timeout": "stop"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "b16_a38d9e",
+      "type": "IF_END",
+      "if_id": "if13_9f6fa1",
+      "params": {}
+    },
+    {
+      "id": "b3_59f4df",
+      "type": "LOOP_END",
+      "loop_id": "loop1_a6f584",
+      "params": {}
+    }
+  ]
+}

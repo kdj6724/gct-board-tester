@@ -33,6 +33,11 @@ UPLOAD_SCRIPT = "UPLOAD_SCRIPT"
 EXEC = "EXEC"  # PC 에서 로컬 프로그램(.exe 등)을 실행하고 출력을 캡처하는 블록.
                # UART 가 아니라 subprocess 로 도는 것이라 보드와는 별개 경로다
                # (예: fastboot.exe 로 USB 를 통해 타겟보드에 이미지 flash).
+BREAK = "BREAK"  # 가장 가까운 바깥쪽 Loop 를 즉시 빠져나간다(파이썬 for/while 의 break 와
+                 # 동일한 개념). If 블록의 참/거짓 경로 안에 넣어서 "성공하면 재시도 Loop
+                 # 를 그만 돌고 다음으로 넘어간다" 같은 흐름을 만들 때 쓴다 - Loop 밖(또는
+                 # Loop 안에 안 감싸인 상태)에서 실행되면 그냥 전체 시퀀스가 끝난 것으로
+                 # 처리한다(에러로 죽지 않음). 파라미터 없음.
 LOOP_START = "LOOP_START"
 LOOP_END = "LOOP_END"
 IF_START = "IF_START"
@@ -53,7 +58,7 @@ PRESET = "PRESET"  # 저장된 프리셋(블록 묶음)을 캔버스에 놓은 �
 # Knock 은 Input 과 달리 응답이 올 때까지 일정 간격으로 같은 입력을 반복 전송한다
 # (한 번 찔러서는 안 깨어나는 프롬프트를 대비 - 보통 Input+Check 조합으로 되지만,
 # "한 번만 보내고 끝"인 Input 과 구분하려고 별도 블록으로 분리함).
-PALETTE_TYPES = [POWER, WAIT_STRING, SEND, KNOCK, CTRL, DELAY, UPLOAD_SCRIPT, EXEC, "LOOP", "IF"]
+PALETTE_TYPES = [POWER, WAIT_STRING, SEND, KNOCK, CTRL, DELAY, UPLOAD_SCRIPT, EXEC, "LOOP", "IF", BREAK]
 
 # 블록 타입별 표시 정보 (라벨 / 색상)
 BLOCK_META = {
@@ -66,6 +71,7 @@ BLOCK_META = {
     DELAY:         {"label": "⏱  Delay",          "color": "#6c7086", "text_color": "#cdd6f4"},
     UPLOAD_SCRIPT: {"label": "\U0001f4c4 Script", "color": "#94e2d5", "text_color": "#1e1e2e"},
     EXEC:          {"label": "\U0001f4bb Exec",  "color": "#74c7ec", "text_color": "#1e1e2e"},
+    BREAK:         {"label": "⏹ Break (Loop 종료)", "color": "#f5c2e7", "text_color": "#1e1e2e"},
     LOOP_START:    {"label": "\U0001f501 Loop",         "color": "#cba6f7", "text_color": "#1e1e2e"},
     LOOP_END:      {"label": "└─ End Loop",   "color": "#cba6f7", "text_color": "#1e1e2e"},
     IF_START:      {"label": "\U0001f500 If",           "color": "#fab387", "text_color": "#1e1e2e"},
@@ -110,11 +116,16 @@ def default_params(block_type: str) -> dict:
     if block_type == EXEC:
         # cmd 는 명령 프롬프트에 치듯이 경로+인자를 한 줄로 그대로 적는다(예:
         # "Y:\...\fastboot.exe flash linux K:\...\Image"). {var} 로 Loop 변수도 쓸 수 있음.
+        # files 는 "파일 선택" 으로 고른 경로 최대 5개 - 명령어 안에 <파일1>~<파일5> 로
+        # 적어두면 실행 직전에 그 경로 문자열로 그대로 치환된다({var} 와는 별개 문법 -
+        # 매번 날짜 등으로 바뀌는 긴 경로를 파일 탐색기로 골라서 넣고 싶다는 요청으로 추가함).
         # check_pattern 을 비워두면 exit code(0=성공)만으로 판정하고, 채우면 다른
         # Check/Wait String 블록들과 똑같이 "출력에 이 문자열이 있는가" 로 판정한다 -
         # 툴 전체에서 성공/실패를 확인하는 방식을 일관되게 가져가려고 추가함.
         return {"cmd": "", "timeout": 60.0, "on_timeout": "stop",
-                "check_pattern": "", "regex": False}
+                "check_pattern": "", "regex": False, "files": ["", "", "", "", ""]}
+    if block_type == BREAK:
+        return {}
     if block_type == LOOP_START:
         # for (var_name = start; var_name OP end; var_name += step) 와 동일한 개념.
         # infinite=True 면 조건 무시하고 Stop 누를 때까지 반복.
@@ -123,9 +134,25 @@ def default_params(block_type: str) -> dict:
     if block_type == LOOP_END:
         return {}
     if block_type == IF_START:
-        # Check 블록과 동일한 개념: pattern 이 timeout 안에 나타나면 참(True) 경로,
-        # 못 찾으면 거짓(False) 경로로 분기한다 (stop/continue 개념 없음 - 항상 둘 중 하나로 진행).
-        return {"label": "If", "pattern": "", "regex": False, "timeout": 10.0}
+        # source="serial": Check 블록과 동일한 개념 - UART 로 pattern 이 timeout 안에
+        # 나타나면 참(True) 경로, 못 찾으면 거짓(False) 경로로 분기한다.
+        # send_text(source="serial" 전용, 선택): 판정하기 전에 먼저 이 문자열을 보드에
+        # 보낸다(비어있으면 그냥 아무것도 안 보내고 대기만 함 - 기존 방식 그대로).
+        # SEND 블록으로 먼저 커맨드를 보내고 그 다음 블록으로 이 If 를 따로 두면, SEND 가
+        # check 없이 실행될 때 자동으로 따라붙는 응답 캡처(auto-capture)가 그 사이에
+        # 응답을 먼저 다 읽어서 로그로 흘려보내 버리고, 뒤이은 If 의 read_until 은 이미
+        # 빈 버퍼만 보게 되는 문제가 실측으로 확인됨(예: "가짜 명령 쳐서 응답으로 현재
+        # 쉘 판별" 같은 프리셋에서 응답이 분명히 왔는데도 타임아웃으로 거짓 판정되던
+        # 버그). send_text 를 쓰면 이 If 블록 하나가 "보내고 -> 바로 그 자리에서 응답
+        # 대기"까지 원자적으로 처리해서 그 사이에 가로채가는 단계가 없다.
+        # source="exec": Exec 블록과 동일한 개념 - PC 에서 cmd 를 실행해서, check_pattern
+        # 이 출력에 있는지(비어있으면 exit code == 0 인지)로 참/거짓을 판정한다. netsh 같은
+        # 로컬 명령 결과(성공/실패)로 분기하고 싶다는 요청으로 추가함 - 예: WiFi 접속
+        # 성공/실패에 따라 다음 블록을 다르게 타고 싶은 경우.
+        # 두 source 모두 stop/continue 개념 없음 - 항상 둘 중 하나로 진행(테스트를 안 멈춤).
+        return {"label": "If", "source": "serial",
+                "pattern": "", "regex": False, "timeout": 10.0, "send_text": "",
+                "cmd": "", "check_pattern": "", "files": ["", "", "", "", ""]}
     if block_type in (IF_ELSE, IF_END):
         return {}
     if block_type == PRESET:

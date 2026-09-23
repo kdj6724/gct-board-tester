@@ -1,0 +1,40 @@
+{
+  "name": "set-dm-shell",
+  "blocks": [
+    {
+      "id": "b7_57b5d8",
+      "type": "IF_START",
+      "if_id": "if6_da40dd",
+      "params": {
+        "label": "현재 DM> 상태? (Unknown command 응답으로 판별)",
+        "source": "serial",
+        "pattern": "Unknown command",
+        "regex": false,
+        "timeout": 2.0,
+        "send_text": "gct_shell_probe_9f3"
+      }
+    },
+    {
+      "id": "b8_d46f51",
+      "type": "IF_ELSE",
+      "if_id": "if6_da40dd",
+      "params": {}
+    },
+    {
+      "id": "b10_b03c35",
+      "type": "SEND",
+      "params": {
+        "text": "exit",
+        "append_enter": true,
+        "delay_after": 1.0,
+        "check": null
+      }
+    },
+    {
+      "id": "b9_0db8c9",
+      "type": "IF_END",
+      "if_id": "if6_da40dd",
+      "params": {}
+    }
+  ]
+}

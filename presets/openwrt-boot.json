@@ -1,0 +1,33 @@
+{
+  "name": "openwrt-boot",
+  "blocks": [
+    {
+      "id": "b1_17816b",
+      "type": "POWER",
+      "params": { "state": "off", "delay_after": 2.0 }
+    },
+    {
+      "id": "b2_d15c93",
+      "type": "POWER",
+      "params": { "state": "on", "delay_after": 0.0 }
+    },
+    {
+      "id": "b3_f55548",
+      "type": "DELAY",
+      "params": { "seconds": 5.0 }
+    },
+    {
+      "id": "b4_d954d2",
+      "type": "KNOCK",
+      "params": {
+        "text": "",
+        "append_enter": true,
+        "interval": 2.0,
+        "pattern": "DM>",
+        "regex": false,
+        "timeout": 60.0,
+        "on_timeout": "stop"
+      }
+    }
+  ]
+}

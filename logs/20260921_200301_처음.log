@@ -1,4 +1,0 @@
-[20:03:01.669] === TEST START === profile: 처음
-[20:03:08.238] $ (exec) Y:\work\gct-board-tester\fastboot\fastboot.exe flash linux K:\ENG\ENG05\CS\Daily_build\20260919\GDM7275X\linuxos_master\Image\Image
-[20:03:08.495] < waiting for any device >
-[20:03:10.806] === TEST STOP ===

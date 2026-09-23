@@ -172,6 +172,8 @@ def summarize(block: dict) -> str:
         return f"{p.get('seconds',0):g}s"
     if t == st.UPLOAD_SCRIPT:
         return p.get("target_path", "")
+    if t == st.BREAK:
+        return "가장 가까운 Loop 를 즉시 빠져나감"
     if t == st.EXEC:
         c = p.get("cmd", "")
         # 경로가 기니까 파일명(맨 뒤 구간)만 보여주는 게 오히려 한눈에 안 들어와서,
@@ -481,10 +483,19 @@ class BlockEditorWindow(tk.Toplevel):
     def __init__(self, parent, blocks: list[dict], on_save, exclude_preset: str | None = None):
         super().__init__(parent)
         self.title("테스트 시퀀스 편집 (블록 조립)")
-        self.geometry("980x680")
+        # 마지막으로 조절한 창 크기를 기억해뒀다가 그대로 띄운다(없으면 기본값) -
+        # 메인 윈도우는 이미 이렇게 되는데 이 창만 안 돼서 "여기는 사이즈가 저장
+        # 안 된다"는 요청으로 추가함. main_app.py 의 메인 윈도우와 같은
+        # settings.json 을 쓰지만 서로 다른 키(block_editor_geometry)를 쓰고,
+        # cm.update_settings() 로 "지금 파일에 있는 값 + 이 키만" 병합해서 저장하므로
+        # 메인 윈도우 쪽 저장과 서로 덮어쓰지 않는다.
+        self.geometry(cm.load_settings().get("block_editor_geometry") or "980x680")
+        self._geometry_after_id = None
         self.configure(bg=BG)
         self.transient(parent)
         self.grab_set()
+        self.bind("<Configure>", self._on_configure)
+        self.protocol("WM_DELETE_WINDOW", self._on_close_window)
 
         self.blocks: list[dict] = copy.deepcopy(blocks)
         self.on_save = on_save
@@ -519,7 +530,7 @@ class BlockEditorWindow(tk.Toplevel):
         tk.Button(top, text="저장", command=self._save, font=("Consolas", 10, "bold"),
                   bg=ACC, fg="#1e1e2e", relief="flat", bd=0, padx=14, pady=5,
                   cursor="hand2").pack(side="right")
-        tk.Button(top, text="취소", command=self.destroy, font=("Consolas", 10),
+        tk.Button(top, text="취소", command=self._on_close_window, font=("Consolas", 10),
                   bg=FIELD, fg=FG, relief="flat", bd=0, padx=14, pady=5,
                   cursor="hand2").pack(side="right", padx=(0, 6))
         tk.Button(top, text="\U0001f4e6 프리셋으로 저장",
@@ -1033,12 +1044,38 @@ class BlockEditorWindow(tk.Toplevel):
         self.blocks = unwrap_container(self.blocks, index)
         self.redraw()
 
+    # ---- 창 크기 저장 (메인 윈도우와 동일한 디바운스 방식, main_app.py 참고) -------
+    def _on_configure(self, event):
+        if event.widget is not self:
+            return
+        if self._geometry_after_id is not None:
+            self.after_cancel(self._geometry_after_id)
+        self._geometry_after_id = self.after(500, self._save_editor_geometry)
+
+    def _save_editor_geometry(self):
+        self._geometry_after_id = None
+        cm.update_settings({"block_editor_geometry": self.geometry()})
+
+    def _flush_geometry(self):
+        """디바운스(500ms)가 끝나기 전에 창이 닫히는 경우를 위해, 닫기 직전에
+        한 번 더 확실히 저장한다(메인 윈도우의 _on_close 와 동일한 이유)."""
+        if self._geometry_after_id is not None:
+            self.after_cancel(self._geometry_after_id)
+            self._geometry_after_id = None
+        self._save_editor_geometry()
+
+    def _on_close_window(self):
+        """취소 버튼 또는 창의 X 버튼(WM_DELETE_WINDOW) 공용 - 저장 없이 닫는다."""
+        self._flush_geometry()
+        self.destroy()
+
     # ---- 저장 ------------------------------------------------------------
     def _save(self):
         err = st.validate(self.blocks)
         if err:
             self._toast(err)
             return
+        self._flush_geometry()
         self.on_save(self.blocks)
         self.destroy()
 

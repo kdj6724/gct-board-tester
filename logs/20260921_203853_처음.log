@@ -1,4 +1,0 @@
-[20:38:53.847] === TEST START === profile: 처음
-[20:38:58.184] $ (knock every 0.5s) 
-[20:38:58.194] === ERROR: could not open port 'COM4': PermissionError(13, '액세스가 거부되었습니다.', None, 5) ===
-[20:38:58.198] === TEST STOP ===

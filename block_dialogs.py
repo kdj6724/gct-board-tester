@@ -316,14 +316,37 @@ def edit_upload_script(parent, params: dict):
 
 
 def edit_exec(parent, params: dict):
-    d = _Dialog(parent, "Exec 블록", height=580)
+    d = _Dialog(parent, "Exec 블록", width=540, height=820)
     d._label("실행할 명령어 - 명령 프롬프트에 치듯이 경로+인자를 한 줄로 그대로 적으세요\n"
-             "(예: Y:\\work\\gct-board-tester\\fastboot\\fastboot.exe flash linux "
-             "K:\\...\\Image) - {var} 로 Loop 변수도 쓸 수 있습니다")
+             "(예: <파일1> flash linux <파일2>) - {var} 로 Loop 변수도, 아래 \"파일 선택\"으로 "
+             "고른 경로는 <파일1>~<파일5> 로 쓸 수 있습니다")
     txt = scrolledtext.ScrolledText(d.body, height=4, width=44, font=("Consolas", 11), bg=FIELD, fg=FG,
                                      insertbackground=FG, relief="flat", bd=4, wrap="none")
     txt.pack(fill="x")
     txt.insert("1.0", params.get("cmd", ""))
+
+    d._label("파일 선택 (매번 바뀌는 긴 경로를 직접 타이핑하는 대신 탐색기로 골라서 "
+             "위 명령어에 <파일1>~<파일5> 로 넣어 쓰세요 - 안 쓰는 슬롯은 비워두면 됩니다)")
+    existing_files = list(params.get("files") or [])
+    existing_files += [""] * (5 - len(existing_files))
+    file_vars = []
+    for i in range(5):
+        row = tk.Frame(d.body, bg=BG)
+        row.pack(fill="x", pady=(3, 0))
+        tk.Label(row, text=f"<파일{i + 1}>", font=("Consolas", 10, "bold"), bg=BG, fg=MUTE,
+                 width=8, anchor="w").pack(side="left")
+        v = tk.StringVar(value=existing_files[i])
+        tk.Entry(row, textvariable=v, font=("Consolas", 10), bg=FIELD, fg=FG,
+                 insertbackground=FG, relief="flat", bd=4).pack(
+            side="left", fill="x", expand=True, padx=(4, 4))
+
+        def _browse(v=v):
+            path = filedialog.askopenfilename(title="파일 선택")
+            if path:
+                v.set(path)
+        tk.Button(row, text="\U0001f4c2 찾아보기", command=_browse, font=("Consolas", 9),
+                 bg=FIELD, fg=FG, relief="flat", bd=0, padx=8, pady=2, cursor="hand2").pack(side="left")
+        file_vars.append(v)
 
     d._label("타임아웃 (초) - 이 시간 안에 안 끝나면 강제 종료합니다")
     timeout = tk.StringVar(value=str(params.get("timeout", 60)))
@@ -345,28 +368,114 @@ def edit_exec(parent, params: dict):
     def collect():
         return {"cmd": txt.get("1.0", "end").rstrip("\n"), "timeout": float(timeout.get()),
                  "on_timeout": on_timeout.get(), "check_pattern": pattern.get(),
-                 "regex": bool(regex.get())}
+                 "regex": bool(regex.get()), "files": [v.get() for v in file_vars]}
     d.collect = collect
     return d.show()
 
 
 def edit_if(parent, params: dict):
-    d = _Dialog(parent, "If 블록", height=350)
+    d = _Dialog(parent, "If 블록", width=520, height=560)
     d._label("라벨")
     label = tk.StringVar(value=params.get("label", "If"))
     d._entry(label, width=20)
-    d._label("검사할 문자열 (regex 체크 시 정규식, '|' 로 복수 매칭 가능)")
-    pattern = tk.StringVar(value=params.get("pattern", ""))
-    d._entry(pattern, width=40)
-    regex = tk.BooleanVar(value=params.get("regex", False))
-    d._check("정규식으로 취급", regex)
+
+    d._label("무엇을 보고 참/거짓을 판정할지")
+    source = tk.StringVar(value=params.get("source", "serial"))
+    d._radio_row(source, [("serial", "보드 UART 출력"), ("exec", "PC 명령 실행 결과")])
+
     timeout = tk.StringVar(value=str(params.get("timeout", 10)))
-    d._label("타임아웃 (초) - 이 안에 문자열이 나타나면 참, 아니면 거짓 경로로 진행")
-    d._entry(timeout, width=10)
+
+    # ── source="serial": 기존 방식 그대로 - UART 에서 문자열 대기 ──
+    serial_frame = tk.Frame(d.body, bg=BG)
+    tk.Label(serial_frame, text="판정 전에 먼저 보낼 문자열 (선택 - 비우면 그냥 대기만 함). "
+              "SEND 블록을 따로 앞에 두면 그 SEND 의 자동 응답 캡처가 이 If 가 볼 응답을 "
+              "먼저 가로채가 버릴 수 있어서, '보내고 확인'을 한 블록에서 같이 처리하고 "
+              "싶을 때 여기 씁니다", font=("Consolas", 10), bg=BG, fg=MUTE,
+              wraplength=d.width - 48, justify="left").pack(anchor="w", pady=(8, 2), fill="x")
+    send_text = tk.StringVar(value=params.get("send_text", ""))
+    tk.Entry(serial_frame, textvariable=send_text, width=40, font=("Consolas", 11), bg=FIELD, fg=FG,
+              insertbackground=FG, relief="flat", bd=5).pack(anchor="w", fill="x")
+
+    tk.Label(serial_frame, text="검사할 문자열 (regex 체크 시 정규식, '|' 로 복수 매칭 가능)",
+              font=("Consolas", 10), bg=BG, fg=MUTE, wraplength=d.width - 48,
+              justify="left").pack(anchor="w", pady=(8, 2), fill="x")
+    pattern = tk.StringVar(value=params.get("pattern", ""))
+    tk.Entry(serial_frame, textvariable=pattern, width=40, font=("Consolas", 11), bg=FIELD, fg=FG,
+              insertbackground=FG, relief="flat", bd=5).pack(anchor="w", fill="x")
+    serial_regex = tk.BooleanVar(value=params.get("regex", False))
+    tk.Checkbutton(serial_frame, text="정규식으로 취급", variable=serial_regex, font=("Consolas", 10),
+                    bg=BG, fg=FG, activebackground=BG, selectcolor=FIELD).pack(anchor="w", pady=(6, 0))
+
+    # ── source="exec": Exec 블록과 동일하게 PC 명령을 돌려서 check_pattern/exit code 로 판정 ──
+    exec_frame = tk.Frame(d.body, bg=BG)
+    tk.Label(exec_frame, text="실행할 명령어 - {var} 로 Loop 변수, <파일1>~<파일5> 로 아래 "
+              "\"파일 선택\"으로 고른 경로를 쓸 수 있습니다", font=("Consolas", 10), bg=BG, fg=MUTE,
+              wraplength=d.width - 48, justify="left").pack(anchor="w", pady=(8, 2), fill="x")
+    cmd_txt = scrolledtext.ScrolledText(exec_frame, height=3, width=44, font=("Consolas", 11),
+                                          bg=FIELD, fg=FG, insertbackground=FG, relief="flat", bd=4,
+                                          wrap="none")
+    cmd_txt.pack(fill="x")
+    cmd_txt.insert("1.0", params.get("cmd", ""))
+
+    existing_files = list(params.get("files") or [])
+    existing_files += [""] * (5 - len(existing_files))
+    file_vars = []
+    for i in range(5):
+        row = tk.Frame(exec_frame, bg=BG)
+        row.pack(fill="x", pady=(3, 0))
+        tk.Label(row, text=f"<파일{i + 1}>", font=("Consolas", 10, "bold"), bg=BG, fg=MUTE,
+                  width=8, anchor="w").pack(side="left")
+        v = tk.StringVar(value=existing_files[i])
+        tk.Entry(row, textvariable=v, font=("Consolas", 10), bg=FIELD, fg=FG,
+                  insertbackground=FG, relief="flat", bd=4).pack(
+            side="left", fill="x", expand=True, padx=(4, 4))
+
+        def _browse(v=v):
+            path = filedialog.askopenfilename(title="파일 선택")
+            if path:
+                v.set(path)
+        tk.Button(row, text="\U0001f4c2 찾아보기", command=_browse, font=("Consolas", 9),
+                   bg=FIELD, fg=FG, relief="flat", bd=0, padx=8, pady=2, cursor="hand2").pack(side="left")
+        file_vars.append(v)
+
+    tk.Label(exec_frame, text="확인할 문자열 (비우면 exit code==0 로 판정 - 채우면 Exec "
+              "블록과 동일하게 출력에서 이 문자열이 있는지로 판정)", font=("Consolas", 10),
+              bg=BG, fg=MUTE, wraplength=d.width - 48, justify="left").pack(anchor="w", pady=(10, 2), fill="x")
+    check_pattern = tk.StringVar(value=params.get("check_pattern", ""))
+    tk.Entry(exec_frame, textvariable=check_pattern, width=40, font=("Consolas", 11), bg=FIELD, fg=FG,
+              insertbackground=FG, relief="flat", bd=5).pack(anchor="w", fill="x")
+    exec_regex = tk.BooleanVar(value=params.get("regex", False))
+    tk.Checkbutton(exec_frame, text="정규식으로 취급", variable=exec_regex, font=("Consolas", 10),
+                    bg=BG, fg=FG, activebackground=BG, selectcolor=FIELD).pack(anchor="w", pady=(6, 0))
+
+    timeout_frame = tk.Frame(d.body, bg=BG)
+    tk.Label(timeout_frame, text="타임아웃 (초) - 이 안에 참으로 판정되면 참, 아니면(시간 "
+              "초과/실패) 거짓 경로로 진행", font=("Consolas", 10), bg=BG, fg=MUTE,
+              wraplength=d.width - 48, justify="left").pack(anchor="w", pady=(10, 2), fill="x")
+    tk.Entry(timeout_frame, textvariable=timeout, width=10, font=("Consolas", 11), bg=FIELD, fg=FG,
+              insertbackground=FG, relief="flat", bd=5).pack(anchor="w")
+    timeout_frame.pack(fill="x")
+
+    def _update_visibility(*_):
+        if source.get() == "exec":
+            serial_frame.pack_forget()
+            exec_frame.pack(fill="x", before=timeout_frame)
+        else:
+            exec_frame.pack_forget()
+            serial_frame.pack(fill="x", before=timeout_frame)
+
+    source.trace_add("write", _update_visibility)
+    _update_visibility()
 
     def collect():
-        return {"label": label.get() or "If", "pattern": pattern.get(),
-                 "regex": bool(regex.get()), "timeout": float(timeout.get())}
+        return {"label": label.get() or "If", "source": source.get(),
+                 "pattern": pattern.get(),
+                 "regex": bool(exec_regex.get() if source.get() == "exec" else serial_regex.get()),
+                 "timeout": float(timeout.get()),
+                 "send_text": send_text.get(),
+                 "cmd": cmd_txt.get("1.0", "end").rstrip("\n"),
+                 "check_pattern": check_pattern.get(),
+                 "files": [v.get() for v in file_vars]}
     d.collect = collect
     return d.show()
 
