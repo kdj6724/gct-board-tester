@@ -98,12 +98,16 @@ def edit_power(parent, params: dict):
 
 
 def edit_wait_string(parent, params: dict):
-    d = _Dialog(parent, "String Check 블록", height=340)
+    d = _Dialog(parent, "String Check 블록", height=420)
     pattern = tk.StringVar(value=params.get("pattern", ""))
     d._label("검사할 문자열 (regex 체크 시 정규식, '|' 로 복수 매칭 가능)")
     d._entry(pattern, width=40)
     regex = tk.BooleanVar(value=params.get("regex", False))
     d._check("정규식으로 취급", regex)
+    fail = tk.StringVar(value=params.get("fail_pattern", ""))
+    d._label("실패 패턴 (선택, 항상 정규식) - 기다리는 중 이게 나오면 즉시 실패+중단 "
+             "(예: Kernel panic|Oops|Unable to handle)")
+    d._entry(fail, width=40)
     timeout = tk.StringVar(value=str(params.get("timeout", 30)))
     d._label("타임아웃 (초)")
     d._entry(timeout)
@@ -113,6 +117,7 @@ def edit_wait_string(parent, params: dict):
 
     def collect():
         return {"pattern": pattern.get(), "regex": bool(regex.get()),
+                 "fail_pattern": fail.get().strip(),
                  "timeout": float(timeout.get()), "on_timeout": on_timeout.get()}
     d.collect = collect
     return d.show()
@@ -182,7 +187,7 @@ def edit_send(parent, params: dict):
 
 
 def edit_knock(parent, params: dict):
-    d = _Dialog(parent, "Knock 블록", height=590)
+    d = _Dialog(parent, "Knock 블록", height=670)
     d._label("보낼 문자열 / 키 입력 ({var} 등 루프 변수 사용 가능, 비워두면 Enter만 전송) - "
              "Input과 달리 아래 문자열을 찾을 때까지 반복 전송합니다")
     txt = scrolledtext.ScrolledText(d.body, height=3, width=44, font=("Consolas", 11), bg=FIELD, fg=FG,
@@ -202,6 +207,9 @@ def edit_knock(parent, params: dict):
     d._entry(pattern, width=40)
     regex = tk.BooleanVar(value=params.get("regex", False))
     d._check("정규식으로 취급", regex)
+    fail = tk.StringVar(value=params.get("fail_pattern", ""))
+    d._label("실패 패턴 (선택, 항상 정규식) - 기다리는 중 이게 나오면 즉시 실패+중단")
+    d._entry(fail, width=40)
     timeout = tk.StringVar(value=str(params.get("timeout", 30)))
     d._label("전체 타임아웃 (초) - 이 시간 안에 못 찾으면 실패")
     d._entry(timeout, width=10)
@@ -212,8 +220,8 @@ def edit_knock(parent, params: dict):
     def collect():
         return {"text": txt.get("1.0", "end").rstrip("\n"), "append_enter": bool(enter.get()),
                  "interval": float(interval.get()), "pattern": pattern.get(),
-                 "regex": bool(regex.get()), "timeout": float(timeout.get()),
-                 "on_timeout": on_timeout.get()}
+                 "regex": bool(regex.get()), "fail_pattern": fail.get().strip(),
+                 "timeout": float(timeout.get()), "on_timeout": on_timeout.get()}
     d.collect = collect
     return d.show()
 

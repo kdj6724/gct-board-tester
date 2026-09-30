@@ -12,9 +12,14 @@
       "params": { "state": "on", "delay_after": 0.0 }
     },
     {
-      "id": "b3_f55548",
-      "type": "DELAY",
-      "params": { "seconds": 5.0 }
+      "id": "b3_wait_kernel",
+      "type": "WAIT_STRING",
+      "params": {
+        "pattern": "Starting kernel",
+        "regex": false,
+        "timeout": 30.0,
+        "on_timeout": "stop"
+      }
     },
     {
       "id": "b4_d954d2",
@@ -22,10 +27,10 @@
       "params": {
         "text": "",
         "append_enter": true,
-        "interval": 2.0,
-        "pattern": "DM>",
-        "regex": false,
-        "timeout": 60.0,
+        "interval": 3.0,
+        "pattern": "(DM>|#) ?$",
+        "regex": true,
+        "timeout": 120.0,
         "on_timeout": "stop"
       }
     }

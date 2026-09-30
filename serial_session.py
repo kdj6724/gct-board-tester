@@ -10,6 +10,32 @@ import re
 import time
 
 
+# ─────────────────────────────────────────────
+# 블록 사이에 잘리는 "덜 끝난 줄" 보존
+# ─────────────────────────────────────────────
+# read_* 함수들은 256바이트씩 읽다가 패턴을 찾으면 바로 반환한다. 그때 같은 청크 안에
+# 아직 줄바꿈이 안 온 뒷부분(예: 커널 패닉 트레이스의 "Internal error: Oops: 9")이
+# 있으면 지금까지는 그냥 버려져서, 다음 블록 로그에는 "6000005" 처럼 잘린 꼬리만
+# 남았다(부팅 반복 테스트 시뮬레이션에서 확인). 그 조각을 ser 객체에 붙여두었다가 다음
+# read_* 호출이 이어서 한 줄로 완성해 로그에 남긴다. 로그(on_line)용으로만 쓰고 패턴
+# 매칭(buf)에는 넣지 않는다 - 매칭 동작은 예전과 완전히 같게 유지하기 위함(남은
+# 프롬프트 조각 "# " 이 다음 Check 에서 바로 매칭돼버리는 식의 동작 변화 방지).
+def _take_pending(ser) -> str:
+    return getattr(ser, "_gbt_pending", "") or ""
+
+
+def _put_pending(ser, text: str):
+    try:
+        ser._gbt_pending = text
+    except Exception:  # noqa: BLE001
+        pass
+
+
+def clear_pending(ser):
+    """reset_input_buffer() 로 수신 버퍼를 비울 때 같이 불러서 남은 조각도 버린다."""
+    _put_pending(ser, "")
+
+
 def open_serial(serial_module, port: str, baud: int, timeout: float = 1.0):
     return serial_module.Serial(port, baud, timeout=timeout)
 
@@ -27,16 +53,19 @@ def read_until(ser, pattern: str, regex: bool, timeout: float,
     deadline = time.time() + timeout if timeout else None
     last_rx = time.time()
     buf = ""
-    line_buf = ""
+    line_buf = _take_pending(ser)
     matcher = re.compile(pattern) if regex else None
 
     def _matched(text: str) -> bool:
+        _put_pending(ser, line_buf)
         return bool(matcher.search(text)) if matcher else (pattern in text)
 
     while True:
         if running_check is not None and not running_check():
+            _put_pending(ser, line_buf)
             return False, buf, False
         if deadline is not None and time.time() >= deadline:
+            _put_pending(ser, line_buf)
             return False, buf, False
         raw = ser.read(256)
         if raw:
@@ -50,9 +79,11 @@ def read_until(ser, pattern: str, regex: bool, timeout: float,
                 if on_line and line.strip():
                     on_line(line)
             if _matched(buf):
+                _put_pending(ser, line_buf)
                 return True, buf, False
         else:
             if idle_timeout is not None and (time.time() - last_rx) > idle_timeout:
+                _put_pending(ser, line_buf)
                 return False, buf, True
             if poke_on_idle:
                 ser.write(b"\n")
@@ -74,10 +105,11 @@ def read_until_with_poke(ser, pattern: str, regex: bool, timeout: float,
     """
     deadline = time.time() + timeout if timeout else None
     buf = ""
-    line_buf = ""
+    line_buf = _take_pending(ser)
     matcher = re.compile(pattern) if regex else None
 
     def _matched(text: str) -> bool:
+        _put_pending(ser, line_buf)
         return bool(matcher.search(text)) if matcher else (pattern in text)
 
     ser.write(poke_bytes)
@@ -85,8 +117,10 @@ def read_until_with_poke(ser, pattern: str, regex: bool, timeout: float,
 
     while True:
         if running_check is not None and not running_check():
+            _put_pending(ser, line_buf)
             return False, buf
         if deadline is not None and time.time() >= deadline:
+            _put_pending(ser, line_buf)
             return False, buf
         raw = ser.read(256)
         if raw:
@@ -99,6 +133,7 @@ def read_until_with_poke(ser, pattern: str, regex: bool, timeout: float,
                 if on_line and line.strip():
                     on_line(line)
             if _matched(buf):
+                _put_pending(ser, line_buf)
                 return True, buf
         else:
             time.sleep(0.05)
@@ -138,7 +173,7 @@ def read_until_idle(ser, timeout: float, idle_timeout: float = 0.3,
     deadline = time.time() + timeout if timeout else None
     last_rx = time.time()
     buf = ""
-    line_buf = ""
+    line_buf = _take_pending(ser)
     while True:
         if running_check is not None and not running_check():
             break
@@ -159,12 +194,57 @@ def read_until_idle(ser, timeout: float, idle_timeout: float = 0.3,
             if (time.time() - last_rx) > idle_timeout:
                 break
             time.sleep(0.02)
+    _put_pending(ser, line_buf)
     return buf
 
 
+def _needs_safe_upload(script: str) -> bool:
+    """한글 등 비ASCII 문자나 탭이 있으면 heredoc 으로 그대로 치면 안 된다.
+    보드 셸(BusyBox ash)의 줄 편집기가 입력을 한 글자씩 받아서 처리하는데, 비ASCII
+    바이트는 깨지고(실측: fc_sweep3.sh 의 한글이 \\354\\210.. 로 찍히며 md5 불일치)
+    탭은 자동완성 키로 먹힐 수 있다."""
+    return any(ord(c) > 0x7E or (ord(c) < 0x20 and c != "\n") for c in script)
+
+
+def _printf_line(line: str) -> str:
+    """한 줄을 printf 포맷 문자열(작은따옴표 안)로 바꾼다. 출력은 순수 ASCII.
+    - 비ASCII/제어문자 바이트 -> \\ooo (8진수, POSIX printf 가 해석)
+    - \\ -> \\\\,  % -> %%,  ' -> '\\''  (셸 작은따옴표 탈출)"""
+    out = []
+    for b in line.encode("utf-8"):
+        c = chr(b)
+        if c == "\\":
+            out.append("\\\\")
+        elif c == "%":
+            out.append("%%")
+        elif c == "'":
+            out.append("'\\''")
+        elif 0x20 <= b <= 0x7E:
+            out.append(c)
+        else:
+            out.append("\\%03o" % b)
+    return "".join(out) + "\\n"
+
+
 def upload_script(ser, script: str, target_path: str, running_check=None):
-    """heredoc 방식으로 원격 셸에 스크립트 파일을 생성한다 (기존 auto_script.py 방식과 동일)."""
+    """원격 셸에 스크립트 파일을 생성한다.
+    - 순수 ASCII(탭 없음): 기존 auto_script.py 와 같은 heredoc 방식.
+    - 한글/탭 포함: 줄마다 printf '...' >> 파일 로 보낸다(비ASCII 는 8진수 이스케이프).
+      UART 로 나가는 건 전부 ASCII 라서 줄 편집기를 거쳐도 안 깨지고, 보드에 생기는
+      파일은 원본과 바이트 단위로 같다(업로드 뒤 md5sum 으로 확인 권장)."""
     lines = script.splitlines()
+    if _needs_safe_upload(script):
+        ser.write(f": > {target_path}\n".encode())
+        time.sleep(0.1)
+        for line in lines:
+            if running_check is not None and not running_check():
+                return
+            ser.write(f"printf '{_printf_line(line)}' >> {target_path}\n".encode("ascii"))
+            time.sleep(0.03)
+        time.sleep(0.3)
+        ser.write(f"chmod +x {target_path}\n".encode())
+        time.sleep(0.1)
+        return
     ser.write(f"cat > {target_path} << 'SCRIPTEOF'\n".encode())
     time.sleep(0.1)
     for line in lines:

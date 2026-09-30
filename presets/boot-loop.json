@@ -1,0 +1,66 @@
+{
+  "name": "boot-loop",
+  "blocks": [
+    {
+      "id": "bl_loop_s",
+      "type": "LOOP_START",
+      "loop_id": "loop_bootloop",
+      "params": {
+        "label": "부팅 반복",
+        "var_name": "i",
+        "start": "1",
+        "op": "<=",
+        "end": "10",
+        "step": "1",
+        "infinite": false
+      }
+    },
+    {
+      "id": "bl_pwr_off",
+      "type": "POWER",
+      "params": {
+        "state": "off",
+        "delay_after": 2.0
+      }
+    },
+    {
+      "id": "bl_pwr_on",
+      "type": "POWER",
+      "params": {
+        "state": "on",
+        "delay_after": 0.0
+      }
+    },
+    {
+      "id": "bl_wait_kernel",
+      "type": "WAIT_STRING",
+      "params": {
+        "pattern": "Starting kernel",
+        "regex": false,
+        "fail_pattern": "Kernel panic|Unable to handle kernel|Internal error:|Oops",
+        "timeout": 30.0,
+        "on_timeout": "stop"
+      }
+    },
+    {
+      "id": "bl_prompt",
+      "type": "KNOCK",
+      "params": {
+        "text": "",
+        "append_enter": true,
+        "interval": 3.0,
+        "pattern": "(DM>|#) ?$",
+        "regex": true,
+        "fail_pattern": "Kernel panic|Unable to handle kernel|Internal error:|Oops|U-Boot 20\\d\\d\\.",
+        "timeout": 60.0,
+        "on_timeout": "stop"
+      }
+    },
+    {
+      "id": "bl_loop_e",
+      "type": "LOOP_END",
+      "loop_id": "loop_bootloop",
+      "params": {}
+    }
+  ]
+}

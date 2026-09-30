@@ -1,0 +1,17 @@
+# fc sweep 세팅 목록 예시 - 복사해서 고쳐 쓰세요
+#   cli/sweep_campaign.py --sets scripts/sets/<파일> --control def --var runs1=10
+#
+# 한 줄에 하나:  이름  PauseAll SysOn SysOff ShOn ShOff PtOn PtOff   (값 0~1023)
+# 기존 세팅 이름만 적으면 스크립트에 있는 값 그대로 씀
+# 이름은 영문/숫자/_ 만. --control def 를 주면 def 가 def_c1, def_c2 ... 로 5개마다 끼워짐
+
+# --- 기존 세팅 ---
+L440
+ss440
+L380
+
+# --- 새 조합 예시: def 에서 한 가지씩만 바꿈 (값은 예시, 직접 정하세요) ---
+def_pt180   496 240 204 190 154 180 140
+def_pt240   496 240 204 190 154 240 200
+def_pa480   480 240 204 190 154 112 100
+# def_pa512 512 ...  <- PauseAll=512 은 09-30 캠페인에서 5/5 멈춤. 넣지 마세요

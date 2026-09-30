@@ -58,7 +58,12 @@ class App(tk.Tk):
     def _build_ui(self):
         BG = "#1e1e2e"; CARD = "#2a2a3e"; ACC = "#7c6af7"
         FG = "#cdd6f4"; MUTE = "#6c7086"; RED = "#f38ba8"; GRN = "#a6e3a1"
-        self._c = dict(BG=BG, CARD=CARD, ACC=ACC, FG=FG, MUTE=MUTE, RED=RED, GRN=GRN)
+        # Windows 콘솔(Exec) 출력 전용 색 - UART(MUTE, 회보라 계열)와는 눈에
+        # 안 띄게 살짝만 다른, 톤을 낮춘 스틸블루. UART 로그는 지금 색 그대로
+        # 두고 Exec 출력만 색으로 구분해달라는 요청으로 추가함.
+        EXEC_MUTE = "#5e8aa3"
+        self._c = dict(BG=BG, CARD=CARD, ACC=ACC, FG=FG, MUTE=MUTE, RED=RED, GRN=GRN,
+                        EXEC_MUTE=EXEC_MUTE)
 
         hdr = tk.Frame(self, bg=BG)
         hdr.pack(fill="x", padx=20, pady=(16, 0))
@@ -165,6 +170,7 @@ class App(tk.Tk):
         self._txt.tag_config("err", foreground=RED)
         self._txt.tag_config("data", foreground=FG)
         self._txt.tag_config("mute", foreground=MUTE)
+        self._txt.tag_config("exec", foreground=EXEC_MUTE)
         self._log_visible = False
 
     # 로그 Text 위젯에 유지할 최대 줄 수. Exec/Knock 처럼 출력이 많은 블록을

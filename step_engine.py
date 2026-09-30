@@ -7,6 +7,7 @@ GUI(Tk)와 분리되어 있어 실제 하드웨어 없이도(가짜 serial/tapo 
 """
 from __future__ import annotations
 import os
+import re
 import signal
 import subprocess
 import threading
@@ -60,10 +61,20 @@ class StepContext:
     on_active: Optional[Callable[[Optional[str], dict], None]] = None
     loop_progress: dict = field(default_factory=dict)
 
+    # 실행 중 이벤트 알림(선택). GUI 는 안 쓰고, CLI 러너가 "전원 ON 시점부터 로그 구간을
+    # 새로 시작"하거나 실패 정보를 리포트에 남기는 데 쓴다. on_event(name, data)
+    #   - "power": {"state": "on"/"off"}  (전원 제어 성공 직후)
+    #   - "fail_pattern": {"pattern": ..., "match": ...}  (실패 패턴 감지 직후)
+    on_event: Optional[Callable[[str, dict], None]] = None
+
     # ---- 내부 유틸 ---------------------------------------------------
     def check_running(self):
         if not self.is_running():
             raise StopRequested()
+
+    def emit(self, name: str, **data):
+        if self.on_event is not None:
+            self.on_event(name, data)
 
     def report_active(self, block_id: str | None):
         if self.on_active is not None:
@@ -82,8 +93,14 @@ class StepContext:
             self.ser = self.serial_factory()
         return self.ser
 
-    def _on_line(self, line: str):
-        self.log("  " + line, "mute")
+    def _on_line(self, line: str, tag: str = "mute"):
+        # UART(시리얼)에서 온 줄은 기본값 "mute" 그대로 - 화면 색은 지금까지와
+        # 동일하게 유지한다. _run_process() 가 PC 로컬 명령(Exec/Windows 콘솔)
+        # 출력을 흘려보낼 때만 tag="exec" 로 따로 넘겨서, 눈에 안 띄게 은은한
+        # 다른 색으로 구분되게 한다(UART 로그와 Windows 콘솔 로그를 색으로
+        # 구분해달라는 요청으로 추가함) - main_app.py 의 tag_config("exec", ...)
+        # 참고.
+        self.log("  " + line, tag)
         self.log_result(line)
         self._capture.append(line)
 
@@ -106,13 +123,47 @@ def _exec_power(block, ctx: StepContext):
     if not ok:
         ctx.log("전원 제어 실패. 연결 상태를 확인하세요.", "err")
         raise StopRequested()
+    ctx.emit("power", state="on" if state else "off")
     if state and ctx.boot_reset_buffer and ctx.ser is not None:
         try:
             ctx.ser.reset_input_buffer()
+            ss.clear_pending(ctx.ser)
         except Exception:  # noqa: BLE001
             pass
     delay = float(p.get("delay_after", 0) or 0)
     _sleep_interruptible(delay, ctx)
+
+
+# 실패 패턴(fail_pattern): Check/Knock 블록이 기다리는 동안 이 정규식이 나오면 (정상
+# 패턴이 나오기 전이라도) 바로 실패로 판정한다 - 부팅 반복 테스트에서 "프롬프트를 기다리는
+# 중에 Kernel panic / Oops 가 찍히면 즉시 멈추고 싶다"는 요청으로 추가함. 항상 정규식이다
+# ('|' 로 여러 개). 감지 후에는 패닉 트레이스 뒷부분까지 로그에 남기려고 보드가 조용해질
+# 때까지(최대 _FAIL_TAIL_TIMEOUT 초) 조금 더 읽은 다음 StopRequested 로 멈춘다 - 전원은
+# 건드리지 않으므로 보드는 실패한 상태 그대로 남는다.
+_FAIL_TAIL_TIMEOUT = 10.0
+_FAIL_TAIL_IDLE = 2.0
+
+
+def _combined_pattern(pattern: str, regex: bool, fail_pattern: str) -> tuple[str, bool]:
+    """정상 패턴 + 실패 패턴을 하나의 정규식으로 합친다 (실패 패턴이 없으면 원래 그대로)."""
+    if not fail_pattern:
+        return pattern, regex
+    ok = pattern if regex else re.escape(pattern)
+    return f"(?:{ok})|(?:{fail_pattern})", True
+
+
+def _check_fail(buf: str, fail_pattern: str, ser, ctx: StepContext):
+    """buf 에 실패 패턴이 있으면 트레이스 뒷부분을 더 읽어서 남기고 멈춘다."""
+    if not fail_pattern:
+        return
+    m = re.search(fail_pattern, buf)
+    if not m:
+        return
+    ctx.log(f"\U0001f4a5 실패 패턴 감지: {m.group(0)!r} - 뒤따르는 로그를 더 수집한 뒤 그 자리에서 멈춥니다", "err")
+    ss.read_until_idle(ser, timeout=_FAIL_TAIL_TIMEOUT, idle_timeout=_FAIL_TAIL_IDLE,
+                       on_line=ctx._on_line, running_check=ctx.is_running)
+    ctx.emit("fail_pattern", pattern=fail_pattern, match=m.group(0))
+    raise StopRequested()
 
 
 def _exec_wait_string(block, ctx: StepContext):
@@ -120,13 +171,17 @@ def _exec_wait_string(block, ctx: StepContext):
     pattern = ctx.subst(p.get("pattern", ""))
     timeout = float(p.get("timeout", 30) or 30)
     regex = bool(p.get("regex", False))
-    ctx.log(f"Waiting: '{pattern}' (timeout {timeout:g}s)", "mute")
+    fail_pattern = ctx.subst(p.get("fail_pattern", "") or "")
+    ctx.log(f"Waiting: '{pattern}' (timeout {timeout:g}s)"
+            + (f" / 실패: '{fail_pattern}'" if fail_pattern else ""), "mute")
     ser = ctx.ensure_serial()
+    pat, rx = _combined_pattern(pattern, regex, fail_pattern)
     found, buf, idle = ss.read_until(
-        ser, pattern, regex, timeout,
+        ser, pat, rx, timeout,
         on_line=ctx._on_line, running_check=ctx.is_running,
     )
     ctx.check_running()
+    _check_fail(buf, fail_pattern, ser, ctx)
     if found:
         ctx.log(f"→ 감지됨: '{pattern}'", "ok")
     else:
@@ -200,6 +255,7 @@ def _exec_knock(block, ctx: StepContext):
     pattern = ctx.subst(p.get("pattern", ""))
     regex = bool(p.get("regex", False))
     timeout = float(p.get("timeout", 30) or 30)
+    fail_pattern = ctx.subst(p.get("fail_pattern", "") or "")
 
     payload = text + ("\n" if append_enter else "")
     poke_bytes = payload.encode("utf-8", errors="replace")
@@ -208,11 +264,13 @@ def _exec_knock(block, ctx: StepContext):
             f"'{pattern}' 대기 (최대 {timeout:g}s)", "info")
     ctx.log_result(f"$ (knock every {interval:g}s) {text}")
     ser = ctx.ensure_serial()
+    pat, rx = _combined_pattern(pattern, regex, fail_pattern)
     found, buf = ss.read_until_with_poke(
-        ser, pattern, regex, timeout, poke_bytes, interval,
+        ser, pat, rx, timeout, poke_bytes, interval,
         on_line=ctx._on_line, running_check=ctx.is_running,
     )
     ctx.check_running()
+    _check_fail(buf, fail_pattern, ser, ctx)
     if found:
         ctx.log(f"  → 감지됨: '{pattern}'", "ok")
     else:
@@ -380,7 +438,7 @@ def _run_process(cmd: str, timeout: float, ctx: StepContext):
     timed_out = False
     while True:
         while flushed < len(lines):
-            ctx._on_line(lines[flushed])
+            ctx._on_line(lines[flushed], "exec")
             flushed += 1
         if proc.poll() is not None and not reader.is_alive():
             break
@@ -394,7 +452,7 @@ def _run_process(cmd: str, timeout: float, ctx: StepContext):
             raise
         time.sleep(0.05)
     while flushed < len(lines):  # 루프 빠져나온 뒤 남은 줄 마저 흘려보내기
-        ctx._on_line(lines[flushed])
+        ctx._on_line(lines[flushed], "exec")
         flushed += 1
 
     if timed_out:
@@ -646,6 +704,7 @@ def _run_if(node, ctx: StepContext):
             if hasattr(ser, "reset_input_buffer"):
                 try:
                     ser.reset_input_buffer()
+                    ss.clear_pending(ser)
                 except Exception:  # noqa: BLE001
                     pass
             ctx.log(f"$ {send_text!r}", "info")

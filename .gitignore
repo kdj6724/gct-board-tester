@@ -4,3 +4,4 @@ settings.json
 profiles/
 logs/
 *.env
+.cyg*

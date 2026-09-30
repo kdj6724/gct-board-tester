@@ -1,0 +1,236 @@
+{
+  "name": "fc-sg-sweep",
+  "vars": {
+    "if": "eth0",
+    "board_ip": "192.168.5.1",
+    "runs": "70",
+    "pass_mbps": "1500",
+    "iperf_opt": "-t10 -i1 -w4M",
+    "a_ip": "192.168.5.113",
+    "a_port": "5113",
+    "b_ip": "192.168.5.112",
+    "b_port": "5112",
+    "cpus": "4"
+  },
+  "post": [
+    "fc_sweep3"
+  ],
+  "blocks": [
+    {
+      "id": "fs_boot",
+      "type": "PRESET",
+      "params": {
+        "preset_name": "openwrt-boot",
+        "blocks": [
+          {
+            "id": "fsb_bl_pwr_off",
+            "type": "POWER",
+            "params": {
+              "state": "off",
+              "delay_after": 2.0
+            }
+          },
+          {
+            "id": "fsb_bl_pwr_on",
+            "type": "POWER",
+            "params": {
+              "state": "on",
+              "delay_after": 0.0
+            }
+          },
+          {
+            "id": "fsb_bl_wait_kernel",
+            "type": "WAIT_STRING",
+            "params": {
+              "pattern": "Starting kernel",
+              "regex": false,
+              "fail_pattern": "Kernel panic|Unable to handle kernel|Internal error:|Oops",
+              "timeout": 30.0,
+              "on_timeout": "stop"
+            }
+          },
+          {
+            "id": "fsb_bl_prompt",
+            "type": "KNOCK",
+            "params": {
+              "text": "",
+              "append_enter": true,
+              "interval": 3.0,
+              "pattern": "(DM>|#) ?$",
+              "regex": true,
+              "fail_pattern": "Kernel panic|Unable to handle kernel|Internal error:|Oops|U-Boot 20\\d\\d\\.",
+              "timeout": 60.0,
+              "on_timeout": "stop"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "fs_shell",
+      "type": "PRESET",
+      "params": {
+        "preset_name": "set-linux-shell",
+        "blocks": [
+          {
+            "id": "b2_49f280",
+            "type": "IF_START",
+            "if_id": "if1_6baedd",
+            "params": {
+              "label": "현재 DM> 상태? (Unknown command 응답으로 판별)",
+              "source": "serial",
+              "pattern": "Unknown command",
+              "regex": false,
+              "timeout": 2.0,
+              "send_text": "gct_shell_probe_9f3"
+            }
+          },
+          {
+            "id": "b5_46ae55",
+            "type": "SEND",
+            "params": {
+              "text": "\n\nshell",
+              "append_enter": true,
+              "delay_after": 1.0,
+              "check": null
+            }
+          },
+          {
+            "id": "b3_b72d08",
+            "type": "IF_ELSE",
+            "if_id": "if1_6baedd",
+            "params": {}
+          },
+          {
+            "id": "b4_24b2b8",
+            "type": "IF_END",
+            "if_id": "if1_6baedd",
+            "params": {}
+          }
+        ]
+      }
+    },
+    {
+      "id": "fs_wd",
+      "type": "SEND",
+      "params": {
+        "text": "kern wd md -en",
+        "append_enter": true,
+        "delay_after": 0.5,
+        "check": null
+      }
+    },
+    {
+      "id": "fs_cpu_set",
+      "type": "SEND",
+      "params": {
+        "text": "for c in 1 2 3; do v=0; [ $c -lt {cpus} ] && v=1; echo $v > /sys/devices/system/cpu/cpu$c/online; done",
+        "append_enter": true,
+        "delay_after": 1.0,
+        "check": null
+      }
+    },
+    {
+      "id": "fs_cpu_chk",
+      "type": "SEND",
+      "params": {
+        "text": "n=1; for c in 1 2 3; do [ \"$(cat /sys/devices/system/cpu/cpu$c/online)\" = 1 ] && n=$((n+1)); done; echo CPUS_ON=$n",
+        "append_enter": true,
+        "delay_after": 0.0,
+        "check": {
+          "pattern": "CPUS_ON={cpus}",
+          "regex": false,
+          "timeout": 20.0,
+          "on_timeout": "stop"
+        }
+      }
+    },
+    {
+      "id": "fs_ifup",
+      "type": "SEND",
+      "params": {
+        "text": "ifconfig {if} {board_ip} up",
+        "append_enter": true,
+        "delay_after": 0.5,
+        "check": null
+      }
+    },
+    {
+      "id": "fs_link",
+      "type": "KNOCK",
+      "params": {
+        "text": "echo LINK_$(cat /sys/class/net/{if}/carrier 2>/dev/null)",
+        "append_enter": true,
+        "interval": 2.0,
+        "pattern": "LINK_1",
+        "regex": false,
+        "fail_pattern": "",
+        "timeout": 30.0,
+        "on_timeout": "stop"
+      }
+    },
+    {
+      "id": "fs_upload",
+      "type": "UPLOAD_SCRIPT",
+      "params": {
+        "target_path": "/tmp/fc_sweep3.sh",
+        "script": "#!/bin/sh\n# ==================================================================\n# RTL8363SC flow-control threshold sweep  (12h 확장판, 2026-09-15)\n#   세팅마다 dual-iperf 를 RUNS 회 전부 수행 (중단 없음).\n#   매 회 A+B 합계가 PASS_MBPS 이상이면 pass 로 집계.\n#   장시간 실행용: 진행률/ETA 표시, 중단 후 재개(RESUME) 지원.\n#   BusyBox ash 호환 (배열/bc 미사용)\n#\n#   이번 버전에서 바뀐 점 (원본 fc_sweep2.sh, 34세팅×50회 ≈5.2h 대비):\n#     - Sys+Shared 래더를 540/520 이후로 계속 연장 (L560p600 ~ L1000p1023,\n#       23개 신규). PauseAll[9:0]/Sys/Shared 레지스터가 전부 10비트\n#       (0~1023) 필드라서 L1000p1023 이 이 축에서 낼 수 있는 사실상의\n#       상한선 — 그 이후로는 값을 더 못 올림. \"440에서 래더가 포화되지\n#       않았다\"는 미해결 이슈를 여기서 끝까지 밀어붙여 진짜 포화점(또는\n#       상한선까지 계속 오르는지)을 확인하는 목적.\n#     - 위 연장만으로는 (23개×50회×11초 ≈2.75h 추가 → 총 ~8h) 12시간을\n#       못 채워서, RUNS 를 50→70 으로 같이 올려 기존 34세팅까지 포함해\n#       전체 57세팅×70회×11초 ≈ 12h11m 이 되도록 맞춤. 부수 효과로\n#       모든 세팅의 pass-rate 95% CI 도 n=50일 때의 ±14pp 보다 좁아짐.\n#     - 물리적 버퍼 한계(vendor 확인 불가, \"fixed silicon\"으로만 알려짐)가\n#       레지스터 스케일 상 정확히 어디인지는 모름 — 상위 랭크(L800~L1000대)\n#       에서 이미 결과가 평평해지면(=거의 매번 FAST에 수렴) 그게 포화\n#       신호이니 굳이 끝까지 기다리지 않고 Ctrl+C 후 RESUME=1 로 이어받아도 됨.\n#\n#   실행 예:\n#     nohup sh fc_sweep2.sh > /tmp/sweep_log.txt 2>&1 &\n#     tail -f /tmp/sweep_log.txt\n#   중단 후 이어서:\n#     RESUME=1 sh fc_sweep2.sh 2>&1 | tee -a /tmp/sweep_log.txt\n# ==================================================================\n\n# ---- config ------------------------------------------------------\n# 아래 값들은 환경변수로 덮어쓸 수 있음 (gct-board-tester 의 --var 로 넘김)\nIP_A=${IP_A:-192.168.5.113} ;  PORT_A=${PORT_A:-5113}\nIP_B=${IP_B:-192.168.5.112} ;  PORT_B=${PORT_B:-5112}\nIPERF_OPT=${IPERF_OPT:-\"-t10 -i1 -w4M\"}\n\nRUNS=${RUNS:-70}     # 세팅당 반복 횟수 (기존 50 -> 70, 12h 예산에 맞춤)\nPASS_MBPS=${PASS_MBPS:-1500}  # 두 스트림 합계 pass 기준\nSTAGGER=0            # 두 번째 iperf 지연(초). 0 = 동시 출발\nSETTLE=2             # 레지스터 적용 후 대기(초)\nRESUME=${RESUME:-0}  # 1 이면 이미 끝난 세팅 건너뜀\n\nKERN=\"kern rtl8363\"  # 레지스터 명령 접두어\nOUT=/tmp/fc_sweep2\n# ------------------------------------------------------------------\n\n# name      PauseAll SysOn SysOff ShOn ShOff PtOn PtOff\nSETTINGS=\"\ndef       |496|240|204|190|154|112|100\nss440     |480|440|400|420|380|180|140\ns440      |480|440|400|300|260|180|140\nL340      |496|340|300|320|280|180|140\nL360      |496|360|320|340|300|180|140\nL380      |496|380|340|360|320|180|140\nL400      |496|400|360|380|340|180|140\nL420      |496|420|380|400|360|180|140\nL440      |496|440|400|420|380|180|140\nL460      |496|460|420|440|400|180|140\nL480      |496|480|440|460|420|180|140\nL460p512  |512|460|420|440|400|180|140\nL480p512  |512|480|440|460|420|180|140\nL500p512  |512|500|460|480|440|180|140\nL520p560  |560|520|480|500|460|180|140\nL540p560  |560|540|500|520|480|180|140\nL560p600  |600|560|520|540|500|180|140\nL580p600  |600|580|540|560|520|180|140\nL600p640  |640|600|560|580|540|180|140\nL620p640  |640|620|580|600|560|180|140\nL640p680  |680|640|600|620|580|180|140\nL660p680  |680|660|620|640|600|180|140\nL680p720  |720|680|640|660|620|180|140\nL700p720  |720|700|660|680|640|180|140\nL720p760  |760|720|680|700|660|180|140\nL740p760  |760|740|700|720|680|180|140\nL760p800  |800|760|720|740|700|180|140\nL780p800  |800|780|740|760|720|180|140\nL800p840  |840|800|760|780|740|180|140\nL820p840  |840|820|780|800|760|180|140\nL840p880  |880|840|800|820|780|180|140\nL860p880  |880|860|820|840|800|180|140\nL880p920  |920|880|840|860|820|180|140\nL900p920  |920|900|860|880|840|180|140\nL920p960  |960|920|880|900|860|180|140\nL940p960  |960|940|900|920|880|180|140\nL960p1000 |1000|960|920|940|900|180|140\nL980p1000 |1000|980|940|960|920|180|140\nL1000p1023|1023|1000|960|980|940|180|140\ng20       |496|440|420|420|400|180|140\ng30       |496|440|410|420|390|180|140\ng60       |496|440|380|420|360|180|140\ng80       |496|440|360|420|340|180|140\ng100      |496|440|340|420|320|180|140\na_s440h380|496|440|400|380|340|180|140\na_s440h340|496|440|400|340|300|180|140\na_s400h420|496|400|360|420|380|180|140\na_s360h420|496|360|320|420|380|180|140\na_s480h420|496|480|440|420|380|180|140\na_s440h460|512|440|400|460|420|180|140\npa460     |460|440|400|420|380|180|140\npa512     |512|440|400|420|380|180|140\npa540     |540|440|400|420|380|180|140\npa600     |600|440|400|420|380|180|140\npt112     |496|440|400|420|380|112|72\npt240     |496|440|400|420|380|240|200\npt320     |496|440|400|420|380|320|280\n\"\n\nmkdir -p \"$OUT\"\nRESULT=\"$OUT/result.txt\"\nDETAIL=\"$OUT/detail.txt\"\nif [ \"$RESUME\" != \"1\" ]; then\n    : > \"$RESULT\"\n    : > \"$DETAIL\"\nfi\ntouch \"$RESULT\" \"$DETAIL\"\n\nNSET=$(echo \"$SETTINGS\" | grep -c '|')\nT_START=$(date +%s)\n\n# ---- iperf 결과에서 최종 대역폭(Mbps) 추출 ------------------------\nparse_bw() {\n    awk '\n    /(Kbits|Mbits|Gbits)\\/sec/ { v=$(NF-1); u=$NF }\n    END {\n        if (v == \"\") { print \"0\"; exit }\n        if (u ~ /^Gbits/)      v = v * 1000\n        else if (u ~ /^Kbits/) v = v / 1000\n        printf \"%.1f\", v\n    }' \"$1\"\n}\n\napply_setting() {\n    $KERN wr 0x121e $1 >/dev/null 2>&1\n    $KERN wr 0x121f $2 >/dev/null 2>&1\n    $KERN wr 0x1220 $3 >/dev/null 2>&1\n    $KERN wr 0x1221 $4 >/dev/null 2>&1\n    $KERN wr 0x1222 $5 >/dev/null 2>&1\n    $KERN wr 0x1227 $6 >/dev/null 2>&1\n    $KERN wr 0x1228 $7 >/dev/null 2>&1\n}\n\nrun_one() {\n    iperf -c $IP_A $IPERF_OPT -p $PORT_A > \"$OUT/.a\" 2>&1 &\n    PID_A=$!\n    [ \"$STAGGER\" != \"0\" ] && sleep $STAGGER\n    iperf -c $IP_B $IPERF_OPT -p $PORT_B > \"$OUT/.b\" 2>&1 &\n    PID_B=$!\n    wait $PID_A\n    wait $PID_B\n}\n\nhms() {  # 초 -> Hh Mm\n    awk -v s=\"$1\" 'BEGIN{printf \"%dh%02dm\", int(s/3600), int((s%3600)/60)}'\n}\n\n# ---- main --------------------------------------------------------\necho \"====================================================================\"\necho \" RTL8363SC FC sweep #2  (Sys+Shared 상향 탐색, 1000/1023 레지스터 상한까지 연장)\"\necho \"   settings  : $NSET      runs/setting : $RUNS\"\necho \"   pass line : ${PASS_MBPS} Mbps (A+B 합계)\"\necho \"   stream A  : $IP_A:$PORT_A\"\necho \"   stream B  : $IP_B:$PORT_B\"\necho \"   예상 소요 : ~$(hms $(( NSET * RUNS * 11 )))\"\necho \"   resume    : $RESUME    시작: $(date '+%Y-%m-%d %H:%M:%S')\"\necho \"====================================================================\"\n\nIDX=0\necho \"$SETTINGS\" | tr -d ' ' | while IFS='|' read NAME PA SON SOFF SHON SHOFF PTON PTOFF; do\n    [ -z \"$NAME\" ] && continue\n    IDX=$((IDX+1))\n\n    if [ \"$RESUME\" = \"1\" ] && grep -q \"^$NAME|\" \"$RESULT\" 2>/dev/null; then\n        echo \"[$IDX/$NSET] $NAME  -- 이미 완료, 건너뜀\"\n        continue\n    fi\n\n    ELAPSED=$(( $(date +%s) - T_START ))\n    echo \"\"\n    echo \"--------------------------------------------------------------------\"\n    echo \"[$IDX/$NSET] $NAME   PauseAll=$PA Sys=$SON/$SOFF Shared=$SHON/$SHOFF Port=$PTON/$PTOFF\"\n    echo \"         경과 $(hms $ELAPSED)   $(date '+%H:%M:%S')\"\n    echo \"--------------------------------------------------------------------\"\n\n    apply_setting $PA $SON $SOFF $SHON $SHOFF $PTON $PTOFF\n    sleep $SETTLE\n\n    {\n        echo \"\"\n        echo \"=== [$NAME] PauseAll=$PA Sys=$SON/$SOFF Shared=$SHON/$SHOFF Port=$PTON/$PTOFF\"\n        $KERN dump 2>&1\n    } >> \"$DETAIL\"\n\n    VALS=\"$OUT/vals_$NAME.txt\"\n    : > \"$VALS\"\n    PASS=0\n    ERRS=0\n    i=1\n    while [ $i -le $RUNS ]; do\n        run_one\n        A=$(parse_bw \"$OUT/.a\")\n        B=$(parse_bw \"$OUT/.b\")\n\n        # iperf 실패(0) 감지 -> 1회 재시도\n        BAD=$(awk -v a=\"$A\" -v b=\"$B\" 'BEGIN{print (a<=0||b<=0)?\"1\":\"0\"}')\n        if [ \"$BAD\" = \"1\" ]; then\n            sleep 2\n            run_one\n            A=$(parse_bw \"$OUT/.a\")\n            B=$(parse_bw \"$OUT/.b\")\n            BAD=$(awk -v a=\"$A\" -v b=\"$B\" 'BEGIN{print (a<=0||b<=0)?\"1\":\"0\"}')\n            if [ \"$BAD\" = \"1\" ]; then\n                ERRS=$((ERRS+1))\n                echo \"  run $i/$RUNS : iperf 실패 (A=$A B=$B) - 집계 제외\"\n                echo \"$NAME run$i ERROR A=$A B=$B\" >> \"$DETAIL\"\n                i=$((i+1))\n                continue\n            fi\n        fi\n\n        TOT=$(awk -v a=\"$A\" -v b=\"$B\" 'BEGIN{printf \"%.1f\", a+b}')\n        OK=$(awk -v t=\"$TOT\" -v p=\"$PASS_MBPS\" 'BEGIN{print (t>=p)?\"1\":\"0\"}')\n        if [ \"$OK\" = \"1\" ]; then PASS=$((PASS+1)); MARK=\"pass\"; else MARK=\"FAIL\"; fi\n\n        echo \"$TOT\" >> \"$VALS\"\n        printf \"  run %3d/%d : A=%7s  B=%7s  total=%7s  %s\\n\" \\\n               \"$i\" \"$RUNS\" \"$A\" \"$B\" \"$TOT\" \"$MARK\"\n        echo \"$NAME run$i A=$A B=$B total=$TOT $MARK\" >> \"$DETAIL\"\n        i=$((i+1))\n    done\n\n    STAT=$(sort -n \"$VALS\" | awk '\n        { v[NR]=$1; s+=$1 }\n        END {\n            n=NR\n            if (n==0) { print \"0|0|0|0|0|0\"; exit }\n            avg=s/n\n            for (k=1;k<=n;k++) d+=(v[k]-avg)*(v[k]-avg)\n            sd=(n>1)?sqrt(d/(n-1)):0\n            med=(n%2)?v[(n+1)/2]:(v[int(n/2)]+v[int(n/2)+1])/2\n            p10=v[int(n*0.10)+1]\n            printf \"%.1f|%.1f|%.1f|%.1f|%.1f|%.1f\", avg, v[1], v[n], med, sd, p10\n        }')\n    AVG=$(echo \"$STAT\" | cut -d'|' -f1)\n    MIN=$(echo \"$STAT\" | cut -d'|' -f2)\n    MAX=$(echo \"$STAT\" | cut -d'|' -f3)\n    MED=$(echo \"$STAT\" | cut -d'|' -f4)\n    SD=$(echo  \"$STAT\" | cut -d'|' -f5)\n    P10=$(echo \"$STAT\" | cut -d'|' -f6)\n    VALID=$(wc -l < \"$VALS\")\n    RATE=$(awk -v p=\"$PASS\" -v n=\"$VALID\" 'BEGIN{printf \"%.0f\", (n>0)?p*100/n:0}')\n\n    echo \"  ==> pass $PASS/$VALID (${RATE}%)  avg=$AVG med=$MED p10=$P10 min=$MIN max=$MAX sd=$SD${ERRS:+  err=$ERRS}\"\n    echo \"$NAME|$PASS|$VALID|$RATE|$AVG|$MED|$P10|$MIN|$MAX|$SD|$PA|$SON/$SOFF|$SHON/$SHOFF|$PTON/$PTOFF\" >> \"$RESULT\"\ndone\n\n# ---- summary -----------------------------------------------------\nTOTAL=$(( $(date +%s) - T_START ))\necho \"\"\necho \"====================================================================\"\necho \" SUMMARY   (세팅당 $RUNS 회, pass >= ${PASS_MBPS} Mbps)   총 소요 $(hms $TOTAL)\"\necho \"====================================================================\"\nprintf \"%-10s %9s %7s %8s %8s %8s %8s %8s %7s   %s\\n\" \\\n       \"setting\" \"pass\" \"rate\" \"avg\" \"med\" \"p10\" \"min\" \"max\" \"sd\" \"PauseAll Sys Shared Port\"\necho \"-------------------------------------------------------------------------------------------------------------\"\nsort -t'|' -k4,4rn -k5,5rn \"$RESULT\" | while IFS='|' read N P T R AVG MED P10 MN MX SD RPA RS RSH RPT; do\n    printf \"%-10s %5s/%-3s %6s%% %8s %8s %8s %8s %8s %7s   %-8s %-9s %-9s %s\\n\" \\\n           \"$N\" \"$P\" \"$T\" \"$R\" \"$AVG\" \"$MED\" \"$P10\" \"$MN\" \"$MX\" \"$SD\" \"$RPA\" \"$RS\" \"$RSH\" \"$RPT\"\ndone\necho \"====================================================================\"\necho \"\"\necho \"[def 기준선 대비]\"\nawk -F'|' '\n    $1==\"def\" { dr=$4; da=$5; dp=$7 }\n    { n[NR]=$1; r[NR]=$4; a[NR]=$5; p[NR]=$7 }\n    END {\n        printf \"  def : rate %s%%, avg %s, p10 %s\\n\", dr, da, dp\n        printf \"  %-10s %9s %9s %9s\\n\", \"setting\", \"rate차\", \"avg차\", \"p10차\"\n        for (k=1;k<=NR;k++) {\n            if (n[k]==\"def\") continue\n            printf \"  %-10s %+8.0f%% %+9.1f %+9.1f\\n\", n[k], r[k]-dr, a[k]-da, p[k]-dp\n        }\n    }' \"$RESULT\"\necho \"\"\necho \"detail log : $DETAIL\"\necho \"raw result : $RESULT\"\necho \"per-run    : $OUT/vals_<setting>.txt\"\n"
+      }
+    },
+    {
+      "id": "fs_verify",
+      "type": "SEND",
+      "params": {
+        "text": "md5sum /tmp/fc_sweep3.sh",
+        "append_enter": true,
+        "delay_after": 0.0,
+        "check": {
+          "pattern": "07cc26cf1830e56bae6b32a775bd8c00",
+          "regex": false,
+          "timeout": 30.0,
+          "on_timeout": "stop"
+        }
+      }
+    },
+    {
+      "id": "fs_run",
+      "type": "SEND",
+      "params": {
+        "text": "IP_A={a_ip} PORT_A={a_port} IP_B={b_ip} PORT_B={b_port} RUNS={runs} PASS_MBPS={pass_mbps} IPERF_OPT=\"{iperf_opt}\" sh /tmp/fc_sweep3.sh",
+        "append_enter": true,
+        "delay_after": 0.0,
+        "check": {
+          "pattern": "settings  : \\d+",
+          "regex": true,
+          "timeout": 30.0,
+          "on_timeout": "stop"
+        }
+      }
+    },
+    {
+      "id": "fs_wait_done",
+      "type": "WAIT_STRING",
+      "params": {
+        "pattern": "per-run +: /",
+        "regex": true,
+        "fail_pattern": "Kernel panic|Unable to handle kernel|Internal error:",
+        "timeout": 86400.0,
+        "on_timeout": "stop"
+      }
+    },
+    {
+      "id": "fs_wait_end",
+      "type": "KNOCK",
+      "params": {
+        "text": "",
+        "append_enter": true,
+        "interval": 2.0,
+        "pattern": "(DM>|#) ?$",
+        "regex": true,
+        "fail_pattern": "",
+        "timeout": 30.0,
+        "on_timeout": "stop"
+      }
+    }
+  ]
+}
