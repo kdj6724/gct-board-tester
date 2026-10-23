@@ -1,0 +1,28 @@
+# variant: v09_dsvref_0x1a
+# PHY DQ VREF DVFS0/1 DS0/DS1: 0x14(30%) -> 0x1a(40%)
+# 근거: sphy_v9r8_functions.c 주석의 % 표. PHY 문서로는 미확인
+#
+--- a/base/drivers/orbit_ddram/sphy_v9r8_functions.c
++++ b/base/drivers/orbit_ddram/sphy_v9r8_functions.c
+@@ -3265,8 +3265,8 @@
+     //  45      0x2d    70%
+     //  51      0x33    80%
+     //  58      0xaa    90%
+-    orbit_field_update(sphy_v9r8_reg_dvfs0_con3,SPHY_V9R8_DVFS0_DS1_VREF         , 0x14);
+-    orbit_field_update(sphy_v9r8_reg_dvfs0_con3,SPHY_V9R8_DVFS0_DS0_VREF         , 0x14);
++    orbit_field_update(sphy_v9r8_reg_dvfs0_con3,SPHY_V9R8_DVFS0_DS1_VREF         , 0x1a);
++    orbit_field_update(sphy_v9r8_reg_dvfs0_con3,SPHY_V9R8_DVFS0_DS0_VREF         , 0x1a);
+ #else
+     orbit_field_update(sphy_v9r8_reg_dvfs0_con3,SPHY_V9R8_DVFS0_DS1_VREF         , 0x14);
+     orbit_field_update(sphy_v9r8_reg_dvfs0_con3,SPHY_V9R8_DVFS0_DS0_VREF         , 0x14);
+@@ -3410,8 +3410,8 @@
+     //  45      0x2d    70%
+     //  51      0x33    80%
+     //  58      0xaa    90%
+-    orbit_field_update(sphy_v9r8_reg_dvfs1_con3,SPHY_V9R8_DVFS1_DS1_VREF         , 0x14);
+-    orbit_field_update(sphy_v9r8_reg_dvfs1_con3,SPHY_V9R8_DVFS1_DS0_VREF         , 0x14);
++    orbit_field_update(sphy_v9r8_reg_dvfs1_con3,SPHY_V9R8_DVFS1_DS1_VREF         , 0x1a);
++    orbit_field_update(sphy_v9r8_reg_dvfs1_con3,SPHY_V9R8_DVFS1_DS0_VREF         , 0x1a);
+ #else
+     orbit_field_update(sphy_v9r8_reg_dvfs1_con3,SPHY_V9R8_DVFS1_DS1_VREF         , 0x14);
+     orbit_field_update(sphy_v9r8_reg_dvfs1_con3,SPHY_V9R8_DVFS1_DS0_VREF         , 0x14);

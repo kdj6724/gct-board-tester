@@ -1,0 +1,97 @@
+{
+  "name": "fw-usb-mode",
+  "blocks": [
+    {
+      "id": "sb_retry_s",
+      "type": "LOOP_START",
+      "loop_id": "loop_sbl_dl",
+      "params": {
+        "label": "SBL 다운로드",
+        "var_name": "try",
+        "start": "1",
+        "op": "<=",
+        "end": "5",
+        "step": "1",
+        "infinite": false,
+        "retry": true
+      }
+    },
+    {
+      "id": "fu_pwr_off",
+      "type": "POWER",
+      "params": {
+        "state": "off",
+        "delay_after": 2.0
+      }
+    },
+    {
+      "id": "fu_pwr_on",
+      "type": "POWER",
+      "params": {
+        "state": "on",
+        "delay_after": 0.0
+      }
+    },
+    {
+      "id": "fu_knock_u",
+      "type": "KNOCK",
+      "params": {
+        "text": "u",
+        "append_enter": false,
+        "fast": true,
+        "interval": 0.02,
+        "pattern": "total 3 char",
+        "regex": false,
+        "timeout": 15.0,
+        "on_timeout": "stop",
+        "settle": 0.3,
+        "stray": "fill",
+        "fill_total": 3,
+        "fill_char": "x"
+      }
+    },
+    {
+      "id": "fu_send_usb",
+      "type": "SEND",
+      "params": {
+        "text": "usb",
+        "append_enter": true,
+        "delay_after": 0.0,
+        "check": {
+          "pattern": "usb_dnl_fastboot: ready",
+          "regex": false,
+          "timeout": 15.0,
+          "on_timeout": "stop"
+        }
+      }
+    },
+    {
+      "id": "fu_preload",
+      "type": "EXEC",
+      "params": {
+        "cmd": "/home/test/bin/fastboot --preload /home/test/work/uboot/7275x/perloader/u-boot_7275x_preload.bin boot",
+        "timeout": 30.0,
+        "on_timeout": "stop",
+        "check_pattern": "Sending 'preload'[^\\n]*OKAY[\\s\\S]*Finished",
+        "regex": true
+      }
+    },
+    {
+      "id": "fu_flash_sbl",
+      "type": "EXEC",
+      "params": {
+        "cmd": "/home/test/bin/fastboot flash sbl /home/test/gct-board-tester/sbl/images/sbl_7275x_c.bin",
+        "timeout": 60.0,
+        "on_timeout": "stop",
+        "check_pattern": "Sending 'sbl'[^\\n]*OKAY[\\s\\S]*Writing 'sbl'[^\\n]*OKAY[\\s\\S]*Finished",
+        "regex": true
+      }
+    },
+    {
+      "id": "sb_retry_e",
+      "type": "LOOP_END",
+      "loop_id": "loop_sbl_dl",
+      "params": {}
+    }
+  ]
+}

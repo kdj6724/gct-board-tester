@@ -159,6 +159,9 @@ def build_preset(src: str, sets: dict, dst: str):
         json.dump(d, f, ensure_ascii=False, indent=2)
 
 
+_ANSI = re.compile(r"\x1b\[[0-9;]*m")
+
+
 def fisher_greater(a: int, b: int, c: int, d: int) -> float:
     """2x2 [[a,b],[c,d]] 에서 첫 행의 성공 비율이 더 크다는 단측 Fisher 정확검정 p값."""
     from math import comb
@@ -249,6 +252,8 @@ class Campaign:
                        "runs": [], "done": {"1": {}, "2": {}}, "dead_count": {},
                        "dead_skip": {"1": [], "2": []}, "toplist": [], "finished": False,
                        "control": args.control or ""}
+        if args.resume and "iperf" not in self.vars:   # iperf3 옵션 생기기 전 캠페인 = iperf2 로 계속
+            self.vars["iperf"] = "iperf"
         if "base_preset" not in self.st:           # 예전 버전으로 시작한 캠페인을 --resume
             self.st["base_preset"] = find_preset(self.st["preset"])
             sc = load_preset(self.st["base_preset"])[1]
@@ -266,15 +271,15 @@ class Campaign:
     def dedupe(self, sets: dict, args, already: dict | None = None) -> dict:
         """같은 값 조합(이름만 다른 것)과, DB 에 이미 같은 조건으로 돌린 조합을 뺀다."""
         db = _db()
-        tsec, cpus = db.tsec_of(self.vars.get("opt1", "")), self.vars.get("cpus", "")
+        tsec, cpus, pin = db.tsec_of(self.vars.get("opt1", "")), self.vars.get("cpus", ""), self.pin()
         mode = getattr(args, "mode", "2stage")
         keys_now = {db.key_of(v) for v in (already or {}).values()}
         if getattr(args, "retest", False):
             done_keys = set()
         elif mode == "focus":
-            done_keys = db.tested_keys(tsec, cpus, args.until) if args.until else set()
+            done_keys = db.tested_keys(tsec, cpus, args.until, pin, self.optkey(self.vars.get("opt1"))) if args.until else set()
         else:
-            done_keys = db.tested_keys(tsec, cpus, 1)
+            done_keys = db.tested_keys(tsec, cpus, 1, pin, self.optkey(self.vars.get("opt1")))
         out, dup, old = {}, [], []
         for n, v in sets.items():
             k = db.key_of(v)
@@ -290,9 +295,21 @@ class Campaign:
             self.clog(f"값이 같은 세팅 {len(dup)}개 제외: {' '.join(dup)}")
         if old:
             why = (f"누적 {args.until}회 이상" if mode == "focus" else "이미 측정됨")
-            self.clog(f"DB 에 같은 조건(-t{tsec}, cpus={cpus})으로 {why} {len(old)}개 제외: {' '.join(old)}"
+            self.clog(f"DB 에 같은 조건('{self.optkey(self.vars.get('opt1'))}', cpus={cpus}, pin={pin or '없음'})으로 {why} {len(old)}개 제외: {' '.join(old)}"
                       "  (다시 돌리려면 --retest)")
         return out
+
+    def optkey(self, opt: str | None) -> str:
+        """DB 조건용 iperf 옵션 문자열. iperf3 면 앞에 'iperf3 ' 를 붙여 iperf2 결과와 섞이지 않게."""
+        opt = opt or ""
+        return f"iperf3 {opt}" if self.vars.get("iperf", "iperf") == "iperf3" else opt
+
+    def pin(self) -> str:
+        n = int(self.vars.get("cpus", "1") or 1)
+        # 켜진 코어(0..cpus-1) 안에 있을 때만 실제로 묶임 (스크립트도 offline 코어면 안 묶음)
+        a, b = (x if x != "" and int(x) < n else "" for x in
+                (self.vars.get("taskset_a", ""), self.vars.get("taskset_b", "")))
+        return f"{a},{b}" if (a or b) else ""
 
     def db_append(self, idx: int, csv_path: str | None, new_done: list[str]):
         if not csv_path or not os.path.exists(csv_path) or not new_done:
@@ -311,7 +328,7 @@ class Campaign:
                              "tsec": db.tsec_of(opt), "cpus": self.vars.get("cpus", ""),
                              "key": db.key_of(self.st["sets"][r["setting"]]), "name": r["setting"],
                              "iperf_run": r["run"], "a": r["a"], "b": r["b"], "total": r["total"],
-                             "mark": r["mark"], "cpu": r.get("cpu", "")})
+                             "mark": r["mark"], "cpu": r.get("cpu", ""), "pin": self.pin(), "opt": self.optkey(opt)})
         db.append(rows)
 
     # ---- 기록 --------------------------------------------------------
@@ -352,6 +369,44 @@ class Campaign:
         self.clog(f"add.txt 에서 세팅 {len(new)}개 추가: {' '.join(new)}  (총 {len(self.names)}개)")
         return True
 
+    def switch_to_focus(self) -> bool:
+        """explore 캠페인 폴더에 focus.txt(세팅 목록)가 생기면, 지금 목록이 끝난 뒤 같은 캠페인에서
+        집중 테스트(-t10 x runs2)로 넘어간다. 탐색 결과는 summary_explore.txt / state 의 explore_done 에 보존."""
+        p = os.path.join(self.dir, "focus.txt")
+        if not os.path.exists(p):
+            return False
+        done1 = self.st["done"]["1"]
+        left = [n for n in self.names if n not in done1 and n not in self.st["dead_skip"]["1"]]
+        self.st["explore_unrun"] = left            # 전환 시점에 못 돌린 탐색 세팅 (기록만)
+        try:
+            ref = {**self.base, **self.st["sets"]}
+            sets = read_sets_file(p, ref)
+        except ValueError as e:
+            self.clog(f"focus.txt 읽기 실패 (무시): {e}")
+            os.rename(p, p + ".bad")
+            return False
+        with open(os.path.join(self.dir, "summary_explore.txt"), "w", encoding="utf-8") as f:
+            f.write(self.write_outputs(save=False))
+        self.st["explore_done"] = done1
+        self.st["explore_dead"] = self.st["dead_skip"]["1"]
+        self.st["done"]["1"], self.st["dead_skip"]["1"], self.st["dead_count"] = {}, [], {}
+        ctl = self.st.get("control")
+        sets = {n: v for n, v in sets.items() if n != ctl}
+        sets = with_controls(sets, ctl, self.args.control_every, self.base)
+        self.st["sets"], self.names = sets, list(sets)
+        self.vars["opt1"] = self.vars.get("opt2", "-t10 -i1 -w4M")
+        self.vars["runs1"] = self.vars.get("runs2", "50")
+        self.st["mode"] = "focus"
+        build_preset(self.st["base_preset"], self.st["sets"], self.preset)
+        os.rename(p, p + ".used")
+        lv = os.path.join(self.dir, "live.txt")
+        if os.path.exists(lv):
+            os.rename(lv, os.path.join(self.dir, "live_explore.txt"))
+        self.save()
+        self.clog(f"focus.txt → 집중 테스트로 전환: 세팅 {len(sets)}개 ({self.vars['opt1']} x {self.vars['runs1']})"
+                  f"  탐색 결과는 summary_explore.txt")
+        return True
+
     def ctl_file(self, name: str):
         p = os.path.join(self.dir, name)
         if not os.path.exists(p):
@@ -366,6 +421,8 @@ class Campaign:
         if self.ctl_file("stop") is not None:
             self.clog("stop 파일 발견 → 종료")
             return None
+        if self.st.get("mode") == "explore":
+            self.switch_to_focus()                  # focus.txt 있으면 남은 탐색 버리고 전환
         done1, done2 = self.st["done"]["1"], self.st["done"]["2"]
         skip1 = list(done1) + self.st["dead_skip"]["1"]
         left1 = [n for n in self.names if n not in skip1]
@@ -410,7 +467,7 @@ class Campaign:
         v = dict(self.vars)
         v.update(extra)
         cmd = [sys.executable, "-u", RUN_PY, self.preset, "--out-dir", self.dir,
-               "--json", jpath, "--no-color"]
+               "--json", jpath, "--color" if sys.stdout.isatty() else "--no-color"]
         for k, val in v.items():
             cmd += ["--var", f"{k}={val}"]
         proc = subprocess.Popen(cmd, cwd=ROOT, stdout=subprocess.PIPE, stderr=subprocess.STDOUT,
@@ -438,6 +495,7 @@ class Campaign:
                 sys.stdout.write(line)
                 sys.stdout.flush()
                 last = time.time()
+                line = _ANSI.sub("", line)          # 색 코드 떼고 판정/기록
                 # 스크립트가 실제로 찍은 헤더 (업로드 중 printf 줄엔 $NSET 그대로라 안 걸림)
                 if not testing and re.search(r"settings\s+:\s+\d+", line):
                     testing = True
@@ -447,6 +505,12 @@ class Campaign:
                 m = re.search(r"\[\d+/\d+\] (\S+)\s+PauseAll=", line)
                 if m:
                     cur = m.group(1)
+                if (re.search(r"==> pass ", line) and self.st.get("mode") == "explore"
+                        and os.path.exists(os.path.join(self.dir, "focus.txt")) and sent_int == 0):
+                    self.clog(f"run{idx:02d}: focus.txt 발견 → 이 세팅까지만 하고 끊고 집중 테스트로 전환")
+                    self._cut = True
+                    proc.send_signal(signal.SIGINT)
+                    sent_int, t_int = 1, time.time()
                 if re.search(r"==> (pass |TRAFFIC_DEAD)", line):
                     live.write(f"{datetime.datetime.now():%H:%M:%S} run{idx:02d} P{cur_ph} {cur:<11} {line.strip()}\n")
                     live.flush()
@@ -498,7 +562,8 @@ class Campaign:
                     new_done.append(f"P{ph}:{name}")
         for d in post.get("dead") or []:
             dead.append((str(d["phase"]), d["setting"], "TRAFFIC_DEAD"))
-        if not dead and (out["hung"] or res.get("status") != "PASS"):
+        user_stop = out["rc"] == 130 and not out["hung"]     # Ctrl-C 는 세팅 탓이 아님
+        if not dead and not user_stop and (out["hung"] or res.get("status") != "PASS"):
             # 멈춘 세팅 = 이번 회차에서 시작했지만 못 끝낸 마지막 세팅
             for ph in ("2", "1"):
                 table = (post.get(f"phase{ph}") or {}).get("table") or {}
@@ -521,45 +586,58 @@ class Campaign:
 
     # ---- 결과 파일 ---------------------------------------------------
     def candidates(self, done1: dict, done2: dict) -> list[str]:
-        """기준(대조군 합계 > def > 전체 합계) 대비 빠른 회차 비율로 유망/제외 후보를 뽑는다."""
+        """기준(대조군 합계 > def > 전체) 대비 avg(합계 평균)로 유망/제외 후보를 뽑는다.
+        p = avg 차이에 대한 단측 Welch(정규근사) 검정."""
+        import math
         ctl = self.st.get("control")
         is_ctl = (lambda n: bool(ctl) and re.fullmatch(re.escape(ctl) + r"_c\d+", n) is not None)
-        L = ["", "[살펴볼 후보]  기준 대비 '빠른 회차(pass) 비율' 단측 Fisher 검정 (p 작을수록 우연 아닐 가능성 큼)"]
+
+        def pool(ts):                      # 여러 세팅 결과를 하나로 (평균, 표준편차, n)
+            n = sum(t["n"] for t in ts)
+            m = sum(t["avg"] * t["n"] for t in ts) / n
+            ss = sum((t["n"] - 1) * t["sd"] ** 2 + t["n"] * (t["avg"] - m) ** 2 for t in ts)
+            return m, math.sqrt(ss / (n - 1)) if n > 1 else 0.0, n
+
+        def p_greater(t, bm, bsd, bn):     # t 의 평균이 기준보다 크다는 단측 p
+            se = math.sqrt(t["sd"] ** 2 / t["n"] + bsd ** 2 / bn) or 1e-9
+            return 0.5 * math.erfc((t["avg"] - bm) / se / math.sqrt(2))
+
+        rank = getattr(self.args, "rank", "min")
+        key = (lambda t: (-t["min"], -t["avg"])) if rank == "min" else (lambda t: (-t["avg"], -t["min"]))
+        L = ["", f"[살펴볼 후보]  {'min(최저 합계) 높은 순, 같으면 avg' if rank == 'min' else 'avg 높은 순'}"
+                 "  / p = avg 가 기준보다 높다는 게 우연일 확률(작을수록 확실)"]
         for ph, d in (("1", done1), ("2", done2)):
             meas = {n: t for n, t in d.items() if t.get("n")}
             if not meas:
                 continue
             ctls = [t for n, t in meas.items() if is_ctl(n)]
+            bmin = min((t["min"] for t in ctls), default=None)
             if ctls:
-                bp, bn, bname = sum(t["pass"] for t in ctls), sum(t["n"] for t in ctls), f"대조군 {ctl} 합계"
+                (bm, bsd, bn), bname = pool(ctls), f"대조군 {ctl} 합계"
             elif "def" in meas:
-                bp, bn, bname = meas["def"]["pass"], meas["def"]["n"], "def"
+                t = meas["def"]
+                (bm, bsd, bn), bname = (t["avg"], t["sd"], t["n"]), "def"
+                bmin = t["min"]
             else:
-                bp, bn = sum(t["pass"] for t in meas.values()), sum(t["n"] for t in meas.values())
-                bname = "전체 평균"
-            L.append(f" PHASE {ph}: 기준 = {bname} {bp}/{bn} ({round(bp * 100 / bn) if bn else 0}%)")
-            rows = []
-            for n, t in meas.items():
-                if is_ctl(n) or n == "def":
-                    continue
-                pg = fisher_greater(t["pass"], t["n"] - t["pass"], bp, bn - bp)
-                pl = fisher_greater(t["n"] - t["pass"], t["pass"], bn - bp, bp)
-                rows.append((n, t, pg, pl))
-            good = sorted([r for r in rows if r[1]["pass"] / r[1]["n"] > bp / max(bn, 1)],
-                          key=lambda r: (r[2], -r[1]["avg"]))
+                (bm, bsd, bn), bname = pool(list(meas.values())), "전체"
+            if bmin is None:
+                bmin = min(t["min"] for t in meas.values())
+            L.append(f" PHASE {ph}: 기준 = {bname}  avg {bm:.1f}  sd {bsd:.1f}  min {bmin:.0f}  n={bn}")
+            rows = [(n, t, p_greater(t, bm, bsd, bn)) for n, t in meas.items() if not (is_ctl(n) or n == "def")]
+            better = (lambda t: t["min"] > bmin) if rank == "min" else (lambda t: t["avg"] > bm)
+            good = sorted([r for r in rows if better(r[1])], key=lambda r: key(r[1]))
             if ph == "1":
                 self._cand1 = [r[0] for r in good]
-            show = [r for r in good if r[2] < 0.2] or good[:5]
-            L.append("   유망 (더 많이 돌려볼 것):" + ("" if any(r[2] < 0.2 for r in good)
-                                                    else "  ※ 기준과 뚜렷한 차이는 아직 없음, 비율 상위만 표시"))
-            for n, t, pg, _ in show[:8]:
-                L.append(f"     {n:<11} {t['pass']:>3}/{t['n']:<3} ({t['rate']:>3}%)  avg {t['avg']:>7.1f}  p={pg:.3f}")
-            bad = sorted([r for r in rows if r[3] < 0.05], key=lambda r: r[3])
+            L.append(f"   유망 ({'min' if rank == 'min' else 'avg'} 이 기준보다 높은 것 {len(good)}개 중 상위):")
+            for n, t, pg in good[:10]:
+                L.append(f"     {n:<11} avg {t['avg']:>7.1f} ({t['avg'] - bm:>+6.1f})  pass {t['pass']:>3}/{t['n']:<3}"
+                         f"  min {t['min']:>6.0f}  p={pg:.3f}")
+            bad = sorted([r for r in rows if 1 - r[2] < 0.05], key=lambda r: r[1]["avg"])
             dead = self.st["dead_skip"][ph]
             if bad or dead:
-                L.append("   제외 권장 (기준보다 뚜렷이 나쁨 / 멈춤):")
-                for n, t, _, pl in bad:
-                    L.append(f"     {n:<11} {t['pass']:>3}/{t['n']:<3} ({t['rate']:>3}%)  avg {t['avg']:>7.1f}  p={pl:.3f}")
+                L.append("   제외 권장 (기준보다 뚜렷이 낮음 / 멈춤):")
+                for n, t, pg in bad[:10]:
+                    L.append(f"     {n:<11} avg {t['avg']:>7.1f} ({t['avg'] - bm:>6.1f})  pass {t['pass']:>3}/{t['n']:<3}")
                 for n in dead:
                     v = self.st.get("sets", {}).get(n) or getattr(self, "base", {}).get(n)
                     L.append(f"     {n:<11} 멈춤(DEAD)" + (f"  PauseAll={v[0]}" if v else ""))
@@ -576,7 +654,7 @@ class Campaign:
         L = []
         for ph, opt in (("1", self.vars.get("opt1")), ("2", self.vars.get("opt2"))):
             t, cpus = db.tsec_of(opt), self.vars.get("cpus", "")
-            P = db.pooled(rows, t, cpus)
+            P = db.pooled(rows, t, cpus, self.pin(), self.optkey(opt))
             mine = {}
             for n, v in self.st["sets"].items():
                 k = db.key_of(v)
@@ -587,23 +665,26 @@ class Campaign:
             ctl = self.st.get("control") or "def"
             ck = db.key_of(self.st["sets"].get(ctl) or self.base.get(ctl, [0] * 7))
             base = P.get(ck)
-            L += ["", f"[누적 결과 -t{t} cpus={cpus}]  이번 세팅들을 예전 캠페인까지 합산 (data/fc_db.csv)"]
+            L += ["", f"[누적 결과 '{self.optkey(opt)}' cpus={cpus} pin={self.pin() or '없음'}]  이번 세팅들을 예전 캠페인까지 합산 (data/fc_db.csv)"]
             if base:
-                L.append(f"  기준 {ctl}: {base['pass']}/{base['n']} ({round(base['rate']*100)}%)  avg {base['avg']:.1f}")
-            L.append(f"  {'setting':<11}{'pass':>10}{'rate':>6}{'95%CI':>11}{'avg':>8}  p(기준보다 좋음)  캠페인수")
-            for k, n in sorted(mine.items(), key=lambda kv: (-P[kv[0]]["rate"], -P[kv[0]]["avg"])):
+                L.append(f"  기준 {ctl}: avg {base['avg']:.1f}  sd {base['sd']:.1f}  n={base['n']}")
+            L.append(f"  {'setting':<11}{'avg':>8}{'±95%':>7}{'min':>6}{'pass':>10}  p(기준보다 높음)  캠페인수")
+            rk = getattr(self.args, "rank", "min")
+            for k, n in sorted(mine.items(), key=lambda kv: (-P[kv[0]][rk], -P[kv[0]]["avg"])):
                 d = P[k]
-                lo, hi = db.wilson(d["pass"], d["n"])
+                ci = 1.96 * d["sd"] / (d["n"] ** 0.5) if d["n"] > 1 else 0
                 pv = ""
                 if base and k != ck:
-                    pv = f"{fisher_greater(d['pass'], d['n'] - d['pass'], base['pass'], base['n'] - base['pass']):.3f}"
-                L.append(f"  {n:<11}{d['pass']:>5}/{d['n']:<4}{round(d['rate']*100):>5}%"
-                         f"{f'{round(lo*100)}~{round(hi*100)}%':>11}{d['avg']:>8.1f}  {pv:>8}        {len(d['campaigns'])}")
+                    import math
+                    se = math.sqrt(d["sd"] ** 2 / d["n"] + base["sd"] ** 2 / base["n"]) or 1e-9
+                    pv = f"{0.5 * math.erfc((d['avg'] - base['avg']) / se / math.sqrt(2)):.3f}"
+                L.append(f"  {n:<11}{d['avg']:>8.1f}{ci:>7.1f}{d['min']:>6.0f}{d['pass']:>5}/{d['n']:<4}  {pv:>8}"
+                         f"        {len(d['campaigns'])}")
         return L
 
     def write_candidates(self, names: list[str]):
         with open(os.path.join(self.dir, "candidates.txt"), "w", encoding="utf-8") as f:
-            f.write(f"# {os.path.basename(self.dir)} 의 유망 후보 (빠른 회차 비율 기준, 좋은 순)\n")
+            f.write(f"# {os.path.basename(self.dir)} 의 유망 후보 ({getattr(self.args, 'rank', 'min')} 높은 순)\n")
             f.write("# 이름       PauseAll SysOn SysOff ShOn ShOff PtOn PtOff\n")
             for n in names:
                 v = self.st.get("sets", {}).get(n) or getattr(self, "base", {}).get(n)
@@ -751,6 +832,10 @@ class Campaign:
             self.write_outputs()
             self.clog(f"run{idx:02d} 끝: {info['status']}  완료 {len(info['new_done'])}개"
                       + (f"  멈춤 {' '.join(info['dead'])}" if info["dead"] else ""))
+            if getattr(self, "_cut", False):          # focus.txt 로 일부러 끊은 것 → 계속
+                self._cut = False
+                reason = "switch to focus"
+                continue
             if out["rc"] == 130 and not out["hung"]:
                 self.clog("사용자 중단 → 캠페인 중단 (--resume 으로 이어가기 가능)")
                 print("\n" + self.write_outputs())
@@ -800,6 +885,8 @@ def main(argv=None) -> int:
                     help="2stage(기본)=스크리닝 후 TOP 집중 / explore=-t3 x10 으로 넓게만, 끝나면 candidates.txt / "
                          "focus=목록을 -t10 x50 으로 집중 (보통 --sets candidates.txt --control def)")
     ap.add_argument("--cand-max", type=int, default=8, help="candidates.txt 에 넣을 최대 개수 (기본 8)")
+    ap.add_argument("--rank", choices=["min", "avg"], default="min",
+                    help="후보 순위 기준: min(최저 합계, 기본) / avg")
     ap.add_argument("--retest", action="store_true", help="DB 에 이미 있는 값 조합도 다시 돌림")
     ap.add_argument("--until", type=int, default=0,
                     help="focus: 누적 -t10 측정이 이 횟수 이상인 후보는 건너뜀 (0=항상 추가로 쌓음)")

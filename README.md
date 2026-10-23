@@ -76,3 +76,8 @@ Run 을 누르면 `logs/` 폴더에 타임스탬프 파일명으로 로그가 �
 `wrap_range` / `unwrap_loop` / `delete_block`)은 tkinter, serial, Tapo 에
 의존하지 않는 순수 함수로 분리되어 있습니다. 가짜(mock) serial/Tapo
 객체로 중첩 Loop, 변수 스윕, Stop 중단 등을 단위 테스트했습니다.
+
+## 스위치(RTL8363SC) Flow Control 임계값 튜닝
+
+CLI 캠페인 도구(`cli/sweep_campaign.py`, `scripts/fc_sweep4.sh`)로 RTL8363SC 임계값을
+탐색/집중 테스트한 결과와 사용법은 [`switch/README.md`](switch/README.md) 에 정리되어 있다.

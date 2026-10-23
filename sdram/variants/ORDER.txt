@@ -1,0 +1,16 @@
+# 위에서부터 순서대로 시험. 줄을 지우거나 순서를 바꾸면 그대로 반영됨 ('#' 줄 무시)
+v00_baseline
+v01_adj_current
+v02_adj_test1
+v03_adj_test2
+v04_adj_test3
+v05_adj_test4
+v06_adj_test5
+v07_adj_test6
+v08_dsvref_0x0d
+v09_dsvref_0x1a
+v10_cavref_0x33
+v11_cavref_0x66
+v12_pdds_6
+v13_pdds_4
+v14_pdds_2

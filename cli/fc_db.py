@@ -25,7 +25,7 @@ CLI_DIR = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.dirname(CLI_DIR)
 DB_PATH = os.path.join(ROOT, "data", "fc_db.csv")   # git 으로 관리 (logs/ 는 .gitignore)
 FIELDS = ["ts", "campaign", "run", "mode", "phase", "tsec", "cpus", "key", "name",
-          "iperf_run", "a", "b", "total", "mark", "cpu"]
+          "iperf_run", "a", "b", "total", "mark", "cpu", "pin", "opt"]   # pin = iperf A,B 코어 지정 ("1,3", 없으면 "")
 
 
 def key_of(vals) -> str:
@@ -45,6 +45,19 @@ def load(path: str = DB_PATH) -> list[dict]:
 
 
 def append(rows: list[dict], path: str = DB_PATH):
+    if os.path.exists(path):                        # 예전 헤더(열 부족)면 새 헤더로 옮겨 적기
+        with open(path, encoding="utf-8") as f:
+            head = f.readline().strip().split(",")
+        if head != FIELDS:
+            old = load(path)
+            with open(path, "w", newline="", encoding="utf-8") as f:
+                w = csv.DictWriter(f, fieldnames=FIELDS, extrasaction="ignore")
+                w.writeheader()
+                for r in old:
+                    r = {k: (r.get(k) or "") for k in FIELDS}
+                    if not r["opt"]:                # opt 열 생기기 전 데이터는 전부 -w4M 이었음
+                        r["opt"] = f"-t{r['tsec']} -i1 -w4M"
+                    w.writerow(r)
     new = not os.path.exists(path)
     os.makedirs(os.path.dirname(path), exist_ok=True)
     with open(path, "a", newline="", encoding="utf-8") as f:
@@ -54,7 +67,12 @@ def append(rows: list[dict], path: str = DB_PATH):
         w.writerows(rows)
 
 
-def pooled(rows: list[dict], tsec: int | None = None, cpus: str | None = None) -> dict:
+def norm_opt(opt: str) -> str:
+    return " ".join((opt or "").split())
+
+
+def pooled(rows: list[dict], tsec: int | None = None, cpus: str | None = None,
+           pin: str | None = None, opt: str | None = None) -> dict:
     """key -> {n, pass, avg, names, campaigns}. ERROR run 은 제외."""
     out: dict = {}
     for r in rows:
@@ -64,15 +82,24 @@ def pooled(rows: list[dict], tsec: int | None = None, cpus: str | None = None) -
             continue
         if cpus is not None and str(r["cpus"]) != str(cpus):
             continue
-        d = out.setdefault(r["key"], {"n": 0, "pass": 0, "sum": 0.0, "names": set(), "campaigns": set()})
+        if pin is not None and (r.get("pin") or "") != pin:
+            continue
+        if opt is not None and norm_opt(r.get("opt") or f"-t{r['tsec']} -i1 -w4M") != norm_opt(opt):
+            continue
+        d = out.setdefault(r["key"], {"n": 0, "pass": 0, "sum": 0.0, "sq": 0.0, "min": 1e9,
+                                      "names": set(), "campaigns": set()})
+        v = float(r["total"])
         d["n"] += 1
         d["pass"] += r["mark"] == "pass"
-        d["sum"] += float(r["total"])
+        d["sum"] += v
+        d["sq"] += v * v
+        d["min"] = min(d["min"], v)
         d["names"].add(r["name"])
         d["campaigns"].add(r["campaign"])
     for d in out.values():
         d["avg"] = d["sum"] / d["n"]
         d["rate"] = d["pass"] / d["n"]
+        d["sd"] = math.sqrt(max(0.0, (d["sq"] - d["n"] * d["avg"] ** 2) / (d["n"] - 1))) if d["n"] > 1 else 0.0
     return out
 
 
@@ -85,28 +112,30 @@ def wilson(p: int, n: int, z: float = 1.96) -> tuple[float, float]:
     return max(0.0, c - h), min(1.0, c + h)
 
 
-def tested_keys(tsec: int, cpus: str, min_n: int = 1) -> set[str]:
-    return {k for k, d in pooled(load(), tsec, cpus).items() if d["n"] >= min_n}
+def tested_keys(tsec: int, cpus: str, min_n: int = 1, pin: str = "", opt: str | None = None) -> set[str]:
+    return {k for k, d in pooled(load(), tsec, cpus, pin, opt).items() if d["n"] >= min_n}
 
 
-def report(tsec: int, cpus: str | None, min_n: int, control_key: str | None) -> str:
+def report(tsec: int, cpus: str | None, min_n: int, control_key: str | None, pin: str | None = None,
+           opt: str | None = None, sort: str = "min") -> str:
     rows = load()
-    P = pooled(rows, tsec, cpus)
+    P = pooled(rows, tsec, cpus, pin, opt)
     if not P:
         return f"DB 에 -t{tsec}" + (f" cpus={cpus}" if cpus else "") + " 결과 없음"
-    L = [f"누적 결과 (-t{tsec}" + (f", cpus={cpus}" if cpus else ", cpus 전체") + f")  {DB_PATH}",
-         f"  {'key(PA-SOn-SOff-ShOn-ShOff-POn-POff)':<38}{'pass':>9}{'rate':>6}{'95%CI':>12}{'avg':>8}  이름 / 캠페인수"]
+    L = [f"누적 결과 (-t{tsec}" + (f", cpus={cpus}" if cpus else ", cpus 전체")
+         + (f", pin={pin or '없음'}" if pin is not None else ", pin 전체")
+         + (f", opt='{opt}'" if opt else ", opt 전체") + f")  {DB_PATH}",
+         f"  {'key(PA-SOn-SOff-ShOn-ShOff-POn-POff)':<38}{'avg':>8}{'±95%':>7}{'sd':>7}{'min':>6}{'pass':>10}  이름 / 캠페인수"]
     base = P.get(control_key) if control_key else None
-    for k, d in sorted(P.items(), key=lambda kv: (-kv[1]["rate"], -kv[1]["avg"])):
+    for k, d in sorted(P.items(), key=lambda kv: (-kv[1][sort], -kv[1]["avg"])):
         if d["n"] < min_n:
             continue
-        lo, hi = wilson(d["pass"], d["n"])
+        ci = 1.96 * d["sd"] / math.sqrt(d["n"]) if d["n"] > 1 else 0
         mark = "  ← 기준" if k == control_key else ""
-        L.append(f"  {k:<38}{d['pass']:>4}/{d['n']:<4}{round(d['rate'] * 100):>5}%"
-                 f"{f'{round(lo*100)}~{round(hi*100)}%':>12}{d['avg']:>8.1f}  {','.join(sorted(d['names']))[:28]}"
-                 f" /{len(d['campaigns'])}{mark}")
+        L.append(f"  {k:<38}{d['avg']:>8.1f}{ci:>7.1f}{d['sd']:>7.1f}{d['min']:>6.0f}{d['pass']:>5}/{d['n']:<4}"
+                 f"  {','.join(sorted(d['names']))[:28]} /{len(d['campaigns'])}{mark}")
     if base:
-        L.append(f"  기준 {control_key}: {base['pass']}/{base['n']} ({round(base['rate']*100)}%)")
+        L.append(f"  기준 {control_key}: avg {base['avg']:.1f}  n={base['n']}")
     return "\n".join(L)
 
 
@@ -146,7 +175,7 @@ def import_campaign(d: str) -> int:
                             "mode": st.get("mode", "2stage"), "phase": r["phase"], "tsec": tsec_of(opt),
                             "cpus": v.get("cpus", ""), "key": key_of(sets[r["setting"]]), "name": r["setting"],
                             "iperf_run": r["run"], "a": r["a"], "b": r["b"], "total": r["total"],
-                            "mark": r["mark"], "cpu": r.get("cpu", "")})
+                            "mark": r["mark"], "cpu": r.get("cpu", ""), "pin": "", "opt": opt or ""})
     append(out)
     print(f"  {camp}: {len(out)}행 추가")
     return len(out)
@@ -160,11 +189,14 @@ def main(argv=None) -> int:
     r.add_argument("--cpus", help="cpus 조건 (기본: 전체)")
     r.add_argument("--min-n", type=int, default=1)
     r.add_argument("--control", default="496-240-204-190-154-112-100", help="기준 key (기본 def)")
+    r.add_argument("--pin", help='코어 지정 조건 ("1,3", 지정 안 한 것은 "")')
+    r.add_argument("--opt", help='iperf 옵션 조건 (예: "-t10 -i1 -w1M")')
+    r.add_argument("--sort", choices=["min", "avg"], default="min", help="정렬 기준 (기본 min)")
     i = sub.add_parser("import")
     i.add_argument("dirs", nargs="+")
     a = ap.parse_args(argv)
     if a.cmd == "report":
-        print(report(a.t, a.cpus, a.min_n, a.control))
+        print(report(a.t, a.cpus, a.min_n, a.control, a.pin, a.opt, a.sort))
     else:
         for d in a.dirs:
             for x in sorted(glob.glob(d)):

@@ -1,0 +1,15 @@
+# variant: v10_cavref_0x33
+# CBT CA VREF: 0x4d(30%) -> 0x33(20%) (DDR_WINBOND_DFS_ADJ 쪽)
+# 근거: 주석의 % 표. 이후 CBT 트레이닝이 덮어쓰는지는 미확인
+#
+--- a/base/drivers/orbit_ddram/sphy_v9r8_functions.c
++++ b/base/drivers/orbit_ddram/sphy_v9r8_functions.c
+@@ -926,7 +926,7 @@
+ 	// 179	0xb3	70%
+ 	// 204	0xcc	80%
+ 	// 230	0xe6	90%
+-    orbit_field_update(sphy_v9r8_reg_cbt_con0, SPHY_V9R8_CBT_CA_VREF, 0x4d); //(default=0x4d)
++    orbit_field_update(sphy_v9r8_reg_cbt_con0, SPHY_V9R8_CBT_CA_VREF, 0x33); //(default=0x4d)
+ #else
+     orbit_field_update(sphy_v9r8_reg_cbt_con0, SPHY_V9R8_CBT_CA_VREF, 0x4d); //(default=0x4d)
+ #endif

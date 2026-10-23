@@ -1,0 +1,10 @@
+vq700_both_7
+vq700_both_6
+vq700_both_5
+vq700_both_4
+vq700_ch0_6
+vq700_ch0_5
+vq700_ch0_4
+vq700_ch1_6
+vq700_ch1_5
+vq700_ch1_4

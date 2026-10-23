@@ -62,7 +62,11 @@ def load_sequence(target: str) -> tuple[str, list[dict], dict]:
     """파일 경로면 그 파일을, 아니면 profiles/ → presets/ 에서 같은 이름을 찾는다.
     세 번째 반환값(meta)은 시퀀스 파일 최상위의 선택 항목들:
       "vars": {"key": "기본값"}  - --var 로 안 주면 이 값으로 {key} 치환
-      "post": ["fc_sg"]          - 실행 후 돌릴 결과 처리기 (cli/post_<이름>.py)"""
+      "post": ["fc_sg"]          - 실행 후 돌릴 결과 처리기 (cli/post_<이름>.py)
+      "log": "fail"              - --log 를 안 줬을 때의 기본값 (긴 반복 테스트용)
+      "after_fail": {"timeout": 120, "idle": 30, "until": "DM>"}
+                                 - 실패 뒤에도 보드 출력을 더 받아서(워치독 리셋 후 재부팅 등)
+                                   실패 로그에 "실패 이후" 로 남긴다"""
     path = target if os.path.isfile(target) else None
     if path is None:
         for d in (cm.PROFILES_DIR, cm.PRESETS_DIR):
@@ -78,7 +82,8 @@ def load_sequence(target: str) -> tuple[str, list[dict], dict]:
     default_name = os.path.splitext(os.path.basename(path))[0]
     if isinstance(data, list):
         return default_name, data, {}
-    meta = {"vars": data.get("vars") or {}, "post": data.get("post") or []}
+    meta = {"vars": data.get("vars") or {}, "post": data.get("post") or [],
+            "log": data.get("log"), "after_fail": data.get("after_fail")}
     return data.get("name") or default_name, data["blocks"], meta
 
 
@@ -142,12 +147,14 @@ class Runner:
         self.stop_reason = ""
         self._last_err = ""
         self._log_file = None
-        self._segment: list[str] = []   # 마지막 전원 ON 이후 줄들 (--log fail 용)
+        self._segment: list[str] = []   # 마지막 부팅(전원 ON / reboot) 이후 줄들 (--log fail 용)
+        self._prev_segment: list[str] = []  # 그 직전 부팅의 줄들 (실패 로그에 "이전 부팅" 으로 같이 남김)
+        self.fail_reason = ""           # 블록이 알려준 실패 사유 (멈춤 등)
         self._all: list[str] = []       # 전체 줄 (결과 처리기 post_* 용, 타임스탬프 없이)
         self._progress: dict = {}       # 마지막으로 본 Loop 진행 상황 {loop_id: (i, total)}
         self.fail_match = ""
         self._lock = threading.Lock()
-        self._color = sys.stdout.isatty() and not args.no_color
+        self._color = (sys.stdout.isatty() or args.color) and not args.no_color
 
     # ---- 콜백 -------------------------------------------------------
     def log(self, msg: str, tag: str = "info"):
@@ -175,18 +182,69 @@ class Runner:
     def on_event(self, name: str, data: dict):
         if name == "power" and data.get("state") == "on":
             with self._lock:
-                self._segment = []  # 새 부팅 시작 - 이전(정상) 회차 로그는 버린다
+                # 새 부팅 시작 - 직전 부팅 하나만 남기고 그 이전 회차 로그는 버린다
+                self._prev_segment, self._segment = self._segment, []
             it = self.iteration_text()
             self.log_result(f"=== POWER ON{' (' + it + ')' if it else ''} ===")
+        elif name == "boot":
+            # 전원 ON 없이 명령으로 재부팅(kern reboot 등)한 경우도 새 부팅으로 본다.
+            with self._lock:
+                self._prev_segment, self._segment = self._segment, []
+            it = self.iteration_text()
+            self.log_result(f"=== REBOOT ({data.get('label', '')}){' (' + it + ')' if it else ''} ===")
         elif name == "fail_pattern":
             self.fail_match = data.get("match", "")
+        elif name == "reason":
+            self.fail_reason = data.get("text", "")
 
-    def on_active(self, block_id, loop_progress: dict):  # noqa: ARG002
-        if loop_progress:
-            self._progress = loop_progress
+    def on_active(self, block_id, loop_progress: dict):
+        self._progress = loop_progress   # Loop 밖이면 {} (끝난 Loop 의 회차가 남지 않게)
+        if block_id:
+            self._last_block = block_id  # 실패 시 어느 블록에서였는지 결과에 남김
 
     def iteration_text(self) -> str:
         return ", ".join(f"{i}/{t}" if t else f"{i}/∞" for i, t in self._progress.values())
+
+    # ---- 실패 뒤처리 ---------------------------------------------------
+    _RR_RE = re.compile(r"rr=(0x[0-9a-fA-F]+\([^)]*\))")
+
+    def _capture_after_fail(self, ctx, cfg):
+        """실패 뒤에도 보드 출력을 조금 더 받아서 실패 로그에 남긴다 (멈춘 뒤 워치독 리셋 →
+        재부팅되는 과정 등). until 이 나오거나, idle 초 동안 조용하거나, timeout 이 되면 끝."""
+        if not cfg:
+            return
+        timeout = float(cfg.get("timeout", 120))
+        idle = float(cfg.get("idle", 30))
+        until = cfg.get("until") or "DM>"
+        self.log(f"실패 이후 로그 수집 (최대 {timeout:g}s, '{until}' 나오거나 {idle:g}s 조용하면 끝)", "mute")
+        self.log_result(f"=== AFTER FAIL (최대 {timeout:g}s) ===")
+        self._after_start = len(self._segment)
+        try:
+            ss.read_until(ctx.ser, until, False, timeout, on_line=ctx._on_line,
+                          idle_timeout=idle, running_check=self.is_running)
+        except Exception as e:  # noqa: BLE001
+            self.log(f"실패 이후 로그 수집 중단: {type(e).__name__}: {e}", "err")
+
+    def _fail_reason_text(self, fallback: str) -> str:
+        m = self.fail_match
+        if self.fail_reason:
+            reason = self.fail_reason
+        elif m and m.startswith("rr="):
+            reason = f"워치독 리셋 ({m})"
+        elif m and m.startswith("U-Boot"):
+            reason = f"예상치 못한 재부팅 ({m} 다시 출력)"
+        elif m:
+            reason = f"실패 패턴 감지: {m}"
+        else:
+            reason = fallback
+        # 실패한 부팅에서 커널이 올라온 뒤에 다시 찍힌 리셋 원인(rr=...)이 있으면 = 그 뒤에
+        # 보드가 리셋됨 (멈춤 → 워치독 등). 실패 로그만 보고도 원인을 알 수 있게 사유에 붙인다.
+        text = "".join(self._segment)
+        k = text.find("Starting kernel")
+        rr = self._RR_RE.findall(text[k:]) if k >= 0 else []
+        if rr and "rr=" not in reason:
+            reason += f" → 이후 리셋 원인 rr={rr[0]}"
+        return reason
 
     def is_running(self) -> bool:
         return self.running
@@ -201,6 +259,8 @@ class Runner:
             init_vars = {k: str(v) for k, v in meta["vars"].items()}
             init_vars.update(parse_vars(args.var))
             posts = list(meta["post"]) + [x for x in (args.post or []) if x not in meta["post"]]
+            if args.log is None:
+                args.log = meta.get("log") or "full"
         except Exception as e:  # noqa: BLE001
             print(f"ERROR: {e}", file=sys.stderr)
             return EXIT_ERROR
@@ -249,6 +309,8 @@ class Runner:
             status, reason = "ERROR", f"{type(e).__name__}: {e}"
             self.log(f"ERROR: {reason}", "err")
         finally:
+            if status == "FAIL" and ctx is not None and ctx.ser is not None:
+                self._capture_after_fail(ctx, meta.get("after_fail"))
             if ctx is not None and ctx.ser is not None:
                 try:
                     ctx.ser.close()
@@ -259,8 +321,8 @@ class Runner:
         if status == "PASS" and failed_saves:
             status, reason = "FAIL", "Save 판정 FAIL: " + ", ".join(failed_saves)
 
-        if self.fail_match and status == "FAIL":
-            reason = f"실패 패턴 감지: {self.fail_match}"
+        if status == "FAIL":
+            reason = self._fail_reason_text(reason)
         iteration = self.iteration_text()
         if iteration and status != "PASS":
             reason = f"[{iteration}회차] {reason}"
@@ -273,6 +335,10 @@ class Runner:
         if status in ("FAIL", "ERROR") and args.log == "fail":
             fail_log = base + "_FAIL.log"
             with open(fail_log, "w", encoding="utf-8") as f:
+                if self._prev_segment:
+                    f.write("##### 이전 부팅 (정상) #####\n")
+                    f.writelines(self._prev_segment)
+                    f.write("\n##### 실패한 부팅 #####\n")
                 f.writelines(self._segment)
             log_path = fail_log
 
@@ -281,6 +347,7 @@ class Runner:
             "started": datetime.datetime.fromtimestamp(started).isoformat(timespec="seconds"),
             "duration_sec": round(duration, 1), "port": port, "baud": baud,
             "vars": init_vars, "iteration": iteration, "saves": self.saves, "log": log_path,
+            "block": getattr(self, "_last_block", ""),
         }
         for pname in posts:
             try:
@@ -357,13 +424,15 @@ def main(argv=None) -> int:
                    help="시퀀스 안의 {KEY} 를 치환할 변수 (여러 번 지정 가능)")
     p.add_argument("--out-dir", help="로그/결과 저장 폴더 (기본: logs/)")
     p.add_argument("--json", help="결과 JSON 경로 (기본: <out-dir>/<시각>_<이름>.json)")
-    p.add_argument("--log", choices=["full", "fail"], default="full",
-                   help="full=전체 로그 저장(기본), fail=실패 시 마지막 전원 ON~실패 구간만 저장")
+    p.add_argument("--log", choices=["full", "fail"], default=None,
+                   help="full=전체 로그 저장(기본), fail=실패 시 마지막 부팅 시작(전원 ON 또는 "
+                        "reboot)~실패 구간만 저장. 안 주면 시퀀스 파일의 \"log\" 값, 그것도 없으면 full")
     p.add_argument("--post", action="append", metavar="NAME",
                    help="실행 후 결과 처리기 (cli/post_NAME.py). 시퀀스 파일의 \"post\" 에도 지정 가능")
     p.add_argument("--junit", help="JUnit XML 출력 경로 (Jenkins 용)")
     p.add_argument("-q", "--quiet", action="store_true", help="UART/Exec 원본 줄은 화면에 안 찍음(파일엔 남음)")
     p.add_argument("--no-color", action="store_true")
+    p.add_argument("--color", action="store_true", help="파이프로 넘겨도 색 유지 (sweep_campaign.py 가 씀)")
     args = p.parse_args(argv)
 
     runner = Runner(args)

@@ -1,0 +1,60 @@
+{
+  "name": "fw-usb-mode-manual",
+  "blocks": [
+    {
+      "id": "fu_knock_u",
+      "type": "KNOCK",
+      "params": {
+        "text": "u",
+        "append_enter": false,
+        "fast": true,
+        "interval": 0.02,
+        "pattern": "total 3 char",
+        "regex": false,
+        "timeout": 60.0,
+        "on_timeout": "stop",
+        "settle": 0.3,
+        "stray": "fill",
+        "fill_total": 3,
+        "fill_char": "x"
+      }
+    },
+    {
+      "id": "fu_send_usb",
+      "type": "SEND",
+      "params": {
+        "text": "usb",
+        "append_enter": true,
+        "delay_after": 0.0,
+        "check": {
+          "pattern": "usb_dnl_fastboot: ready",
+          "regex": false,
+          "timeout": 15.0,
+          "on_timeout": "stop"
+        }
+      }
+    },
+    {
+      "id": "fu_preload",
+      "type": "EXEC",
+      "params": {
+        "cmd": "/home/test/bin/fastboot --preload /home/test/work/uboot/7275x/perloader/u-boot_7275x_preload.bin boot",
+        "timeout": 30.0,
+        "on_timeout": "stop",
+        "check_pattern": "Sending 'preload'[^\\n]*OKAY[\\s\\S]*Finished",
+        "regex": true
+      }
+    },
+    {
+      "id": "fu_flash_sbl",
+      "type": "EXEC",
+      "params": {
+        "cmd": "/home/test/bin/fastboot flash sbl /home/test/gct-board-tester/sbl/images/sbl_7275x_c.bin",
+        "timeout": 60.0,
+        "on_timeout": "stop",
+        "check_pattern": "Sending 'sbl'[^\\n]*OKAY[\\s\\S]*Writing 'sbl'[^\\n]*OKAY[\\s\\S]*Finished",
+        "regex": true
+      }
+    }
+  ]
+}

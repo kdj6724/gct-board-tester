@@ -1,0 +1,42 @@
+diff --git a/base/drivers/orbit_ddram/sphy_v9r8_functions.c b/base/drivers/orbit_ddram/sphy_v9r8_functions.c
+index f5ea7ea..ffa5bb7 100644
+--- a/base/drivers/orbit_ddram/sphy_v9r8_functions.c
++++ b/base/drivers/orbit_ddram/sphy_v9r8_functions.c
+@@ -4266,8 +4266,22 @@ void sphy_v9r8_DDRPHY_init_setting_LP4_post(struct orbit_config *cfg)
+ 
+ void sphy_v9r8_DDRPHY_setting_after_DRAM_initialization_LP4(struct orbit_config *cfg)
+ {
++  unsigned int zq_dds = (cfg->num_ch == 1) ? 6 : 7;	/* 10/13 PHY DDS sweep, see below */
+ 
+   orbit_comment("// DDRPHY_setting_after_DRAM_initialization_LP4();\n");
++  /* 10/13 PHY driver strength sweep (NOKIASUB6-275): ZQ_CON0 zq_mode_dds/pdds, ZQ_CON3 zq_ck/ds1/ds0 dds/pdds
++   * CH1 (omc_cfg_1, num_ch 1) only = 6, CH0 = 0x7 (default). Default (reset) 0x7 is written explicitly for the other CH because the zq_con0/zq_con3
++   * shadow variables are shared by both CH. Propagated to I/O by zq_manual_str below. */
++  printf("phy zq dds/pdds=%u (CH%u)\n", zq_dds, (unsigned int)cfg->num_ch);
++  orbit_field_update(sphy_v9r8_reg_zq_con0, SPHY_V9R8_ZQ_MODE_DDS , zq_dds);
++  orbit_field_update(sphy_v9r8_reg_zq_con0, SPHY_V9R8_ZQ_MODE_PDDS, zq_dds);
++  orbit_field_update(sphy_v9r8_reg_zq_con3, SPHY_V9R8_ZQ_CK_DDS   , zq_dds);
++  orbit_field_update(sphy_v9r8_reg_zq_con3, SPHY_V9R8_ZQ_CK_PDDS  , zq_dds);
++  orbit_field_update(sphy_v9r8_reg_zq_con3, SPHY_V9R8_ZQ_DS1_DDS  , zq_dds);
++  orbit_field_update(sphy_v9r8_reg_zq_con3, SPHY_V9R8_ZQ_DS1_PDDS , zq_dds);
++  orbit_field_update(sphy_v9r8_reg_zq_con3, SPHY_V9R8_ZQ_DS0_DDS  , zq_dds);
++  orbit_field_update(sphy_v9r8_reg_zq_con3, SPHY_V9R8_ZQ_DS0_PDDS , zq_dds);
++  orbit_writel(sphy_v9r8_reg_zq_con3, cfg->phy_base_addr, SPHY_V9R8_ZQ_CON3_OFFSET);
+   //zq_clk_div_en = 'h1
+ 
+   orbit_field_update(sphy_v9r8_reg_zq_con0, SPHY_V9R8_ZQ_CLK_DIV_EN, 0x1);
+diff --git a/base/sys/main.c b/base/sys/main.c
+index 4120cbf..9128bcd 100644
+--- a/base/sys/main.c
++++ b/base/sys/main.c
+@@ -1445,8 +1445,8 @@ void ddr_init(void)
+ 	//pmic_vcc_mcp_set(VCC_MCP_0_575);	//NG
+ 	//pmic_vcc_mcp_set(VCC_MCP_0_600);	//NG
+ 	//pmic_vcc_mcp_set(VCC_MCP_0_625);	//NG
+-	//pmic_vcc_mcp_set(VCC_MCP_0_650);	//OK
+-	pmic_vcc_mcp_set(VCC_MCP_0_700);	//NG
++	pmic_vcc_mcp_set(VCC_MCP_0_650);	//OK	(10/13 VDDQ 0.650 for DDS sweep)
++	//pmic_vcc_mcp_set(VCC_MCP_0_700);	//NG
+ 	//pmic_vcc_mcp_set(VCC_MCP_1_100);	//NG
+ #else
+ 	pmic_vcc_mcp_set(VCC_MCP_0_650);

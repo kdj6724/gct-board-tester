@@ -166,6 +166,15 @@ def _check_fail(buf: str, fail_pattern: str, ser, ctx: StepContext):
     raise StopRequested()
 
 
+def _report_hang(ctx: StepContext, hang: float, pattern: str):
+    """hang_sec 동안 보드 출력이 한 줄도 없으면 "멈춤" 으로 실패 처리한다 (워치독이 리셋할
+    때까지 기다리지 않고 바로 판정). 러너가 결과 사유에 쓰도록 reason 이벤트를 보낸다."""
+    msg = f"멈춤: {hang:g}초 동안 출력 없음 ('{pattern}' 대기 중)"
+    ctx.log(f"⛔ {msg}", "err")
+    ctx.emit("reason", text=msg)
+    raise StopRequested()
+
+
 def _exec_wait_string(block, ctx: StepContext):
     p = block["params"]
     pattern = ctx.subst(p.get("pattern", ""))
@@ -176,14 +185,18 @@ def _exec_wait_string(block, ctx: StepContext):
             + (f" / 실패: '{fail_pattern}'" if fail_pattern else ""), "mute")
     ser = ctx.ensure_serial()
     pat, rx = _combined_pattern(pattern, regex, fail_pattern)
+    hang = float(p.get("hang_sec", 0) or 0)
     found, buf, idle = ss.read_until(
         ser, pat, rx, timeout,
         on_line=ctx._on_line, running_check=ctx.is_running,
+        idle_timeout=hang or None,
     )
     ctx.check_running()
     _check_fail(buf, fail_pattern, ser, ctx)
     if found:
         ctx.log(f"→ 감지됨: '{pattern}'", "ok")
+    elif idle and hang:
+        _report_hang(ctx, hang, pattern)
     else:
         action = p.get("on_timeout", "stop")
         ctx.log(f"⚠ Timeout: '{pattern}' 미검출", "err")
@@ -212,6 +225,10 @@ def _exec_send(block, ctx: StepContext):
         is_last = (i == len(lines) - 1)
         payload = line + ("\n" if (not is_last or append_enter) else "")
         ctx.log(f"$ {line!r}", "info")
+        if is_last and p.get("mark_boot"):
+            # 이 입력으로 보드가 재부팅된다(kern reboot 등) - 러너가 "부팅 구간"을 여기서
+            # 새로 시작하게 알린다 (--log fail 이면 실패한 회차의 부팅 로그만 남기기 위함).
+            ctx.emit("boot", label=line)
         ctx.log_result(f"$ {line}")
         ser.write(payload.encode("utf-8", errors="replace"))
         ctx.check_running()
@@ -220,7 +237,7 @@ def _exec_send(block, ctx: StepContext):
         # 뒤이어 Check 가 붙어있으면 여기서 먼저 읽어버리지 않는다 - Check 가 기다리는
         # pattern(예: 다시 뜨는 프롬프트)을 auto-capture 가 가로채서 Check 가 못 보게
         # 되는 걸 막기 위함이다.
-        if not (is_last and check):
+        if not (is_last and (check or p.get("no_capture"))):
             ss.read_until_idle(ser, timeout=_AUTO_CAPTURE_TIMEOUT, idle_timeout=_AUTO_CAPTURE_IDLE,
                                 on_line=ctx._on_line, running_check=ctx.is_running)
             ctx.check_running()
@@ -260,23 +277,98 @@ def _exec_knock(block, ctx: StepContext):
     payload = text + ("\n" if append_enter else "")
     poke_bytes = payload.encode("utf-8", errors="replace")
 
+    if p.get("fast"):
+        _exec_knock_fast(p, ctx, text, poke_bytes, interval, pattern, regex, timeout, fail_pattern)
+        return
+
     ctx.log(f"\U0001f44a Knock: {text!r} 를 {interval:g}초 간격으로 보내며 "
             f"'{pattern}' 대기 (최대 {timeout:g}s)", "info")
     ctx.log_result(f"$ (knock every {interval:g}s) {text}")
     ser = ctx.ensure_serial()
     pat, rx = _combined_pattern(pattern, regex, fail_pattern)
+    hang = float(p.get("hang_sec", 0) or 0)
+    info: dict = {}
     found, buf = ss.read_until_with_poke(
         ser, pat, rx, timeout, poke_bytes, interval,
         on_line=ctx._on_line, running_check=ctx.is_running,
+        hang_timeout=hang or None, info=info,
     )
     ctx.check_running()
     _check_fail(buf, fail_pattern, ser, ctx)
     if found:
         ctx.log(f"  → 감지됨: '{pattern}'", "ok")
+    elif info.get("hang"):
+        _report_hang(ctx, hang, pattern)
     else:
         ctx.log(f"  ⚠ Timeout: '{pattern}' 미검출", "err")
         if p.get("on_timeout", "stop") == "stop":
             raise StopRequested()
+
+
+def _exec_knock_fast(p, ctx: StepContext, text, poke_bytes, interval, pattern, regex,
+                     timeout, fail_pattern):
+    """Knock 의 fast 모드: 부트로더 진입 키 연타 (예: 'u' 연타 → "total 3 char").
+
+    추가 params
+      settle : 감지 후 이 시간(초) 동안 조용해질 때까지 남은 응답을 더 읽는다 (기본 0.3)
+      stray  : 감지 뒤에 연타 글자가 에코돼 보이면(=보드에 여분 입력이 들어감) 어떻게 할지
+               "stop"(기본, 그 자리에서 멈춤) / "backspace"(그 개수만큼 0x08 전송)
+               / "fill"(fill_char 로 fill_total 글자를 채워 그 입력을 버리게 함 - GDM7275x
+               SBL 의 "total 3 char" 입력용) / "ignore"
+      fill_total, fill_char : fill 모드용 (기본 3, "x")
+    보드가 입력을 에코하지 않으면 여분 입력이 있어도 여기서는 알 수 없다.
+    """
+    settle = float(p.get("settle", 0.3) or 0.3)
+    stray_action = (p.get("stray") or "stop").lower()
+    ctx.log(f"\U0001f44a Knock(fast): {text!r} 를 {interval:g}초 간격으로 연타하며 "
+            f"'{pattern}' 대기 (최대 {timeout:g}s)", "info")
+    ctx.log_result(f"$ (knock fast every {interval:g}s) {text}")
+    ser = ctx.ensure_serial()
+    pat, rx = _combined_pattern(pattern, regex, fail_pattern)
+    t0 = time.time()
+    found, buf, tail, sent = ss.knock_fast(
+        ser, pat, rx, timeout, poke_bytes, interval, settle=settle,
+        on_line=ctx._on_line, running_check=ctx.is_running,
+    )
+    ctx.check_running()
+    _check_fail(buf, fail_pattern, ser, ctx)
+    if not found:
+        ctx.log(f"  ⚠ Timeout: '{pattern}' 미검출 ({sent}회 전송)", "err")
+        if p.get("on_timeout", "stop") == "stop":
+            raise StopRequested()
+        return
+    ctx.log(f"  → 감지됨: '{pattern}' ({time.time() - t0:.2f}s, {sent}회 전송), "
+            f"감지 뒤 수신: {tail!r}", "ok")
+    if not text:
+        return
+    m = re.search(f"(?:{re.escape(text)})+[ \\t]*$", tail.replace("\r", "").split("\n")[-1])
+    stray = len(m.group(0).strip()) // len(text) if m else 0
+    if stray == 0:
+        return
+    msg = f"  ⚠ 감지 뒤에 {text!r} 가 {stray}개 더 들어간 것으로 보임 (에코 {tail!r})"
+    if stray_action == "fill":
+        # 부트로더가 정해진 글자 수(fill_total)를 받으면 한 번 처리하고 다시 입력을 받는
+        # 경우: 이미 들어간 여분 글자에 아무 글자를 더해 fill_total 개를 채워서 그 입력을
+        # 버리게 한 뒤, 다음 블록에서 정상 명령(예: usb)을 새로 보낸다. (사용자 확인 방식)
+        total = int(p.get("fill_total", 3) or 3)
+        fill_char = (p.get("fill_char") or "x")[:1]
+        n = (total - stray % total) % total
+        ctx.log(msg + f" → '{fill_char}' {n}개로 {total}글자를 채워서 버리고 다시 입력", "err")
+        if n:
+            ser.write((fill_char * n).encode())
+        resp = ss.read_until_idle(ser, timeout=2.0, idle_timeout=0.3,
+                                  on_line=ctx._on_line, running_check=ctx.is_running)
+        ctx.log(f"  ↳ 채운 뒤 응답: {resp!r}", "mute")
+    elif stray_action == "backspace":
+        ctx.log(msg + f" → backspace {stray * len(text)}개 전송", "err")
+        ser.write(b"\x08" * (stray * len(text)))
+        ss.read_until_idle(ser, timeout=1.0, idle_timeout=0.2,
+                           on_line=ctx._on_line, running_check=ctx.is_running)
+    elif stray_action == "ignore":
+        ctx.log(msg + " → 무시", "err")
+    else:
+        ctx.log(msg + " → 다음 입력이 섞이지 않도록 여기서 멈춤 (stray 옵션으로 변경 가능)", "err")
+        raise StopRequested()
 
 
 _CTRL_BYTES = {
@@ -752,11 +844,18 @@ def _run_nodes(nodes, ctx: StepContext):
 def _run_loop(node, ctx: StepContext):
     """for (var = start; var OP end; var += step) 와 동일하게 실행한다.
     infinite=True 면 Stop 누를 때까지 var 를 계속 증가시키며 반복한다."""
-    p = node["start"]["params"]
+    p = dict(node["start"]["params"])
+    for k in ("start", "end", "step"):   # --var 로 반복 횟수 지정 가능 (예: "end": "{reboots}")
+        if isinstance(p.get(k), str) and "{" in p[k]:
+            p[k] = ctx.subst(p[k])
     loop_id = node["start"].get("id")
     label = p.get("label") or "Loop"
     var_name = p.get("var_name", "i")
     ctx.log(f"\U0001f501 {label}: {st.for_loop_repr(p)}", "info")
+
+    if p.get("retry"):
+        _run_retry_loop(node, ctx, p, loop_id, label, var_name)
+        return
 
     try:
         if p.get("infinite"):
@@ -791,6 +890,61 @@ def _run_loop(node, ctx: StepContext):
     finally:
         # Stop/에러로 중간에 빠져나가도 이 Loop 의 진행률 표시는 지워야
         # 바깥/다음 블록 하이라이트가 엉뚱한 "3/10" 배지를 계속 달고 있지 않는다.
+        ctx.loop_progress.pop(loop_id, None)
+        ctx.vars.pop(var_name, None)
+
+
+def _run_retry_loop(node, ctx: StepContext, p, loop_id, label, var_name):
+    """Loop 의 retry 모드: 안쪽 블록들을 끝까지 성공하면 바로 빠져나오고, 중간에 실패
+    (타임아웃 stop, 실패 패턴, Exec 실패, 시리얼 예외 등)하면 처음부터 다시 한다.
+    start..end 횟수만큼 시도해도 안 되면 실패로 끝낸다. 사용자 Stop 은 재시도하지 않는다.
+    (SBL 다운로드처럼 "무슨 문제든 전원 off 후 처음부터 다시" 하는 구간용 - 안쪽 첫
+    블록을 전원 off 로 두면 된다.)"""
+    values = st.for_loop_values(p)
+    total = len(values)
+    last_err = ""
+    try:
+        for i, v in enumerate(values, start=1):
+            ctx.check_running()
+            ctx.vars[var_name] = v
+            ctx.loop_progress[loop_id] = (i, total)
+            ctx.log(f"─── {label} 시도 {i}/{total} ───", "info")
+            try:
+                _run_nodes(node["children"], ctx)
+            except LoopBreak:
+                ctx.log(f"  ⏹ {label}: Break 로 종료", "mute")
+                return
+            except StopRequested:
+                if not ctx.is_running():
+                    raise                       # 사용자 Stop
+                last_err = "단계 실패"
+            except Exception as e:  # noqa: BLE001 - 시리얼 끊김 등도 재시도 대상
+                if not ctx.is_running():
+                    raise
+                last_err = f"{type(e).__name__}: {e}"
+                # 시리얼 쪽 예외였을 수 있으니 포트를 닫고 다음 시도에서 새로 연다.
+                try:
+                    if getattr(ctx, "ser", None) is not None:
+                        ctx.ser.close()
+                except Exception:  # noqa: BLE001
+                    pass
+                ctx.ser = None
+            else:
+                if i > 1:
+                    ctx.log(f"  ✅ {label}: {i}번째 시도에서 성공", "ok")
+                ctx.emit("retry", label=label, attempts=i, ok=True)
+                return
+            ctx.log(f"  ↻ {label}: 시도 {i}/{total} 실패 ({last_err}) → 처음부터 다시", "err")
+            ctx.emit("retry", label=label, attempts=i, ok=False, error=last_err)
+            if getattr(ctx, "ser", None) is not None:
+                try:
+                    ctx.ser.reset_input_buffer()
+                except Exception:  # noqa: BLE001
+                    pass
+                ss.clear_pending(ctx.ser)
+        ctx.log(f"  ❌ {label}: {total}번 모두 실패", "err")
+        raise StopRequested()
+    finally:
         ctx.loop_progress.pop(loop_id, None)
         ctx.vars.pop(var_name, None)
 

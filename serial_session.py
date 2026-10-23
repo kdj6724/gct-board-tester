@@ -92,7 +92,8 @@ def read_until(ser, pattern: str, regex: bool, timeout: float,
 
 def read_until_with_poke(ser, pattern: str, regex: bool, timeout: float,
                           poke_bytes: bytes, poke_interval: float,
-                          on_line=None, running_check=None) -> tuple[bool, str]:
+                          on_line=None, running_check=None,
+                          hang_timeout: float | None = None, info: dict | None = None) -> tuple[bool, str]:
     """Knock 블록용: `poke_bytes` 를 즉시 한 번 보내고, 그 뒤로 poke_interval 초마다
     응답 여부와 상관없이 다시 보내면서(리부팅 직후처럼 한 번의 Enter 로는 프롬프트가
     안 깨어나는 경우를 대비) pattern 이 나타나는지 최대 timeout 초 동안 확인한다.
@@ -114,6 +115,7 @@ def read_until_with_poke(ser, pattern: str, regex: bool, timeout: float,
 
     ser.write(poke_bytes)
     next_poke = time.time() + max(0.1, poke_interval)
+    last_rx = time.time()
 
     while True:
         if running_check is not None and not running_check():
@@ -124,6 +126,7 @@ def read_until_with_poke(ser, pattern: str, regex: bool, timeout: float,
             return False, buf
         raw = ser.read(256)
         if raw:
+            last_rx = time.time()
             chunk = raw.decode("utf-8", errors="replace")
             buf += chunk
             line_buf += chunk
@@ -137,9 +140,100 @@ def read_until_with_poke(ser, pattern: str, regex: bool, timeout: float,
                 return True, buf
         else:
             time.sleep(0.05)
+            if hang_timeout and time.time() - last_rx > hang_timeout:
+                # poke 를 보내는데도 hang_timeout 초 동안 아무 수신이 없음 = 보드가 멈춤
+                if info is not None:
+                    info["hang"] = True
+                _put_pending(ser, line_buf)
+                return False, buf
         if time.time() >= next_poke:
             ser.write(poke_bytes)
             next_poke = time.time() + max(0.1, poke_interval)
+
+
+def knock_fast(ser, pattern: str, regex: bool, timeout: float,
+               poke_bytes: bytes, interval: float, settle: float = 0.3,
+               on_line=None, running_check=None) -> tuple[bool, str, str, int]:
+    """부트로더 진입처럼 "아주 빠르게 연타" 해야 하는 Knock 용.
+
+    read_until_with_poke 는 ser.read(256) 에서 수신이 없으면 포트 timeout(보통 1초)만큼
+    막혀서 실제 전송 간격이 1초 가까이 늘어난다. 여기서는 in_waiting 만큼만 읽어서 막히지
+    않고, interval 초(최소 0.005)마다 poke_bytes 를 보낸다.
+
+    pattern 을 찾으면 그 즉시 보내기를 멈추고, settle 초 동안 수신이 없을 때까지(최대 2초)
+    더 읽는다. pattern 뒤에 들어온 내용(tail)을 같이 돌려줘서, 감지 직전에 이미 보낸
+    여분의 poke 가 보드에 들어갔는지(에코) 확인할 수 있게 한다.
+
+    반환값: (found, buffer, tail, 보낸 횟수)
+    """
+    interval = max(0.005, float(interval))
+    deadline = time.time() + timeout if timeout else None
+    buf = ""
+    line_buf = _take_pending(ser)
+    matcher = re.compile(pattern) if regex else None
+    sent = 0
+    next_poke = 0.0
+    match_end = -1
+
+    def _feed(raw: bytes):
+        nonlocal buf, line_buf
+        chunk = raw.decode("utf-8", errors="replace")
+        buf += chunk
+        line_buf += chunk
+        while "\n" in line_buf:
+            line, line_buf = line_buf.split("\n", 1)
+            line = line.rstrip("\r")
+            if on_line and line.strip():
+                on_line(line)
+
+    def _avail() -> int:
+        try:
+            return int(getattr(ser, "in_waiting", 0) or 0)
+        except Exception:  # noqa: BLE001
+            return 0
+
+    while True:
+        if running_check is not None and not running_check():
+            _put_pending(ser, line_buf)
+            return False, buf, "", sent
+        now = time.time()
+        if deadline is not None and now >= deadline:
+            _put_pending(ser, line_buf)
+            return False, buf, "", sent
+        if now >= next_poke:
+            ser.write(poke_bytes)
+            sent += 1
+            next_poke = now + interval
+        n = _avail()
+        if n:
+            _feed(ser.read(n))
+            if matcher:
+                m = matcher.search(buf)
+                if m:
+                    match_end = m.end()
+            else:
+                i = buf.find(pattern)
+                if i >= 0:
+                    match_end = i + len(pattern)
+            if match_end >= 0:
+                break
+        else:
+            time.sleep(0.001)
+
+    # 감지됨 → 더 보내지 않고, 조용해질 때까지 남은 응답(여분 입력의 에코 등)을 모은다.
+    last_rx = time.time()
+    hard_stop = last_rx + 2.0
+    while time.time() < hard_stop:
+        n = _avail()
+        if n:
+            _feed(ser.read(n))
+            last_rx = time.time()
+        elif time.time() - last_rx > settle:
+            break
+        else:
+            time.sleep(0.005)
+    _put_pending(ser, line_buf)
+    return True, buf, buf[match_end:], sent
 
 
 def send_text(ser, text: str, append_enter: bool = True, delay_after: float = 0.0, on_send=None):

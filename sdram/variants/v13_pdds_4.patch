@@ -1,0 +1,15 @@
+# variant: v13_pdds_4
+# LPDDR4_PDDS (MR3 OP[5:3]): 1 -> 4 (DDR_WINBOND_DFS_ADJ 쪽)
+# 근거: mr_config.h 주석 (1~6, default 6, 후보 6/4/2). 값의 의미는 JEDEC LPDDR4 기준, 칩 데이터시트 미확인
+#
+--- a/base/drivers/orbit_ddram/mr_config.h
++++ b/base/drivers/orbit_ddram/mr_config.h
+@@ -25,7 +25,7 @@
+ //#define LPDDR4_PDDS 4 // MR3 OP[5:3] (Pull-Down Drive Strength)
+ //#define LPDDR4_PDDS 2 // MR3 OP[5:3] (Pull-Down Drive Strength)
+ #if defined(DDR_WINBOND_DFS_ADJ)
+-#define LPDDR4_PDDS 1 // MR3 OP[5:3] (Pull-Down Drive Strength)
++#define LPDDR4_PDDS 4 // MR3 OP[5:3] (Pull-Down Drive Strength)
+ #else
+ #define LPDDR4_PDDS 1 // MR3 OP[5:3] (Pull-Down Drive Strength)
+ #endif

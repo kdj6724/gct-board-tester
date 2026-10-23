@@ -1,0 +1,11 @@
+--- a/base/drivers/orbit_ddram/sphy_v9r8_functions.c
++++ b/base/drivers/orbit_ddram/sphy_v9r8_functions.c
+@@ -4270,7 +4270,7 @@
+  *   0x7 = 30ohm (reset default), 0x6 = 34ohm, 0x5 = 40ohm, 0x4 = 48ohm (TRM, dds field)
+  * Verified with DDRRATE=3200, VDDQ 0.700V: kern reboot, boards 05/16/17 all pass with 0x6.
+  */
+-#define SPHY_V9R8_WINBOND_ZQ_DDS	0x6
++#define SPHY_V9R8_WINBOND_ZQ_DDS	0x5
+ 
+ /*
+  * Set ZQ_CON0 zq_mode_dds/pdds and ZQ_CON3 zq_ck/ds1/ds0 dds/pdds to the same value.

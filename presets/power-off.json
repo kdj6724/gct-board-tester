@@ -1,0 +1,10 @@
+{
+  "name": "power-off",
+  "blocks": [
+    {
+      "id": "po_off",
+      "type": "POWER",
+      "params": { "state": "off", "delay_after": 0.0 }
+    }
+  ]
+}

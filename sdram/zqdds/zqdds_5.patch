@@ -1,0 +1,24 @@
+diff --git a/base/drivers/orbit_ddram/sphy_v9r8_functions.c b/base/drivers/orbit_ddram/sphy_v9r8_functions.c
+index f5ea7ea..98b74c4 100644
+--- a/base/drivers/orbit_ddram/sphy_v9r8_functions.c
++++ b/base/drivers/orbit_ddram/sphy_v9r8_functions.c
+@@ -4268,6 +4268,19 @@ void sphy_v9r8_DDRPHY_setting_after_DRAM_initialization_LP4(struct orbit_config
+ {
+ 
+   orbit_comment("// DDRPHY_setting_after_DRAM_initialization_LP4();\n");
++  /* 10/13 PHY driver strength sweep (NOKIASUB6-275, Dean): ZQ_CON0 zq_mode_dds/pdds,
++   * ZQ_CON3 zq_ck/ds1/ds0 dds/pdds = 5 (reset default 0x7). Propagated by zq_manual_str below.
++   * 3732 = PHY DVFS mode 0 (normal) -> these registers are used (DVFS0/1_CON3/CON6 not changed). */
++  printf("phy zq dds/pdds=%d\n", 5);
++  orbit_field_update(sphy_v9r8_reg_zq_con0, SPHY_V9R8_ZQ_MODE_DDS , 5);
++  orbit_field_update(sphy_v9r8_reg_zq_con0, SPHY_V9R8_ZQ_MODE_PDDS, 5);
++  orbit_field_update(sphy_v9r8_reg_zq_con3, SPHY_V9R8_ZQ_CK_DDS   , 5);
++  orbit_field_update(sphy_v9r8_reg_zq_con3, SPHY_V9R8_ZQ_CK_PDDS  , 5);
++  orbit_field_update(sphy_v9r8_reg_zq_con3, SPHY_V9R8_ZQ_DS1_DDS  , 5);
++  orbit_field_update(sphy_v9r8_reg_zq_con3, SPHY_V9R8_ZQ_DS1_PDDS , 5);
++  orbit_field_update(sphy_v9r8_reg_zq_con3, SPHY_V9R8_ZQ_DS0_DDS  , 5);
++  orbit_field_update(sphy_v9r8_reg_zq_con3, SPHY_V9R8_ZQ_DS0_PDDS , 5);
++  orbit_writel(sphy_v9r8_reg_zq_con3, cfg->phy_base_addr, SPHY_V9R8_ZQ_CON3_OFFSET);
+   //zq_clk_div_en = 'h1
+ 
+   orbit_field_update(sphy_v9r8_reg_zq_con0, SPHY_V9R8_ZQ_CLK_DIV_EN, 0x1);

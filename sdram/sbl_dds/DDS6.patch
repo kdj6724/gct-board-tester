@@ -1,0 +1,84 @@
+--- a/Makefile
++++ b/Makefile
+@@ -97,10 +97,10 @@
+ #DDRRATE=2133
+ #DDRRATE=2662
+ #DDRRATE=3200
+-# DDR_WINBOND=y: default DDRRATE 3200 (NOKIASUB6-275 kern reboot test).
++# DDR profile: DDR_WINBOND=y defaults to 3732; VDDQ 0.650V, DDS/PDDS 0x6.
+ # DDRRATE=xxxx on the command line still overrides. Without DDR_WINBOND the default stays 3732.
+ ifeq ("$(DDR_WINBOND)", "y")
+-DDRRATE ?= 3200
++DDRRATE ?= 3732
+ endif
+ DDRRATE ?= 3732
+ #DDRRATE=4266
+--- a/m2-wbd
++++ b/m2-wbd
+@@ -1,3 +1,3 @@
+ #!/bin/sh
+ 
+-./m2 DDR_WINBOND=y
++./m2 DDR_WINBOND=y RETRY_DDR_CH=1 "$@"
+--- a/base/sys/main.c
++++ b/base/sys/main.c
+@@ -1439,7 +1439,7 @@
+ 	//pmic_vcc_mcp_set(VCC_MCP_0_600);	//NG
+ 	//pmic_vcc_mcp_set(VCC_MCP_0_625);	//NG
+ 	//pmic_vcc_mcp_set(VCC_MCP_0_650);	//OK
+-	pmic_vcc_mcp_set(VCC_MCP_0_700);	//NG
++	pmic_vcc_mcp_set(VCC_MCP_0_650); // Selected DDR profile
+ 	//pmic_vcc_mcp_set(VCC_MCP_1_100);	//NG
+ #else
+ 	pmic_vcc_mcp_set(VCC_MCP_0_650);
+@@ -1461,6 +1461,7 @@
+ 	#endif
+ #endif
+ 
++	printf("DDR_PROFILE=SBLSWEEP_DDS6 sbl CH=1 DDRRATE=%d VDDQ_MV=650 DDS=0x6\n", DDRRATE);
+ 	run_ddr();
+ 
+ 	print_wk("ddr=%u vdd1=%s vdd2=%s vddq=%s\n",
+--- a/base/sys/ddr_main.c
++++ b/base/sys/ddr_main.c
+@@ -102,12 +102,8 @@
+ 		printf("DDR RETRY FAIL %d/%d\n", i, retry);
+ #else
+ 	#if defined(DDR_SWEEP_CH)
+-	ddr_sweep_ch = 2;
++	ddr_sweep_ch = 1;
+ 	ret = ddr_main();
+-	if (ret != 0) {
+-		ddr_sweep_ch = 1;
+-		ret = ddr_main();
+-	}
+ 	#else
+ 	ret = ddr_main();
+ 	#endif
+@@ -120,6 +116,7 @@
+ #endif	// GDM7259X_FPGA_SYS
+ #endif // RUN_BOOTROM_ON_DDR
+ 
++	printf("DDR_PROFILE_CHANNELS=1 INIT_RET=%d\n", ret);
+ 	ddr_sphy_config();
+ 
+ 	#if defined(SBL2_MEM_TEST)
+--- a/base/drivers/orbit_ddram/sphy_v9r8_functions.c
++++ b/base/drivers/orbit_ddram/sphy_v9r8_functions.c
+@@ -4270,7 +4270,7 @@
+  *   0x7 = 30ohm (reset default), 0x6 = 34ohm, 0x5 = 40ohm, 0x4 = 48ohm (TRM, dds field)
+  * Verified with DDRRATE=3200, VDDQ 0.700V: kern reboot, boards 05/16/17 all pass with 0x6.
+  */
+-#define SPHY_V9R8_WINBOND_ZQ_DDS	0x6
++#define SPHY_V9R8_WINBOND_ZQ_DDS	0x6
+ 
+ /*
+  * Set ZQ_CON0 zq_mode_dds/pdds and ZQ_CON3 zq_ck/ds1/ds0 dds/pdds to the same value.
+@@ -4298,6 +4298,7 @@
+   orbit_comment("// DDRPHY_setting_after_DRAM_initialization_LP4();\n");
+ #if defined(DDR_WINBOND_DFS_ADJ)
+   sphy_v9r8_set_zq_dds(cfg, SPHY_V9R8_WINBOND_ZQ_DDS);
++  printf("DDR_PROFILE_ZQ_APPLIED=0x%x\n", SPHY_V9R8_WINBOND_ZQ_DDS);
+ #endif
+   //zq_clk_div_en = 'h1
+ 

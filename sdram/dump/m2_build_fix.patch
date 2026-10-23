@@ -1,0 +1,25 @@
+diff --git a/base/drivers/orbit_ddram/sphy_v9r8_functions.c b/base/drivers/orbit_ddram/sphy_v9r8_functions.c
+--- a/base/drivers/orbit_ddram/sphy_v9r8_functions.c
++++ b/base/drivers/orbit_ddram/sphy_v9r8_functions.c
+@@ -6323,6 +6323,7 @@
+   orbit_writel(sphy_v9r8_reg_schd_train_con0, cfg->phy_base_addr, SPHY_V9R8_SCHD_TRAIN_CON0_OFFSET);
+ }
+ 
++#if defined(DDR_WINBOND_DFS_ADJ)
+ static void show_dfs_adj(const char *prefix, uint8_t adj[][4])
+ {
+ 	printf("%s-adj: {%d,%d,%d,%d}{%d,%d,%d,%d}\n",
+@@ -6330,6 +6331,13 @@
+ 		adj[0][0], adj[0][1], adj[0][2], adj[0][3],
+ 		adj[1][0], adj[1][1], adj[1][2], adj[1][3]);
+ }
++#else
++/* build fix for non-Winbond build (./m2): adj arrays are 1-D [4] here */
++static void show_dfs_adj(const char *prefix, uint8_t adj[4])
++{
++	printf("%s-adj: {%d,%d,%d,%d}\n", prefix, adj[0], adj[1], adj[2], adj[3]);
++}
++#endif
+ 
+ //DDR_WINBOND_DFS_ADJ
+ void ddr_sphy_config(void)

@@ -26,6 +26,9 @@
 
 # ---- config (gct-board-tester 의 --var 로 덮어씀) -----------------
 IF=${IF:-eth0}                   # 보드 쪽 인터페이스 (카운터 수집용)
+IPERF=${IPERF:-iperf3}           # iperf3(기본) 또는 iperf(iperf2). 서버도 같은 종류로 띄워야 함
+TASKSET_A=${TASKSET_A:-}         # iperf A 를 묶을 코어 번호 (비우면 안 묶음)
+TASKSET_B=${TASKSET_B:-}         # iperf B 를 묶을 코어 번호
 IP_A=${IP_A:-192.168.5.113} ;  PORT_A=${PORT_A:-5113}
 IP_B=${IP_B:-192.168.5.112} ;  PORT_B=${PORT_B:-5112}
 
@@ -144,6 +147,18 @@ MARKSEQ=0
 
 # ---- iperf 결과에서 최종 대역폭(Mbps) 추출 ------------------------
 parse_bw() {
+    if [ "$IPERF" = "iperf3" ]; then
+        # iperf3: 마지막 요약의 receiver 줄  "... 1.08 GBytes   930 Mbits/sec   receiver"
+        awk '
+        /receiver/ { for (i = 2; i <= NF; i++) if ($i ~ /bits\/sec$/) { v = $(i-1); u = $i } }
+        END {
+            if (v == "") { print "0"; exit }
+            if (u ~ /^Gbits/)      v = v * 1000
+            else if (u ~ /^Kbits/) v = v / 1000
+            printf "%.1f", v
+        }' "$1"
+        return
+    fi
     awk '
     /(Kbits|Mbits|Gbits)\/sec/ { v=$(NF-1); u=$NF }
     END {
@@ -207,16 +222,28 @@ apply_verified() {
     return 1
 }
 
+# 코어 지정: 그 코어가 online 일 때만 taskset, 아니면 경고 한 번 찍고 안 묶음
+pin_prefix() {
+    [ -z "$1" ] && return
+    if [ "$1" = "0" ] || [ "$(cat /sys/devices/system/cpu/cpu$1/online 2>/dev/null)" = "1" ]; then
+        echo "taskset -c $1"
+    else
+        echo "  !! cpu$1 이 offline 이라 taskset 안 함" >&2
+    fi
+}
+PIN_A=$(pin_prefix "$TASKSET_A")
+PIN_B=$(pin_prefix "$TASKSET_B")
+
 # 두 iperf 동시 실행. -t + IPERF_GRACE 초 안에 안 끝나면 죽이고 TIMEDOUT=1
 #  (트래픽이 죽으면 iperf 가 연결 대기로 2분 넘게 멈춰 있는 걸 막음)
 run_one() {
     TIMEDOUT=0
     [ "$COUNTERS" = "1" ] && snap "$OUT/.c0"
     [ "$MIB" = "1" ] && kern rtl cntrst >/dev/null 2>&1
-    iperf -c $IP_A $IPERF_OPT -p $PORT_A > "$OUT/.a" 2>&1 &
+    $PIN_A $IPERF -c $IP_A $IPERF_OPT -p $PORT_A > "$OUT/.a" 2>&1 &
     PID_A=$!
     [ "$STAGGER" != "0" ] && sleep $STAGGER
-    iperf -c $IP_B $IPERF_OPT -p $PORT_B > "$OUT/.b" 2>&1 &
+    $PIN_B $IPERF -c $IP_B $IPERF_OPT -p $PORT_B > "$OUT/.b" 2>&1 &
     PID_B=$!
     TS=$(tsec "$IPERF_OPT")
     LIM=$(( TS + ${IPERF_GRACE:-$(( TS / 2 + 2 ))} ))
@@ -257,6 +284,12 @@ cnt_delta() {
             if (d["cpu_total"] > 0) printf "cpu=%d", 100*d["cpu_busy"]/d["cpu_total"]
             for (k in d) if (k !~ /^cpu_/ && k ~ re && d[k] != 0) printf " %s=%d", k, d[k]
         }' "$1" "$2"
+}
+
+# iperf3 sender 요약 줄의 재전송(Retr) 수. iperf2 면 빈 값
+parse_retr() {
+    [ "$IPERF" = "iperf3" ] || return
+    awk '/sender/ { for (i = 2; i <= NF; i++) if ($i ~ /bits\/sec$/) r = $(i+1) } END { print r + 0 }' "$1"
 }
 
 # run_one 결과 -> A, B, BAD (BAD=1 : 0 이거나 시간초과)
@@ -359,7 +392,9 @@ measure() {
         echo "$TOT" >> "$VALS"
         printf "  run %3d/%d : A=%7s  B=%7s  total=%7s  %s\n" \
                "$i" "$RUNS" "$A" "$B" "$TOT" "$MK"
-        [ "$COUNTERS" = "1" ] && echo "  cnt $i/$RUNS : $(cnt_delta "$OUT/.c0" "$OUT/.c1")"
+        RTR=""
+        [ "$IPERF" = "iperf3" ] && RTR=" retrA=$(parse_retr "$OUT/.a") retrB=$(parse_retr "$OUT/.b")"
+        [ "$COUNTERS" = "1" ] && echo "  cnt $i/$RUNS : $(cnt_delta "$OUT/.c0" "$OUT/.c1")$RTR"
         if [ "$MIB" = "1" ]; then
             echo "  mib $i/$RUNS begin"
             kern rtl status 2>&1
@@ -415,8 +450,9 @@ echo "   settings  : $NSET ($SETLIST)      top : $TOPN"
 echo "   phase 1   : $NSET x $RUNS1 회, iperf $OPT1   (~$(hms $(( NSET * RUNS1 * (T1 + 1) ))))"
 echo "   phase 2   : $TOPN x $RUNS2 회, iperf $OPT2   (~$(hms $(( TOPN * RUNS2 * (T2 + 1) ))))"
 echo "   pass line : ${PASS_MBPS} Mbps (A+B 합계)"
-echo "   stream A  : $IP_A:$PORT_A"
-echo "   stream B  : $IP_B:$PORT_B"
+echo "   iperf     : $IPERF"
+echo "   stream A  : $IP_A:$PORT_A   ${PIN_A:-(코어 지정 없음)}"
+echo "   stream B  : $IP_B:$PORT_B   ${PIN_B:-(코어 지정 없음)}"
 echo "   verify    : $VERIFY    dump : $DUMP    phases : $PHASES    dead_n : $DEAD_N"
 [ -n "$SKIP1$SKIP2" ] && echo "   skip      : P1[$SKIP1]  P2[$SKIP2]"
 [ -n "$TOPLIST" ] && echo "   toplist   : $TOPLIST"

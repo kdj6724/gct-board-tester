@@ -1,0 +1,90 @@
+diff --git a/base/drivers/orbit_ddram/test_lpddr4.c b/base/drivers/orbit_ddram/test_lpddr4.c
+--- a/base/drivers/orbit_ddram/test_lpddr4.c
++++ b/base/drivers/orbit_ddram/test_lpddr4.c
+@@ -152,6 +152,71 @@
+ }
+ #endif
+ 
++/* 10/12 training result dump (requested by Dean): after DDR init, print
++ * omc_cfg / omc_cfg_1 prbs_result[] and train_result[][] with member names (read-only).
++ * printf calls are kept short because SBL printf truncates long lines. */
++static void trn_arr(const char *name, const uint32_t *v)
++{
++  int i;
++  printf("%s", name);
++  for (i = 0; i < 8; i++)
++    printf(" 0x%x", v[i]);
++  printf("\n");
++}
++
++static void trn_dump(struct orbit_config *c, const char *cfg)
++{
++#ifdef ORBIT_REDUCE_SZ
++  const int np = 1, nl = 4;
++#else
++  const int np = 2, nl = 9;
++#endif
++  int p, l;
++  for (p = 0; p < np; p++) {
++    prbs_result_t *q = &c->prbs_result[p];
++    printf("==== %s.prbs_result[%d] ====\n", cfg, p);
++    printf("  offsetr0_cs0=0x%x offsetr1_cs0=0x%x offsetw0_cs0=0x%x offsetw1_cs0=0x%x\n",
++           q->offsetr0_cs0, q->offsetr1_cs0, q->offsetw0_cs0, q->offsetw1_cs0);
++    printf("  offsetr0_cs1=0x%x offsetr1_cs1=0x%x offsetw0_cs1=0x%x offsetw1_cs1=0x%x\n",
++           q->offsetr0_cs1, q->offsetr1_cs1, q->offsetw0_cs1, q->offsetw1_cs1);
++  }
++  for (p = 0; p < np; p++) {
++    for (l = 0; l < nl; l++) {
++      train_result_t *t = &c->train_result[p][l];
++      printf("==== %s.train_result[%d][%d] ====\n", cfg, p, l);
++      printf("  lock_value_init             = 0x%x\n", t->lock_value_init);
++      printf("  rd_deskew_center_dm_cs0     = 0x%x\n", t->rd_deskew_center_dm_cs0);
++      trn_arr("  rd_deskew_center_cs0[0..7]  =", t->rd_deskew_center_cs0);
++      printf("  rd_deskew_left_dm_cs0       = 0x%x\n", t->rd_deskew_left_dm_cs0);
++      trn_arr("  rd_deskew_left_cs0[0..7]    =", t->rd_deskew_left_cs0);
++      printf("  rd_dqs_vwmc_cs0             = 0x%x\n", t->rd_dqs_vwmc_cs0);
++      printf("  rd_dqs_vwml_cs0             = 0x%x\n", t->rd_dqs_vwml_cs0);
++      printf("  rd_deskew_center_dm_cs1     = 0x%x\n", t->rd_deskew_center_dm_cs1);
++      trn_arr("  rd_deskew_center_cs1[0..7]  =", t->rd_deskew_center_cs1);
++      printf("  rd_deskew_left_dm_cs1       = 0x%x\n", t->rd_deskew_left_dm_cs1);
++      trn_arr("  rd_deskew_left_cs1[0..7]    =", t->rd_deskew_left_cs1);
++      printf("  rd_dqs_vwmc_cs1             = 0x%x\n", t->rd_dqs_vwmc_cs1);
++      printf("  rd_dqs_vwml_cs1             = 0x%x\n", t->rd_dqs_vwml_cs1);
++      trn_arr("  wr_deskewc_cs0[0..7]        =", t->wr_deskewc_cs0);
++      printf("  dm_deskewc_cs0              = 0x%x\n", t->dm_deskewc_cs0);
++      printf("  ecc_deskewc_cs0             = 0x%x\n", t->ecc_deskewc_cs0);
++      trn_arr("  wr_deskewl_cs0[0..7]        =", t->wr_deskewl_cs0);
++      printf("  dm_deskewl_cs0              = 0x%x\n", t->dm_deskewl_cs0);
++      printf("  ecc_deskewl_cs0             = 0x%x\n", t->ecc_deskewl_cs0);
++      printf("  wr_byte0_cyc_cs0_code       = 0x%x\n", t->wr_byte0_cyc_cs0_code);
++      printf("  wr_byte1_cyc_cs0_code       = 0x%x\n", t->wr_byte1_cyc_cs0_code);
++      trn_arr("  wr_deskewc_cs1[0..7]        =", t->wr_deskewc_cs1);
++      printf("  dm_deskewc_cs1              = 0x%x\n", t->dm_deskewc_cs1);
++      printf("  ecc_deskewc_cs1             = 0x%x\n", t->ecc_deskewc_cs1);
++      trn_arr("  wr_deskewl_cs1[0..7]        =", t->wr_deskewl_cs1);
++      printf("  dm_deskewl_cs1              = 0x%x\n", t->dm_deskewl_cs1);
++      printf("  ecc_deskewl_cs1             = 0x%x\n", t->ecc_deskewl_cs1);
++      printf("  wr_byte0_cyc_cs1_code       = 0x%x\n", t->wr_byte0_cyc_cs1_code);
++      printf("  wr_byte1_cyc_cs1_code       = 0x%x\n", t->wr_byte1_cyc_cs1_code);
++    }
++  }
++}
++
+ int ddr_main(void)
+ {
+   int freq_start = 0, freq_end = 0;
+@@ -737,5 +802,14 @@
+ 
+ #endif // #ifdef ORBIT_PCH
+ 
++  if (ret == 0) {
++    trn_dump(&omc_cfg, "omc_cfg");
++#if defined(DDR_SWEEP_CH)
++    if (ddr_sweep_ch == 2)
++      trn_dump(&omc_cfg_1, "omc_cfg_1");
++#elif defined(USE_2CH_DDR)
++    trn_dump(&omc_cfg_1, "omc_cfg_1");
++#endif
++  }
+   return ret;
+ }
