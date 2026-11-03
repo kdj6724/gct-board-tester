@@ -5,3 +5,4 @@ profiles/
 logs/
 *.env
 .cyg*
+rig.json
