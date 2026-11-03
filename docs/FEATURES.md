@@ -10,6 +10,7 @@
 | 2 | 이미지 빌드 | `bash gbt.sh build <이미지...>` | sbl / uboot(+tfa) 빌드. linux / openwrt 는 등록 예정 | `config/images.json` → 이미지 파일 + `logs/flash/*_build_*.log` | sbl·uboot 시험 중 (2026-11-03) |
 | 3 | fastboot 기록 | `bash gbt.sh flash <보드> <이미지...> [--no-build]` | rig.json 으로 보드 찾기 → lock → 빌드 → fastboot 진입 → preload 부팅 → 기록 → 부팅 로그 커밋 = 소스 HEAD 확인 | `rig.json`, `config/images.json` → `logs/flash/<시각>_<보드>_<이미지>.log` | 시험 중 (2026-11-03) |
 | 4 | 부팅 반복 시험 | (예정) | kern / 전원 반복, DM> 확인, 실패·DDR 재시도 횟수 집계 | | 예정 |
+| 9 | 커밋 + push | `bash gbt.sh commit "<무엇을 왜>"` | 정해진 폴더(gbt/ config/ patches/ docs/ tools/ reports/ gbt.sh .gitignore)만 커밋 → push (거부되면 pull --rebase 후 다시). 정리 전 폴더(sdram/ 등)·logs/·rig.json 은 안 넣고 목록만 보여줌 | | 사용 가능 (2026-11-03) |
 | 5 | 결과 정리 | (예정) | 보드별 결과 → 엑셀 | `logs/` → `reports/*.xlsx` | 예정 (지금은 수동 생성) |
 
 ## 소스 구조
@@ -36,6 +37,14 @@ reports/               시험 결과 엑셀 (커밋함)
 sdram/                 기존 SBL DDR 시험 스크립트 (정리 전)
 기존 GUI/엔진          main_app.py, step_engine.py, serial_session.py, tapo_control.py, presets/ ...
 ```
+
+## 작업 방식 (매번 설명하지 않아도 되게)
+
+1. 원하는 걸 말하면 Claude 가 gbt/ tools/ config/ patches/ docs/ 를 고쳐서 테스트 PC 에 넣고, 실행할 명령 한 줄을 줌
+2. 실행해서 결과(화면 출력)를 붙여 주면 Claude 가 로그(logs/)를 직접 읽고 판단
+3. 됐으면 `bash gbt.sh commit "<무엇을 왜>"` 한 줄로 커밋 + push
+4. 소스(SDK)를 고쳐야 하면 SDK 는 건드리지 않고 patches/<이미지>/ 에 패치 파일로 저장, 빌드할 때만 `--patch` 로 적용
+5. 보드는 항상 이름(00, 08, 02 …)으로 부름. 연결이 바뀌면 `bash gbt.sh discover`, 상태는 `bash gbt.sh status`
 
 새 기능을 만들 때 규칙: 장비를 다루는 코드는 gbt/ 에, 명령 입구는 tools/ 에, 바꿀 수 있는 값은 config/ 에. 그리고 이 표와 TEST_SPEC.md 를 같이 고쳐서 커밋
 

@@ -6,6 +6,7 @@
   probe <Tapo IP>     그 Tapo 만 껐다 켜고 모든 UART 출력 보기
   build <이미지...>   이미지 빌드 (config/images.json: sbl, uboot ...)
   flash <보드> <이미지...> [--no-build]   빌드 → fastboot 기록 → 부팅 로그로 버전 확인
+  commit "<메시지>"    정해진 폴더(gbt/ config/ patches/ docs/ tools/ reports/ gbt.sh .gitignore)만 커밋하고 push
   help                기능 목록 (docs/FEATURES.md)
 """
 import os
@@ -39,6 +40,54 @@ def cmd_status():
         print(f"  (짝 없음) UART {short(k)}: {v}")
 
 
+# commit 에 넣는 것 (정해진 것만 - sdram/ 같은 정리 전 폴더나 logs/, rig.json 은 안 넣음)
+COMMIT_PATHS = ["gbt.sh", ".gitignore", "gbt", "config", "patches", "docs", "tools", "reports"]
+OLD_FILES = ["rig.py", "tools/rig_tapo.txt"]   # 예전 위치 (지금은 gbt/rig.py, config/rig_tapo.txt)
+TRAILER = ("\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>\n"
+           "Claude-Session: https://claude.ai/code/session_01F8w4KvCWcHsrNvMpmwMMbA")
+
+
+def git(*args, check=True):
+    r = subprocess.run(["git", *args], text=True, capture_output=True)
+    if check and r.returncode != 0:
+        print(r.stdout + r.stderr)
+        sys.exit(f"git {' '.join(args)} 실패")
+    return r
+
+
+def cmd_commit(msg):
+    if not msg.strip():
+        sys.exit('사용: bash gbt.sh commit "<무엇을 왜 바꿨는지>"')
+    for f in OLD_FILES:
+        if os.path.exists(f):
+            os.remove(f)
+        git("rm", "-q", "--cached", "--ignore-unmatch", f)
+    git("add", "-A", "--", *[p for p in COMMIT_PATHS if os.path.exists(p)])
+    staged = git("diff", "--cached", "--name-status").stdout.strip()
+    if not staged:
+        print("커밋할 변경 없음")
+    else:
+        print("커밋할 파일:")
+        print("\n".join("  " + ln for ln in staged.splitlines()))
+        git("commit", "-q", "-m", msg.strip() + TRAILER)
+        print(git("log", "-1", "--format=커밋 %h %s").stdout.strip())
+    other = git("status", "--short", "--", ".", *[f":(exclude){p}" for p in COMMIT_PATHS]).stdout.strip()
+    if other:
+        print("(이번에 안 넣은 변경 - 정리 전 폴더 등):")
+        print("\n".join("  " + ln for ln in other.splitlines()[:15]) + ("\n  ..." if len(other.splitlines()) > 15 else ""))
+    ahead = git("rev-list", "--count", "@{u}..HEAD", check=False).stdout.strip() or "?"
+    print(f"push (올라갈 커밋 {ahead}개) ...")
+    r = git("push", "origin", "HEAD", check=False)
+    if r.returncode != 0 and ("rejected" in r.stderr or "fetch first" in r.stderr):
+        print("GitHub 에 새 커밋이 있어서 pull --rebase 후 다시 push")
+        git("pull", "--rebase", "-q", "origin", "main")
+        r = git("push", "origin", "HEAD", check=False)
+    if r.returncode != 0:
+        print(r.stdout + r.stderr)
+        sys.exit("push 실패 (인증이면: 토큰을 Password 에, git config --global credential.helper store)")
+    print("push 완료:", git("log", "-1", "--format=%h %s").stdout.strip())
+
+
 def main():
     a = sys.argv[1:] or ["help"]
     py = sys.executable
@@ -46,6 +95,8 @@ def main():
         cmd_status()
     elif a[0] == "discover":
         sys.exit(subprocess.call([py, "tools/discover_rig.py", *a[1:]]))
+    elif a[0] == "commit":
+        cmd_commit(" ".join(a[1:]))
     elif a[0] in ("build", "flash"):
         sys.exit(subprocess.call([py, "tools/build_flash.py", *a]))
     elif a[0] == "probe" and len(a) == 2:
