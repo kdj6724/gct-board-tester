@@ -1,0 +1,19 @@
+AFE power down 을 하지 않는 SBL 패치 (2026-11-03)
+  AFE_POWER_DOWN=n 으로 빌드하면 grf_gpio_ctrl_7259x.c:896 이 ihs.c 의 #if AFE_POWER_DOWN 안에 있는
+  refx_clock_mhz 를 참조해서 링크 실패 → AFE_POWER_DOWN=y 는 두고 afe_power_down() 초입에서 return
+  사용: bash gbt.sh flash <보드> sbl --patch sbl:patches/sbl/afe_power_down_skip.patch
+gbt-expect: afe pwr down skipped (gbt patch)
+
+--- a/base/ihs/ihs.c
++++ b/base/ihs/ihs.c
+@@ -925,6 +925,10 @@
+ 
+ void afe_power_down(void)
+ {
++	/* gbt patch afe_power_down_skip: skip AFE power down (keep AFE_POWER_DOWN=y so the build still links) */
++	printf("\rafe pwr down skipped (gbt patch)\n");
++	return;
++
+ 	printf("\rafe pwr down ref=%d\n", refx_clock_mhz);
+ 
+ 	ihs_afe_pll_init_v2(refx_clock_mhz == 100 ? 1 : 0);

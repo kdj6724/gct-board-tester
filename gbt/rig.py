@@ -4,7 +4,7 @@
   사용 중   : logs/locks/<보드>.lock 에 flock + 누가 쓰는지 JSON 기록. 프로세스가 죽으면 OS 가 lock 을 풀어줌
 
   사용 예:
-      import rig
+      from gbt import rig
       b = rig.lookup("08")                     # {'tapo': ..., 'uart': ..., 'fastboot': ...}
       with rig.acquire("08", "nokia sweep"):   # 다른 도구가 쓰는 중이면 rig.Busy 예외
           ...                                  # 여기서만 Tapo 켜고 끄기 / UART 열기
@@ -21,7 +21,7 @@ import glob
 import json
 import os
 
-ROOT = os.path.dirname(os.path.abspath(__file__))
+ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 RIG_JSON = os.path.join(ROOT, "rig.json")
 LOCK_DIR = os.path.join(ROOT, "logs", "locks")
 BOARDS_CONF = os.path.join(ROOT, "sdram", "boards.conf")

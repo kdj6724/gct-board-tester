@@ -1,0 +1,21 @@
+{
+  "_설명": "이미지 등록 표 (docs/TEST_SPEC.md 2장). dir 의 ~ 는 홈. files = [[fastboot 파티션, dir 기준 파일], ...]. version_re = 부팅 로그에서 이 이미지의 커밋을 읽는 정규식(그룹 1)",
+  "sbl": {
+    "dir": "~/gdm-autotest/sdk/sbl/7275x",
+    "build": "./m2 DDR_WINBOND=y",
+    "files": [["sbl", "images/sbl_7275x_c.bin"]],
+    "version_re": "SBL: \\S+ \\S+ (\\S+?)\\(",
+    "note": "sbl 에 sbl2 포함 (flash sbl 한 번). ./m2-wbd 와 같은 빌드인데 m2-wbd 는 뒤 인자를 버려서 ./m2 를 직접 씀 → --set sbl.DDRRATE=2662 / sbl.AFE_POWER_DOWN=n 처럼 make 변수를 넘길 수 있음"
+  },
+  "uboot": {
+    "dir": "~/gdm-autotest/sdk/uboot/7275x",
+    "build": "./md_dual_sbl",
+    "files": [["uboot", "u-boot_7275x.bin"], ["tfa", "arm-trusted-firmware/tfa_7275x.bin"]],
+    "version_re": "U-Boot: \\S+ \\S+ (\\S+?)\\(",
+    "note": "U-Boot 와 TFA 는 항상 같이 기록 (파티션 이름 uboot / tfa 는 사용자 확인 2026-11-03)"
+  },
+  "_preload": {
+    "winbond-2ch": "sdram/preload_winbond_3200.bin",
+    "keymos-1ch": "~/gdm-autotest/sdk/uboot/preloader/u-boot_7275x_preload.bin"
+  }
+}

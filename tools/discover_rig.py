@@ -20,7 +20,7 @@
 
 사용 (gct-board-tester 폴더에서):
   ~/.venv-gbt/bin/python tools/discover_rig.py
-  옵션: --tapo-file tools/rig_tapo.txt  --out rig.json  --keep-names (묻지 않고 이전 이름/자리 이름 사용)
+  옵션: --tapo-file config/rig_tapo.txt  --out rig.json  --keep-names (묻지 않고 이전 이름/자리 이름 사용)
         --blink-on 4 --blink-off 3 (이름 물을 때 깜빡임 간격, 이름을 입력할 때까지 계속)
   진단: --probe <Tapo IP>  그 Tapo 만 껐다 켜고 모든 UART 출력을 보여줌 (921600)
 Tapo 계정은 remote_power.env 의 TAPO_EMAIL / TAPO_PASSWORD
@@ -43,7 +43,7 @@ os.chdir(ROOT)
 import serial  # noqa: E402
 
 import config_manager as cm  # noqa: E402
-import rig  # noqa: E402
+from gbt import rig  # noqa: E402
 from tapo_control import TapoController  # noqa: E402
 
 FASTBOOT = "/home/test/bin/fastboot"
@@ -243,7 +243,7 @@ def probe(ip, email, pw, skip_real=()):
 # ---------------------------------------------------------------- 본체
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument("--tapo-file", default="tools/rig_tapo.txt")
+    ap.add_argument("--tapo-file", default="config/rig_tapo.txt")
     ap.add_argument("--out", default="rig.json")
     ap.add_argument("--keep-names", action="store_true", help="이름을 묻지 않음 (이전 이름 또는 S1, S2 ...)")
     ap.add_argument("--probe", metavar="TAPO_IP", help="진단: 이 Tapo 하나만 껐다 켜고 모든 UART 에 들어오는 출력을 보여줌 (921600)")

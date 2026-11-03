@@ -2,7 +2,7 @@
 
 이 문서가 기준이다. 규칙을 바꾸면 이 문서와 스크립트를 같이 고치고 커밋 메시지에 이유를 적는다.
 
-## 0. 보드 관리 (공통 규칙) — `rig.py`, `bash gbt.sh status`
+## 0. 보드 관리 (공통 규칙) — `gbt/rig.py`, `bash gbt.sh status`
 
 - 장비 정보는 `rig.json` 하나가 기준 (1장의 페어 찾기가 만듦). 보드 이름 = 페어 이름
 - **Tapo 를 켜고 끄거나 UART 를 열거나 fastboot 를 쓰는 코드는 반드시 `rig.acquire(보드, 용도)` 로 그 보드 lock 을 잡은 뒤에만** 실행
@@ -18,7 +18,7 @@ Tapo 플러그 / UART / fastboot USB 가 어떻게 짝지어져 있는지 자동
 **페어 이름 = 그 페어에 꽂힌 보드 이름.** 이후 모든 시험 명령·결과 파일·엑셀은 이 이름을 쓴다.
 
 ### 입력
-- `tools/rig_tapo.txt` : Tapo IP 목록 (계정은 `remote_power.env`)
+- `config/rig_tapo.txt` : Tapo IP 목록 (계정은 `remote_power.env`)
 - UART : `/dev/serial/by-path/*` 전부 (꽂은 USB 자리 기준 이름). 같은 장치가 `usb-0:…` / `usbv2-0:…` 두 이름으로 보이면 실제 장치 기준으로 하나만 (`usb-0` 쪽 이름)
 - fastboot : `/home/test/bin/fastboot devices -l` 의 `usb:경로`
 
@@ -62,3 +62,37 @@ Tapo 플러그 / UART / fastboot USB 가 어떻게 짝지어져 있는지 자동
   "unmatched": {"tapo": {"<ip>": "<이유>"}, "uart": {"<by-path>": "<이유>"}}
 }
 ```
+
+## 2. 이미지 빌드 / 3. fastboot 기록 — `tools/build_flash.py`
+
+### 이미지 등록 표 `config/images.json`
+| 이미지 | 소스 폴더 | 빌드 | 기록 (파티션 ← 파일) | 버전 확인 (부팅 로그) |
+|---|---|---|---|---|
+| sbl | `~/gdm-autotest/sdk/sbl/7275x` | `./m2 DDR_WINBOND=y` (= m2-wbd, m2-wbd 는 뒤 인자를 버려서 m2 직접) | `sbl` ← `images/sbl_7275x_c.bin` (sbl2 포함) | `SBL: <날짜> <커밋>(` |
+| uboot | `~/gdm-autotest/sdk/uboot/7275x` | `./md_dual_sbl` | `uboot` ← `u-boot_7275x.bin`, `tfa` ← `arm-trusted-firmware/tfa_7275x.bin` (항상 같이) | `U-Boot: <날짜> <커밋>(` |
+| linux / openwrt | (예정) | | | |
+
+preload (fastboot 기록할 때 RAM 에 올리는 것, 보드 종류별): winbond-2ch → `sdram/preload_winbond_3200.bin`, keymos-1ch → `sdk/uboot/preloader/u-boot_7275x_preload.bin`
+
+### build
+- 소스 폴더 HEAD 와 커밋 안 된 변경을 로그에 남기고 빌드 명령 실행. rc=0 이고 결과 파일이 빌드 시작 뒤에 새로 생겨야 성공
+- 빌드 로그: `logs/flash/<시각>_build_<이미지>.log`
+
+### 옵션
+- `--set <이미지>.<make변수>=<값>` (여러 번): 빌드 명령 뒤에 `VAR=VAL` 로 붙임. make 명령줄 값이 Makefile 의 `VAR=y` 를 덮어씀 → Makefile 은 안 고침 (다른 시험 SBL 에 영향 없음)
+  - 확인: SBL Makefile 은 켜진 옵션을 `Makefile:NNN: 이름` 으로 찍음 → `=n` 인데 찍히면 실패. 예) `--set sbl.AFE_POWER_DOWN=n`
+- `--preload <파일>`: 보드 종류를 모를 때(type_guess ?) 또는 다른 preload 를 쓸 때
+- `--patch <이미지>:<패치 파일>` (여러 번): 빌드 직전에 `git apply`, 빌드가 끝나면(실패해도) `git apply -R` 로 되돌림 → 소스 폴더는 깨끗하게 유지 (sweep 이 "커밋 안 된 변경" 으로 거부하지 않음)
+  - 패치 파일은 `patches/<이미지>/` 에 둠. 머리말(첫 diff 줄 전)에 설명과 `gbt-expect: <글자>` → 기록 뒤 부팅 로그에 그 글자가 있어야 성공
+  - 빌드하는 동안 소스 폴더 lock(`logs/.lock_sbl_<폴더>`, 기존 sweep 과 같은 파일)을 잡음 → sweep 과 동시에 소스를 건드리지 않음
+  - 예) `patches/sbl/afe_power_down_skip.patch`: AFE_POWER_DOWN=n 빌드는 링크 실패(ihs.c 의 #if AFE_POWER_DOWN 안 refx_clock_mhz 를 grf_gpio_ctrl_7259x.c:896 이 참조) → afe_power_down() 초입에서 return
+
+### flash `<보드> <이미지...>`
+1. `rig.acquire(보드)` — 다른 도구가 쓰는 중이면 시작 안 함
+2. 빌드 (`--no-build` 면 지금 있는 파일로)
+3. fastboot 진입: Tapo OFF(2.5초) → ON → `u` 20ms 연타 (최대 15초) → `total 3 char` → 여분 `u` 를 `x` 로 3글자 채움 → `usb` → `usb_dnl_fastboot: ready` (최대 15초)
+4. `fastboot -s <보드 fastboot> --preload <preload> boot` → 출력에 `OKAY` (30초)
+5. 파일마다 `fastboot -s … flash <파티션> <파일>` → `Writing '<파티션>' … OKAY` (120초)
+6. 3~5 중 하나라도 실패하면 3부터 다시, 최대 `--tries`(기본 3)번. 다 실패하면 전원 OFF, 종료코드 1
+7. 확인: 전원 껐다 켜서 `Starting kernel` 까지(최대 40초) 부팅 로그에서 version_re 로 커밋을 읽어 소스 HEAD 와 앞 7자리 비교. 다르면 종료코드 2 ("기록은 됐지만 반영 안 됐을 수 있음")
+8. 전원은 켠 채로 둠. 전체 로그 `logs/flash/<시각>_<보드>_<이미지>.log`

@@ -4,6 +4,8 @@
   status              보드 전체 현황 (rig.json + 사용 중인지)
   discover [옵션]     장비 자동 구분 (tools/discover_rig.py)
   probe <Tapo IP>     그 Tapo 만 껐다 켜고 모든 UART 출력 보기
+  build <이미지...>   이미지 빌드 (config/images.json: sbl, uboot ...)
+  flash <보드> <이미지...> [--no-build]   빌드 → fastboot 기록 → 부팅 로그로 버전 확인
   help                기능 목록 (docs/FEATURES.md)
 """
 import os
@@ -13,7 +15,7 @@ import sys
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, ROOT)
 os.chdir(ROOT)
-import rig  # noqa: E402
+from gbt import rig  # noqa: E402
 
 
 def short(p):
@@ -44,6 +46,8 @@ def main():
         cmd_status()
     elif a[0] == "discover":
         sys.exit(subprocess.call([py, "tools/discover_rig.py", *a[1:]]))
+    elif a[0] in ("build", "flash"):
+        sys.exit(subprocess.call([py, "tools/build_flash.py", *a]))
     elif a[0] == "probe" and len(a) == 2:
         sys.exit(subprocess.call([py, "tools/discover_rig.py", "--probe", a[1]]))
     else:
